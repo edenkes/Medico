@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_home"
+        icon="@drawable/ic_home_black_36dp"
+        title="Home" />
+    <tab
+        id="@+id/tab_personal"
+        icon="@drawable/ic_friends"
+        title="Personal" />
+    <tab
+        id="@+id/tab_camera"
+        icon="@drawable/ic_add_a_photo_black_24dp"
+        title="Camera" />
+    <tab
+        id="@+id/tab_favorites"
+        icon="@drawable/ic_favorites"
+        title="Favorites" />
+    <tab
+        id="@+id/tab_recents"
+        icon="@drawable/ic_recents"
+        title="Recents" />
+</tabs>

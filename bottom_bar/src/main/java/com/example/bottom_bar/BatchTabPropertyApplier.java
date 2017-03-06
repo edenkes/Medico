@@ -1,0 +1,30 @@
+package com.example.bottom_bar;
+
+/**
+ * Created by edenkes on 3/3/2017.
+ */
+
+import android.support.annotation.NonNull;
+
+class BatchTabPropertyApplier {
+    private final BottomBar bottomBar;
+
+    interface TabPropertyUpdater {
+        void update(BottomBarTab tab);
+    }
+
+    BatchTabPropertyApplier(@NonNull BottomBar bottomBar) {
+        this.bottomBar = bottomBar;
+    }
+
+    void applyToAllTabs(TabPropertyUpdater propertyUpdater) {
+        int tabCount = bottomBar.getTabCount();
+
+        if (tabCount > 0) {
+            for (int i = 0; i < tabCount; i++) {
+                BottomBarTab tab = bottomBar.getTabAtPosition(i);
+                propertyUpdater.update(tab);
+            }
+        }
+    }
+}
