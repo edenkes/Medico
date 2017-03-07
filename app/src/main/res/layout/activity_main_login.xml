@@ -6,10 +6,5 @@
     android:layout_height="match_parent"
     tools:context="bredesh.medico.Login.MainLoginActivity">
 
-    <fragment
-        android:name="bredesh.medico.Login.LoginFragment"
-        android:id="@+id/fragment_login"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+
 </android.support.constraint.ConstraintLayout>

@@ -23,7 +23,7 @@ import bredesh.medico.Fragments.FragmentFavorites;
 import bredesh.medico.Fragments.FragmentHome;
 import bredesh.medico.Fragments.FragmentPersonal;
 import bredesh.medico.Fragments.FragmentRecents;
-import bredesh.medico.Login.LoginActivity;
+import bredesh.medico.Login.MainLoginActivity;
 import bredesh.medico.Login.Session;
 
 
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     private void logout(){
         session.setLoggedin(false);
         finish();
-        startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        startActivity(new Intent(MainActivity.this,MainLoginActivity.class));
     }
 
     private void setBadgeCount(@IdRes int menuItemId, int counter) {
