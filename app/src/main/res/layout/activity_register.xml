@@ -44,7 +44,19 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:hint="Password"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textColorHint="@color/colorWhite" />
+
+        <EditText
+            android:id="@+id/etPassConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="Confirm Password"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textColorHint="@color/colorWhite" />
@@ -53,7 +65,7 @@
             android:id="@+id/btnReg"
             style="@android:style/Widget.Button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="38dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -68,7 +80,7 @@
     <TextView
         android:id="@+id/tvLogin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_alignParentBottom="true"

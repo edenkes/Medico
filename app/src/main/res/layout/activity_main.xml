@@ -5,6 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWindowBackground"
     tools:context="bredesh.medico.MainActivity">
 
 
@@ -16,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomBar"
-        android:layout_alignParentTop="true" />
+        android:layout_below="@+id/app_bar" />
 
     <include
         android:id="@+id/app_bar"

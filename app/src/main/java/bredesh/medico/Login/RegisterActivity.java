@@ -14,8 +14,10 @@ import bredesh.medico.R;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
     private Button reg;
     private TextView tvLogin;
-    private EditText etEmail, etPass;
+    private EditText etEmail, etPass, etPassConfirm;
     private DbHelper db;
+    private final int size = 8;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         tvLogin = (TextView)findViewById(R.id.tvLogin);
         etEmail = (EditText)findViewById(R.id.etEmail);
         etPass = (EditText)findViewById(R.id.etPass);
+        etPassConfirm = (EditText)findViewById(R.id.etPassConfirm);
         reg.setOnClickListener(this);
         tvLogin.setOnClickListener(this);
     }
@@ -48,16 +51,28 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void register(){
         String email = etEmail.getText().toString();
         String pass = etPass.getText().toString();
-        if(email.isEmpty() && pass.isEmpty()){
-            displayToast("Username/password field empty");
-        }else{
+        String passConfirm = etPassConfirm.getText().toString();
+        if(email.isEmpty()){
+            displayToast("Username field can't be empty");
+        }else if (pass.isEmpty()){
+            displayToast("Password field can't be empty");
+        }else if(!email.contains("@")){
+            displayToast("Please enter a valid email");
+        }else if(pass.length() < size){
+            displayToast("Please enter a password with a length greater than " + size + " characters");
+        }else if(!pass.equals(passConfirm)){
+            displayToast("Entered passwords do not match");
+        }else if(db.checkEmail(email)){
+            displayToast("That email is already exists, please enter another");
+        }
+        else{
             db.addUser(email,pass);
-            displayToast("User registered");
+            displayToast("You have successfully registered to Medico");
             finish();
         }
     }
 
     private void displayToast(String message){
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 }
