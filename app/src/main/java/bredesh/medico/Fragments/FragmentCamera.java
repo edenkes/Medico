@@ -16,6 +16,6 @@ public class FragmentCamera extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_fragment_camera, container, false);
-    }
-
+}
+//added note
 }
