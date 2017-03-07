@@ -63,6 +63,7 @@ public class DbHelper extends SQLiteOpenHelper {
         Log.d(TAG, "user inserted" + id);
     }
 
+    
     public boolean checkEmail(String email){
         //HashMap<String, String> user = new HashMap<String, String>();
         String selectQuery = "select * from  " + USER_TABLE + " where " +
