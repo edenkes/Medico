@@ -46,7 +46,7 @@ public class FragmentCamera extends Fragment {
             public void onClick(View v) {
                 Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                 if (takeVideoIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                    takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 15);
+//                    takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 15);
                     startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
                 }
             }

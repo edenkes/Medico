@@ -22,36 +22,30 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+//
+//        db = new DbHelper(this);
+//        reg = (Button)findViewById(R.id.btnReg);
+//        tvLogin = (TextView)findViewById(R.id.tvLogin);
+//        etEmail = (EditText)findViewById(R.id.etEmail);
+//        etPass = (EditText)findViewById(R.id.etPass);
+//        etPassConfirm = (EditText)findViewById(R.id.etPassConfirm);
+//        reg.setOnClickListener(this);
+//        tvLogin.setOnClickListener(this);
+//
 
-        db = new DbHelper(this);
-        reg = (Button)findViewById(R.id.btnReg);
-        tvLogin = (TextView)findViewById(R.id.tvLogin);
-        etEmail = (EditText)findViewById(R.id.etEmail);
-        etPass = (EditText)findViewById(R.id.etPass);
-        etPassConfirm = (EditText)findViewById(R.id.etPassConfirm);
-        reg.setOnClickListener(this);
-        tvLogin.setOnClickListener(this);
-
-        reg = (Button)findViewById(R.id.btnReg);
-        tvLogin = (TextView)findViewById(R.id.tvLogin);
-        etEmail = (EditText)findViewById(R.id.etEmail);
-        etPass = (EditText)findViewById(R.id.etPass);
-        etPassConfirm = (EditText)findViewById(R.id.etPassConfirm);
-        reg.setOnClickListener(this);
-        tvLogin.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.btnReg:
+       /*     case R.id.btnReg:
                 register();
                 break;
             case R.id.tvLogin:
                 startActivity(new Intent(RegisterActivity.this,MainLoginActivity.class));
                 finish();
                 break;
-            default:
+    */        default:
 
         }
     }

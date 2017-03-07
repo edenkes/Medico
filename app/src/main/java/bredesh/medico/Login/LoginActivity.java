@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+/*
         db = new DbHelper(this);
         session = new Session(this);
         login = (Button)findViewById(R.id.btnLogin);
@@ -34,19 +34,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(session.loggedin()){
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
             finish();
-        }
+        }*/
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.btnLogin:
+          /*  case R.id.btnLogin:
                 login();
                 break;
             case R.id.btnReg:
                 startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
                 break;
-            default:
+*/            default:
 
         }
     }
