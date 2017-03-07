@@ -17,7 +17,10 @@
         </activity>
         <activity android:name=".Login.LoginActivity" />
         <activity android:name=".Login.RegisterActivity" />
-        <activity android:name=".Login.MainLoginActivity"></activity>
+        <activity android:name=".Login.MainLoginActivity"/>
+        <activity android:name=".Camera.VideoData"/>
+        <activity android:name=".Camera.NavigationAfterData"/>
+
     </application>
 
 </manifest>
