@@ -81,20 +81,11 @@
         android:id="@+id/btnGoToLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="55dp"
         android:background="@color/transparent"
         android:onClick="goLogin"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/tvLogin"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_alignParentBottom="true"
-        android:layout_above="@+id/btnGoToLogin"
-        android:textColor="@color/colorWhite" />
 
 </RelativeLayout>

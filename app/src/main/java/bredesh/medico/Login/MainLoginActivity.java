@@ -36,28 +36,9 @@ public class MainLoginActivity extends AppCompatActivity  implements View.OnClic
         //global
         db = new DbHelper(this);
         session = new Session(this);
-        
-        //Login frame
-        login = (Button)findViewById(R.id.btnLogin);
-        goregister = (Button)findViewById(R.id.btnGoToRegister);
-        etEmailLog = (EditText)findViewById(R.id.etEmailLog);
-        etPassLog = (EditText)findViewById(R.id.etPassLog);
 
-        login.setOnClickListener(this);
-        goregister.setOnClickListener(this);
+        setLogin();
 
-        register = (Button)findViewById(R.id.btnRegister);
-        gologin = (Button)findViewById(R.id.btnGoToLogin);
-
-        etEmailReg = (EditText)findViewById(R.id.etEmailReg);
-        etPassReg = (EditText)findViewById(R.id.etPassReg);
-        etPassConfirmReg = (EditText) findViewById(R.id.etPassConfirmReg);
-
-        tvLogin = (TextView)findViewById(R.id.tvLogin);
-        tvLogin.setOnClickListener(this);
-
-//        register.setOnClickListener(this);
-//        gologin.setOnClickListener(this);
         /*
 
         //Register frame
@@ -89,8 +70,18 @@ public class MainLoginActivity extends AppCompatActivity  implements View.OnClic
                 break;
             case R.id.btnGoToRegister:
                 setContentView(R.layout.activity_register);
+                setRegister();
+                /*
+                //Register Content
+                register = (Button)findViewById(R.id.btnRegister);
+                gologin = (Button)findViewById(R.id.btnGoToLogin);
+                etEmailReg = (EditText)findViewById(R.id.etEmailReg);
+                etPassReg = (EditText)findViewById(R.id.etPassReg);
+                etPassConfirmReg = (EditText) findViewById(R.id.etPassConfirmReg);
 
-
+                register.setOnClickListener(this);
+                gologin.setOnClickListener(this);
+*/
 //                startActivity(new Intent(MainLoginActivity.this,RegisterActivity.class));
                 break;
             case R.id.btnRegister:
@@ -99,20 +90,45 @@ public class MainLoginActivity extends AppCompatActivity  implements View.OnClic
             case R.id.btnGoToLogin:
 //                startActivity(new Intent(RegisterActivity.this,MainLoginActivity.class));
                 setContentView(R.layout.activity_login);
+                setLogin();
 
 //                finish();
                 break;
-            case R.id.tvLogin:
+            /*case R.id.tvLogin:
                 displayToast("hii");
 
 //                setContentView(R.layout.activity_login);
 
 //                startActivity(new Intent(RegisterActivity.this,MainLoginActivity.class));
 //                finish();
-                break;
+                break;*/
             default:
 
         }
+    }
+
+    private void setLogin(){
+        //Login Content
+        login = (Button)findViewById(R.id.btnLogin);
+        goregister = (Button)findViewById(R.id.btnGoToRegister);
+        etEmailLog = (EditText)findViewById(R.id.etEmailLog);
+        etPassLog = (EditText)findViewById(R.id.etPassLog);
+
+        login.setOnClickListener(this);
+        goregister.setOnClickListener(this);
+    }
+
+    private void setRegister(){
+        //Register Content
+        register = (Button)findViewById(R.id.btnRegister);
+        gologin = (Button)findViewById(R.id.btnGoToLogin);
+        etEmailReg = (EditText)findViewById(R.id.etEmailReg);
+        etPassReg = (EditText)findViewById(R.id.etPassReg);
+        etPassConfirmReg = (EditText) findViewById(R.id.etPassConfirmReg);
+
+        register.setOnClickListener(this);
+        gologin.setOnClickListener(this);
+
     }
 
     private void login(){
@@ -148,7 +164,10 @@ public class MainLoginActivity extends AppCompatActivity  implements View.OnClic
         else{
             db.addUser(email,pass);
             displayToast("You have successfully registered to Medico");
-            finish();
+            setContentView(R.layout.activity_login);
+            setLogin();
+
+//            finish();
         }
     }
 
