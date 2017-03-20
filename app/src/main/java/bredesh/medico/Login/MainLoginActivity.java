@@ -14,17 +14,10 @@ import bredesh.medico.R;
 
 
 public class MainLoginActivity extends AppCompatActivity  implements View.OnClickListener{
-/*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_login);
-    }*/
-
-    private final int size = 8;
+    protected final int size = 8;
     private DbHelper db;
     private Session session;
-    private Button login, goregister, register, gologin;
+    protected Button login, goregister, register, gologin;
     private EditText etEmailLog, etPassLog, etEmailReg, etPassReg, etPassConfirmReg;
     private TextView tvLogin;
 
