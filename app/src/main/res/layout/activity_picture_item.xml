@@ -8,7 +8,7 @@
 
 
     <RelativeLayout
-        android:layout_width="368dp"
+        android:layout_width="180dp"
         android:layout_height="250dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -20,16 +20,11 @@
             android:id="@+id/imgFood"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#4f0101"
+
             app:srcCompat="@mipmap/ic_medico"
-             />
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/txtName"
@@ -53,24 +48,14 @@
             android:textSize="17sp" />
 
         <TextView
-            android:id="@+id/txtDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextDate"
-            android:layout_alignBaseline="@+id/textClock"
-            android:layout_alignBottom="@+id/textClock"
-            android:layout_toRightOf="@+id/txtName"
-            android:layout_toEndOf="@+id/txtName" />
-
-        <TextView
             android:id="@+id/txtCrateBy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="crateBy"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="20dp" />
+            android:layout_below="@+id/txtName"
+            android:layout_toRightOf="@+id/txtPrice"
+            android:layout_toEndOf="@+id/txtPrice"
+            android:layout_marginTop="45dp" />
 
         <RadioButton
             android:id="@+id/alertButton"
@@ -80,14 +65,6 @@
             android:layout_alignBottom="@+id/txtPrice"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true" />
-
-        <TextClock
-            android:id="@+id/textClock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="20dp" />
 
         <TextView
             android:id="@+id/txtNumAlerts"
@@ -101,3 +78,5 @@
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
+
+
