@@ -7,7 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,11 +29,10 @@ import bredesh.medico.R;
 
 public class AddNewItem extends AppCompatActivity {
     EditText edtName, edtPrice;
-    Button btnChoose, btnAdd, btnList;
+    Button btnChoose, btnAdd;
     ImageView imageView;
 
     final int REQUEST_CODE_GALLERY = 999;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class AddNewItem extends AppCompatActivity {
         init();
 
         btnChoose.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View view) {
                 ActivityCompat.requestPermissions(
@@ -72,22 +74,13 @@ public class AddNewItem extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-/*
-        btnList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AddNewItem.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });*/
     }
 
     private byte[] imageViewToByte(ImageView image) {
         Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return byteArray;
+        return stream.toByteArray();
     }
 
     @Override
@@ -133,9 +126,7 @@ public class AddNewItem extends AppCompatActivity {
         edtPrice = (EditText) findViewById(R.id.edtPrice);
         btnChoose = (Button) findViewById(R.id.btnChoose);
         btnAdd = (Button) findViewById(R.id.btnAdd);
-//        btnList = (Button) findViewById(R.id.btnList);
         imageView = (ImageView) findViewById(R.id.imageView);
     }
-
 
 }

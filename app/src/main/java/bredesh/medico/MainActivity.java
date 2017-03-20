@@ -4,8 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
@@ -13,9 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.bottom_bar.BottomBar;
@@ -23,17 +18,11 @@ import com.example.bottom_bar.BottomBarTab;
 import com.example.bottom_bar.OnTabReselectListener;
 import com.example.bottom_bar.OnTabSelectListener;
 
-import java.util.ArrayList;
-
 import bredesh.medico.Fragments.FragmentCamera;
 import bredesh.medico.Fragments.FragmentFavorites;
 import bredesh.medico.Fragments.FragmentHome;
 import bredesh.medico.Fragments.FragmentPersonal;
 import bredesh.medico.Fragments.FragmentRecents;
-import bredesh.medico.Fragments.PictureItem.AddNewItem;
-import bredesh.medico.Fragments.PictureItem.ItemListAdapter;
-import bredesh.medico.Fragments.PictureItem.PictureItem;
-import bredesh.medico.Fragments.PictureItem.SQLiteHelper;
 import bredesh.medico.Login.MainLoginActivity;
 import bredesh.medico.Login.Session;
 
@@ -45,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private BottomBarTab personal;
     private BottomBarTab camera;
     private int counterHome;
-    private Toolbar toolbar;
     private Session session;
 
     @SuppressWarnings("ConstantConditions")
@@ -59,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             logout();
         }
 
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
 

@@ -39,23 +39,6 @@ public class MainLoginActivity extends AppCompatActivity  implements View.OnClic
 
         setLogin();
 
-        /*
-
-        //Register frame
-        register = (Button)findViewById(R.id.btnRegister);
-        gologin = (Button)findViewById(R.id.btnGoToLogin);
-        etEmailReg = (EditText)findViewById(R.id.etEmailReg);
-        etPassReg = (EditText)findViewById(R.id.etPassReg);
-        etPassConfirmReg = (EditText) findViewById(R.id.etPassConfirmReg);
-
-        register.setOnClickListener(this);
-        gologin.setOnClickListener(this);
-
-        tvLogin = (TextView)findViewById(R.id.tvLogin);
-        tvLogin.setOnClickListener(this);
-
-*/
-
         if(session.loggedin()){
             startActivity(new Intent(MainLoginActivity.this,MainActivity.class));
             finish();
@@ -71,39 +54,16 @@ public class MainLoginActivity extends AppCompatActivity  implements View.OnClic
             case R.id.btnGoToRegister:
                 setContentView(R.layout.activity_register);
                 setRegister();
-                /*
-                //Register Content
-                register = (Button)findViewById(R.id.btnRegister);
-                gologin = (Button)findViewById(R.id.btnGoToLogin);
-                etEmailReg = (EditText)findViewById(R.id.etEmailReg);
-                etPassReg = (EditText)findViewById(R.id.etPassReg);
-                etPassConfirmReg = (EditText) findViewById(R.id.etPassConfirmReg);
-
-                register.setOnClickListener(this);
-                gologin.setOnClickListener(this);
-*/
-//                startActivity(new Intent(MainLoginActivity.this,RegisterActivity.class));
                 break;
             case R.id.btnRegister:
                 register();
                 break;
             case R.id.btnGoToLogin:
-//                startActivity(new Intent(RegisterActivity.this,MainLoginActivity.class));
                 setContentView(R.layout.activity_login);
                 setLogin();
-
-//                finish();
                 break;
-            /*case R.id.tvLogin:
-                displayToast("hii");
-
-//                setContentView(R.layout.activity_login);
-
-//                startActivity(new Intent(RegisterActivity.this,MainLoginActivity.class));
-//                finish();
-                break;*/
             default:
-
+                break;
         }
     }
 
@@ -166,8 +126,6 @@ public class MainLoginActivity extends AppCompatActivity  implements View.OnClic
             displayToast("You have successfully registered to Medico");
             setContentView(R.layout.activity_login);
             setLogin();
-
-//            finish();
         }
     }
 

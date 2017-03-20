@@ -1,10 +1,5 @@
 package bredesh.medico.Fragments.PictureItem;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import bredesh.medico.R;
-
 public class PictureItem{
     private int id;
     private String exerciseName;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -22,7 +23,8 @@
             android:fontFamily="cursive"
             android:gravity="center"
             android:textColor="@color/colorWhite"
-            android:textSize="45sp" />
+            android:textSize="45sp"
+            tools:targetApi="jelly_bean" />
 
         <EditText
             android:id="@+id/etEmailReg"
@@ -32,9 +34,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:singleLine="true"
             android:textColorHint="@color/colorWhite" />
 
         <EditText
@@ -44,9 +45,8 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:hint="Enter Password"
+            android:hint="@string/enter_password"
             android:inputType="textPassword"
-            android:singleLine="true"
             android:textColorHint="@color/colorWhite" />
 
         <EditText
@@ -56,9 +56,8 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:hint="Confirm Password"
+            android:hint="@string/confirm_password"
             android:inputType="textPassword"
-            android:singleLine="true"
             android:textColorHint="@color/colorWhite" />
 
         <Button
@@ -70,7 +69,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/button_custom"
-            android:onClick="register"
             android:text="Register"
             android:textSize="20dp"
             android:textColor="@color/colorWhite" />
@@ -82,7 +80,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
-        android:onClick="goLogin"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

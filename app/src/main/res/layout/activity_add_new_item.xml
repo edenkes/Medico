@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="bredesh.medico.Fragments.PictureItem.AddNewItem">
 
-
     <RelativeLayout
         android:layout_width="368dp"
         android:layout_height="551dp"
@@ -83,4 +82,5 @@
             android:layout_alignStart="@+id/btnAdd" />
 
     </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>

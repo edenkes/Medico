@@ -26,7 +26,7 @@ public class FragmentRecents extends Fragment {
 
         ListView listView = (ListView) view.findViewById(R.id.listView12);
 
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 menuItem

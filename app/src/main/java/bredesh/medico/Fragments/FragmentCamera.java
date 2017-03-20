@@ -12,7 +12,6 @@ import android.widget.Button;
 
 import bredesh.medico.Camera.VideoData;
 import bredesh.medico.Fragments.PictureItem.AddNewItem;
-import bredesh.medico.MainActivity;
 import bredesh.medico.R;
 
 

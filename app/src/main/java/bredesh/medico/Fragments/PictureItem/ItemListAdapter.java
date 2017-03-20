@@ -1,6 +1,5 @@
 package bredesh.medico.Fragments.PictureItem;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
