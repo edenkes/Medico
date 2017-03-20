@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="bredesh.medico.Fragments.PictureItem.PictureItem">
+
+
+    <RelativeLayout
+        android:layout_width="368dp"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <ImageView
+            android:id="@+id/imgFood"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#4f0101"
+            app:srcCompat="@mipmap/ic_medico"
+            />
+
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="cursive"
+            android:text="Exercise Name"
+            android:textAlignment="center"
+            android:textColor="#45025a"
+            android:textSize="27sp" />
+
+        <TextView
+            android:id="@+id/txtPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="price"
+            android:textAlignment="center"
+            android:textColor="#510703"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextDate"
+            android:layout_alignBaseline="@+id/textClock"
+            android:layout_alignBottom="@+id/textClock"
+            android:layout_toRightOf="@+id/txtName"
+            android:layout_toEndOf="@+id/txtName" />
+
+        <TextView
+            android:id="@+id/txtCrateBy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="crateBy"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="20dp" />
+
+        <RadioButton
+            android:id="@+id/alertButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/txtPrice"
+            android:layout_alignBottom="@+id/txtPrice"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+        <TextClock
+            android:id="@+id/textClock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/txtNumAlerts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="numAlerts"
+            android:layout_alignBaseline="@+id/txtName"
+            android:layout_alignBottom="@+id/txtName"
+            android:layout_toLeftOf="@+id/alertButton"
+            android:layout_toStartOf="@+id/alertButton" />
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="bredesh.medico">
 
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_medico"
@@ -18,10 +21,11 @@
         </activity>
         <activity android:name=".Login.LoginActivity" />
         <activity android:name=".Login.RegisterActivity" />
-        <activity android:name=".Login.MainLoginActivity"/>
-        <activity android:name=".Camera.VideoData"/>
-        <activity android:name=".Camera.NavigationAfterData"/>
-
+        <activity android:name=".Login.MainLoginActivity" />
+        <activity android:name=".Camera.VideoData" />
+        <activity android:name=".Camera.NavigationAfterData" />
+        <activity android:name=".Fragments.PictureItem.PictureItem" />
+        <activity android:name=".Fragments.PictureItem.AddNewItem"></activity>
     </application>
 
 </manifest>
