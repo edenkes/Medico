@@ -22,8 +22,11 @@
         <activity android:name=".Login.MainLoginActivity" />
         <activity android:name=".Camera.VideoData" />
         <activity android:name=".Camera.NavigationAfterData" />
-        <activity android:name=".Fragments.PictureItem.PictureItem" />
         <activity android:name=".Fragments.PictureItem.AddNewItem"></activity>
     </application>
+
+    <service android:name=".PushNotification.NotificationService"
+        android:process=":my_process"
+        />
 
 </manifest>
