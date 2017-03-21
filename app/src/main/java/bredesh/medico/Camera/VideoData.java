@@ -110,7 +110,7 @@ public class VideoData extends Activity{
                     else
                         days_to_alert[i] = 0;
                 }
-                db.addAlert(exName.getText().toString(), chosenTime.getText().toString(), days_to_alert);
+                db.addAlert(exName.getText().toString(), chosenTime.getText().toString(), (new Intent()).getStringExtra("last_recorded_video_uri"), days_to_alert);
                 startActivity(new Intent(VideoData.this, NavigationAfterData.class));
 
             }

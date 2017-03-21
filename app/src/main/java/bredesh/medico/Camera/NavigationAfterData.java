@@ -56,7 +56,7 @@ public class NavigationAfterData extends Activity {
             public void onClick(View v) {
                 Intent takeImageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takeImageIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takeImageIntent, REQUEST_VIDEO_CAPTURE);
+                    startActivityForResult(takeImageIntent, REQUEST_IMAGE_CAPTURE);
                 }
             }
         });
