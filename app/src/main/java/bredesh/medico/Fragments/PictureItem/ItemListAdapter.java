@@ -6,19 +6,22 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import bredesh.medico.MainActivity;
 import bredesh.medico.R;
 
 /**
  * Created by edenkes on 3/9/2017.
  */
 
-public class ItemListAdapter extends BaseAdapter {
+public class ItemListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
 
     private Context context;
     private  int layout;
@@ -43,6 +46,11 @@ public class ItemListAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(context , "", Toast.LENGTH_LONG);
     }
 
     private class ViewHolder{
@@ -80,4 +88,6 @@ public class ItemListAdapter extends BaseAdapter {
 
         return row;
     }
+
+
 }

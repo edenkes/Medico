@@ -4,16 +4,20 @@ import android.app.Fragment;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import bredesh.medico.Fragments.PictureItem.ItemListAdapter;
 import bredesh.medico.Fragments.PictureItem.PictureItem;
 import bredesh.medico.Fragments.PictureItem.SQLiteHelper;
+import bredesh.medico.MainActivity;
 import bredesh.medico.R;
 
 
@@ -64,6 +68,9 @@ public class FragmentHome extends Fragment {
             list.add(new PictureItem(exerciseName, numAlerts, crateBy, txtDate, image, id));
         }
         adapter.notifyDataSetChanged();
+
+        gridView.setOnItemClickListener(adapter);
+
 
         // Inflate the layout for this fragment
         return view;

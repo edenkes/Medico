@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Medico");
-        actionBar.setLogo(R.mipmap.ic_launcher);
+        actionBar.setTitle("");
+        actionBar.setLogo(R.mipmap.ic_medico);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.tab_home:
                 home.setBadgeCount(counter);
                 counterHome = counter;
-
                 break;
             case R.id.tab_personal:
                 personal.setBadgeCount(counter);
