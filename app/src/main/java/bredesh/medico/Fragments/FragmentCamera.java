@@ -80,7 +80,5 @@ public class FragmentCamera extends Fragment {
                 startActivity(new Intent(getActivity(), VideoData.class));
             }
         }
-
     }
-
 }

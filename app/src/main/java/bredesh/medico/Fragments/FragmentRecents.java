@@ -1,12 +1,16 @@
 package bredesh.medico.Fragments;
 
 import android.app.Fragment;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import bredesh.medico.R;
 
@@ -33,6 +37,15 @@ public class FragmentRecents extends Fragment {
         );
 
         listView.setAdapter(stringArrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String food = String.valueOf(parent.getItemAtPosition(position));
+                Toast.makeText(getContext(),  food, Toast.LENGTH_LONG).show();
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;

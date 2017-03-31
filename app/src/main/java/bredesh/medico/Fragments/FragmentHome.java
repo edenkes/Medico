@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -38,20 +39,14 @@ public class FragmentHome extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fragment_home, container, false);
 
         //PictureItem
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            sqLiteHelper = new SQLiteHelper(getContext(), "FoodDB.sqlite", null, 1);
-        }
-
+        sqLiteHelper = new SQLiteHelper(view.getContext(), "FoodDB.sqlite", null, 1);
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS FOOD(Id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, price VARCHAR, image BLOB)");
 
         ArrayList<PictureItem> list = new ArrayList<>();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            adapter = new ItemListAdapter(getContext(), R.layout.activity_picture_item, list);
-        }
+        adapter = new ItemListAdapter(view.getContext(), R.layout.activity_picture_item, list);
 
         GridView gridView = (GridView) view.findViewById(R.id.gridView);
         gridView.setAdapter(adapter);
-//        btnAddNew = (Button) findViewById(R.id.btnAddNew);
 
         // get all data from sqlite
         Cursor cursor = sqLiteHelper.getData("SELECT * FROM FOOD");
@@ -69,8 +64,16 @@ public class FragmentHome extends Fragment {
         }
         adapter.notifyDataSetChanged();
 
-        gridView.setOnItemClickListener(adapter);
+//        gridView.setOnItemClickListener(adapter);
 
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String ExerciseName = String.valueOf(((PictureItem) parent.getItemAtPosition(position)).getExerciseName());
+                String Id = String.valueOf(((PictureItem) parent.getItemAtPosition(position)).getId());
+                Toast.makeText(view.getContext(), "ExerciseName: " + ExerciseName + ", Id: " + Id, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;

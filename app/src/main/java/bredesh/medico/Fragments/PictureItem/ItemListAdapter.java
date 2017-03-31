@@ -1,5 +1,6 @@
 package bredesh.medico.Fragments.PictureItem;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,11 +15,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import bredesh.medico.MainActivity;
 import bredesh.medico.R;
 
+
 /**
- * Created by edenkes on 3/9/2017.
+ * Created by edenkes on 3/9/20t17.
  */
 
 public class ItemListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
@@ -48,9 +49,10 @@ public class ItemListAdapter extends BaseAdapter implements AdapterView.OnItemCl
         return position;
     }
 
+    @SuppressLint("ShowToast")
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(context , "", Toast.LENGTH_LONG);
+        Toast.makeText(context , "boo", Toast.LENGTH_LONG);
     }
 
     private class ViewHolder{
@@ -60,7 +62,6 @@ public class ItemListAdapter extends BaseAdapter implements AdapterView.OnItemCl
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-
         View row = view;
         ViewHolder holder = new ViewHolder();
 

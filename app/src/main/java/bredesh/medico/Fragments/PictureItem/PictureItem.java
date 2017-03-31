@@ -36,6 +36,10 @@ public class PictureItem{
         this.exerciseName = exerciseName;
     }
 
+    public String getName() {
+        return exerciseName;
+    }
+
     public String getNumAlerts() {
         return numAlerts;
     }
