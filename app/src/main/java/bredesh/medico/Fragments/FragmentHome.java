@@ -1,83 +1,50 @@
 package bredesh.medico.Fragments;
 
 import android.app.Fragment;
-import android.database.Cursor;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import bredesh.medico.Fragments.PictureItem.ItemListAdapter;
-import bredesh.medico.Fragments.PictureItem.PictureItem;
-import bredesh.medico.Fragments.PictureItem.SQLiteHelper;
-import bredesh.medico.MainActivity;
+import bredesh.medico.Fragments.PictureItem.AlertAdapter;
+import bredesh.medico.PushNotfications.NotificationService;
 import bredesh.medico.R;
 
 
 public class FragmentHome extends Fragment {
-    //PictureItem
-    private ItemListAdapter adapter = null;
-    public static SQLiteHelper sqLiteHelper;
 
-    public FragmentHome(){
-        //
-    }
-
+    GridView gridView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_fragment_home, container, false);
+        gridView = (GridView) view.findViewById(R.id.gridView);
 
-        //PictureItem
-        sqLiteHelper = new SQLiteHelper(view.getContext(), "FoodDB.sqlite", null, 1);
-        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS FOOD(Id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, price VARCHAR, image BLOB)");
+        gridView.setAdapter(new AlertAdapter(getActivity().getApplicationContext()));
 
-        ArrayList<PictureItem> list = new ArrayList<>();
-        adapter = new ItemListAdapter(view.getContext(), R.layout.activity_picture_item, list);
-
-        GridView gridView = (GridView) view.findViewById(R.id.gridView);
-        gridView.setAdapter(adapter);
-
-        // get all data from sqlite
-        Cursor cursor = sqLiteHelper.getData("SELECT * FROM FOOD");
-        list.clear();
-        while (cursor.moveToNext()){
-            int id = cursor.getInt(0);
-            String exerciseName = cursor.getString(1);
-            String numAlerts = cursor.getString(2);
-            byte[] image = cursor.getBlob(3);
-            //            todo
-            String crateBy = cursor.getString(2);
-            String txtDate = cursor.getString(2);
-
-            list.add(new PictureItem(exerciseName, numAlerts, crateBy, txtDate, image, id));
-        }
-        adapter.notifyDataSetChanged();
-
-//        gridView.setOnItemClickListener(adapter);
+        final Intent SERVICE_INTENT = new Intent(getActivity().getBaseContext(), NotificationService.class);
+        getActivity().startService(SERVICE_INTENT);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String ExerciseName = String.valueOf(((PictureItem) parent.getItemAtPosition(position)).getExerciseName());
-                String Id = String.valueOf(((PictureItem) parent.getItemAtPosition(position)).getId());
-                Toast.makeText(view.getContext(), "ExerciseName: " + ExerciseName + ", Id: " + Id, Toast.LENGTH_SHORT).show();
+
+
             }
         });
 
-        // Inflate the layout for this fragment
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        gridView.setAdapter(new AlertAdapter(getActivity().getApplicationContext()));
 
+    }
 }

@@ -26,9 +26,9 @@ public class LocalDBManager extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "USER_ALERTS";
     private static final String TABLE_NAME = "ALERTS";
-    private static final int VERSTION = 1;
+    private static final int VERSION = 1;
 
-    public LocalDBManager(Context context) { super(context, DATABASE_NAME, null, VERSTION); }
+    public LocalDBManager(Context context) { super(context, DATABASE_NAME, null, VERSION); }
 
     @Override
     public void onCreate(SQLiteDatabase db) {

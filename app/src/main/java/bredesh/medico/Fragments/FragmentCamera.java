@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import bredesh.medico.Camera.VideoData;
-import bredesh.medico.Fragments.PictureItem.AddNewItem;
 import bredesh.medico.R;
 
 
@@ -19,8 +18,6 @@ public class FragmentCamera extends Fragment {
 
     private static final int REQUEST_VIDEO_CAPTURE = 1;
     private static final int REQUEST_IMAGE_CAPTURE = 2;
-    Button btnAddNew;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,15 +28,6 @@ public class FragmentCamera extends Fragment {
         Button camera, video;
 
         camera = (Button) view.findViewById(R.id.buttonCamera);
-        btnAddNew = (Button) view.findViewById(R.id.btnAddNew);
-
-        btnAddNew.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddNewItem.class);
-                startActivity(intent);
-            }
-        });
 
         camera.setOnClickListener(new View.OnClickListener() {
 

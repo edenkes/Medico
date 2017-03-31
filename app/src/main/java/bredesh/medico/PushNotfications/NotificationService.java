@@ -97,13 +97,14 @@ public class NotificationService extends Service {
         NotificationBuilder
                 .setContentTitle(notiName)
                 .setWhen(System.currentTimeMillis());
-      //TODO: change api to 16 and then write this :  mNotificationManager.notify(1, NotificationBuilder.build());
+        mNotificationManager.notify(1, NotificationBuilder.build());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         shouldStop = true;
+        cursor.close();
         mNotificationManager.cancelAll();
     }
 

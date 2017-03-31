@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00ffba"
-        android:text=""
-        android:textSize="3sp" />
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr"
+    android:padding="5sp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,58 +24,119 @@
 
         <TextView
             android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
             android:layout_weight="1"
             android:lines="1"
             android:scrollHorizontally="true"
-            android:layout_marginLeft="10sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:text="TextView"
             android:textColor="#FFFFFF"
-            android:text="TextView" />
+            android:textSize="25sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="#BB643aff"
-        android:weightSum="2">
+        android:orientation="horizontal"
+        android:weightSum="7">
 
         <TextView
-            android:id="@+id/days"
-            android:textStyle="bold"
+            android:id="@+id/sunday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10sp"
-            android:text="Days:"
+            android:layout_margin="5sp"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="Su"
             android:textColor="#FFFFFF"
             android:textSize="25sp" />
 
         <TextView
-            android:id="@+id/tv_days"
-            android:layout_weight="1"
-            android:lines="1"
-            android:scrollHorizontally="true"
-            android:layout_marginLeft="10sp"
+            android:id="@+id/monday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:layout_margin="5sp"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="Mo"
             android:textColor="#FFFFFF"
-            android:text="TextView" />
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="Tu"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="We"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="Th"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="Fr"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="Sa"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
 
     </LinearLayout>
 
-
-
-
     <TextView
+        android:id="@+id/tv_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00ffba"
-        android:text=""
-        android:textSize="3sp" />
-
+        android:background="#111166"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp" />
 
 </LinearLayout>

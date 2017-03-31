@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
 import bredesh.medico.R;
 
 
@@ -23,18 +22,17 @@ import bredesh.medico.R;
 
 public class VideoData extends Activity{
 
-    Button chooseFrequency, addAlert, setTime, duration;
+    Button chooseFrequency, addAlert, setTime;
     TextView confirm, chosenTime;
     EditText exName;
 
     AlertDialog dialog;
-    // arraylist to keep the selected days
+    // array to keep the selected days
     final boolean[] selectedDays = new boolean[7];
     LocalDBManager db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.video_data);
@@ -43,7 +41,6 @@ public class VideoData extends Activity{
         addAlert = (Button) findViewById(R.id.add_alert);
         confirm = (TextView) findViewById(R.id.confirm);
         exName = (EditText) findViewById(R.id.videoName);
-        duration = (Button) findViewById(R.id.duration);
 
         chosenTime = (TextView) findViewById(R.id.chosen_time);
         setTime = (Button) findViewById(R.id.change_time);
@@ -57,15 +54,6 @@ public class VideoData extends Activity{
             @Override
             public void onClick(View v) {
                 dialog.show();
-            }
-        });
-
-        duration.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-
             }
         });
 
@@ -111,14 +99,13 @@ public class VideoData extends Activity{
                         days_to_alert[i] = 0;
                 }
                 db.addAlert(exName.getText().toString(), chosenTime.getText().toString(), (new Intent()).getStringExtra("last_recorded_video_uri"), days_to_alert);
-                startActivity(new Intent(VideoData.this, NavigationAfterData.class));
+                finish();
 
             }
         });
     }
 
     private void setDialog() {
-        // TODO Auto-generated method stub
         final CharSequence[] items = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
         for(int i=0; i<selectedDays.length; i++)
             selectedDays[i] = true;

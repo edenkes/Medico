@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:layoutDirection="ltr"
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Video Name:"
+            android:textColor="#000000"
             android:textSize="20dp" />
 
         <EditText
@@ -25,6 +28,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:maxLines="1"
+            android:textColor="#000000"
             android:text="Exercise 1" >
         </EditText>
     </LinearLayout>
@@ -36,6 +40,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:text="Notification Settings"
+        android:textColor="#000000"
         android:textSize="25dp" />
 
     <Button
@@ -45,30 +50,6 @@
         android:layout_gravity="center_horizontal"
         android:text="Choose Frequency" />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal"
-        android:weightSum="2" >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:text="Exercise Duration"
-            android:textSize="20dp" />
-
-        <Button
-            android:id="@+id/duration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.2"
-            android:textStyle="italic"
-            android:text="10:10 min" >
-        </Button>
-    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -97,6 +78,7 @@
                 android:layout_weight="0.4"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="Notification Time 1:"
+                android:textColor="#000000"
                 android:textSize="20dp" />
 
             <TextView
@@ -105,6 +87,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.25"
                 android:gravity="center_horizontal|center_vertical"
+                android:textColor="#000000"
                 android:text="23:59"
                 android:textSize="20dp" />
 

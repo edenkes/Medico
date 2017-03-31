@@ -3,19 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWindowBackground"
+    android:layoutDirection="ltr"
     tools:context="bredesh.medico.Fragments.FragmentCamera">
 
-
-    <Button
-        android:id="@+id/btnAddNew"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add New Item"
-        android:background="@color/colorDarkBlue"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="0dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +25,7 @@
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_videocam_black_48dp"
+
             android:text="button Video" />
 
         <Button
@@ -45,7 +35,6 @@
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_photo_camera_black_48dp"
             android:text="button Camera" />
     </LinearLayout>
 
