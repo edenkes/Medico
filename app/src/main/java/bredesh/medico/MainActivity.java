@@ -143,37 +143,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void changeFragment(@IdRes int menuItemId){
-        Fragment fragment;
+        Fragment fragment = null;
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
         switch (menuItemId) {
             case R.id.tab_recents:
                 fragment = new FragmentRecents();
-                ft.replace(R.id.fragment_place, fragment);
-                ft.commit();
                 break;
             case R.id.tab_favorites:
                 fragment = new FragmentFavorites();
-                ft.replace(R.id.fragment_place, fragment);
-                ft.commit();
                 break;
             case R.id.tab_home:
                 fragment = new FragmentHome();
-                ft.replace(R.id.fragment_place, fragment);
-                ft.commit();
                 break;
             case R.id.tab_personal:
                 fragment = new FragmentPersonal();
-                ft.replace(R.id.fragment_place, fragment);
-                ft.commit();
                 break;
             case R.id.tab_camera:
                 fragment = new FragmentCamera();
-                ft.replace(R.id.fragment_place, fragment);
-                ft.commit();
                 break;
         }
+        ft.replace(R.id.fragment_place, fragment);
+        ft.commit();
     }
 }
 

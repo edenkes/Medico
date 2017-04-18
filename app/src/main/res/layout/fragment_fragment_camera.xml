@@ -23,19 +23,20 @@
             android:layout_width="50dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
-
-            android:text="button Video" />
+            android:background="@drawable/ic_videocam_black_48dp"
+            android:text="@string/button_video"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/buttonCamera"
             android:layout_width="50dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:text="button Camera" />
+            android:background="@drawable/ic_photo_camera_black_48dp"
+            android:text="button Camera"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
 </FrameLayout>

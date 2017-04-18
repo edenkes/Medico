@@ -23,6 +23,7 @@ public class NavigationAfterData extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_after_data);
+/*
 
         Button record, capture, personalPlan;
 
@@ -60,6 +61,7 @@ public class NavigationAfterData extends Activity {
                 }
             }
         });
+*/
 
     }
 

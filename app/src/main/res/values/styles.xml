@@ -15,7 +15,7 @@
 
     </style>
 
-    <style name="MyCustomToolBarTheme" parent="Theme.AppCompat.Light">
+    <style name="MyCustomToolBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:textColor">@color/textColor</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
