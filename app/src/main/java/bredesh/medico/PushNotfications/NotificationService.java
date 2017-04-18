@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.IBinder;
+import android.util.Log;
+
 import java.util.Calendar;
 import bredesh.medico.Camera.LocalDBManager;
 import bredesh.medico.MainActivity;
@@ -27,15 +29,16 @@ public class NotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        Log.i("test2", "here again");
+
         localdb = new LocalDBManager(getApplicationContext());
 
         cursor = getAllTodaysAlerts(); //also updates @param:CURRENT_DAY
 
 
-
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationBuilder = new Notification.Builder(getApplicationContext());
-        NotificationBuilder.setVibrate(new long[] {100,1000});
+        NotificationBuilder.setVibrate(new long[]{100, 1000});
 
         //return to the last open activity
         Intent getBack = new Intent(this, MainActivity.class);
@@ -45,48 +48,46 @@ public class NotificationService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, getBack, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationBuilder.setContentIntent(pendingIntent);
 
+        {
+            Calendar calendar;
+            int currentHour;
+            int currentMinutes;
+            String time;
+            while (!shouldStop) {
+                try {
+                    Thread.sleep(30000);//30 sec
+                    calendar = Calendar.getInstance();
+                    currentHour = calendar.get(Calendar.HOUR);
+                    currentMinutes = calendar.get(Calendar.MINUTE);
+                    Log.i("min", "" + currentMinutes);
+                    Log.i("hour", "" + currentHour);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+                    if (calendar.get(Calendar.DAY_OF_WEEK) != CURRENT_DAY)
+                        getAllTodaysAlerts();
 
-                Calendar calendar;
-                int currentHour;
-                int currentMinutes;
-                String time;
-                while(!shouldStop)
-                {
-                    try {
-                        Thread.sleep(30000);//30 sec
-                        calendar = Calendar.getInstance();
-                        currentHour = calendar.get(Calendar.HOUR);
-                        currentMinutes = calendar.get(Calendar.MINUTE);
-
-                        if(calendar.get(Calendar.DAY_OF_WEEK) != CURRENT_DAY)
-                            getAllTodaysAlerts();
-
-                        cursor.moveToFirst();
-                        while(cursor.moveToNext())
-                        {
-                            time = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
-                            if(Integer.parseInt(time.substring(0,2)) == currentHour &&
+                    cursor.moveToFirst();
+                    Log.i("cSize", "" + cursor.getCount());
+                    while (cursor.moveToNext()) {
+                        time = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
+                        if (Integer.parseInt(time.substring(0, 2)) == currentHour &&
                                 Integer.parseInt(time.substring(3)) == currentMinutes)
-                                //now we need to show notification!!
-                            {
-                                String notiName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
-                                showNotification(notiName);
-                            }
+                        //now we need to show notification!!
+                        {
+                            String notiName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
+                            showNotification(notiName);
                         }
-                    } catch (Exception e) {
-                        stopSelf();
                     }
+                } catch (Exception e) {
+                    stopSelf();
                 }
-
-
-                //Stop service once it finishes its task
-                stopSelf();
             }
-        }).start();
+
+
+            //Stop service once it finishes its task
+            stopSelf();
+        }
+
+
 
 
         return START_STICKY;

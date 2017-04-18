@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class LocalDBManager extends SQLiteOpenHelper{
@@ -59,6 +60,13 @@ public class LocalDBManager extends SQLiteOpenHelper{
         this.onCreate(db);
     }
 
+    public void DeleteAllAlerts() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " +TABLE_NAME + "");
+        onCreate(db);
+        db.close();
+    }
+
     public void addAlert(String alert_name, String alert_time, String alert_uri, int[] days_to_alert){
 
         // 1. get reference to writable DB
@@ -87,9 +95,12 @@ public class LocalDBManager extends SQLiteOpenHelper{
     }
 
     public Cursor getAllAlerts() {
-        Cursor cursor;
+        Cursor cursor = null;
         SQLiteDatabase database = this.getReadableDatabase();
-        cursor=database.query(TABLE_NAME, new String[]{KEY_ID, KEY_NAME, KEY_TIME, URIVIDEO, SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY}, null, null, null, null, null);
+        try {
+          cursor = database.query(TABLE_NAME, new String[]{KEY_ID, KEY_NAME, KEY_TIME, URIVIDEO
+                                , SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY}, null, null, null, null, null);
+        } catch (SQLiteException e) { onCreate(database); return getAllAlerts(); }
         return cursor;
     }
 

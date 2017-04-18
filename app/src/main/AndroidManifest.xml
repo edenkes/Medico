@@ -21,7 +21,6 @@
         </activity>
         <activity android:name=".Login.MainLoginActivity" />
         <activity android:name=".Camera.VideoData" />
-        <activity android:name=".Camera.NavigationAfterData" />
     </application>
 
     <service android:name=".PushNotification.NotificationService"

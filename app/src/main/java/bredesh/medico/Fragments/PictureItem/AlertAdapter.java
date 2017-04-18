@@ -31,6 +31,7 @@ public class AlertAdapter extends BaseAdapter {
         {
             String time = c.getString(c.getColumnIndex(db.KEY_TIME));
             String name = c.getString(c.getColumnIndex(db.KEY_NAME));
+            String uri = c.getString(c.getColumnIndex(db.URIVIDEO));
             int[] days = new int[7];
             days[0] = c.getInt(c.getColumnIndex(db.SUNDAY));
             days[1] = c.getInt(c.getColumnIndex(db.MONDAY));
@@ -40,7 +41,7 @@ public class AlertAdapter extends BaseAdapter {
             days[5] = c.getInt(c.getColumnIndex(db.FRIDAY));
             days[6] = c.getInt(c.getColumnIndex(db.SATURDAY));
 
-            videoItems[i] = new VideoItem(time,name, days);
+            videoItems[i] = new VideoItem(time, name, uri, days);
             i++;
         }
         c.close();
@@ -86,13 +87,13 @@ public class AlertAdapter extends BaseAdapter {
 
             tv_name.setText(videoItems[position].getName());
             int[] days =videoItems[position].getDays();
-            if(days[0] == 1) sunday.setBackgroundColor(Color.parseColor("#5555FF"));
-            if(days[1] == 1) monday.setBackgroundColor(Color.parseColor("#5555FF"));
-            if(days[2] == 1) tuesday.setBackgroundColor(Color.parseColor("#5555FF"));
-            if(days[3] == 1) wednesday.setBackgroundColor(Color.parseColor("#5555FF"));
-            if(days[4] == 1) thursday.setBackgroundColor(Color.parseColor("#5555FF"));
-            if(days[5] == 1) friday.setBackgroundColor(Color.parseColor("#5555FF"));
-            if(days[6] == 1) saturday.setBackgroundColor(Color.parseColor("#5555FF"));
+            if(days[0] == 1) sunday.setBackgroundColor(Color.parseColor("#00FF33"));
+            if(days[1] == 1) monday.setBackgroundColor(Color.parseColor("#00FF33"));
+            if(days[2] == 1) tuesday.setBackgroundColor(Color.parseColor("#00FF33"));
+            if(days[3] == 1) wednesday.setBackgroundColor(Color.parseColor("#00FF33"));
+            if(days[4] == 1) thursday.setBackgroundColor(Color.parseColor("#00FF33"));
+            if(days[5] == 1) friday.setBackgroundColor(Color.parseColor("#00FF33"));
+            if(days[6] == 1) saturday.setBackgroundColor(Color.parseColor("#00FF33"));
 
             TextView time = (TextView) gridView.findViewById(R.id.tv_time);
             time.setText(videoItems[position].getTime());

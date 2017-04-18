@@ -1,5 +1,7 @@
 package bredesh.medico.Fragments.PictureItem;
 
+import android.net.Uri;
+
 /**
  * Created by Omri on 01-Apr-17.
  */
@@ -8,15 +10,19 @@ public class VideoItem {
 
     private String name;
     private String time;
+    private Uri uri;
     private int[] days;
     private final String[] daysNames = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
 
-    public VideoItem(String time, String name, int[] days)
+    public VideoItem(String time, String name, String uri, int[] days)
     {
         this.time = time;
         this.name = name;
         this.days = days;
+        this.uri = Uri.parse(uri);
     }
+
+    public Uri getUri() { return  uri;}
 
     public String getTime() { return time; }
 

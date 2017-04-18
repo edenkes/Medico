@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,6 +27,7 @@ import bredesh.medico.Fragments.FragmentPersonal;
 import bredesh.medico.Fragments.FragmentRecents;
 import bredesh.medico.Login.MainLoginActivity;
 import bredesh.medico.Login.Session;
+import bredesh.medico.PushNotfications.NotificationService;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
         if(!session.loggedin()){
             logout();
         }
+
+        final Intent SERVICE_INTENT = new Intent(getBaseContext(), NotificationService.class);
+        startService(SERVICE_INTENT);
+        Log.i("test2","here !!!");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
