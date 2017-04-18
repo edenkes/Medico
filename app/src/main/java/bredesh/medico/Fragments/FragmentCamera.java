@@ -11,9 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+
 import bredesh.medico.Camera.LocalDBManager;
 import bredesh.medico.Camera.VideoData;
 import bredesh.medico.R;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class FragmentCamera extends Fragment {
@@ -69,11 +73,16 @@ public class FragmentCamera extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if(resultCode == Activity.RESULT_OK)
-        {
-            intent.putExtra("RecordedUri", intent.getData().toString());
-            intent.setClass(getActivity(), VideoData.class);
-            startActivity(intent);
+//        if(resultCode == Activity.RESULT_OK)
+            if(resultCode == RESULT_OK && intent != null){
+                try {
+
+                    intent.putExtra("RecordedUri", intent.getData().toString());
+                    intent.setClass(getActivity(), VideoData.class);
+                    startActivity(intent);
+                }catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
         }
     }
 }
