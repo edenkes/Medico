@@ -62,8 +62,8 @@ public class VideoData extends Activity{
             @Override
             public void onClick(View v) {
 
-                int hour = 23;
-                int minute = 59;
+                int hour = 8;
+                int minute = 00;
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(VideoData.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override

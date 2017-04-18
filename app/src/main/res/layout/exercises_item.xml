@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5sp"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="10sp"
+        android:background="@drawable/exercises_bar_custom">
+
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="35dp"
+            android:text="Switch" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@android:drawable/ic_menu_manage"
+            />
+
+        <ImageView
+            android:id="@+id/imageSync"
+            android:layout_width="15dp"
+            android:layout_height="20dp"
+           android:background="@android:drawable/ic_popup_sync"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/textSAT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/textFRI"
+            android:layout_marginLeft="5dp"
+            android:visibility="invisible"
+            android:text="SAT" />
+
+        <TextView
+            android:id="@+id/textFRI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/textTHU"
+            android:layout_marginLeft="5dp"
+            android:visibility="invisible"
+            android:text="FRI" />
+
+        <TextView
+            android:id="@+id/textTHU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/textWED"
+            android:layout_marginLeft="5dp"
+            android:visibility="invisible"
+            android:text="THU" />
+
+        <TextView
+            android:id="@+id/textWED"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/textTUE"
+            android:layout_marginLeft="5dp"
+            android:visibility="invisible"
+            android:text="WED" />
+
+        <TextView
+            android:id="@+id/textTUE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/textMON"
+            android:layout_marginLeft="5dp"
+            android:visibility="invisible"
+            android:text="TUE" />
+
+        <TextView
+            android:id="@+id/textMON"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/textSUN"
+            android:layout_marginLeft="5dp"
+            android:visibility="invisible"
+            android:text="MON" />
+
+        <TextView
+            android:id="@+id/textSUN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/imageSync"
+            android:layout_marginLeft="5dp"
+            android:visibility="invisible"
+            android:text="SUN" />
+
+        <TextView
+            android:id="@+id/textTimeExercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:text="6:00" />
+
+        <TextView
+            android:id="@+id/textExercisesName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="exercisesName" />
+
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

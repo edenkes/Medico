@@ -74,28 +74,28 @@ public class AlertAdapter extends BaseAdapter {
             gridView = new View(con);
 
             // get layout from mobile.xml
-            gridView = inflater.inflate(R.layout.video_item, null);
+            gridView = inflater.inflate(R.layout.exercises_item, null);
 
-            TextView tv_name = (TextView) gridView.findViewById(R.id.tv_name);
-            TextView sunday = (TextView) gridView.findViewById(R.id.sunday);
-            TextView monday = (TextView) gridView.findViewById(R.id.monday);
-            TextView tuesday = (TextView) gridView.findViewById(R.id.tuesday);
-            TextView wednesday = (TextView) gridView.findViewById(R.id.wednesday);
-            TextView thursday = (TextView) gridView.findViewById(R.id.thursday);
-            TextView friday = (TextView) gridView.findViewById(R.id.friday);
-            TextView saturday = (TextView) gridView.findViewById(R.id.saturday);
+            TextView tv_name = (TextView) gridView.findViewById(R.id.textExercisesName);
+            TextView sunday = (TextView) gridView.findViewById(R.id.textSUN);
+            TextView monday = (TextView) gridView.findViewById(R.id.textMON);
+            TextView tuesday = (TextView) gridView.findViewById(R.id.textTUE);
+            TextView wednesday = (TextView) gridView.findViewById(R.id.textWED);
+            TextView thursday = (TextView) gridView.findViewById(R.id.textTHU);
+            TextView friday = (TextView) gridView.findViewById(R.id.textFRI);
+            TextView saturday = (TextView) gridView.findViewById(R.id.textSAT);
+            TextView time = (TextView) gridView.findViewById(R.id.textTimeExercise);
 
             tv_name.setText(videoItems[position].getName());
-            int[] days =videoItems[position].getDays();
-            if(days[0] == 1) sunday.setBackgroundColor(Color.parseColor("#00FF33"));
-            if(days[1] == 1) monday.setBackgroundColor(Color.parseColor("#00FF33"));
-            if(days[2] == 1) tuesday.setBackgroundColor(Color.parseColor("#00FF33"));
-            if(days[3] == 1) wednesday.setBackgroundColor(Color.parseColor("#00FF33"));
-            if(days[4] == 1) thursday.setBackgroundColor(Color.parseColor("#00FF33"));
-            if(days[5] == 1) friday.setBackgroundColor(Color.parseColor("#00FF33"));
-            if(days[6] == 1) saturday.setBackgroundColor(Color.parseColor("#00FF33"));
+            int[] days = videoItems[position].getDays();
+            if(days[0] == 1) sunday.setVisibility(View.VISIBLE);
+            if(days[1] == 1) monday.setVisibility(View.VISIBLE);
+            if(days[2] == 1) tuesday.setVisibility(View.VISIBLE);
+            if(days[3] == 1) wednesday.setVisibility(View.VISIBLE);
+            if(days[4] == 1) thursday.setVisibility(View.VISIBLE);
+            if(days[5] == 1) friday.setVisibility(View.VISIBLE);
+            if(days[6] == 1) saturday.setVisibility(View.VISIBLE);
 
-            TextView time = (TextView) gridView.findViewById(R.id.tv_time);
             time.setText(videoItems[position].getTime());
 
         } else {
