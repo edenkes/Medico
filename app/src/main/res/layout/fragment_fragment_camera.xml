@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="16dp"
         android:paddingLeft="16dp"
@@ -38,5 +38,12 @@
             android:text="button Camera"
             tools:ignore="ButtonStyle" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_remove_all"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:text="Remove All Alerts" />
 
 </FrameLayout>

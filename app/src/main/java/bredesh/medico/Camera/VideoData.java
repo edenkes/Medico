@@ -3,7 +3,6 @@ package bredesh.medico.Camera;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateFormat;
@@ -12,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
 import bredesh.medico.R;
 
 
@@ -22,7 +22,7 @@ import bredesh.medico.R;
 
 public class VideoData extends Activity{
 
-    Button chooseFrequency, addAlert, setTime;
+    Button chooseFrequency, setTime;
     TextView confirm, chosenTime;
     EditText exName;
 
@@ -38,7 +38,7 @@ public class VideoData extends Activity{
         setContentView(R.layout.video_data);
 
         chooseFrequency = (Button) findViewById(R.id.change_frq);
-        addAlert = (Button) findViewById(R.id.add_alert);
+
         confirm = (TextView) findViewById(R.id.confirm);
         exName = (EditText) findViewById(R.id.videoName);
 
@@ -77,14 +77,6 @@ public class VideoData extends Activity{
             }
         });
 
-        addAlert.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                //TODO:adding more alerts
-            }
-        });
-
         confirm.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -98,7 +90,8 @@ public class VideoData extends Activity{
                     else
                         days_to_alert[i] = 0;
                 }
-                db.addAlert(exName.getText().toString(), chosenTime.getText().toString(), (new Intent()).getStringExtra("last_recorded_video_uri"), days_to_alert);
+                String videoUri = getIntent().getStringExtra("RecordedUri");
+                db.addAlert(exName.getText().toString(), chosenTime.getText().toString(), videoUri, days_to_alert);
                 finish();
 
             }

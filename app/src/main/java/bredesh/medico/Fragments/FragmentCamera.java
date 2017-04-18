@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import bredesh.medico.Camera.LocalDBManager;
 import bredesh.medico.Camera.VideoData;
 import bredesh.medico.R;
 
@@ -25,10 +27,9 @@ public class FragmentCamera extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment_camera, container, false);
 
-        Button camera, video;
+        Button camera, video, removeAll;
 
         camera = (Button) view.findViewById(R.id.buttonCamera);
-
         camera.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -46,9 +47,20 @@ public class FragmentCamera extends Fragment {
             public void onClick(View v) {
                 Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                 if (takeVideoIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-//                    takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 15);
+                    takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 15);
                     startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
                 }
+            }
+        });
+
+
+        removeAll = (Button) view.findViewById(R.id.button_remove_all);
+        removeAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocalDBManager db = new LocalDBManager(getActivity().getApplicationContext());
+                db.DeleteAllAlerts();
+                Toast.makeText(getActivity().getApplicationContext(), "Alerts Removed", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -59,14 +71,9 @@ public class FragmentCamera extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if(resultCode == Activity.RESULT_OK)
         {
-            if(requestCode == REQUEST_VIDEO_CAPTURE){
-                intent.putExtra("last_recorded_video_uri", intent.getData().toString());
-                startActivity(new Intent(getActivity(),VideoData.class));
-            }
-            else if(requestCode == REQUEST_IMAGE_CAPTURE){
-                intent.putExtra("last_captured_image_uri", intent.getData().toString());
-                startActivity(new Intent(getActivity(), VideoData.class));
-            }
+            intent.putExtra("RecordedUri", intent.getData().toString());
+            intent.setClass(getActivity(), VideoData.class);
+            startActivity(intent);
         }
     }
 }

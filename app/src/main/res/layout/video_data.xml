@@ -55,21 +55,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/listView1"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/add_alert"
-            android:visibility="invisible"
-            android:layout_marginTop="15dp" >
-
-        </ListView>
-
-        <LinearLayout android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:weightSum="1" >
+            android:weightSum="1">
 
 
             <TextView
@@ -77,7 +70,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.4"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="Notification Time 1:"
+                android:text="Notification Time"
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
@@ -87,8 +80,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.25"
                 android:gravity="center_horizontal|center_vertical"
-                android:textColor="#000000"
                 android:text="23:59"
+                android:textColor="#000000"
                 android:textSize="20dp" />
 
             <Button
@@ -105,20 +98,13 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
-            android:gravity="center_vertical|center_horizontal"
             android:background="#00CCCC"
+            android:gravity="center_vertical|center_horizontal"
             android:text="Confirm"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
-        <Button
-            android:id="@+id/add_alert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/confirm"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15dp"
-            android:text="Add Alert" />
 
     </RelativeLayout>
+
 </LinearLayout>
