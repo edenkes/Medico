@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
-    android:background="@drawable/screen_add_alert_artboard">
+    android:background="@drawable/screen_add_alert_artboard2">
 
     <TextView
         android:id="@+id/tvTime"

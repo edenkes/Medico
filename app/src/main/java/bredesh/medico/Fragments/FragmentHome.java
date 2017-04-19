@@ -1,9 +1,12 @@
 package bredesh.medico.Fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,15 +39,14 @@ public class FragmentHome extends Fragment {
         getActivity().startService(SERVICE_INTENT);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @SuppressLint("ShowToast")
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(view.getContext(), "moving to the movie! :)", Toast.LENGTH_SHORT);
-
-
                 Uri videoUri = ((VideoItem)(alertAdapter.getItem(position))).getUri();
-                Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
-                startActivity(intent);
-
+                if(videoUri != null ) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                    startActivity(intent);
+                }
             }
         });
 

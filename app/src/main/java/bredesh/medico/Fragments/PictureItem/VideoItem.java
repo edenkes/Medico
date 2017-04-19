@@ -19,7 +19,9 @@ public class VideoItem {
         this.time = time;
         this.name = name;
         this.days = days;
-        this.uri = Uri.parse(uri);
+        if (!uri.equals("null")) {
+            this.uri = Uri.parse(uri);
+        }else this.uri = null;
     }
 
     public Uri getUri() { return  uri;}

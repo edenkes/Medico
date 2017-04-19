@@ -52,6 +52,17 @@
             android:text="Email Address"
             android:textColor="@color/colorLetters"/>
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="24dp"
+            android:text="Under construction"
+            android:textColor="@color/textColor"
+            android:textSize="50sp" />
+
     </LinearLayout>
 
 </FrameLayout>

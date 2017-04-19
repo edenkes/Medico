@@ -2,13 +2,13 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#800463</color>
+    <color name="colorAccent">#ffffff</color>
 
+    <color name="colorWindowBackground">#ffffff</color>
     <color name="colorLetters">#5f027e</color>
     <color name="textColor">#000000</color>
     <color name="textColorPrimary">#ded4e3</color>
     <color name="textColorSecondary">#0dccb2</color>
-    <color name="colorWindowBackground">#f5f4f4</color>
     <color name="colorAppBar">#b30355a8</color>
     <color name="colorExercisesBar">#7b014890</color>
 
