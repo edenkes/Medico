@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:layoutDirection="ltr"
-    android:background="#FFFFFF">
+    android:layoutDirection="ltr">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,24 +12,18 @@
         android:orientation="horizontal"
         android:weightSum="2" >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Video Name:"
-            android:textColor="#000000"
-            android:textSize="20dp" />
-
         <EditText
             android:id="@+id/videoName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:fontFamily="casual"
+
+            android:hint="Exercises Name"
+            android:inputType="textPersonName"
             android:maxLines="1"
-            android:textColor="#000000"
-            android:text="Exercise 1" >
-        </EditText>
+            android:textColorHint="@color/colorDarkBlue"></EditText>
     </LinearLayout>
 
     <TextView
@@ -40,7 +33,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:text="Notification Settings"
-        android:textColor="#000000"
+        android:textColor="@color/textColor"
         android:textSize="25dp" />
 
     <Button
@@ -71,7 +64,7 @@
                 android:layout_weight="0.4"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="Notification Time"
-                android:textColor="#000000"
+                android:textColor="@color/textColor"
                 android:textSize="20dp" />
 
             <TextView
@@ -80,8 +73,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.25"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="23:59"
-                android:textColor="#000000"
+                android:text="08:00"
+                android:textColor="@color/textColor"
                 android:textSize="20dp" />
 
             <Button
@@ -98,10 +91,10 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
-            android:background="#00CCCC"
             android:gravity="center_vertical|center_horizontal"
             android:text="Confirm"
-            android:textColor="#FFFFFF"
+            android:fontFamily="cursive"
+            android:textColor="@color/textColor"
             android:textSize="20dp" />
 
 

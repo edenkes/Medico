@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import bredesh.medico.Fragments.PictureItem.AlertAdapter;
 import bredesh.medico.Fragments.PictureItem.VideoItem;
@@ -36,12 +38,16 @@ public class FragmentHome extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(view.getContext(), "moving to the movie! :)", Toast.LENGTH_SHORT);
 
-            Uri videoUri = ((VideoItem)(alertAdapter.getItem(position))).getUri();
-            Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
-            startActivity(intent);
+
+                Uri videoUri = ((VideoItem)(alertAdapter.getItem(position))).getUri();
+                Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                startActivity(intent);
+
             }
         });
+
 
         return view;
     }

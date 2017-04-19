@@ -3,6 +3,7 @@ package bredesh.medico.Camera;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateFormat;
@@ -11,7 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import bredesh.medico.Login.MainLoginActivity;
+import bredesh.medico.MainActivity;
 import bredesh.medico.R;
 
 
@@ -22,8 +26,8 @@ import bredesh.medico.R;
 
 public class VideoData extends Activity{
 
-    Button chooseFrequency, setTime;
-    TextView confirm, chosenTime;
+    Button chooseFrequency, setTime, confirm;
+    TextView chosenTime;
     EditText exName;
 
     AlertDialog dialog;
@@ -35,15 +39,15 @@ public class VideoData extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.video_data);
+        setContentView(R.layout.exercises_data);
 
-        chooseFrequency = (Button) findViewById(R.id.change_frq);
+        chooseFrequency = (Button) findViewById(R.id.btChange_frq);
 
-        confirm = (TextView) findViewById(R.id.confirm);
-        exName = (EditText) findViewById(R.id.videoName);
+        confirm = (Button) findViewById(R.id.btConfirm);
+        exName = (EditText) findViewById(R.id.etExerciseName);
 
-        chosenTime = (TextView) findViewById(R.id.chosen_time);
-        setTime = (Button) findViewById(R.id.change_time);
+        chosenTime = (TextView) findViewById(R.id.tvTime);
+        setTime = (Button) findViewById(R.id.btChange_time);
 
         setDialog();
 
@@ -91,9 +95,11 @@ public class VideoData extends Activity{
                         days_to_alert[i] = 0;
                 }
                 String videoUri = getIntent().getStringExtra("RecordedUri");
+                Toast.makeText(getApplicationContext(), "name: " + exName.getText().toString()+ ", time: " + chosenTime.getText().toString(),Toast.LENGTH_SHORT).show();
+
                 db.addAlert(exName.getText().toString(), chosenTime.getText().toString(), videoUri, days_to_alert);
                 finish();
-
+//                startActivity(new Intent(VideoData.this,MainLoginActivity.class));
             }
         });
     }

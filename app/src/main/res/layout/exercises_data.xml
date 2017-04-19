@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:background="@drawable/screen_add_alert_artboard">
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="114dp"
+        android:text="08:00"
+        android:textColor="@color/textColor"
+        android:textSize="25sp"
+        android:layout_marginStart="137dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/btChange_time"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:background="@color/transparent"
+        android:layout_alignBottom="@+id/tvTime"
+        android:layout_toEndOf="@+id/tvTime"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/btChange_frq"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:background="@color/transparent"
+        android:layout_above="@+id/btChange_time"
+        android:layout_alignStart="@+id/btChange_time"
+        android:layout_marginBottom="15dp" />
+
+    <Button
+        android:id="@+id/btConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/etExerciseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Exercise Name"
+        android:maxLines="1"
+        android:textColorHint="@color/textColor"
+        android:layout_marginBottom="51dp"
+        android:layout_above="@+id/btChange_frq"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>
