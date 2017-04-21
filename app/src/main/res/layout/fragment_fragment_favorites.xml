@@ -7,31 +7,27 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWindowBackground"
-        >
+        android:background="@color/colorWindowBackground">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:fontFamily="cursive"
             android:text=" Welcome\nFavorites tab\n"
             android:textColor="@color/colorLetters"
-            android:textSize="73dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:textSize="73dp" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="24dp"
+            android:text="Under construction"
             android:textColor="@color/textColor"
-            android:textSize="50sp"
-            android:text="Under construction" />
+            android:textSize="50sp" />
     </RelativeLayout>
 
 
