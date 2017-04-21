@@ -80,7 +80,7 @@ public class FragmentCamera extends Fragment {
                         e.printStackTrace();
                     }
                 }else{
-                    Toast.makeText(getActivity().getApplicationContext(), "Couldn't connect the picture ot the video", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Couldn't attach the video/picture", Toast.LENGTH_LONG).show();
                     intent.putExtra("RecordedUri", "null");
                     intent.setClass(getActivity(), VideoData.class);
                     startActivity(intent);

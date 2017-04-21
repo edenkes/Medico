@@ -17,6 +17,7 @@
     <color name="colorDarkBlue">#0e3b9c</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="colorWhiteTransparent">#85ffffff</color>
     <color name="colorOfWhite">#fffde7</color>
     <color name="colorYellow">#f2fb00</color>
     <color name="colorGreen">#2cf404</color>

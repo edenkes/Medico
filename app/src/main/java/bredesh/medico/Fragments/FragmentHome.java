@@ -44,22 +44,29 @@ public class FragmentHome extends Fragment  {
         lvHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity().getApplicationContext(), "onListItemClick: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity().getApplicationContext(), "onListItemClick: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
 
                 videoUri = ((VideoItem)(alertAdapter.getItem(position))).getUri();
+
+                if(videoUri != null ) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                    startActivity(intent);
+                }else
+                    Toast.makeText(getActivity().getApplicationContext(), "Couldn't find the video/photo", Toast.LENGTH_SHORT).show();
 
                 btPlay = (Button) parent.findViewById(R.id.btPlay);
 
                 btPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getActivity().getApplicationContext(), "onListItemClick: Play", Toast.LENGTH_SHORT).show();
-
+//                        Toast.makeText(getActivity().getApplicationContext(), "onListItemClick: Play", Toast.LENGTH_SHORT).show();
                         if(videoUri != null ) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Intent video", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity().getApplicationContext(), "Intent video", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
                             startActivity(intent);
-                        }
+                        }else
+                            Toast.makeText(getActivity().getApplicationContext(), "Couldn't find the video/photo", Toast.LENGTH_SHORT).show();
+
                     }
                 });
 

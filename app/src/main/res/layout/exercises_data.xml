@@ -51,7 +51,10 @@
         android:inputType="textPersonName"
         android:hint="Exercise Name"
         android:maxLines="1"
+        android:fontFamily="casual"
         android:textColorHint="@color/textColor"
+        android:textColor="@color/textColor"
+        android:background="@color/colorWhiteTransparent"
         android:layout_above="@+id/btChangeFrequency"
          android:layout_centerHorizontal="true"
         android:layout_marginBottom="35dp" />
