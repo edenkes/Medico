@@ -13,22 +13,22 @@
         android:text="08:00"
         android:textColor="@color/textColor"
         android:textSize="25sp"
-        android:layout_below="@+id/btChange_time"
+        android:layout_below="@+id/btChangeTime"
         android:layout_marginTop="25dp"
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:id="@+id/btChange_time"
+        android:id="@+id/btChangeTime"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:background="@color/transparent"
 
-        android:layout_below="@+id/btChange_frq"
+        android:layout_below="@+id/btChangeFrequency"
         android:layout_alignParentStart="true"
         android:layout_marginTop="25dp" />
 
     <Button
-        android:id="@+id/btChange_frq"
+        android:id="@+id/btChangeFrequency"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:background="@color/transparent"
@@ -52,9 +52,8 @@
         android:hint="Exercise Name"
         android:maxLines="1"
         android:textColorHint="@color/textColor"
-        android:layout_above="@+id/btChange_frq"
+        android:layout_above="@+id/btChangeFrequency"
          android:layout_centerHorizontal="true"
         android:layout_marginBottom="35dp" />
-
 
 </RelativeLayout>

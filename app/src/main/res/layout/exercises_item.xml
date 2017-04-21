@@ -8,9 +8,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:padding="10sp"
+        android:background="@drawable/exercises_bar_custom"
         android:descendantFocusability="blocksDescendants"
-        android:background="@drawable/exercises_bar_custom">
+        android:padding="10sp">
 
 
         <Switch
@@ -29,99 +29,98 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:background="@android:drawable/ic_menu_manage"
-            />
+            android:background="@android:drawable/ic_menu_manage" />
 
         <ImageView
             android:id="@+id/imageSync"
             android:layout_width="15dp"
             android:layout_height="20dp"
-           android:background="@android:drawable/ic_popup_sync"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:background="@android:drawable/ic_popup_sync" />
 
         <TextView
-            android:id="@+id/textSAT"
+            android:id="@+id/tvSAT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/textFRI"
             android:layout_marginLeft="5dp"
-            android:visibility="invisible"
-            android:text="SAT" />
+            android:layout_toEndOf="@+id/tvFRI"
+            android:text="SAT"
+            android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/textFRI"
+            android:id="@+id/tvFRI"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/textTHU"
             android:layout_marginLeft="5dp"
-            android:visibility="invisible"
-            android:text="FRI" />
+            android:layout_toEndOf="@+id/tvTHU"
+            android:text="FRI"
+            android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/textTHU"
+            android:id="@+id/tvTHU"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/textWED"
             android:layout_marginLeft="5dp"
-            android:visibility="invisible"
-            android:text="THU" />
+            android:layout_toEndOf="@+id/tvWED"
+            android:text="THU"
+            android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/textWED"
+            android:id="@+id/tvWED"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/textTUE"
             android:layout_marginLeft="5dp"
-            android:visibility="invisible"
-            android:text="WED" />
+            android:layout_toEndOf="@+id/tvTUE"
+            android:text="WED"
+            android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/textTUE"
+            android:id="@+id/tvTUE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/textMON"
             android:layout_marginLeft="5dp"
-            android:visibility="invisible"
-            android:text="TUE" />
+            android:layout_toEndOf="@+id/tvMON"
+            android:text="TUE"
+            android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/textMON"
+            android:id="@+id/tvMON"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/textSUN"
             android:layout_marginLeft="5dp"
-            android:visibility="invisible"
-            android:text="MON" />
+            android:layout_toEndOf="@+id/tvSUN"
+            android:text="MON"
+            android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/textSUN"
+            android:id="@+id/tvSUN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_marginLeft="5dp"
             android:layout_toEndOf="@+id/imageSync"
-            android:layout_marginLeft="5dp"
-            android:visibility="invisible"
-            android:text="SUN" />
+            android:text="SUN"
+            android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/textTimeExercise"
+            android:id="@+id/tvExerciseTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
+            android:text="8:00"
             android:textSize="40dp"
-            android:textStyle="bold"
-            android:text="8:00" />
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textExercisesName"
+            android:id="@+id/tvExercisesName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -129,17 +128,16 @@
             android:text="exercisesName" />
 
         <Button
-            android:id="@+id/buttonPlay"
+            android:id="@+id/btPlay"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/ic_play_circle_outline_black_24dp"
-             />
+            android:layout_centerVertical="true"
+            android:onClick="onClickPlay"
+            android:background="@drawable/ic_play_circle_outline_black_24dp" />
 
 
     </RelativeLayout>
-
 
 
 </LinearLayout>

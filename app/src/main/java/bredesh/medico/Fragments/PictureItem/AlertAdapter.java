@@ -2,7 +2,6 @@ package bredesh.medico.Fragments.PictureItem;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,8 @@ public class AlertAdapter extends BaseAdapter {
 
     VideoItem[] videoItems;
     Context con;
+    private TextView tvExercisesName, tvExerciseTime;
+    private TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
 
     public AlertAdapter(Context con)
     {
@@ -76,33 +77,37 @@ public class AlertAdapter extends BaseAdapter {
             // get layout from mobile.xml
             gridView = inflater.inflate(R.layout.exercises_item, null);
 
-            TextView tv_name = (TextView) gridView.findViewById(R.id.textExercisesName);
-            TextView sunday = (TextView) gridView.findViewById(R.id.textSUN);
-            TextView monday = (TextView) gridView.findViewById(R.id.textMON);
-            TextView tuesday = (TextView) gridView.findViewById(R.id.textTUE);
-            TextView wednesday = (TextView) gridView.findViewById(R.id.textWED);
-            TextView thursday = (TextView) gridView.findViewById(R.id.textTHU);
-            TextView friday = (TextView) gridView.findViewById(R.id.textFRI);
-            TextView saturday = (TextView) gridView.findViewById(R.id.textSAT);
-            TextView time = (TextView) gridView.findViewById(R.id.textTimeExercise);
+            setupTestView(gridView);
 
-            tv_name.setText(videoItems[position].getName());
+            tvExercisesName.setText(videoItems[position].getName());
             int[] days = videoItems[position].getDays();
-            if(days[0] == 1) sunday.setVisibility(View.VISIBLE);
-            if(days[1] == 1) monday.setVisibility(View.VISIBLE);
-            if(days[2] == 1) tuesday.setVisibility(View.VISIBLE);
-            if(days[3] == 1) wednesday.setVisibility(View.VISIBLE);
-            if(days[4] == 1) thursday.setVisibility(View.VISIBLE);
-            if(days[5] == 1) friday.setVisibility(View.VISIBLE);
-            if(days[6] == 1) saturday.setVisibility(View.VISIBLE);
+            if(days[0] == 1) tvSUN.setVisibility(View.VISIBLE);
+            if(days[1] == 1) tvMON.setVisibility(View.VISIBLE);
+            if(days[2] == 1) tvTUE.setVisibility(View.VISIBLE);
+            if(days[3] == 1) tvWED.setVisibility(View.VISIBLE);
+            if(days[4] == 1) tvTHU.setVisibility(View.VISIBLE);
+            if(days[5] == 1) tvFRI.setVisibility(View.VISIBLE);
+            if(days[6] == 1) tvSAT.setVisibility(View.VISIBLE);
 
-            time.setText(videoItems[position].getTime());
+            tvExerciseTime.setText(videoItems[position].getTime());
 
         } else {
             gridView = (View) convertView;
         }
 
         return gridView;
+    }
+
+    private void setupTestView(View gridView) {
+        tvExercisesName = (TextView) gridView.findViewById(R.id.tvExercisesName);
+        tvExerciseTime = (TextView) gridView.findViewById(R.id.tvExerciseTime);
+        tvSUN = (TextView) gridView.findViewById(R.id.tvSUN);
+        tvMON = (TextView) gridView.findViewById(R.id.tvMON);
+        tvTUE = (TextView) gridView.findViewById(R.id.tvTUE);
+        tvWED = (TextView) gridView.findViewById(R.id.tvWED);
+        tvTHU = (TextView) gridView.findViewById(R.id.tvTHU);
+        tvFRI = (TextView) gridView.findViewById(R.id.tvFRI);
+        tvSAT = (TextView) gridView.findViewById(R.id.tvSAT);
     }
 
 }

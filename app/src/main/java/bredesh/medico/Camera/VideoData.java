@@ -3,7 +3,6 @@ package bredesh.medico.Camera;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateFormat;
@@ -14,21 +13,16 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import bredesh.medico.Login.MainLoginActivity;
-import bredesh.medico.MainActivity;
 import bredesh.medico.R;
 
 
 /**
  * Created by Omri on 07-Mar-17.
  */
-
-
 public class VideoData extends Activity{
-
-    Button chooseFrequency, setTime, confirm;
-    TextView chosenTime;
-    EditText exName;
+    Button btChangeFrequency, btChangeTime, btConfirm;
+    TextView tvTime;
+    EditText etExerciseName;
 
     AlertDialog dialog;
     // array to keep the selected days
@@ -41,19 +35,19 @@ public class VideoData extends Activity{
 
         setContentView(R.layout.exercises_data);
 
-        chooseFrequency = (Button) findViewById(R.id.btChange_frq);
+        btChangeFrequency = (Button) findViewById(R.id.btChangeFrequency);
 
-        confirm = (Button) findViewById(R.id.btConfirm);
-        exName = (EditText) findViewById(R.id.etExerciseName);
+        btConfirm = (Button) findViewById(R.id.btConfirm);
+        etExerciseName = (EditText) findViewById(R.id.etExerciseName);
 
-        chosenTime = (TextView) findViewById(R.id.tvTime);
-        setTime = (Button) findViewById(R.id.btChange_time);
+        tvTime = (TextView) findViewById(R.id.tvTime);
+        btChangeTime = (Button) findViewById(R.id.btChangeTime);
 
         setDialog();
 
         db = new LocalDBManager(getApplicationContext());
 
-        chooseFrequency.setOnClickListener(new View.OnClickListener() {
+        btChangeFrequency.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -61,7 +55,7 @@ public class VideoData extends Activity{
             }
         });
 
-        setTime.setOnClickListener(new View.OnClickListener() {
+        btChangeTime.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -72,7 +66,7 @@ public class VideoData extends Activity{
                 mTimePicker = new TimePickerDialog(VideoData.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        chosenTime.setText( selectedHour + ":" + selectedMinute);
+                        tvTime.setText( selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, DateFormat.is24HourFormat(getApplicationContext()));//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -81,11 +75,10 @@ public class VideoData extends Activity{
             }
         });
 
-        confirm.setOnClickListener(new View.OnClickListener() {
+        btConfirm.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
                 int[] days_to_alert = new int[selectedDays.length];
                 for(int i=0; i<days_to_alert.length; i++)
                 {
@@ -95,9 +88,9 @@ public class VideoData extends Activity{
                         days_to_alert[i] = 0;
                 }
                 String videoUri = getIntent().getStringExtra("RecordedUri");
-                Toast.makeText(getApplicationContext(), "name: " + exName.getText().toString()+ ", time: " + chosenTime.getText().toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "name: " + etExerciseName.getText().toString()+ ", time: " + tvTime.getText().toString(),Toast.LENGTH_SHORT).show();
 
-                db.addAlert(exName.getText().toString(), chosenTime.getText().toString(), videoUri, days_to_alert);
+                db.addAlert(etExerciseName.getText().toString(), tvTime.getText().toString(), videoUri, days_to_alert);
                 finish();
 //                startActivity(new Intent(VideoData.this,MainLoginActivity.class));
             }

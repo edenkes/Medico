@@ -45,10 +45,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+/*
         session = new Session(this);
         if(!session.loggedin()){
             logout();
         }
+*/
 
         final Intent SERVICE_INTENT = new Intent(getBaseContext(), NotificationService.class);
         startService(SERVICE_INTENT);
@@ -112,11 +114,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_setting:
                 Toast.makeText(MainActivity.this, "setting", Toast.LENGTH_SHORT);
                 return true;
-            case R.id.action_logout:
+            /*case R.id.action_logout:
                 Toast.makeText(MainActivity.this, "logout", Toast.LENGTH_SHORT);
                 logout();
                 return true;
-            default:
+            */default:
                 return super.onOptionsItemSelected(item);
         }
     }

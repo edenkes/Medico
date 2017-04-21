@@ -6,7 +6,7 @@
     tools:context="bredesh.medico.Fragments.FragmentHome">
 
     <TextView
-        android:id="@+id/textExercises"
+        android:id="@+id/tvExercises"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -16,13 +16,13 @@
         android:textStyle="bold"
         android:text="Exercises" />
 
-    <GridView
-        android:id="@+id/gridView"
+    <ListView
+        android:id="@+id/lvHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:layout_marginTop="38dp"
         android:gravity="center"
-        android:numColumns="1" />
+        />
 
 </FrameLayout>
