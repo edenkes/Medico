@@ -9,6 +9,7 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class VideoData extends Activity{
 
         tvTime = (TextView) findViewById(R.id.tvTime);
         btChangeTime = (Button) findViewById(R.id.btChangeTime);
+
 
         setDialog();
 
