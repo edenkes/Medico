@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,10 +35,7 @@ public class Adapter extends ArrayAdapter<VideoItem> {
     private Context context;
     private int id;
     private ArrayList<VideoItem> arrayList;
-    private TextView tvExercisesName, tvExerciseTime;
-    private TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
-    private Switch switch1;
-    private Button btPlay;
+
 
     public Adapter(Context context, @LayoutRes int resource, ArrayList<VideoItem> objects) {
         super(context, resource, objects);
@@ -59,9 +57,9 @@ public class Adapter extends ArrayAdapter<VideoItem> {
 
     @Override
     public long getItemId(int position) {
-        return 0;   //ToFix
+        return arrayList.indexOf(getItem(position));   //ToFix
     }
-
+/*
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -70,21 +68,25 @@ public class Adapter extends ArrayAdapter<VideoItem> {
             convertView = inflater.inflate(id, null);
         }
 
-        setupTestView(convertView);
+//        setupTestView(convertView);
 
         final VideoItem item = arrayList.get(position);
 
-        switch1 = (Switch) convertView.findViewById(R.id.switch1);
+*//*
 
-        btPlay.setOnClickListener(new View.OnClickListener() {
+        item.switch1 = (Switch) convertView.findViewById(R.id.switch1);
+//        switch1 = (Switch) convertView.findViewById(R.id.switch1);
+        item.btPlay = (Button) convertView.findViewById(R.id.btPlay);
+
+        item.btPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context.getApplicationContext(), "onClickCacked! :)", Toast.LENGTH_SHORT).show();
-                tvExercisesName.setText("eden keshet nkl");
+//                tvExercisesName.setText("eden keshet nkl");
 
             }
         });
-        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        item.switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 item.setIsChecked(isChecked);
@@ -94,6 +96,11 @@ public class Adapter extends ArrayAdapter<VideoItem> {
 
             }
         });
+*//*
+
+        convertView.setTag(item);
+
+        *//*
         tvExercisesName.setText(item.getName());
         tvExerciseTime.setText(item.getTime());
         switch1.setChecked(item.isChecked());
@@ -106,9 +113,13 @@ public class Adapter extends ArrayAdapter<VideoItem> {
         if(days[4] == 1) tvTHU.setVisibility(View.VISIBLE);
         if(days[5] == 1) tvFRI.setVisibility(View.VISIBLE);
         if(days[6] == 1) tvSAT.setVisibility(View.VISIBLE);
-
+*//*
         return super.getView(position, convertView, parent);
     }
+
+    */
+
+    /*
 
     private void setupTestView(View gridView) {
         btPlay = (Button) gridView.findViewById(R.id.btPlay);
@@ -124,5 +135,48 @@ public class Adapter extends ArrayAdapter<VideoItem> {
 
     }
 
+*/
+
+
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        ViewHolder mainViewHolder = null;
+
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+
+        if (convertView == null) {
+//            LayoutInflater inflater = LayoutInflater.from(context.getApplicationContext());
+            convertView = inflater.inflate(R.layout.exercises_item, parent, false);
+
+            ViewHolder viewHolder = new ViewHolder();
+            viewHolder.btPlay = (Button) convertView.findViewById(R.id.btPlay);
+            viewHolder.tvExercisesName = (TextView) convertView.findViewById(R.id.tvExercisesName);
+
+            VideoItem row_pos = arrayList.get(position);
+
+            viewHolder.btPlay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                }
+            });
+
+            viewHolder.tvExercisesName.setText("eden keshet :)");
+            convertView.setTag(viewHolder);
+        } else {
+            mainViewHolder = (ViewHolder) convertView.getTag();
+        }
+
+        return convertView;
+    }
+
+
+    public class ViewHolder{
+        TextView tvExercisesName, tvExerciseTime;
+        TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
+        Switch switch1;
+        Button btPlay;
+    }
 
 }

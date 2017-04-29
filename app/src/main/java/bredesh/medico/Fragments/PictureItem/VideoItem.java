@@ -1,13 +1,16 @@
 package bredesh.medico.Fragments.PictureItem;
 
 import android.net.Uri;
+import android.widget.Button;
 import android.widget.Switch;
+import android.widget.TextView;
 
 /**
  * Created by Omri on 01-Apr-17.
  */
 
 public class VideoItem {
+
 
     private String name;
     private String time;
