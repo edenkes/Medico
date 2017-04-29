@@ -1,4 +1,4 @@
-package bredesh.medico.push_notifications;
+package bredesh.medico.PushNotfications;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -11,7 +11,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import java.util.Calendar;
-import bredesh.medico.camera.LocalDBManager;
+import bredesh.medico.Camera.LocalDBManager;
 import bredesh.medico.MainActivity;
 
 public class NotificationService extends Service {
@@ -24,14 +24,6 @@ public class NotificationService extends Service {
     private boolean shouldStop = false;
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.i("testtt", "onCreate");
-
-    }
-
-
-    @Override
     public IBinder onBind(Intent intent) { return null; }
 
     @Override
@@ -42,36 +34,32 @@ public class NotificationService extends Service {
 
 
         localdb = new LocalDBManager(getApplicationContext());
-        Log.i("test2", "1");
+
         cursor = getAllTodaysAlerts(); //also updates @param:CURRENT_DAY
 
-        Log.i("test2", "2");
+
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationBuilder = new Notification.Builder(getApplicationContext());
         NotificationBuilder.setVibrate(new long[]{100, 1000});
-        Log.i("test2", "3");
+
         //return to the last open activity
         Intent getBack = new Intent(this, MainActivity.class);
         getBack.setAction(Intent.ACTION_MAIN);
         getBack.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        Log.i("test2", "4");
-
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, getBack, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationBuilder.setContentIntent(pendingIntent);
-        Log.i("test2", "5");
+
         {
-            Log.i("test2", "6");
             Calendar calendar;
             int currentHour;
             int currentMinutes;
             String time;
             while (!shouldStop) {
                 try {
-                    Thread.sleep(30000);
-                    Log.i("test2", "7");
+                    Thread.sleep(30000);//30 sec
                     calendar = Calendar.getInstance();
-                    currentHour = calendar.get(Calendar.HOUR) + 12;
+                    currentHour = calendar.get(Calendar.HOUR);
                     currentMinutes = calendar.get(Calendar.MINUTE);
                     Log.i("min", "" + currentMinutes);
                     Log.i("hour", "" + currentHour);
@@ -83,19 +71,15 @@ public class NotificationService extends Service {
                     Log.i("cSize", "" + cursor.getCount());
                     while (cursor.moveToNext()) {
                         time = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
-                        Log.i("time", time);
-                        Log.i("if", "if "+Integer.parseInt(time.substring(0, 2))+"=="+currentHour +" && "+ Integer.parseInt(time.substring(3)) +"=="+ currentMinutes);
                         if (Integer.parseInt(time.substring(0, 2)) == currentHour &&
                                 Integer.parseInt(time.substring(3)) == currentMinutes)
                         //now we need to show notification!!
                         {
-                            Log.i("if", "FUCKING TRUE");
                             String notiName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
                             showNotification(notiName);
                         }
                     }
                 } catch (Exception e) {
-                    Log.i("test2", "DESTROY");
                     stopSelf();
                 }
             }
@@ -122,7 +106,6 @@ public class NotificationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i("test2", "DESTROY");
         shouldStop = true;
         cursor.close();
         mNotificationManager.cancelAll();

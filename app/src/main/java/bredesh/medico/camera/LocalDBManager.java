@@ -1,4 +1,4 @@
-package bredesh.medico.camera;
+package bredesh.medico.Camera;
 
 /**
  * Created by Omri on 07-Mar-17.

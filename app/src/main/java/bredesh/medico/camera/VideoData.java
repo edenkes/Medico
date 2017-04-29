@@ -1,4 +1,4 @@
-package bredesh.medico.camera;
+package bredesh.medico.Camera;
 
 import android.app.Activity;
 import android.app.TimePickerDialog;

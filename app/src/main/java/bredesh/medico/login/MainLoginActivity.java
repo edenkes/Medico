@@ -1,4 +1,4 @@
-package bredesh.medico.login;
+package bredesh.medico.Login;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
