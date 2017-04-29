@@ -5,28 +5,19 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-
-import bredesh.medico.Camera.LocalDBManager;
 import bredesh.medico.Fragments.PictureItem.Adapter;
 import bredesh.medico.Fragments.PictureItem.AlertAdapter;
 import bredesh.medico.Fragments.PictureItem.VideoItem;
-import bredesh.medico.push_notifications.NotificationService;
 import bredesh.medico.R;
+import bredesh.medico.camera.LocalDBManager;
+import bredesh.medico.push_notifications.NotificationService;
 
 
 public class FragmentHome extends Fragment implements AdapterView.OnItemClickListener {
