@@ -4,15 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RemoteViews;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,15 +47,6 @@ public class MainActivity extends AppCompatActivity {
     private BottomBarTab camera;
     private int counterHome;
     private Session session;
-/*
-
-    private NotificationCompat.Builder builder;
-    private NotificationManager notificationManager;
-    private int notification_id;
-    private RemoteViews remoteViews;
-    private Context context;
-
-*/
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -77,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         final Intent SERVICE_INTENT = new Intent(getBaseContext(), NotificationService.class);
         startService(SERVICE_INTENT);
         Log.i("test2","here !!!");
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -199,14 +185,7 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    public void onClickButton1(View view){
-        Toast.makeText(getApplicationContext(), "onClickCheked! :)", Toast.LENGTH_SHORT).show();
+
 
     }
-
-    public void onClickPlay(View view){
-        Toast.makeText(getApplicationContext(), "onClickCacked! :)", Toast.LENGTH_SHORT).show();
-
-    }
-}
 

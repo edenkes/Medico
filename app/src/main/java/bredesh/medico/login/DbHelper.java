@@ -1,4 +1,4 @@
-package bredesh.medico.Login;
+package bredesh.medico.login;
 
 import android.content.ContentValues;
 import android.content.Context;
