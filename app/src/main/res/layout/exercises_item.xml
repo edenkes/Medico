@@ -21,6 +21,8 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="35dp"
             android:fontFamily="cursive"
+            android:focusable="true"
+
             android:text="Switch" />
 
         <ImageButton
@@ -133,10 +135,18 @@
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:onClick="onClickPlay"
+            android:focusable="true"
             android:background="@drawable/ic_play_circle_outline_black_24dp" />
 
-
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickButton1"
+        android:text="Button" />
 
 
 </LinearLayout>
