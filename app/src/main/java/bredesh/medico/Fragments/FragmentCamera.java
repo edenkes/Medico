@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import bredesh.medico.Camera.LocalDBManager;
-import bredesh.medico.Camera.VideoData;
+import bredesh.medico.camera.LocalDBManager;
+import bredesh.medico.camera.VideoData;
 import bredesh.medico.R;
 
 import static android.app.Activity.RESULT_OK;

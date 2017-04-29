@@ -6,7 +6,11 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
+
+
+
     <application
+        android:fullBackupContent="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_medico"
         android:label="@string/app_name"
@@ -15,16 +19,22 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login.MainLoginActivity" />
-        <activity android:name=".Camera.VideoData" />
+        <activity android:name=".login.MainLoginActivity" />
+        <activity android:name=".camera.VideoData" />
+
+        <service
+            android:name=".push_notifications.NotificationService"
+            android:icon="@mipmap/ic_medico"
+            android:process=":medico_process"
+            android:label="Medico"
+            />
+
     </application>
 
-    <service android:name=".PushNotification.NotificationService"
-        android:process=":my_process"
-        />
+
 
 </manifest>

@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import bredesh.medico.Fragments.PictureItem.AlertAdapter;
 import bredesh.medico.Fragments.PictureItem.VideoItem;
-import bredesh.medico.PushNotfications.NotificationService;
+import bredesh.medico.push_notifications.NotificationService;
 import bredesh.medico.R;
 
 

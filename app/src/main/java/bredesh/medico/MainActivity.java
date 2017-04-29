@@ -1,15 +1,16 @@
 package bredesh.medico;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.IdRes;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,9 +26,9 @@ import bredesh.medico.Fragments.FragmentFavorites;
 import bredesh.medico.Fragments.FragmentHome;
 import bredesh.medico.Fragments.FragmentPersonal;
 import bredesh.medico.Fragments.FragmentRecents;
-import bredesh.medico.Login.MainLoginActivity;
-import bredesh.medico.Login.Session;
-import bredesh.medico.PushNotfications.NotificationService;
+import bredesh.medico.login.MainLoginActivity;
+import bredesh.medico.login.Session;
+import bredesh.medico.push_notifications.NotificationService;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -52,9 +53,8 @@ public class MainActivity extends AppCompatActivity {
         }
 */
 
-        final Intent SERVICE_INTENT = new Intent(getBaseContext(), NotificationService.class);
+        Intent SERVICE_INTENT = new Intent(this, NotificationService.class);
         startService(SERVICE_INTENT);
-        Log.i("test2","here !!!");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         setBadgeCount(R.id.tab_recents, 1);
         setBadgeCount(R.id.tab_personal, 3);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

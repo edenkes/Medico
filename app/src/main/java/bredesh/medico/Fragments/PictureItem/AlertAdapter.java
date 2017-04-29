@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import bredesh.medico.Camera.LocalDBManager;
+
+import bredesh.medico.camera.LocalDBManager;
 import bredesh.medico.R;
 
 /**
@@ -47,6 +48,8 @@ public class AlertAdapter extends BaseAdapter {
         }
         c.close();
     }
+
+
 
     @Override
     public int getCount() {
