@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -30,7 +31,7 @@ import bredesh.medico.R;
  * Created by edenk on 22-Apr-17.
  */
 
-public class Adapter extends ArrayAdapter<VideoItem> {
+public class Adapter extends BaseAdapter {
 
     private Context context;
     private int id;
@@ -38,7 +39,6 @@ public class Adapter extends ArrayAdapter<VideoItem> {
 
 
     public Adapter(Context context, @LayoutRes int resource, ArrayList<VideoItem> objects) {
-        super(context, resource, objects);
         this.context = context;
         this.id = resource;
         this.arrayList = objects;

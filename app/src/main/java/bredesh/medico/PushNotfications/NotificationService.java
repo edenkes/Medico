@@ -31,6 +31,8 @@ public class NotificationService extends Service {
 
         Log.i("test2", "here again");
 
+
+
         localdb = new LocalDBManager(getApplicationContext());
 
         cursor = getAllTodaysAlerts(); //also updates @param:CURRENT_DAY
