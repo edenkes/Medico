@@ -56,7 +56,22 @@
         android:textColorHint="@color/textColor"
         android:textColor="@color/textColor"
         android:background="@color/colorWhiteTransparent"
-
         android:layout_marginTop="50dp" />
+
+    <EditText
+        android:id="@+id/etRepeats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="2"
+        android:inputType="number"
+        android:hint="Repeats (default 1)"
+        android:textSize="25sp"
+        android:maxLines="1"
+        android:fontFamily="casual"
+        android:textColorHint="@color/textColor"
+        android:textColor="@color/textColor"
+        android:layout_below="@id/etExerciseName"
+        android:layout_marginTop="50sp"
+        android:background="@color/colorWhiteTransparent"/>
 
 </RelativeLayout>

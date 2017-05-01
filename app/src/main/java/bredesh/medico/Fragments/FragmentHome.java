@@ -3,43 +3,26 @@ package bredesh.medico.Fragments;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RemoteViews;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import bredesh.medico.Camera.ChangeVideoData;
 import bredesh.medico.Camera.LocalDBManager;
-import bredesh.medico.Camera.VideoData;
 import bredesh.medico.Fragments.PictureItem.Adapter;
-import bredesh.medico.Fragments.PictureItem.AlertAdapter;
 import bredesh.medico.Fragments.PictureItem.VideoItem;
-import bredesh.medico.MainActivity;
-import bredesh.medico.PushNotfications.NotificationService;
 import bredesh.medico.R;
 
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 
 public class FragmentHome extends Fragment {
@@ -69,9 +52,6 @@ public class FragmentHome extends Fragment {
 
         final Adapter adapter = new Adapter(context, R.layout.exercises_item, arrayList);
         lvHome.setAdapter(adapter);
-
-        final Intent SERVICE_INTENT = new Intent(getActivity().getApplicationContext(), NotificationService.class);
-       getActivity().startService(SERVICE_INTENT);
 
         lvHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

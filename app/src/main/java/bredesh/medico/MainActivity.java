@@ -22,7 +22,6 @@ import com.example.bottom_bar.OnTabSelectListener;
 import bredesh.medico.Fragments.FragmentCamera;
 import bredesh.medico.Fragments.FragmentHome;
 import bredesh.medico.Fragments.FragmentPersonal;
-import bredesh.medico.PushNotfications.NotificationService;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Intent SERVICE_INTENT = new Intent(getBaseContext(), NotificationService.class);
         startService(SERVICE_INTENT);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
