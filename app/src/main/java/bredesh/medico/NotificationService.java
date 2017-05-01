@@ -36,7 +36,6 @@ public class NotificationService extends Service {
 
         cursor = getAllTodaysAlerts(); //also updates @param:CURRENT_DAY
 
-
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationBuilder = new Notification.Builder(getApplicationContext());
         NotificationBuilder.setVibrate(new long[]{100, 1000});
@@ -49,56 +48,8 @@ public class NotificationService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, getBack, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationBuilder.setContentIntent(pendingIntent);
 
-        {
-            Calendar calendar;
-            int currentHour;
-            int currentMinutes;
-            String time;
-            while (!shouldStop) {
-                try {
-                    synchronized(this) {
-                        calendar = Calendar.getInstance();
-                        currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-                        currentMinutes = calendar.get(Calendar.MINUTE);
-                        Log.i("OMRI", "min: " + currentMinutes);
-                        Log.i("OMRI", "hour: " + currentHour);
-
-                        if (calendar.get(Calendar.DAY_OF_WEEK) != CURRENT_DAY)
-                            getAllTodaysAlerts();
-
-                        cursor.moveToFirst();
-                        Log.i("OMRI", "cSize: " + cursor.getCount());
-                        while (cursor.moveToNext()) {
-                            time = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
-                            int gap = 2;
-                            if (currentHour < 10) gap = 1;
-                            if (Integer.parseInt(time.substring(0, gap)) == currentHour &&
-                                    Integer.parseInt(time.substring(gap + 3)) == currentMinutes)
-                            //now we need to show notification!!
-                            {
-                                Log.i("OMRI", "now im suppose to notify");
-                                String notiName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
-                                int repeats = cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_REPEATS));
-                                showNotification(notiName, repeats);
-                            }
-                        }
-                        Thread.sleep(30000);//30 sec
-                    }
-                } catch (Exception e) {
-                    Log.i("OMRI", "Exception: " + e.getMessage());
-                    stopSelf();
-                }
-            }
-
-
-            //Stop service once it finishes its task
-            stopSelf();
-        }
-
-
-
-
-        return START_STICKY;
+        startThreading();
+        return Service.START_STICKY;
     }
 
     private void showNotification(String notiName, int times)
@@ -115,15 +66,6 @@ public class NotificationService extends Service {
         mNotificationManager.notify(notificationID++, NotificationBuilder.build());
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.i("OMRI", "DESTROY");
-        shouldStop = true;
-        cursor.close();
-        mNotificationManager.cancelAll();
-    }
-
     private Cursor getAllTodaysAlerts()
     {
         Calendar calendar = Calendar.getInstance();
@@ -138,6 +80,56 @@ public class NotificationService extends Service {
             case Calendar.SATURDAY:  return local.getAllAlertsByDay(LocalDBManager.SATURDAY);
             default:                 return local.getAllAlerts();
         }//now cursor initiated with all the alerts today
+    }
+
+    private void startThreading()
+    {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Calendar calendar;
+                int currentHour;
+                int currentMinutes;
+                String time;
+                while (!shouldStop) {
+                    try {
+                        synchronized (this) {
+                            calendar = Calendar.getInstance();
+                            currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+                            currentMinutes = calendar.get(Calendar.MINUTE);
+                            Log.i("OMRI", "min: " + currentMinutes);
+                            Log.i("OMRI", "hour: " + currentHour);
+
+                            cursor = getAllTodaysAlerts();
+
+                            cursor.moveToFirst();
+                            Log.i("OMRI", "cSize: " + cursor.getCount());
+                            while (cursor.moveToNext()) {
+                                time = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
+                                int gap = 2;
+                                if (currentHour < 10) gap = 1;
+                                int notiHour = Integer.parseInt(time.substring(0, gap));
+                                int notiMinute = Integer.parseInt(time.substring(gap + 3));
+                                Log.i("OMRI", "minNOTI: " + notiMinute);
+                                Log.i("OMRI", "hourNOTI: " + notiHour);
+                                if (notiHour == currentHour && notiMinute == currentMinutes)
+                                //now we need to show notification!!
+                                {
+                                    Log.i("OMRI", "now im suppose to notify");
+                                    String notiName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
+                                    int repeats = cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_REPEATS));
+                                    showNotification(notiName, repeats);
+                                }
+                            }
+                            Thread.sleep(60000);//60 sec
+                        }
+                    } catch (Exception e) {
+                        Log.i("OMRI", "Exception: " + e.getMessage());
+                        shouldStop = true;
+                    }
+                }
+            }
+        }).start();
     }
 
 
