@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="Parsonel Info"
             android:textColor="@color/colorLetters"
-            android:textSize="43dp"
+            android:textSize="43sp"
             android:fontFamily="casual"
             android:layout_gravity="center"/>
 

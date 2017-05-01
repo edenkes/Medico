@@ -119,7 +119,6 @@
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:onClick="onClickPlay"
             android:focusable="true"
             android:background="@drawable/ic_play_circle_outline_black_24dp" />
 

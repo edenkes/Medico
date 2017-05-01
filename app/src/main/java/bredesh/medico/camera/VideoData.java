@@ -1,6 +1,8 @@
 package bredesh.medico.Camera;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import bredesh.medico.Fragments.FragmentHome;
 import bredesh.medico.R;
 
 public class VideoData extends Activity{
@@ -78,7 +81,6 @@ public class VideoData extends Activity{
         });
 
         btConfirm.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 if(etExerciseName.getText().toString().length() < maxSize) {
@@ -90,14 +92,10 @@ public class VideoData extends Activity{
                             days_to_alert[i] = 0;
                     }
                     String videoUri = getIntent().getStringExtra("RecordedUri");
-//                    Toast.makeText(getApplicationContext(), "name: " + etExerciseName.getText().toString() + ", time: " + tvTime.getText().toString(), Toast.LENGTH_SHORT).show();
-
                     db.addAlert(etExerciseName.getText().toString(), tvTime.getText().toString(), videoUri, days_to_alert);
                     finish();
                 }else   Toast.makeText(getApplicationContext(),
                         "The name of the exercise is too long, please shorten it", Toast.LENGTH_SHORT).show();
-
-//                startActivity(new Intent(VideoData.this,MainLoginActivity.class));
             }
         });
     }
@@ -133,5 +131,4 @@ public class VideoData extends Activity{
                     }
                 }).create();
     }
-
 }

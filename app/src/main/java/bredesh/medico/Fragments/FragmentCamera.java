@@ -1,6 +1,8 @@
 package bredesh.medico.Fragments;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -55,15 +57,7 @@ public class FragmentCamera extends Fragment {
         });
 
 
-        removeAll = (Button) view.findViewById(R.id.button_remove_all);
-        removeAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LocalDBManager db = new LocalDBManager(getActivity().getApplicationContext());
-                db.DeleteAllAlerts();
-                Toast.makeText(getActivity().getApplicationContext(), "Alerts Removed", Toast.LENGTH_LONG).show();
-            }
-        });
+
 
         return view;
     }
@@ -72,19 +66,14 @@ public class FragmentCamera extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
             if(resultCode == RESULT_OK && intent != null ){
                 if(intent.getData() != null){
-                    try {
                         intent.putExtra("RecordedUri", intent.getData().toString());
                         intent.setClass(getActivity(), VideoData.class);
                         startActivity(intent);
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
                 }else{
                     Toast.makeText(getActivity().getApplicationContext(), "Couldn't attach the video/picture", Toast.LENGTH_LONG).show();
                     intent.putExtra("RecordedUri", "null");
                     intent.setClass(getActivity(), VideoData.class);
                     startActivity(intent);
-
                 }
         }
     }
