@@ -25,6 +25,7 @@ public class LocalDBManager extends SQLiteOpenHelper{
     public static final String THURSDAY = "THURSDAY";
     public static final String FRIDAY = "FRIDAY";
     public static final String SATURDAY = "SATURDAY";
+    public static final String ALERT_TODAY = "alert";
 
     private static final String DATABASE_NAME = "USER_ALERTS";
     private static final String TABLE_NAME = "ALERTS";
@@ -46,10 +47,11 @@ public class LocalDBManager extends SQLiteOpenHelper{
                 WEDNESDAY + " INTEGER, "+
                 THURSDAY + " INTEGER, "+
                 FRIDAY + " INTEGER, "+
-                SATURDAY + " INTEGER )";
+                SATURDAY + " INTEGER, " +
+                ALERT_TODAY + " INTEGER)";
 
         //days: 1 - should alert; 0 - otherwise
-
+        //alert today: 1-alerted already; 0 can alert
         // create table
         db.execSQL(CREATE_ALERTS_TABLE);
     }
@@ -60,6 +62,7 @@ public class LocalDBManager extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " +TABLE_NAME + "");
         // create fresh table
         this.onCreate(db);
+        db.close();
     }
 
     public void DeleteAllAlerts() {
@@ -87,6 +90,7 @@ public class LocalDBManager extends SQLiteOpenHelper{
         values.put(THURSDAY, days_to_alert[4]);
         values.put(FRIDAY, days_to_alert[5]);
         values.put(SATURDAY, days_to_alert[6]);
+        values.put(ALERT_TODAY, 0); //default - should alert!
 
         // 3. insert
         db.insert(TABLE_NAME, // table
@@ -110,9 +114,23 @@ public class LocalDBManager extends SQLiteOpenHelper{
     public Cursor getAllAlertsByDay(String day) {
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT " + KEY_ID + ", " + KEY_NAME + ", " +  KEY_TIME +", " + KEY_REPEATS+", "+
-                                            URIVIDEO + " FROM " + TABLE_NAME + " WHERE " + day +" = 1";
+                                            URIVIDEO+", "+ ALERT_TODAY + " FROM " + TABLE_NAME + " WHERE " + day +" = 1";
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
         return cursor;
+    }
+
+    public void allTodaysAlertReset(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues args = new ContentValues();
+        args.put(ALERT_TODAY, 0);
+        db.update(TABLE_NAME, args, KEY_ID + "=" + id, null);
+    }
+
+    public void updateAlertToday(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues args = new ContentValues();
+        args.put(ALERT_TODAY, 1);
+        db.update(TABLE_NAME, args, KEY_ID + "=" + id, null);
     }
 }

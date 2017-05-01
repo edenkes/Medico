@@ -13,6 +13,8 @@ import java.util.Calendar;
 import bredesh.medico.Camera.LocalDBManager;
 
 public class NotificationService extends Service {
+
+    public static boolean need_to_update = true;
     private NotificationManager mNotificationManager;
     private Notification.Builder NotificationBuilder;
     private LocalDBManager local;
@@ -27,13 +29,14 @@ public class NotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.i("OMRI", "OnStartCommand");
+        Log.i("start", "OnStartCommand");
 
 
-
+        Calendar calendar = Calendar.getInstance();
         local = new LocalDBManager(getApplicationContext());
 
-        cursor = getAllTodaysAlerts(); //also updates @param:CURRENT_DAY
+        CURRENT_DAY = calendar.get(Calendar.DAY_OF_WEEK);
+        cursor = getAllTodaysAlerts(calendar); //also updates @param:CURRENT_DAY
 
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationBuilder = new Notification.Builder(getApplicationContext());
@@ -65,10 +68,8 @@ public class NotificationService extends Service {
         mNotificationManager.notify(notificationID++, NotificationBuilder.build());
     }
 
-    private Cursor getAllTodaysAlerts()
+    private Cursor getAllTodaysAlerts(Calendar calendar)
     {
-        Calendar calendar = Calendar.getInstance();
-        CURRENT_DAY = calendar.get(Calendar.DAY_OF_WEEK);
         switch (CURRENT_DAY) {
             case Calendar.SUNDAY:    return local.getAllAlertsByDay(LocalDBManager.SUNDAY);
             case Calendar.MONDAY:    return local.getAllAlertsByDay(LocalDBManager.MONDAY);
@@ -96,34 +97,43 @@ public class NotificationService extends Service {
                             calendar = Calendar.getInstance();
                             currentHour = calendar.get(Calendar.HOUR_OF_DAY);
                             currentMinutes = calendar.get(Calendar.MINUTE);
-                            Log.i("OMRI", "min: " + currentMinutes);
-                            Log.i("OMRI", "hour: " + currentHour);
 
-                            cursor = getAllTodaysAlerts();
+                            if(need_to_update)
+                            {
+                                cursor = getAllTodaysAlerts(calendar);
+                                need_to_update = false;
+                            }
+                            if(CURRENT_DAY != calendar.get(Calendar.DAY_OF_WEEK))
+                            {
+                                cursor.moveToFirst();
+                                while (cursor.moveToNext()) {
+                                    local.allTodaysAlertReset(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)));
+                                }
+                                CURRENT_DAY = calendar.get(Calendar.DAY_OF_WEEK);
+                                cursor = getAllTodaysAlerts(calendar);
+                            }
 
                             cursor.moveToFirst();
-                            Log.i("OMRI", "cSize: " + cursor.getCount());
                             while (cursor.moveToNext()) {
                                 time = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
                                 int gap = 2;
                                 if (currentHour < 10) gap = 1;
-                                int notiHour = Integer.parseInt(time.substring(0, gap));
-                                int notiMinute = Integer.parseInt(time.substring(gap + 3));
-                                Log.i("OMRI", "minNOTI: " + notiMinute);
-                                Log.i("OMRI", "hourNOTI: " + notiHour);
-                                if (notiHour == currentHour && notiMinute == currentMinutes)
-                                //now we need to show notification!!
+                                int notificationHour = Integer.parseInt(time.substring(0, gap));
+                                int notificationMinute = Integer.parseInt(time.substring(gap + 3));
+                                int todayAlert = cursor.getInt(cursor.getColumnIndex(LocalDBManager.ALERT_TODAY));
+                                if (notificationHour == currentHour && notificationMinute == currentMinutes && todayAlert==0)
                                 {
-                                    Log.i("OMRI", "now im suppose to notify");
-                                    String notiName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
+                                    //now we need to show notification!!
+                                    String notificationName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
                                     int repeats = cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_REPEATS));
-                                    showNotification(notiName, repeats);
+                                    showNotification(notificationName, repeats);
+                                    local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)));
                                 }
                             }
                             Thread.sleep(60000);//60 sec
                         }
                     } catch (Exception e) {
-                        Log.i("OMRI", "Exception: " + e.getMessage());
+                        Log.i("Exception", "Exception: " + e.getMessage());
                         shouldStop = true;
                     }
                 }

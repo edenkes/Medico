@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import bredesh.medico.NotificationService;
 import bredesh.medico.R;
 
 public class VideoData extends Activity{
@@ -90,14 +91,13 @@ public class VideoData extends Activity{
                             days_to_alert[i] = 0;
                     }
                     String videoUri = getIntent().getStringExtra("RecordedUri");
-//                    Toast.makeText(getApplicationContext(), "name: " + etExerciseName.getText().toString() + ", time: " + tvTime.getText().toString(), Toast.LENGTH_SHORT).show();
                     int repeats = Integer.parseInt((etRepeats.getText().toString().equals("")) ? "1" : etRepeats.getText().toString());
                     db.addAlert(etExerciseName.getText().toString(), tvTime.getText().toString(), repeats ,videoUri, days_to_alert);
+                    NotificationService.need_to_update = true;
                     finish();
-                }else   Toast.makeText(getApplicationContext(),
-                        "The name of the exercise is too long, please shorten it", Toast.LENGTH_SHORT).show();
+                }
+                else Toast.makeText(getApplicationContext(), "The name of the exercise is too long, please shorten it", Toast.LENGTH_SHORT).show();
 
-//                startActivity(new Intent(VideoData.this,MainLoginActivity.class));
             }
         });
     }
