@@ -4,7 +4,6 @@
     android:layoutDirection="ltr"
     android:padding="5sp">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
@@ -130,7 +129,4 @@
             android:layout_above="@+id/tvExerciseTime"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
-
-
-
 </RelativeLayout>

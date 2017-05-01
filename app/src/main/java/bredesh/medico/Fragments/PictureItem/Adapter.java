@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 import bredesh.medico.R;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 /**
  * Created by edenk on 22-Apr-17.
  */
@@ -72,17 +74,27 @@ public class Adapter extends BaseAdapter {
         return convertView;
     }
 
-    private void setButtons(View convertView, final ViewHolder viewHolder, final VideoItem item) {
+
+
+    private void setButtons(final View convertView, final ViewHolder viewHolder, final VideoItem item) {
         viewHolder.btPlay = (Button) convertView.findViewById(R.id.btPlay);
         viewHolder.btPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Uri videoUri = item.getUri();
                 if(videoUri != null ) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
-                    context.startActivity(intent);
-                }else
-                    Toast.makeText(context.getApplicationContext(), "Couldn't find the video/photo", Toast.LENGTH_SHORT).show();
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }catch (RuntimeException e){
+
+                    }
+
+                }
+                else    Toast.makeText(context.getApplicationContext(),
+                        "Couldn't find the video/photo", Toast.LENGTH_SHORT).show();
+
             }
         });
 
