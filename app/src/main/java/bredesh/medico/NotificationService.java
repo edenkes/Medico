@@ -61,10 +61,12 @@ public class NotificationService extends Service {
                 .setContentTitle(notiName)
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.ic_medico)
+                .setAutoCancel(true)
                 .setContentText(msg)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setWhen(System.currentTimeMillis());
+
         mNotificationManager.notify(notificationID++, NotificationBuilder.build());
     }
 
