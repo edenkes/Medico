@@ -10,28 +10,9 @@
         android:layout_height="100dp"
         android:background="@drawable/exercises_bar_custom"
         android:descendantFocusability="blocksDescendants"
-        android:padding="10sp">
+        android:padding="10sp"
+        android:id="@+id/relativeLayout">
 
-
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="35dp"
-            android:fontFamily="cursive"
-            android:focusable="true"
-
-            android:text="Switch" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="@android:drawable/ic_menu_manage" />
 
         <ImageView
             android:id="@+id/imageSync"
@@ -115,19 +96,22 @@
             android:id="@+id/tvExerciseTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
             android:text="8:00"
-            android:textSize="40dp"
-            android:textStyle="bold" />
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_alignBaseline="@+id/tvSAT"
+            android:layout_alignBottom="@+id/tvSAT"
+            android:layout_alignParentEnd="true" />
 
         <TextView
             android:id="@+id/tvExercisesName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:fontFamily="cursive"
-            android:text="exercisesName" />
+            android:text="exercisesName"
+            android:textSize="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
 
         <Button
             android:id="@+id/btPlay"
@@ -139,7 +123,16 @@
             android:focusable="true"
             android:background="@drawable/ic_play_circle_outline_black_24dp" />
 
+        <Button
+            android:id="@+id/btAlerts"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/ic_alarm_black_48dp"
+            android:layout_alignBaseline="@+id/btPlay"
+            android:layout_alignBottom="@+id/btPlay"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
+
 
 
 </RelativeLayout>

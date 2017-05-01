@@ -9,24 +9,19 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import bredesh.medico.R;
 
-
-/**
- * Created by Omri on 07-Mar-17.
- */
-public class VideoData extends Activity{
+public class ChangeVideoData extends Activity{
     Button btChangeFrequency, btChangeTime, btConfirm;
     TextView tvTime;
     EditText etExerciseName;
 
     AlertDialog dialog;
-    // array to keep the seleected days
+    // array to keep the selected days
     final boolean[] selectedDays = new boolean[7];
     LocalDBManager db;
 
@@ -65,7 +60,7 @@ public class VideoData extends Activity{
                 int hour = 8;
                 int minute = 00;
                 TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(VideoData.this, new TimePickerDialog.OnTimeSetListener() {
+                mTimePicker = new TimePickerDialog(ChangeVideoData.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         tvTime.setText( selectedHour + ":" + selectedMinute);
@@ -89,10 +84,11 @@ public class VideoData extends Activity{
                     else
                         days_to_alert[i] = 0;
                 }
-                String videoUri = getIntent().getStringExtra("RecordedUri");
+//                String videoUri = getIntent().getStringExtra("RecordedUri");
                 Toast.makeText(getApplicationContext(), "name: " + etExerciseName.getText().toString()+ ", time: " + tvTime.getText().toString(),Toast.LENGTH_SHORT).show();
 
-                db.addAlert(etExerciseName.getText().toString(), tvTime.getText().toString(), videoUri, days_to_alert);
+                //TODO - change to replace the data
+//                db.addAlert(etExerciseName.getText().toString(), tvTime.getText().toString(), videoUri, days_to_alert);
                 finish();
 //                startActivity(new Intent(VideoData.this,MainLoginActivity.class));
             }

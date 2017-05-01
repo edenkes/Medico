@@ -199,14 +199,14 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    public void onClickButton1(View view){
+   /* public void onClickButton1(View view){
         Toast.makeText(getApplicationContext(), "onClickCheked! :)", Toast.LENGTH_SHORT).show();
 
     }
 
-    public void onClickPlay(View view){
-        Toast.makeText(getApplicationContext(), "onClickCacked! :)", Toast.LENGTH_SHORT).show();
+    public void onClickButton(View view){
+        Toast.makeText(getApplicationContext(), "here on click1", Toast.LENGTH_SHORT).show();
 
-    }
+    }*/
 }
 

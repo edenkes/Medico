@@ -17,7 +17,7 @@ public class VideoItem {
     private Uri uri;
     private int[] days;
     private final String[] daysNames = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
-    private boolean isChecked;
+    private boolean isAlertsActive;
 
     public VideoItem(String time, String name, String uri, int[] days)
     {
@@ -27,7 +27,7 @@ public class VideoItem {
         if (!uri.equals("null")) {
             this.uri = Uri.parse(uri);
         }else this.uri = null;
-        isChecked = false;
+        isAlertsActive = true;
     }
 
     public Uri getUri() { return  uri;}
@@ -42,21 +42,26 @@ public class VideoItem {
         return days;
     }
 
-    public String getDaysString()
-    {
+    public String getDaysString(){
         String ans = "";
         for(int i=0; i<days.length; i++)
             if(days[i] == 1)
                 ans+= daysNames[i]+", ";
         return ans;
     }
-    public boolean isChecked(){
-        return isChecked;
+
+    public boolean isAlertsActive(){
+        return isAlertsActive;
     }
 
+    public void setIsAlertsActive(boolean isAlertsActive){
+        this.isAlertsActive = isAlertsActive;
+    }
 
-    public void setIsChecked(boolean isChecked){
-        this.isChecked = isChecked;
+    public void switchAlertsActive(){
+        if(isAlertsActive)
+            isAlertsActive = false;
+        else isAlertsActive = true;
     }
 
     public void setName(String name){
