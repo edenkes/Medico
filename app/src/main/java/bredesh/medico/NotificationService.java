@@ -13,7 +13,6 @@ import java.util.Calendar;
 import bredesh.medico.Camera.LocalDBManager;
 
 public class NotificationService extends Service {
-
     private NotificationManager mNotificationManager;
     private Notification.Builder NotificationBuilder;
     private LocalDBManager local;
