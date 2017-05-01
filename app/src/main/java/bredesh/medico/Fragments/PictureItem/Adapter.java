@@ -83,18 +83,17 @@ public class Adapter extends BaseAdapter {
             public void onClick(View view) {
                 Uri videoUri = item.getUri();
                 if(videoUri != null ) {
-                    try {
+                    try {;
                         Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     }catch (RuntimeException e){
-
+                        Toast.makeText(context.getApplicationContext(),
+                                "Couldn't open the video/photo", Toast.LENGTH_SHORT).show();
                     }
-
                 }
                 else    Toast.makeText(context.getApplicationContext(),
                         "Couldn't find the video/photo", Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -107,7 +106,6 @@ public class Adapter extends BaseAdapter {
             }
         });
     }
-
 
     private void setTextView(View convertView, ViewHolder viewHolder, final VideoItem item) {
         viewHolder.tvExercisesName = (TextView) convertView.findViewById(R.id.tvExercisesName);

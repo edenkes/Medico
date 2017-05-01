@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("");
-        actionBar.setLogo(R.mipmap.ic_medico);
+        actionBar.setLogo(R.mipmap.ic_medico_logo);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 

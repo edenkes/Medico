@@ -9,6 +9,7 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -21,6 +22,7 @@ public class VideoData extends Activity{
     Button btChangeFrequency, btChangeTime, btConfirm;
     TextView tvTime;
     EditText etExerciseName, etRepeats;
+    NumberPicker numberPicker;
 
     AlertDialog dialog;
     // array to keep the selected days
@@ -40,9 +42,15 @@ public class VideoData extends Activity{
         tvTime = (TextView) findViewById(R.id.tvTime);
         btChangeTime = (Button) findViewById(R.id.btChangeTime);
         etRepeats = (EditText) findViewById(R.id.etRepeats);
+        numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
+
         setDialog();
 
         db = new LocalDBManager(getApplicationContext());
+
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(9);
+        numberPicker.setWrapSelectorWheel(false);
 
         btChangeFrequency.setOnClickListener(new View.OnClickListener() {
 
@@ -91,7 +99,8 @@ public class VideoData extends Activity{
                             days_to_alert[i] = 0;
                     }
                     String videoUri = getIntent().getStringExtra("RecordedUri");
-                    int repeats = Integer.parseInt((etRepeats.getText().toString().equals("")) ? "1" : etRepeats.getText().toString());
+//                    int repeats = Integer.parseInt((etRepeats.getText().toString().equals("")) ? "1" : etRepeats.getText().toString());
+                    int repeats = numberPicker.getValue();
                     db.addAlert(etExerciseName.getText().toString(), tvTime.getText().toString(), repeats ,videoUri, days_to_alert);
                     NotificationService.need_to_update = true;
                     finish();
