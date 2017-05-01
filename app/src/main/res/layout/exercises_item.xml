@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:background="@drawable/exercises_bar_custom"
         android:descendantFocusability="blocksDescendants"
         android:padding="10sp"
@@ -97,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="8:00"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:layout_alignBaseline="@+id/tvSAT"
             android:layout_alignBottom="@+id/tvSAT"
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="cursive"
             android:text="exercisesName"
-            android:textSize="40dp"
+            android:textSize="30sp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true" />
 
@@ -128,8 +128,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:background="@drawable/ic_alarm_black_48dp"
-            android:layout_alignBaseline="@+id/btPlay"
-            android:layout_alignBottom="@+id/btPlay"
+            android:layout_above="@+id/tvExerciseTime"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
 

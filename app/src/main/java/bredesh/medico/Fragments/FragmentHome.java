@@ -40,24 +40,22 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 
 
 public class FragmentHome extends Fragment {
-
-    ListView lvHome;
-    private Uri videoUri;
-    private int resource;
+    private Context context;
     ArrayList<VideoItem> arrayList;
+    ListView lvHome;
 
-
+//    private Uri videoUri;
+//    private int resource;
+/*
     private NotificationCompat.Builder builder;
     private NotificationManager notificationManager;
     private int notification_id;
     private RemoteViews remoteViews;
-    private Context context;
-
+*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)  {
-
         View view = inflater.inflate(R.layout.fragment_fragment_home, container, false);
         lvHome = (ListView) view.findViewById(R.id.lvHome);
         context = getActivity().getApplicationContext();
@@ -67,11 +65,10 @@ public class FragmentHome extends Fragment {
         setArrayList();
 
         final Adapter adapter = new Adapter(context, R.layout.exercises_item, arrayList);
-//        final AlertAdapter adapter = new AlertAdapter(context);
         lvHome.setAdapter(adapter);
 
-        final Intent SERVICE_INTENT = new Intent(getActivity().getBaseContext(), NotificationService.class);
-        getActivity().startService(SERVICE_INTENT);
+        final Intent SERVICE_INTENT = new Intent(getActivity().getApplicationContext(), NotificationService.class);
+       getActivity().startService(SERVICE_INTENT);
 
         lvHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -91,6 +88,7 @@ public class FragmentHome extends Fragment {
         Cursor c = db.getAllAlerts();
         arrayList = new ArrayList<>();
         int index;
+
         for ( c.moveToFirst(),  index=0; !c.isAfterLast(); c.moveToNext(), index++){
             String time = c.getString(c.getColumnIndex(db.KEY_TIME));
             String name = c.getString(c.getColumnIndex(db.KEY_NAME));

@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
-    android:background="@drawable/screen_add_alert_artboard2">
+    android:background="@drawable/screen_add_alert_artboard3">
 
     <TextView
         android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="08:00"
-        android:textColor="@color/textColor"
-        android:textSize="25sp"
+        android:text="8 : 00"
+        android:textColor="@color/colorWhite"
+        android:textSize="35sp"
         android:layout_below="@+id/btChangeTime"
         android:layout_marginTop="25dp"
         android:layout_centerHorizontal="true" />
@@ -50,13 +50,13 @@
         android:ems="13"
         android:inputType="textPersonName"
         android:hint="Exercise Name"
+        android:textSize="25sp"
         android:maxLines="1"
         android:fontFamily="casual"
         android:textColorHint="@color/textColor"
         android:textColor="@color/textColor"
         android:background="@color/colorWhiteTransparent"
-        android:layout_above="@+id/btChangeFrequency"
-         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp" />
+
+        android:layout_marginTop="50dp" />
 
 </RelativeLayout>

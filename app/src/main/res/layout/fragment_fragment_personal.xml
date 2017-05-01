@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWindowBackground"
+    android:background="@drawable/screen_background_artboard"
     tools:context="bredesh.medico.Fragments.FragmentPersonal">
 
     <LinearLayout
@@ -52,16 +52,14 @@
             android:text="Email Address"
             android:textColor="@color/colorLetters"/>
 
-        <TextView
-            android:id="@+id/textView2"
+        <EditText
+            android:id="@+id/editTextPoints"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="24dp"
-            android:text="Under construction"
-            android:textColor="@color/textColor"
-            android:textSize="50sp" />
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:text="30 points"
+            android:textColor="@color/colorLetters"/>
 
     </LinearLayout>
 

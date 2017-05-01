@@ -7,4 +7,6 @@
     <string name="enter_password">Enter Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="button_video">button Video</string>
+    <string name="exercises">Exercises</string>
+    <string name="button_camera">button Camera</string>
 </resources>

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWindowBackground"
+    android:background="@drawable/screen_background_artboard"
     android:layoutDirection="ltr"
     tools:context="bredesh.medico.Fragments.FragmentCamera">
 
@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:background="@drawable/ic_videocam_black_48dp"
             android:text="@string/button_video"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:fontFamily="cursive"
             tools:ignore="ButtonStyle" />
 
@@ -44,8 +44,8 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/ic_photo_camera_black_48dp"
-            android:text="button Camera"
-            android:textSize="25dp"
+            android:text="@string/button_camera"
+            android:textSize="25sp"
             android:fontFamily="cursive"
             tools:ignore="ButtonStyle" />
     </LinearLayout>

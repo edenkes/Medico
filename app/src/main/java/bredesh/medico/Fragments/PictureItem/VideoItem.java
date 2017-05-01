@@ -5,13 +5,7 @@ import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 
-/**
- * Created by Omri on 01-Apr-17.
- */
-
 public class VideoItem {
-
-
     private String name;
     private String time;
     private Uri uri;
@@ -19,12 +13,11 @@ public class VideoItem {
     private final String[] daysNames = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
     private boolean isAlertsActive;
 
-    public VideoItem(String time, String name, String uri, int[] days)
-    {
+    public VideoItem(String time, String name, String uri, int[] days){
         this.time = time;
         this.name = name;
         this.days = days;
-        if (!uri.equals("null")) {
+        if (uri != null && !uri.equals("null")) {
             this.uri = Uri.parse(uri);
         }else this.uri = null;
         isAlertsActive = true;
@@ -58,7 +51,7 @@ public class VideoItem {
         this.isAlertsActive = isAlertsActive;
     }
 
-    public void switchAlertsActive(){
+    void switchAlertsActive(){
         if(isAlertsActive)
             isAlertsActive = false;
         else isAlertsActive = true;
