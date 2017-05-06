@@ -99,8 +99,8 @@ public class VideoData extends Activity{
                             days_to_alert[i] = 0;
                     }
                     String videoUri = getIntent().getStringExtra("RecordedUri");
-//                    int repeats = Integer.parseInt((etRepeats.getText().toString().equals("")) ? "1" : etRepeats.getText().toString());
-                    int repeats = numberPicker.getValue();
+                    int repeats = Integer.parseInt((etRepeats.getText().toString().equals("")) ? "1" : etRepeats.getText().toString());
+//                    int repeats = numberPicker.getValue();
                     db.addAlert(etExerciseName.getText().toString(), tvTime.getText().toString(), repeats ,videoUri, days_to_alert);
                     NotificationService.need_to_update = true;
                     finish();
