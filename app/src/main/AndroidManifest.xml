@@ -23,12 +23,11 @@
         <activity android:name=".Camera.VideoData" />
         <activity android:name=".Camera.ChangeVideoData" />
 
-        <service android:name=".NotificationService"
-            android:process=":my_process"
-            />
+        <service
+            android:name=".NotificationService"
+            android:process=":my_process" />
 
+        <activity android:name=".NotifictionWindow"></activity>
     </application>
-
-
 
 </manifest>

@@ -8,11 +8,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.RemoteViews;
+
 import java.util.Calendar;
+
+import bredesh.medico.Camera.ChangeVideoData;
 import bredesh.medico.Camera.LocalDBManager;
 
 public class NotificationService extends Service {
+    private NotificationCompat.Builder builder;
+    private NotificationManager notificationManager;
+    private int notification_id;
+    private RemoteViews remoteViews;
+
 
     private NotificationManager mNotificationManager;
     private Notification.Builder NotificationBuilder;
@@ -21,6 +31,7 @@ public class NotificationService extends Service {
     private int CURRENT_DAY;
     private boolean shouldStop = false;
     private int notificationID = 1;
+    private final String MyOnClick = "button_click";
 
     @Override
     public IBinder onBind(Intent intent) { return null; }
@@ -29,6 +40,16 @@ public class NotificationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         Log.i("start", "OnStartCommand");
+
+        //Notifications
+        notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+        builder = new NotificationCompat.Builder(getApplicationContext());
+
+        remoteViews = new RemoteViews(getApplicationContext().getPackageName(),R.layout.custom_notification);
+        remoteViews.setImageViewResource(R.id.notif_icon, R.mipmap.ic_medico_logo);
+        remoteViews.setTextViewText(R.id.notif_title,"TEXT");
+        remoteViews.setProgressBar(R.id.progressBar,100,40,true);
+        //End of Notifications
 
 
         Calendar calendar = Calendar.getInstance();
@@ -60,6 +81,7 @@ public class NotificationService extends Service {
 
         NotificationCompat.Action action = new NotificationCompat.Action.Builder(null, "Previous", prevPendingIntent).build();
 */
+    /*
         Intent acceptIntent = new Intent(this, MainActivity.class);
         PendingIntent piAccept = PendingIntent.getActivity(this,0,acceptIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -67,7 +89,7 @@ public class NotificationService extends Service {
         NotificationBuilder
                 .setContentTitle(notiName)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.ic_medico)
+                .setSmallIcon(R.mipmap.ic_medico_logo)
                 .setAutoCancel(true)
                 .setContentText(msg)
                 .addAction(android.R.drawable.checkbox_on_background,"Accept", piAccept)
@@ -76,6 +98,40 @@ public class NotificationService extends Service {
                 .setWhen(System.currentTimeMillis());
 
         mNotificationManager.notify(notificationID++, NotificationBuilder.build());
+    */
+        notification_id = (int) System.currentTimeMillis();
+
+        Intent button_intent = new Intent(getApplicationContext(),NotifictionWindow.class);
+//        Intent button_intent = new Intent(MyOnClick);
+        button_intent.putExtra("id",notification_id);
+        PendingIntent button_pending_event = PendingIntent.getActivity(getApplicationContext(),notification_id,
+                button_intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        remoteViews.setOnClickPendingIntent(R.id.btDone, button_pending_event);
+        remoteViews.setOnClickPendingIntent(R.id.btCancel, button_pending_event);
+        remoteViews.setOnClickPendingIntent(R.id.btSnoozed, button_pending_event);
+
+        Intent notification_intent = new Intent(getApplicationContext(),NotifictionWindow.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,notification_intent,0);
+        remoteViews.setTextViewText(R.id.notif_title,notiName);
+
+        Intent acceptIntent = new Intent(this, NotifictionWindow.class);
+        PendingIntent piAccept = PendingIntent.getActivity(this,0,acceptIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        String msg = "Select to show alarm screen. "+notiName;
+//        String msg = "It's time to do "+notiName+".\n"+times+" repeats";
+
+        builder.setSmallIcon(R.mipmap.ic_medico_logo)
+                .setAutoCancel(true)
+                .setCustomBigContentView(remoteViews)
+                .setContentIntent(pendingIntent)
+                .setContentTitle(notiName)
+                .setWhen(System.currentTimeMillis())
+                .setContentText(msg)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setPriority(Notification.PRIORITY_HIGH);
+
+        notificationManager.notify(notification_id,builder.build());
     }
 
     private Cursor getAllTodayAlerts()
@@ -151,6 +207,4 @@ public class NotificationService extends Service {
             }
         }).start();
     }
-
-
 }

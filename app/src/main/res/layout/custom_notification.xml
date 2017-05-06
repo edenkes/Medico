@@ -1,29 +1,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="112dp"
-    android:background="@color/colorPrimaryDark"
+    android:layout_height="128dp"
+    android:background="@color/colorNotificationBackground"
     android:orientation="horizontal"
+    android:padding="10dp"
     >
 
     <ImageView
         android:id="@+id/notif_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
         android:src="@android:drawable/ic_dialog_info"
         android:layout_marginLeft="7dp"
-        android:layout_marginRight="9dp"/>
+        android:layout_marginRight="9dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
-        android:layout_alignBottom="@+id/notif_icon"
-        android:layout_toRightOf="@+id/notif_icon"
-        android:layout_toEndOf="@+id/notif_icon"
         android:layout_marginLeft="19dp"
-        android:layout_marginStart="19dp" />
+        android:layout_marginStart="19dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/notif_icon" />
 
 
     <TextView
@@ -31,24 +31,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:paddingTop="8dp"
         android:textSize="17sp"
         android:textStyle="bold"
-        android:textColor="#ffffff"
+        android:textColor="@color/colorWhite"
         android:text="SOME TEXT"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentEnd="true"
+        />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_alignBottom="@+id/notif_icon"
-        android:layout_alignParentRight="true"
+        android:text="Done"
+        android:id="@+id/btDone"
+        android:background="@drawable/exercises_bar_custom"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
+    <Button
+        android:id="@+id/btSnoozed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Snoozed"
+        android:background="@drawable/exercises_bar_custom"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
+    <Button
+        android:id="@+id/btCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:background="@drawable/exercises_bar_custom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

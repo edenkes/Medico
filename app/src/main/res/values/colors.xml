@@ -11,6 +11,7 @@
     <color name="textColorSecondary">#0dccb2</color>
     <color name="colorAppBar">#f8002e5c</color>
     <color name="colorExercisesBar">#dd6aa1d6</color>
+    <color name="colorNotificationBackground">#dd6aa1d6</color>
 
 
     <color name="transparent">#00000000</color>
