@@ -132,5 +132,6 @@ public class LocalDBManager extends SQLiteOpenHelper{
         ContentValues args = new ContentValues();
         args.put(ALERT_TODAY, 1);
         db.update(TABLE_NAME, args, KEY_ID + "=" + id, null);
+
     }
 }
