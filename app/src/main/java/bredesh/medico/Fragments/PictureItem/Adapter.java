@@ -18,14 +18,11 @@ import java.util.ArrayList;
 
 import bredesh.medico.R;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-
 /**
  * Created by edenk on 22-Apr-17.
  */
 
 public class Adapter extends BaseAdapter {
-
     private Context context;
     private int id;
     private ArrayList<VideoItem> arrayList;
@@ -54,7 +51,6 @@ public class Adapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder mainViewHolder = null;
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -69,7 +65,7 @@ public class Adapter extends BaseAdapter {
             setButtons(convertView, viewHolder, item);
 
             convertView.setTag(viewHolder);
-        } else  mainViewHolder = (ViewHolder) convertView.getTag();
+        } else convertView.getTag();
 
         return convertView;
     }
@@ -83,7 +79,7 @@ public class Adapter extends BaseAdapter {
             public void onClick(View view) {
                 Uri videoUri = item.getUri();
                 if(videoUri != null ) {
-                    try {;
+                    try {
                         Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
@@ -136,8 +132,7 @@ public class Adapter extends BaseAdapter {
             if (days[4] == 1) viewHolder.tvTHU.setVisibility(View.VISIBLE);
             if (days[5] == 1) viewHolder.tvFRI.setVisibility(View.VISIBLE);
             if (days[6] == 1) viewHolder.tvSAT.setVisibility(View.VISIBLE);
-            if(days[0] == 1 || days[1] == 1 || days[2] == 1 || days[3] == 1 || days[4] == 1 || days[5] == 1 || days[6] == 1)
-            {
+            if(days[0] == 1 || days[1] == 1 || days[2] == 1 || days[3] == 1 || days[4] == 1 || days[5] == 1 || days[6] == 1) {
                 viewHolder.imageSync.setVisibility(View.VISIBLE);
                 viewHolder.tvExerciseTime.setVisibility(View.VISIBLE);
             }
@@ -145,7 +140,7 @@ public class Adapter extends BaseAdapter {
                 viewHolder.imageSync.setVisibility(View.INVISIBLE);
                 viewHolder.tvExerciseTime.setVisibility(View.INVISIBLE);
             }
-        }else{
+        }else {
             viewHolder.tvSUN.setVisibility(View.INVISIBLE);
             viewHolder.tvMON.setVisibility(View.INVISIBLE);
             viewHolder.tvTUE.setVisibility(View.INVISIBLE);

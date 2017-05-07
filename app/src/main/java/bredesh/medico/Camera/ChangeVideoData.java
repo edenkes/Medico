@@ -56,7 +56,6 @@ public class ChangeVideoData extends Activity{
 
             @Override
             public void onClick(View v) {
-
                 int hour = 8;
                 int minute = 00;
                 TimePickerDialog mTimePicker;

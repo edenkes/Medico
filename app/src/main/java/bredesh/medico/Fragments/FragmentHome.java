@@ -24,8 +24,6 @@ import bredesh.medico.Fragments.PictureItem.Adapter;
 import bredesh.medico.Fragments.PictureItem.VideoItem;
 import bredesh.medico.R;
 
-
-
 public class FragmentHome extends Fragment {
     private Context context;
     ArrayList<VideoItem> arrayList;
@@ -152,7 +150,6 @@ public class FragmentHome extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        lvHome.setAdapter(new AlertAdapter(getActivity().getApplicationContext()));
         lvHome.setAdapter(new Adapter(context, R.layout.exercises_item, arrayList));
     }
 }
