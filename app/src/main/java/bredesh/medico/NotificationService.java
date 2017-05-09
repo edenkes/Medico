@@ -69,7 +69,7 @@ public class NotificationService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, getBack, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationBuilder.setContentIntent(pendingIntent);
 
-//        startThreading();
+        startThreading();
         return Service.START_STICKY;
     }
 
@@ -147,7 +147,7 @@ public class NotificationService extends Service {
             default:                 return local.getAllAlerts();
         }//now cursor initiated with all the alerts today
     }
-/*
+
     private void startThreading()
     {
         new Thread(new Runnable() {
@@ -206,5 +206,5 @@ public class NotificationService extends Service {
                 }
             }
         }).start();
-    }*/
+    }
 }

@@ -6,6 +6,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 public class VideoItem {
+    int id;
     private String name;
     private String time;
     private Uri uri;
@@ -13,7 +14,8 @@ public class VideoItem {
     private final String[] daysNames = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
     private boolean isAlertsActive;
 
-    public VideoItem(String time, String name, String uri, int[] days){
+    public VideoItem(int id, String time, String name, String uri, int[] days){
+        this.id = id;
         this.time = time;
         this.name = name;
         this.days = days;

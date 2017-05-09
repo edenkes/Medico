@@ -89,6 +89,7 @@ public class FragmentHome extends Fragment {
         int index;
 
         for ( c.moveToFirst(),  index=0; !c.isAfterLast(); c.moveToNext(), index++){
+            int id = c.getInt(c.getColumnIndex(db.KEY_ID));
             String time = c.getString(c.getColumnIndex(db.KEY_TIME));
             String name = c.getString(c.getColumnIndex(db.KEY_NAME));
             String uri = c.getString(c.getColumnIndex(db.URIVIDEO));
@@ -101,7 +102,7 @@ public class FragmentHome extends Fragment {
             days[5] = c.getInt(c.getColumnIndex(db.FRIDAY));
             days[6] = c.getInt(c.getColumnIndex(db.SATURDAY));
 
-            arrayList.add(index, new VideoItem(time, name, uri, days));
+            arrayList.add(index, new VideoItem(id, time, name, uri, days));
         }
         c.close();
     }
