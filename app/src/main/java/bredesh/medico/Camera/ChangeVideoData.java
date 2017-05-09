@@ -9,40 +9,56 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 import bredesh.medico.R;
 
 public class ChangeVideoData extends Activity{
     Button btChangeFrequency, btChangeTime, btConfirm;
     TextView tvTime;
-    EditText etExerciseName;
+    EditText etExerciseName, etRepeats;
+    NumberPicker numberPicker;
 
     AlertDialog dialog;
     // array to keep the selected days
     final boolean[] selectedDays = new boolean[7];
     LocalDBManager db;
+    final private int maxSize = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.exercises_data);
-
+        setContentView(R.layout.exercises_change_data);
+        final Calendar calendar = Calendar.getInstance();
         btChangeFrequency = (Button) findViewById(R.id.btChangeFrequency);
-
         btConfirm = (Button) findViewById(R.id.btConfirm);
         etExerciseName = (EditText) findViewById(R.id.etExerciseName);
-
         tvTime = (TextView) findViewById(R.id.tvTime);
         btChangeTime = (Button) findViewById(R.id.btChangeTime);
+        etRepeats = (EditText) findViewById(R.id.etRepeats);
+        numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
 
+        int minute =  calendar.get(Calendar.MINUTE);
+        String str_minute;
+        if(minute < 10)
+            str_minute = "0" + minute;
+        else
+            str_minute = "" + minute;
+        tvTime.setText( calendar.get(Calendar.HOUR_OF_DAY) + " : " + str_minute);
 
         setDialog();
 
         db = new LocalDBManager(getApplicationContext());
+
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(15);
+        numberPicker.setWrapSelectorWheel(false);
 
         btChangeFrequency.setOnClickListener(new View.OnClickListener() {
 
@@ -57,13 +73,18 @@ public class ChangeVideoData extends Activity{
             @Override
             public void onClick(View v) {
 
-                int hour = 8;
-                int minute = 00;
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(ChangeVideoData.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        tvTime.setText( selectedHour + ":" + selectedMinute);
+                        String strSelectedHour = "" + selectedHour, strSelectedMinute;
+                        if(selectedMinute < 10)
+                            strSelectedMinute = "0" + selectedMinute;
+                        else
+                            strSelectedMinute = "" + selectedMinute;
+                        tvTime.setText( strSelectedHour + " : " + strSelectedMinute);
                     }
                 }, hour, minute, DateFormat.is24HourFormat(getApplicationContext()));//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -76,21 +97,22 @@ public class ChangeVideoData extends Activity{
 
             @Override
             public void onClick(View v) {
-                int[] days_to_alert = new int[selectedDays.length];
-                for(int i=0; i<days_to_alert.length; i++)
-                {
-                    if(selectedDays[i])
-                        days_to_alert[i] = 1;
-                    else
-                        days_to_alert[i] = 0;
+                /*if(etExerciseName.getText().toString().length() < maxSize) {
+                    int[] days_to_alert = new int[selectedDays.length];
+                    for (int i = 0; i < days_to_alert.length; i++) {
+                        if (selectedDays[i])
+                            days_to_alert[i] = 1;
+                        else
+                            days_to_alert[i] = 0;
+                    }
+                    String videoUri = getIntent().getStringExtra("RecordedUri");
+//                    int repeats = Integer.parseInt((etRepeats.getText().toString().equals("")) ? "1" : etRepeats.getText().toString());
+                    int repeats = numberPicker.getValue();
+                    db.addAlert(etExerciseName.getText().toString(), tvTime.getText().toString(), repeats ,videoUri, days_to_alert);
+                    finish();
                 }
-//                String videoUri = getIntent().getStringExtra("RecordedUri");
-                Toast.makeText(getApplicationContext(), "name: " + etExerciseName.getText().toString()+ ", time: " + tvTime.getText().toString(),Toast.LENGTH_SHORT).show();
-
-                //TODO - change to replace the data
-//                db.addAlert(etExerciseName.getText().toString(), tvTime.getText().toString(), videoUri, days_to_alert);
-                finish();
-//                startActivity(new Intent(VideoData.this,MainLoginActivity.class));
+                else Toast.makeText(getApplicationContext(), "The name of the exercise is too long, please shorten it", Toast.LENGTH_SHORT).show();
+*/
             }
         });
     }
