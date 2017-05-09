@@ -16,6 +16,7 @@ import java.util.Calendar;
 
 import bredesh.medico.Camera.ChangeVideoData;
 import bredesh.medico.Camera.LocalDBManager;
+import bredesh.medico.Notification.NotificationWindow;
 
 public class NotificationService extends Service {
     private NotificationCompat.Builder builder;
@@ -101,7 +102,7 @@ public class NotificationService extends Service {
     */
         notification_id = (int) System.currentTimeMillis();
 
-        Intent button_intent = new Intent(getApplicationContext(),NotifictionWindow.class);
+        Intent button_intent = new Intent(getApplicationContext(),NotificationWindow.class);
 //        Intent button_intent = new Intent(MyOnClick);
         button_intent.putExtra("id",notification_id);
         PendingIntent button_pending_event = PendingIntent.getActivity(getApplicationContext(),notification_id,
@@ -112,11 +113,11 @@ public class NotificationService extends Service {
         remoteViews.setOnClickPendingIntent(R.id.btCancel, button_pending_event);
         remoteViews.setOnClickPendingIntent(R.id.btSnoozed, button_pending_event);
 
-        Intent notification_intent = new Intent(getApplicationContext(),NotifictionWindow.class);
+        Intent notification_intent = new Intent(getApplicationContext(),NotificationWindow.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,notification_intent,0);
         remoteViews.setTextViewText(R.id.notif_title,notiName);
 
-        Intent acceptIntent = new Intent(this, NotifictionWindow.class);
+        Intent acceptIntent = new Intent(this, NotificationWindow.class);
         PendingIntent piAccept = PendingIntent.getActivity(this,0,acceptIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         String msg = "Select to show alarm screen. "+notiName;
 //        String msg = "It's time to do "+notiName+".\n"+times+" repeats";

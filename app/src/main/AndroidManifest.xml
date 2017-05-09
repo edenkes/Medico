@@ -27,7 +27,6 @@
             android:name=".NotificationService"
             android:process=":my_process" />
 
-        <activity android:name=".NotifictionWindow"></activity>
     </application>
 
 </manifest>
