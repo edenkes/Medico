@@ -22,6 +22,7 @@
         <activity android:name=".Login.MainLoginActivity" />
         <activity android:name=".Camera.VideoData" />
         <activity android:name=".Camera.ChangeVideoData" />
+        <activity android:name=".Notification.NotificationWindow" />
 
         <service
             android:name=".NotificationService"

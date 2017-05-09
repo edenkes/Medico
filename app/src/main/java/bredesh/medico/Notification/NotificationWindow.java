@@ -1,11 +1,16 @@
 package bredesh.medico.Notification;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.util.GregorianCalendar;
 
 import bredesh.medico.MainActivity;
 import bredesh.medico.R;
@@ -34,6 +39,17 @@ public class NotificationWindow extends AppCompatActivity {
 
     public void onClickSnooze(View view){
         Toast.makeText(getApplicationContext(), "Alert been delay in five mints", Toast.LENGTH_LONG).show();
+
+        Long alertTime = new GregorianCalendar().getTimeInMillis()+ 5*1000;
+
+        Intent alertIntent = new Intent(this, AlertReceiver.class);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, alertTime,
+                PendingIntent.getBroadcast(this, 1, alertIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT));
+
         finish();
         startActivity(new Intent(NotificationWindow.this,MainActivity.class));
     }
