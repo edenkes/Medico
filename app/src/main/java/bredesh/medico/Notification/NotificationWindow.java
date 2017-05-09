@@ -22,7 +22,6 @@ public class NotificationWindow extends AppCompatActivity {
         btDone = (Button) findViewById(R.id.btDone);
         btSnooze = (Button) findViewById(R.id.btSnooze);
         btCancel = (Button) findViewById(R.id.btCancel);
-
     }
 
 

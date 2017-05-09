@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:background="@drawable/screen_background_artboard"
+    tools:context="bredesh.medico.Notification.NotificationWindow">
+
+    <Button
+        android:id="@+id/btCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:onClick="onClickCancel"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/btSnooze" />
+
+    <Button
+        android:id="@+id/btSnooze"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Snooze"
+        android:onClick="onClickSnooze"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/btDone" />
+
+    <Button
+        android:id="@+id/btDone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:onClick="onClickDone"
+        />
+
+</RelativeLayout>

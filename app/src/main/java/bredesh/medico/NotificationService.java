@@ -25,13 +25,14 @@ public class NotificationService extends Service {
     private RemoteViews remoteViews;
 
 
-    private NotificationManager mNotificationManager;
-    private Notification.Builder NotificationBuilder;
+//    private NotificationManager mNotificationManager;
+//    private Notification.Builder NotificationBuilder;
     private LocalDBManager local;
     private Cursor cursor;
     private int CURRENT_DAY;
     private boolean shouldStop = false;
-    private int notificationID = 1;
+//    private int notificationID = 1;
+
     private final String MyOnClick = "button_click";
 
     @Override
@@ -39,9 +40,6 @@ public class NotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        Log.i("start", "OnStartCommand");
-
         //Notifications
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
         builder = new NotificationCompat.Builder(getApplicationContext());
@@ -59,6 +57,7 @@ public class NotificationService extends Service {
         CURRENT_DAY = calendar.get(Calendar.DAY_OF_WEEK);
         cursor = getAllTodayAlerts();
 
+        /*
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationBuilder = new Notification.Builder(getApplicationContext());
 
@@ -69,37 +68,12 @@ public class NotificationService extends Service {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, getBack, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationBuilder.setContentIntent(pendingIntent);
-
+*/
         startThreading();
         return Service.START_STICKY;
     }
 
-    private void showNotification(String notiName, int times)
-    {
-    /*    Intent dismissIntent = new Intent(this, NotificationService.class);
-        dismissIntent.setAction();
-        PendingIntent piDismiss = PendingIntent.getService(this, 0, dismissIntent, 0);
-
-        NotificationCompat.Action action = new NotificationCompat.Action.Builder(null, "Previous", prevPendingIntent).build();
-*/
-    /*
-        Intent acceptIntent = new Intent(this, MainActivity.class);
-        PendingIntent piAccept = PendingIntent.getActivity(this,0,acceptIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-
-        String msg = "It's time to do "+notiName+".\n"+times+" repeats";
-        NotificationBuilder
-                .setContentTitle(notiName)
-                .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.mipmap.ic_medico_logo)
-                .setAutoCancel(true)
-                .setContentText(msg)
-                .addAction(android.R.drawable.checkbox_on_background,"Accept", piAccept)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setPriority(Notification.PRIORITY_HIGH)
-                .setWhen(System.currentTimeMillis());
-
-        mNotificationManager.notify(notificationID++, NotificationBuilder.build());
-    */
+    private void showNotification(String notiName, int times) {
         notification_id = (int) System.currentTimeMillis();
 
         Intent button_intent = new Intent(getApplicationContext(),NotificationWindow.class);
@@ -113,8 +87,8 @@ public class NotificationService extends Service {
         remoteViews.setOnClickPendingIntent(R.id.btCancel, button_pending_event);
         remoteViews.setOnClickPendingIntent(R.id.btSnoozed, button_pending_event);
 
-        Intent notification_intent = new Intent(getApplicationContext(),NotificationWindow.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,notification_intent,0);
+        Intent getBack = new Intent(getApplicationContext(),NotificationWindow.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,getBack,0);
         remoteViews.setTextViewText(R.id.notif_title,notiName);
 
         Intent acceptIntent = new Intent(this, NotificationWindow.class);
