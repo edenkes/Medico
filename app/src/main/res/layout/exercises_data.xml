@@ -7,19 +7,8 @@
     android:layoutDirection="ltr"
     android:background="@drawable/screen_add_alert_artboard4">
 
-    <TextView
-        android:id="@+id/tvTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="8 : 00"
-        android:textColor="@color/colorWhite"
-        android:textSize="35sp"
-        android:layout_above="@+id/btConfirm"
-        android:layout_marginBottom="25dp"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:id="@+id/btChangeTime"
+    <ListView
+        android:id="@+id/listChangeTime"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/transparent"
@@ -53,7 +42,6 @@
         android:layout_height="wrap_content"
         android:ems="13"
         android:inputType="textCapWords"
-
         android:hint="Exercise Name"
         android:textSize="25sp"
         android:maxLines="1"
