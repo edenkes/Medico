@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="20dp"
     android:background="@drawable/screen_background_artboard"
-    tools:context="bredesh.medico.NotifictionWindow">
+    tools:context="bredesh.medico.Notification.NotificationWindow">
 
     <Button
         android:id="@+id/btCancel"
