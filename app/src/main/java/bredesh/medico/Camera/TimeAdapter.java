@@ -56,7 +56,7 @@ public class TimeAdapter extends BaseAdapter {
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.exercises_item, parent, false);
+            convertView = inflater.inflate(R.layout.time_item, parent, false);
             ViewHolder viewHolder = new ViewHolder();
             final String item = arrayList.get(position);
 
