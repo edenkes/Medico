@@ -1,81 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
-    android:layoutDirection="ltr"
-    android:background="@drawable/screen_add_alert_artboard4">
+    android:background="@color/colorPrimaryDark"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <ListView
         android:id="@+id/listChangeTime"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transparent"
-        android:layout_below="@+id/btChangeFrequency"
+        android:layout_height="200dp"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="25dp"
+        android:layout_below="@+id/btChangeFrequency"
         android:layout_marginBottom="25dp"
-        android:layout_above="@+id/btConfirm" />
+        android:layout_marginTop="25dp"
+        android:background="@color/transparent" />
 
     <Button
         android:id="@+id/btChangeFrequency"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="@color/transparent"
-        android:layout_centerVertical="true"
+        android:layout_height="100dp"
 
-        />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/numberPicker"
+        android:layout_centerVertical="false"
+        android:background="@color/transparent"
+        android:elevation="0dp"
+        android:paddingStart="15dp"
+        android:text="@string/select_days"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        tools:text="@string/select_days" />
 
     <Button
         android:id="@+id/btConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/listChangeTime"
+        android:background="@color/transparent"
+        android:text="@string/btn_confirm"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/etExerciseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="13"
-        android:inputType="textCapWords"
-        android:hint="Exercise Name"
-        android:textSize="25sp"
-        android:maxLines="1"
-        android:fontFamily="casual"
-        android:textColorHint="@color/textColor"
-        android:textColor="@color/textColor"
-        android:background="@color/colorWhiteTransparent"
-        android:paddingLeft="20sp"
-        android:layout_marginTop="25dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="25dp"
+        android:background="@color/colorWhiteTransparent"
+        android:ems="13"
+        android:fontFamily="casual"
+        android:hint="@string/extercise_name_hint"
+        android:inputType="textCapWords"
+        android:maxLines="1"
+        android:paddingLeft="20sp"
+        android:paddingStart="16dp"
+        android:textColor="@color/textColor"
+        android:textColorHint="@color/textColor"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/etRepeats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/etExerciseName"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorWhiteTransparent"
         android:ems="13"
-        android:inputType="number"
-        android:hint="Repeats (default 1)"
-        android:textSize="25sp"
-        android:maxLines="1"
         android:fontFamily="casual"
-        android:textColorHint="@color/textColor"
+        android:hint="Repeats (default 1)"
+        android:inputType="number"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:text="@string/no_of_repititions"
         android:textColor="@color/textColor"
-        android:layout_below="@id/etExerciseName"
-        android:layout_marginTop="50sp"
+        android:textColorHint="@color/textColor"
+        android:textSize="25sp"
         android:visibility="invisible"
-        android:background="@color/colorWhiteTransparent"/>
+        tools:text="@string/no_of_repititions" />
+
+    <TextView
+        android:id="@+id/lblRepeats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/numberPicker"
+        android:layout_alignParentStart="false"
+        android:layout_alignTop="@+id/numberPicker"
+        android:layout_centerVertical="false"
+        android:gravity="center_vertical"
+        android:labelFor="@+id/numberPicker"
+        android:paddingStart="16dp"
+        android:text="@string/no_of_repititions"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp" />
 
     <NumberPicker
         android:id="@+id/numberPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btChangeTime"
-        android:layout_alignEnd="@+id/etExerciseName" />
+        android:layout_alignEnd="@+id/etExerciseName"
+        android:layout_below="@+id/etExerciseName"
+        android:layout_marginStart="15dp" />
 
 </RelativeLayout>

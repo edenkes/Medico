@@ -19,6 +19,8 @@ import com.example.bottom_bar.BottomBarTab;
 import com.example.bottom_bar.OnTabReselectListener;
 import com.example.bottom_bar.OnTabSelectListener;
 
+import java.util.Locale;
+
 import bredesh.medico.Fragments.FragmentCamera;
 import bredesh.medico.Fragments.FragmentHome;
 import bredesh.medico.Fragments.FragmentPersonal;

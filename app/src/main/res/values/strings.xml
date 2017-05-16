@@ -6,7 +6,11 @@
     <string name="log_in">Log In</string>
     <string name="enter_password">Enter Password</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="button_video">button Video</string>
+    <string name="button_video">וידאו</string>
     <string name="exercises">Exercises</string>
-    <string name="button_camera">button Camera</string>
+    <string name="button_camera">תמונה</string>
+    <string name="extercise_name_hint">שם התרגיל</string>
+    <string name="select_days">ימים</string>
+    <string name="no_of_repititions">מספר חזרות</string>
+    <string name="btn_confirm">אישור</string>
 </resources>
