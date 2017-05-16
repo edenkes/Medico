@@ -61,7 +61,7 @@ public class VideoData extends Activity{
 
         arrayList = new ArrayList<>();
         arrayList.add(startString);
-        adapter = new TimeAdapter(getApplicationContext(), R.layout.time_item, arrayList);
+        adapter = new TimeAdapter(VideoData.this, R.layout.time_item, arrayList);
 
         timeList.setAdapter(adapter);
 
@@ -71,7 +71,7 @@ public class VideoData extends Activity{
         db = new LocalDBManager(getApplicationContext());
 
         numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(15);
+        numberPicker.setMaxValue(50);
         numberPicker.setWrapSelectorWheel(false);
 
         btChangeFrequency.setOnClickListener(new View.OnClickListener() {
@@ -95,8 +95,8 @@ public class VideoData extends Activity{
                             days_to_alert[i] = 0;
                     }
                     String videoUri = getIntent().getStringExtra("RecordedUri");
-                    int repeats = Integer.parseInt((etRepeats.getText().toString().equals("")) ? "1" : etRepeats.getText().toString());
-//                    int repeats = numberPicker.getValue();
+//                    int repeats = Integer.parseInt((etRepeats.getText().toString().equals("")) ? "1" : etRepeats.getText().toString());
+                    int repeats = numberPicker.getValue();
                     for(int i=0; i<arrayList.size(); i++)
                         db.addAlert(etExerciseName.getText().toString(), arrayList.get(i), repeats ,videoUri, days_to_alert);
                     finish();
