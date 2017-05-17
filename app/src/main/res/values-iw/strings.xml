@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">Medico</string>
     <string name="exercises">תרגילים</string>
-    <string name="extercise_name_hint">שם התרגיל</string>
-    <string name="select_days">ימים</string>
+    <string name="exercise_name_hint">שם התרגיל</string>
+    <string name="select_days">בחירת ימים</string>
     <string name="button_camera">צילום תמונה</string>
     <string name="button_video">צילום סרט</string>
 </resources>

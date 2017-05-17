@@ -2,16 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="60sp"
     android:layoutDirection="ltr"
     android:padding="10sp"
+    android:layout_marginBottom="15sp"
     android:weightSum="1"
     android:background="@color/colorBlueGrey">
 
     <ImageButton
         android:id="@+id/timePick"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="end"
         android:layout_weight="0.2"
         android:background="@color/transparent"
@@ -20,20 +21,20 @@
     <TextView
         android:id="@+id/tvTime"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="0.6"
-        android:gravity="center_horizontal"
+        android:gravity="center_horizontal|center_vertical"
         android:text="8 : 00"
         android:textColor="@color/colorWhite"
-        android:textSize="35sp" />
+        android:textSize="25sp" />
 
     <ImageButton
         android:id="@+id/remove"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        android:layout_gravity="end"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
         android:layout_weight="0.2"
+        android:background="@color/transparent"
         android:src="@drawable/ic_delete_black_48dp" />
 
 

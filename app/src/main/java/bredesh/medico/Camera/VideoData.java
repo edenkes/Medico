@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -23,8 +24,8 @@ import bredesh.medico.R;
 
 public class VideoData extends Activity{
 
-    private Button btChangeFrequency, btConfirm;
-    private EditText etExerciseName, etRepeats;
+    private Button btChangeFrequency, btConfirm, addAlert;
+    private EditText etExerciseName;
     private NumberPicker numberPicker;
     private ListView timeList;
     private TimeAdapter adapter;
@@ -42,27 +43,16 @@ public class VideoData extends Activity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.exercises_data);
-        final Calendar calendar = Calendar.getInstance();
         btChangeFrequency = (Button) findViewById(R.id.btChangeFrequency);
         btConfirm = (Button) findViewById(R.id.btConfirm);
+        addAlert = (Button) findViewById(R.id.btAddAlert);
         etExerciseName = (EditText) findViewById(R.id.etExerciseName);
-        etRepeats = (EditText) findViewById(R.id.etRepeats);
         numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
         timeList = (ListView) findViewById(R.id.listChangeTime);
 
-        int minute =  calendar.get(Calendar.MINUTE);
-        String str_minute;
-        if(minute < 10)
-            str_minute = "0" + minute;
-        else
-            str_minute = "" + minute;
-
-        final String startString = calendar.get(Calendar.HOUR_OF_DAY) + " : " + str_minute;
-
         arrayList = new ArrayList<>();
-        arrayList.add(startString);
+        arrayList.add(makeTimeString());
         adapter = new TimeAdapter(VideoData.this, R.layout.time_item, arrayList);
-
         timeList.setAdapter(adapter);
 
 
@@ -95,7 +85,6 @@ public class VideoData extends Activity{
                             days_to_alert[i] = 0;
                     }
                     String videoUri = getIntent().getStringExtra("RecordedUri");
-//                    int repeats = Integer.parseInt((etRepeats.getText().toString().equals("")) ? "1" : etRepeats.getText().toString());
                     int repeats = numberPicker.getValue();
                     for(int i=0; i<arrayList.size(); i++)
                         db.addAlert(etExerciseName.getText().toString(), arrayList.get(i), repeats ,videoUri, days_to_alert);
@@ -103,6 +92,17 @@ public class VideoData extends Activity{
                 }
                 else Toast.makeText(getApplicationContext(), "The name of the exercise is too long, please shorten it", Toast.LENGTH_SHORT).show();
 
+            }
+        });
+
+
+        // updating the list + adding another alert
+        addAlert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                arrayList.add(makeTimeString());
+                ((BaseAdapter) timeList.getAdapter()).notifyDataSetChanged();
             }
         });
     }
@@ -137,6 +137,23 @@ public class VideoData extends Activity{
                         //  Your code when user clicked on Cancel
                     }
                 }).create();
+    }
+
+
+    /*
+        return string format of the current time.
+        DO NOT CHANGE THIS FORMAT [database and other checks relying on that!!]
+     */
+    private String makeTimeString()
+    {
+        Calendar cal = Calendar.getInstance();
+        int minute =  cal.get(Calendar.MINUTE);
+        String str_minute;
+        if(minute < 10)
+            str_minute = "0" + minute;
+        else
+            str_minute = "" + minute;
+        return cal.get(Calendar.HOUR_OF_DAY) + " : " + str_minute;
     }
 
 }
