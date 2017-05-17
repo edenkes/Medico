@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="ltr"
+    android:layoutDirection="rtl"
     android:padding="5sp">
 
     <RelativeLayout
@@ -26,9 +26,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/tvFRI"
-            android:text="SAT"
+            android:text="@string/Saturday_Short"
             android:visibility="invisible" />
 
         <TextView
@@ -36,9 +36,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/tvTHU"
-            android:text="FRI"
+            android:text="@string/Friday_Short"
             android:visibility="invisible" />
 
         <TextView
@@ -46,9 +46,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/tvWED"
-            android:text="THU"
+            android:text="@string/Thursday_Short"
             android:visibility="invisible" />
 
         <TextView
@@ -56,9 +56,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/tvTUE"
-            android:text="WED"
+            android:text="@string/Wednesday_Short"
             android:visibility="invisible" />
 
         <TextView
@@ -66,9 +66,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/tvMON"
-            android:text="TUE"
+            android:text="@string/Tuesday_Short"
             android:visibility="invisible" />
 
         <TextView
@@ -76,9 +76,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/tvSUN"
-            android:text="MON"
+            android:text="@string/Monday_Short"
             android:visibility="invisible" />
 
         <TextView
@@ -86,21 +86,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/imageSync"
-            android:text="SUN"
+            android:text="@string/Sunday_short"
             android:visibility="invisible" />
 
         <TextView
             android:id="@+id/tvExerciseTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="8:00"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_alignBaseline="@+id/tvSAT"
             android:layout_alignBottom="@+id/tvSAT"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:text="8:00"
+            android:textDirection="ltr"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvExercisesName"

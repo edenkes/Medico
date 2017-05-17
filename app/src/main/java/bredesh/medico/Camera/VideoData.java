@@ -3,6 +3,7 @@ package bredesh.medico.Camera;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateFormat;
@@ -108,12 +109,20 @@ public class VideoData extends Activity{
     }
 
     private void setDialog() {
-        final CharSequence[] items = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+        Resources rscs = getResources();
+        final CharSequence[] items = {
+                rscs.getString(R.string.Sunday),
+                rscs.getString(R.string.Monday),
+                rscs.getString(R.string.Tuesday),
+                rscs.getString(R.string.Wednesday),
+                rscs.getString(R.string.Thursday),
+                rscs.getString(R.string.Friday),
+                rscs.getString(R.string.Saturday)};
         for(int i=0; i<selectedDays.length; i++)
             selectedDays[i] = true;
 
         dialog = new AlertDialog.Builder(this)
-                .setTitle("Select Days to Alert")
+                .setTitle(rscs.getString(R.string.alert_dialog_select_days))
                 .setMultiChoiceItems(items, selectedDays, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
@@ -125,18 +134,19 @@ public class VideoData extends Activity{
                             selectedDays[indexSelected] = false;
                         }
                     }
-                }).setPositiveButton("Set", new DialogInterface.OnClickListener() {
+                }).setPositiveButton(rscs.getString(R.string.alert_dialog_set), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //  Your code when user clicked on OK
                         //  You can write the code  to save the selected item here
                     }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                }).setNegativeButton(rscs.getString(R.string.alert_dialog_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //  Your code when user clicked on Cancel
                     }
                 }).create();
+
     }
 
 }

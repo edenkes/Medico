@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/screen_background_artboard"
     tools:context="bredesh.medico.Fragments.FragmentHome">
 
     <TextView
@@ -16,21 +15,20 @@
         android:textColor="@color/textColor"
         android:text="@string/exercises" />
 
+    <ImageButton
+        android:id="@+id/btDeleteForever"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/ic_delete_black_48dp"
+        android:layout_gravity="right|bottom"
+        />
+
     <ListView
         android:id="@+id/lvHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:layout_marginTop="38dp"
-        android:gravity="center"
-        />
-
-    <ImageButton
-        android:id="@+id/btDeleteForever"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@drawable/ic_delete_black_48dp"
-        android:layout_gravity="right|bottom"
-        />
+        android:gravity="center" />
 
 </FrameLayout>
