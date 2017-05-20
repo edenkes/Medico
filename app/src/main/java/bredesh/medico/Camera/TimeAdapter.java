@@ -59,21 +59,21 @@ public class TimeAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.time_item, parent, false);
             ViewHolder viewHolder = new ViewHolder();
             final String item = arrayList.get(position);
-
-            setItemsView(convertView, viewHolder, item);
-
             convertView.setTag(viewHolder);
+            setItemsView(convertView, viewHolder, item,position);
         } else convertView.getTag();
 
         return convertView;
     }
 
 
-    private void setItemsView(View convertView, ViewHolder viewHolder, String item) {
+    private void setItemsView(View convertView, final ViewHolder viewHolder, String item, final int position) {
 
         viewHolder.tvTime = (TextView) convertView.findViewById(R.id.tvTime);
         viewHolder.alarm = (ImageButton) convertView.findViewById(R.id.timePick);
         viewHolder.remove = (ImageButton) convertView.findViewById(R.id.remove);
+
+        viewHolder.tvTime.setText(item);
 
         viewHolder.alarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +91,9 @@ public class TimeAdapter extends BaseAdapter {
                             strSelectedMinute = "0" + selectedMinute;
                         else
                             strSelectedMinute = "" + selectedMinute;
-                    //    t.setText( strSelectedHour + " : " + strSelectedMinute);
+                        String finalTime = strSelectedHour + " : " + strSelectedMinute;
+                         viewHolder.tvTime.setText(finalTime);
+                        arrayList.set(position, finalTime);
                     }
                 }, hour, minute, DateFormat.is24HourFormat(context));//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -100,7 +102,14 @@ public class TimeAdapter extends BaseAdapter {
             }
         });
 
-        viewHolder.tvTime.setText(item);
+        viewHolder.remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                arrayList.remove(position);
+                notifyDataSetChanged();
+            }
+        });
 
     }
 
