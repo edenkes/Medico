@@ -35,11 +35,12 @@ public class VideoData extends Activity{
     private ListView timeList;
     private TimeAdapter adapter;
     private ArrayList<String> arrayList;
-
+    private TextView lblSelectedDays;
 
     private AlertDialog dialog;
     // array to keep the selected days
     private final boolean[] selectedDays = new boolean[7];
+    private final boolean[] newSelectedDays = new boolean[7];
     private LocalDBManager db;
     private final int maxSize = 20;
 
@@ -53,6 +54,8 @@ public class VideoData extends Activity{
         addAlert = (Button) findViewById(R.id.btAddAlert);
         etExerciseName = (EditText) findViewById(R.id.etExerciseName);
         numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
+        lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
+
         timeList = (ListView) findViewById(R.id.listChangeTime);
 
         arrayList = new ArrayList<>();
@@ -73,6 +76,8 @@ public class VideoData extends Activity{
 
             @Override
             public void onClick(View v) {
+                for (int i=0; i< 7; i++)
+                    newSelectedDays[i] = selectedDays[i];
                 dialog.show();
                 // alignDialogRTL(dialog, getApplicationContext());
             }
@@ -145,8 +150,33 @@ public class VideoData extends Activity{
         }
     }
 
-    private void setDialog() {
+    private void updateSelectedDays()
+    {
+        String result = "";
         Resources rscs = getResources();
+        final CharSequence[] items = {
+                rscs.getString(R.string.Sunday_short),
+                rscs.getString(R.string.Monday_Short),
+                rscs.getString(R.string.Tuesday_Short),
+                rscs.getString(R.string.Wednesday_Short),
+                rscs.getString(R.string.Thursday_Short),
+                rscs.getString(R.string.Friday_Short),
+                rscs.getString(R.string.Saturday_Short)};
+        Boolean anyDayAbsent = false;
+        for (int i=0; i< selectedDays.length; i++)
+        {
+            if (selectedDays[i])
+                result += (result != "" ? " " : "") + items[i];
+            else
+                anyDayAbsent = true;
+        }
+        if (!anyDayAbsent)
+            result = rscs.getString(R.string.all_days);
+        lblSelectedDays.setText(result);
+    }
+
+    private void setDialog() {
+        final Resources rscs = getResources();
         final CharSequence[] items = {
                 rscs.getString(R.string.Sunday),
                 rscs.getString(R.string.Monday),
@@ -160,26 +190,37 @@ public class VideoData extends Activity{
 
         dialog = new AlertDialog.Builder(this)
                 .setTitle(rscs.getString(R.string.alert_dialog_select_days))
-                .setMultiChoiceItems(items, selectedDays, new DialogInterface.OnMultiChoiceClickListener() {
+                .setMultiChoiceItems(items, newSelectedDays, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
-                        if (isChecked) {
-                            // If the user checked the item, add it to the selected items
-                            selectedDays[indexSelected] = true;
-                        } else if (selectedDays[indexSelected]) {
-                            // Else, if the item is already in the array, remove it
-                            selectedDays[indexSelected] = false;
+                        if (!isChecked) {
+                            Boolean anyOtherDaySelected = false;
+                            for (int i=0; i< 7; i++)
+                                if (i != indexSelected && newSelectedDays[i]) {
+                                    anyOtherDaySelected = true;
+                                    break;
+                                }
+                            if (!anyOtherDaySelected) {
+                                newSelectedDays[indexSelected] = true;
+                                ((AlertDialog) dialog).getListView().setItemChecked(indexSelected, true);
+                                Toast.makeText(getApplicationContext(), rscs.getString(R.string.error_must_select_one_day),Toast.LENGTH_LONG).show();
+
+                            }
                         }
                     }
                 }).setPositiveButton(rscs.getString(R.string.alert_dialog_set), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        for (int i=0; i< 7; i++)
+                            selectedDays[i] = newSelectedDays[i];
+                        updateSelectedDays();
                         //  Your code when user clicked on OK
                         //  You can write the code  to save the selected item here
                     }
                 }).setNegativeButton(rscs.getString(R.string.alert_dialog_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        updateSelectedDays();
                         //  Your code when user clicked on Cancel
                     }
                 }).create();

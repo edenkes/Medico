@@ -33,4 +33,6 @@
     <string name="btn_add_alert">הוסף התראה</string>
     <string name="exercise_name_hint">שם התרגיל</string>
     <string name="all_alerts_deleted">כל ההתרעות הוסרו</string>
+    <string name="all_days">כל הימים</string>
+    <string name="error_must_select_one_day">יש לבחור יום אחד לפחות</string>
 </resources>
