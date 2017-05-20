@@ -97,8 +97,10 @@ public class VideoData extends Activity{
                     }
                     String videoUri = getIntent().getStringExtra("RecordedUri");
                     int repeats = numberPicker.getValue();
+                    String times = "";
                     for(int i=0; i<arrayList.size(); i++)
-                        db.addAlert(etExerciseName.getText().toString(), arrayList.get(i), repeats ,videoUri, days_to_alert);
+                        times = times + (i > 0? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
+                    db.addAlert(etExerciseName.getText().toString(), times, repeats ,videoUri, days_to_alert);
                     finish();
                 }
                 else Toast.makeText(getApplicationContext(), "The name of the exercise is too long, please shorten it", Toast.LENGTH_SHORT).show();

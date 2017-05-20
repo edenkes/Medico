@@ -48,7 +48,7 @@ public class LocalDBManager extends SQLiteOpenHelper{
                 THURSDAY + " INTEGER, "+
                 FRIDAY + " INTEGER, "+
                 SATURDAY + " INTEGER, "+
-                ALERT_TODAY + " INTEGER )";
+                ALERT_TODAY + " TEXT )";
 
         //days: 1 - should alert; 0 - otherwise
         //ALERT_TODAY 0 - should alert 1 already alerted
@@ -89,7 +89,7 @@ public class LocalDBManager extends SQLiteOpenHelper{
         values.put(THURSDAY, days_to_alert[4]);
         values.put(FRIDAY, days_to_alert[5]);
         values.put(SATURDAY, days_to_alert[6]);
-        values.put(ALERT_TODAY, 0);
+        values.put(ALERT_TODAY, "");
 
         // 3. insert
         db.insert(TABLE_NAME, // table
@@ -133,7 +133,7 @@ public class LocalDBManager extends SQLiteOpenHelper{
         values.put(THURSDAY, days_to_alert[4]);
         values.put(FRIDAY, days_to_alert[5]);
         values.put(SATURDAY, days_to_alert[6]);
-        values.put(ALERT_TODAY, 0);
+        values.put(ALERT_TODAY, "");
         db.update(TABLE_NAME, values, KEY_ID+"="+rowID, null);
     }
 
@@ -144,17 +144,17 @@ public class LocalDBManager extends SQLiteOpenHelper{
         return db.delete(TABLE_NAME, KEY_ID+"="+rowID, null) >0;
     }
 
-    public void updateAlertToday(int rowID) {
+    public void updateAlertToday(int rowID, String time) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ALERT_TODAY, 1);
+        values.put(ALERT_TODAY, time);
         db.update(TABLE_NAME, values, KEY_ID+"="+rowID, null);
     }
 
     public void allTodaysAlertReset(int rowID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ALERT_TODAY, 0);
+        values.put(ALERT_TODAY, "");
         db.update(TABLE_NAME, values, KEY_ID+"="+rowID, null);
     }
 }

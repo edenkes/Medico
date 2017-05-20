@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/screen_background_artboard"
+    android:background="@color/colorNotificationBackground"
     android:layoutDirection="ltr"
     tools:context="bredesh.medico.Fragments.FragmentCamera">
 
@@ -21,14 +21,14 @@
 
         <Button
             android:id="@+id/btVideo"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/ic_videocam_black_48dp"
+            android:fontFamily="cursive"
             android:text="@string/button_video"
             android:textSize="30sp"
-            android:fontFamily="cursive"
             tools:ignore="ButtonStyle" />
 
         <Button

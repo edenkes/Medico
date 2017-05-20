@@ -14,8 +14,9 @@ public class VideoItem {
     private final String[] daysNames = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
     private boolean isAlertsActive;
     private int noOfRepetitions;
+    private boolean detailedTimes;
 
-    public VideoItem(int id, String time, String name, String uri, int[] days, int noOfRepetitions){
+    public VideoItem(int id, String time, String name, String uri, int[] days, int noOfRepetitions, boolean detailedTimes){
         this.id = id;
         this.time = time;
         this.name = name;
@@ -25,6 +26,7 @@ public class VideoItem {
         }else this.uri = null;
         isAlertsActive = true;
         this.noOfRepetitions = noOfRepetitions;
+        this.detailedTimes = detailedTimes;
     }
 
     public Uri getUri() { return  uri;}
@@ -40,6 +42,8 @@ public class VideoItem {
     }
 
     public int getNoOfRepetitions() {return this.noOfRepetitions;}
+
+    public boolean getDetailedTimes() {return this.detailedTimes;}
 
     public String getDaysString(){
         String ans = "";

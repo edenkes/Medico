@@ -36,4 +36,6 @@
     <string name="all_alerts_deleted">כל ההתרעות הוסרו</string>
     <string name="all_days">כל הימים</string>
     <string name="error_must_select_one_day">יש לבחור יום אחד לפחות</string>
+    <string name="several_times">%d פעמים ביום</string>
+    <string name="times_splitter">", "</string>
 </resources>

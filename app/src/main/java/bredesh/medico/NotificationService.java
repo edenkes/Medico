@@ -154,21 +154,25 @@ public class NotificationService extends Service {
                                 Log.i("normal", "cursoe size: " + cursor.getCount());
                                 cursor.moveToFirst();
                                 do {
-                                    time = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
-                                    int gap = 2;
-                                    if (currentHour < 10) gap = 1;
-                                    int notificationHour = Integer.parseInt(time.substring(0, gap));
-                                    int notificationMinute = Integer.parseInt(time.substring(gap + 3));
-                                    int todayAlert = cursor.getInt(cursor.getColumnIndex(LocalDBManager.ALERT_TODAY));
-                                    Log.i("normal", "notificationHour: " + notificationHour);
-                                    Log.i("normal", "notificationMinute: " + notificationMinute);
-                                    if (notificationHour == currentHour && notificationMinute == currentMinutes && todayAlert == 0) {
-                                        Log.i("normal", "enter alert");
-                                        //now we need to show notification!!
-                                        String notificationName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
-                                        int repeats = cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_REPEATS));
-                                        showNotification(notificationName, repeats);
-                                        local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)));
+                                    String allTimes=cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
+                                    String[] times = allTimes.split(getResources().getString(R.string.times_splitter));
+                                    for (int i=0; i< times.length; i++) {
+                                        time = times[i];
+                                        int gap = 2;
+                                        if (currentHour < 10) gap = 1;
+                                        int notificationHour = Integer.parseInt(time.substring(0, gap));
+                                        int notificationMinute = Integer.parseInt(time.substring(gap + 3));
+                                        String todayAlert = cursor.getString(cursor.getColumnIndex(LocalDBManager.ALERT_TODAY));
+                                        Log.i("normal", "notificationHour: " + notificationHour);
+                                        Log.i("normal", "notificationMinute: " + notificationMinute);
+                                        if (notificationHour == currentHour && notificationMinute == currentMinutes && todayAlert.compareTo(time) < 0) {
+                                            Log.i("normal", "enter alert");
+                                            //now we need to show notification!!
+                                            String notificationName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
+                                            int repeats = cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_REPEATS));
+                                            showNotification(notificationName, repeats);
+                                            local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)), time);
+                                        }
                                     }
                                 } while (cursor.moveToNext());
                             }

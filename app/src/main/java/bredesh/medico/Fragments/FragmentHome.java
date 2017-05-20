@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import bredesh.medico.Camera.ChangeVideoData;
 import bredesh.medico.Camera.LocalDBManager;
@@ -91,6 +92,13 @@ public class FragmentHome extends Fragment {
         for ( c.moveToFirst(),  index=0; !c.isAfterLast(); c.moveToNext(), index++){
             int id = c.getInt(c.getColumnIndex(db.KEY_ID));
             String time = c.getString(c.getColumnIndex(db.KEY_TIME));
+            String [] times = time.split(Pattern.quote(getResources().getString(R.string.times_splitter)));
+            boolean detailedTimes = true;
+            if (times.length > 3) {
+                time = String.format(getString(R.string.several_times), times.length);
+                detailedTimes = false;
+            }
+
             String name = c.getString(c.getColumnIndex(db.KEY_NAME));
             String uri = c.getString(c.getColumnIndex(db.URIVIDEO));
             int[] days = new int[7];
@@ -103,7 +111,7 @@ public class FragmentHome extends Fragment {
             days[6] = c.getInt(c.getColumnIndex(db.SATURDAY));
             int noOfRepetitions = c.getInt(c.getColumnIndex(db.KEY_REPEATS));
 
-            arrayList.add(index, new VideoItem(id, time, name, uri, days, noOfRepetitions));
+            arrayList.add(index, new VideoItem(id, time, name, uri, days, noOfRepetitions, detailedTimes));
         }
         c.close();
     }

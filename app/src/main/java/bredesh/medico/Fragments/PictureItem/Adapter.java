@@ -120,7 +120,8 @@ public class Adapter extends BaseAdapter {
         viewHolder.lblExerciseNoOfRepeats.setText(String.valueOf(item.getNoOfRepetitions()));
         viewHolder.tvExercisesName.setText(item.getName());
         viewHolder.tvExerciseTime.setText(item.getTime());
-
+        if (!item.getDetailedTimes())
+            viewHolder.tvExerciseTime.setTextDirection(View.TEXT_DIRECTION_RTL);
         activateAlerts(viewHolder, item);
     }
 

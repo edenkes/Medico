@@ -98,6 +98,8 @@
             android:layout_alignBaseline="@+id/tvSAT"
             android:layout_alignBottom="@+id/tvSAT"
             android:layout_alignParentEnd="true"
+            android:maxWidth="235sp"
+            android:overScrollMode="ifContentScrolls"
             android:text="8:00"
             android:textDirection="ltr"
             android:textSize="20sp"
