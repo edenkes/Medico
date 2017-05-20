@@ -30,4 +30,7 @@
     <string name="alert_dialog_select_days">בחירת ימים להתרעה</string>
     <string name="alert_dialog_set">אישור</string>
     <string name="alert_dialog_cancel">ביטול</string>
+    <string name="btn_add_alert">הוסף התראה</string>
+    <string name="exercise_name_hint">שם התרגיל</string>
+    <string name="all_alerts_deleted">כל ההתרעות הוסרו</string>
 </resources>

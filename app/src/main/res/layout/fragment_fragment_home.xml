@@ -15,14 +15,6 @@
         android:textColor="@color/textColor"
         android:text="@string/exercises" />
 
-    <ImageButton
-        android:id="@+id/btDeleteForever"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/ic_delete_black_48dp"
-        android:layout_gravity="right|bottom"
-        />
-
     <ListView
         android:id="@+id/lvHome"
         android:layout_width="match_parent"
@@ -30,5 +22,13 @@
         android:layout_gravity="bottom"
         android:layout_marginTop="38dp"
         android:gravity="center" />
+
+    <ImageButton
+        android:id="@+id/btDeleteForever"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/ic_delete_black_48dp"
+        android:layout_gravity="right|bottom"
+        />
 
 </FrameLayout>

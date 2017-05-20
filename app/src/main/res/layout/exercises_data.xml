@@ -11,16 +11,16 @@
         android:id="@+id/etExerciseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhiteTransparent"
-        android:textColor="@color/textColor"
-        android:textColorHint="@color/textColor"
         android:layout_margin="10sp"
-        android:paddingRight="5sp"
+        android:background="@color/colorWhiteTransparent"
         android:ems="13"
-        android:maxLines="1"
         android:fontFamily="casual"
         android:hint="@string/exercise_name_hint"
         android:inputType="textCapWords"
+        android:maxLines="1"
+        android:paddingRight="5sp"
+        android:textColor="@color/textColor"
+        android:textColorHint="@color/textColor"
         android:textSize="24sp" />
 
     <LinearLayout
@@ -33,16 +33,17 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="@string/number_of_repeats"
+            android:text="@string/no_of_repititions"
             android:textColor="@color/colorWhite"
             android:textSize="24sp" />
 
         <NumberPicker
             android:id="@+id/numberPicker"
-            android:layout_width="match_parent"
-            android:layout_marginRight="60sp"
-            android:layout_marginLeft="10sp"
-            android:layout_height="100sp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60sp"
+            android:scaleX="1.5"
+            android:scaleY="1.2" />
 
 
     </LinearLayout>

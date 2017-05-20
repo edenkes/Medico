@@ -105,9 +105,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            /*
             case R.id.action_setting:
                 Toast.makeText(MainActivity.this, "setting", Toast.LENGTH_SHORT);
                 return true;
+                */
             /*case R.id.action_logout:
                 Toast.makeText(MainActivity.this, "logout", Toast.LENGTH_SHORT);
                 logout();

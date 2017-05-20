@@ -61,7 +61,12 @@ public class TimeAdapter extends BaseAdapter {
             final String item = arrayList.get(position);
             convertView.setTag(viewHolder);
             setItemsView(convertView, viewHolder, item,position);
-        } else convertView.getTag();
+        } else
+        {
+            final String item = arrayList.get(position);
+            ViewHolder viewHolder = (ViewHolder) convertView.getTag();
+            setItemsView(convertView, viewHolder, item, position);
+        }
 
         return convertView;
     }

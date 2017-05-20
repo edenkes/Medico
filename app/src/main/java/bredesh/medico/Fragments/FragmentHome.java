@@ -55,7 +55,7 @@ public class FragmentHome extends Fragment {
         lvHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity().getApplicationContext(), "Enter to setting", Toast.LENGTH_SHORT).show();
+                 /* Toast.makeText(getActivity().getApplicationContext(), "Enter to setting", Toast.LENGTH_SHORT).show(); */
 
                 Intent intent = new Intent(getActivity(), ChangeVideoData.class);
                 startActivity(intent);
@@ -68,7 +68,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 LocalDBManager db = new LocalDBManager(getActivity().getApplicationContext());
                 db.DeleteAllAlerts();
-                Toast.makeText(getActivity().getApplicationContext(), "Alerts been Removed", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity().getApplicationContext(), getResources().getString(R.string.all_alerts_deleted) , Toast.LENGTH_LONG).show();
 
                 //Refresh the home page
                 FragmentManager fm = getFragmentManager();

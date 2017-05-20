@@ -1,17 +1,21 @@
 package bredesh.medico.Camera;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateFormat;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.Switch;
@@ -70,6 +74,7 @@ public class VideoData extends Activity{
             @Override
             public void onClick(View v) {
                 dialog.show();
+                // alignDialogRTL(dialog, getApplicationContext());
             }
         });
 
@@ -106,6 +111,38 @@ public class VideoData extends Activity{
                 ((BaseAdapter) timeList.getAdapter()).notifyDataSetChanged();
             }
         });
+    }
+
+    public static void alignDialogRTL(Dialog dialog, Context context) {
+        // Get message text view
+        TextView message = (TextView)dialog.findViewById(android.R.id.message);
+
+        // Defy gravity
+        if (message != null) message.setGravity(Gravity.RIGHT);
+
+        // Get title text view
+        TextView title = (TextView)dialog.findViewById(context.getResources().getIdentifier("alertTitle", "id", "android"));
+
+        // Defy gravity (again)
+        if (title != null) {
+            title.setGravity(Gravity.RIGHT);
+            // Get title's parent layout
+            LinearLayout parent = ((LinearLayout) title.getParent());
+            if (parent != null) {
+
+                // Get layout params
+                LinearLayout.LayoutParams originalParams = (LinearLayout.LayoutParams) parent.getLayoutParams();
+
+                // Set width to WRAP_CONTENT
+                originalParams.width = LinearLayout.LayoutParams.WRAP_CONTENT;
+
+                // Defy gravity (last time)
+                originalParams.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
+
+                // Set updated layout params
+                parent.setLayoutParams(originalParams);
+            }
+        }
     }
 
     private void setDialog() {
