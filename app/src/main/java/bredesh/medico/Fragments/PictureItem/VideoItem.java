@@ -13,8 +13,9 @@ public class VideoItem {
     private int[] days;
     private final String[] daysNames = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
     private boolean isAlertsActive;
+    private int noOfRepetitions;
 
-    public VideoItem(int id, String time, String name, String uri, int[] days){
+    public VideoItem(int id, String time, String name, String uri, int[] days, int noOfRepetitions){
         this.id = id;
         this.time = time;
         this.name = name;
@@ -23,6 +24,7 @@ public class VideoItem {
             this.uri = Uri.parse(uri);
         }else this.uri = null;
         isAlertsActive = true;
+        this.noOfRepetitions = noOfRepetitions;
     }
 
     public Uri getUri() { return  uri;}
@@ -36,6 +38,8 @@ public class VideoItem {
     public int[] getDays() {
         return days;
     }
+
+    public int getNoOfRepetitions() {return this.noOfRepetitions;}
 
     public String getDaysString(){
         String ans = "";

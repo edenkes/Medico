@@ -115,7 +115,9 @@ public class Adapter extends BaseAdapter {
         viewHolder.tvSAT = (TextView) convertView.findViewById(R.id.tvSAT);
 
         viewHolder.imageSync = (ImageView) convertView.findViewById(R.id.imageSync);
+        viewHolder.lblExerciseNoOfRepeats = (TextView) convertView.findViewById(R.id.lblExerciseNoOfRepeats);
 
+        viewHolder.lblExerciseNoOfRepeats.setText(String.valueOf(item.getNoOfRepetitions()));
         viewHolder.tvExercisesName.setText(item.getName());
         viewHolder.tvExerciseTime.setText(item.getTime());
 
@@ -154,7 +156,7 @@ public class Adapter extends BaseAdapter {
     }
 
     private class ViewHolder{
-        TextView tvExercisesName, tvExerciseTime;
+        TextView tvExercisesName, tvExerciseTime, lblExerciseNoOfRepeats;
         TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
         Button btPlay, btAlerts;
         ImageView imageSync;

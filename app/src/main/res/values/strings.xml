@@ -11,7 +11,8 @@
     <string name="button_camera">תמונה</string>
     <string name="extercise_name_hint">שם התרגיל</string>
     <string name="select_days">ימים</string>
-    <string name="no_of_repititions">מספר חזרות</string>
+    <string name="no_of_repetitions">מספר חזרות:</string>
+    <string name="repetitions">חזרות:</string>
     <string name="btn_confirm">אישור</string>
     <string name="Sunday_short">א</string>
     <string name="Monday_Short">ב</string>
