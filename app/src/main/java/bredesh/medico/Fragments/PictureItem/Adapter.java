@@ -3,6 +3,7 @@ package bredesh.medico.Fragments.PictureItem;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
@@ -119,7 +120,8 @@ public class Adapter extends BaseAdapter {
 
         viewHolder.lblExerciseNoOfRepeats.setText(String.valueOf(item.getNoOfRepetitions()));
         viewHolder.tvExercisesName.setText(item.getName());
-        viewHolder.tvExerciseTime.setText(item.getTime());
+        Resources rscs = context.getResources();
+        viewHolder.tvExerciseTime.setText(item.getTime().replace(rscs.getString(R.string.times_splitter), rscs.getString(R.string.times_nice_separator)));
         if (!item.getDetailedTimes())
             viewHolder.tvExerciseTime.setTextDirection(View.TEXT_DIRECTION_RTL);
         activateAlerts(viewHolder, item);

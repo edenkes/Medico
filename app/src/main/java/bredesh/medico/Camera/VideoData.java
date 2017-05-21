@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -25,6 +26,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+
 import bredesh.medico.R;
 
 public class VideoData extends Activity{
@@ -43,12 +46,34 @@ public class VideoData extends Activity{
     private final boolean[] newSelectedDays = new boolean[7];
     private LocalDBManager db;
     private final int maxSize = 20;
+    private Intent intent;
+    private Resources rscs;
+    private int exerciseId;
+    private final int NewExercise = -6;
+
+    private void setExistingExercise(Intent intent)
+    {
+
+        etExerciseName.setText(intent.getStringExtra("exercise_name"));
+
+        String times = intent.getStringExtra("time");
+        String[] timeAL = times.split(rscs.getString(R.string.times_splitter));
+        arrayList = new ArrayList<>();
+        Collections.addAll(arrayList, timeAL);
+        int repeats = intent.getIntExtra("repeats",1);
+        numberPicker.setValue(repeats);
+        int[] days = intent.getIntArrayExtra("days");
+        for (int i=0; i< 7; i++)
+            selectedDays[i] = days[i] != 0;
+        updateSelectedDays();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.exercises_data);
+        rscs = getResources();
         btChangeFrequency = (Button) findViewById(R.id.btChangeFrequency);
         btConfirm = (Button) findViewById(R.id.btConfirm);
         addAlert = (Button) findViewById(R.id.btAddAlert);
@@ -57,20 +82,27 @@ public class VideoData extends Activity{
         lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
 
         timeList = (ListView) findViewById(R.id.listChangeTime);
-
-        arrayList = new ArrayList<>();
-        arrayList.add(makeTimeString());
-        adapter = new TimeAdapter(VideoData.this, R.layout.time_item, arrayList);
-        timeList.setAdapter(adapter);
-
-
-        setDialog();
-
         db = new LocalDBManager(getApplicationContext());
-
+        this.intent = getIntent();
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(50);
         numberPicker.setWrapSelectorWheel(false);
+
+        this.exerciseId = intent.getIntExtra("exerciseId", NewExercise);
+        if (this.exerciseId != NewExercise)
+        {
+            setExistingExercise(intent);
+        }
+        else {
+            arrayList = new ArrayList<>();
+            arrayList.add(makeTimeString());
+            for(int i=0; i<selectedDays.length; i++)
+                selectedDays[i] = true;
+        }
+
+        adapter = new TimeAdapter(VideoData.this, R.layout.time_item, arrayList);
+        timeList.setAdapter(adapter);
+        setDialog();
 
         btChangeFrequency.setOnClickListener(new View.OnClickListener() {
 
@@ -100,7 +132,10 @@ public class VideoData extends Activity{
                     String times = "";
                     for(int i=0; i<arrayList.size(); i++)
                         times = times + (i > 0? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
-                    db.addAlert(etExerciseName.getText().toString(), times, repeats ,videoUri, days_to_alert);
+                    if (exerciseId != NewExercise)
+                        db.updateRow(exerciseId, etExerciseName.getText().toString(), times, repeats, days_to_alert);
+                    else
+                        db.addAlert(etExerciseName.getText().toString(), times, repeats ,videoUri, days_to_alert);
                     finish();
                 }
                 else Toast.makeText(getApplicationContext(), "The name of the exercise is too long, please shorten it", Toast.LENGTH_SHORT).show();
@@ -187,8 +222,6 @@ public class VideoData extends Activity{
                 rscs.getString(R.string.Thursday),
                 rscs.getString(R.string.Friday),
                 rscs.getString(R.string.Saturday)};
-        for(int i=0; i<selectedDays.length; i++)
-            selectedDays[i] = true;
 
         dialog = new AlertDialog.Builder(this)
                 .setTitle(rscs.getString(R.string.alert_dialog_select_days))

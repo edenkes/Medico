@@ -21,9 +21,12 @@ import java.util.regex.Pattern;
 
 import bredesh.medico.Camera.ChangeVideoData;
 import bredesh.medico.Camera.LocalDBManager;
+import bredesh.medico.Camera.VideoData;
 import bredesh.medico.Fragments.PictureItem.Adapter;
 import bredesh.medico.Fragments.PictureItem.VideoItem;
 import bredesh.medico.R;
+
+import static android.app.Activity.RESULT_OK;
 
 public class FragmentHome extends Fragment {
     private Context context;
@@ -53,15 +56,23 @@ public class FragmentHome extends Fragment {
         final Adapter adapter = new Adapter(context, R.layout.exercises_item, arrayList);
         lvHome.setAdapter(adapter);
 
-        lvHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvHome.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                  /* Toast.makeText(getActivity().getApplicationContext(), "Enter to setting", Toast.LENGTH_SHORT).show(); */
 
-                Intent intent = new Intent(getActivity(), ChangeVideoData.class);
-                startActivity(intent);
+                Intent intent = new Intent(getActivity(), VideoData.class);
+                VideoItem vi = (VideoItem) parent.getItemAtPosition(position);
+                intent.putExtra("exerciseId", vi.getId());
+                intent.putExtra("repeats", vi.getNoOfRepetitions());
+                intent.putExtra("time", vi.getTime());
+                intent.putExtra("exercise_name", vi.getName());
+                intent.putExtra("days", vi.getDays());
+                startActivityForResult(intent, 0x1987);
+                return true;
             }
         });
+
 
         ImageButton btDeleteForever = (ImageButton) view.findViewById(R.id.btDeleteForever);
         btDeleteForever.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +92,15 @@ public class FragmentHome extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        FragmentHome fragment = new FragmentHome();
+        ft.replace(R.id.fragment_place, fragment);
+        ft.commit();
     }
 
     private void setArrayList() {

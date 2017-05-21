@@ -53,6 +53,7 @@ public class VideoItem {
         return ans;
     }
 
+    public int getId() {return this.id;}
     public boolean isAlertsActive(){
         return isAlertsActive;
     }
