@@ -22,6 +22,7 @@
     <color name="colorOfWhite">#fffde7</color>
     <color name="colorYellow">#f2fb00</color>
     <color name="colorGreen">#2cf404</color>
+    <color name="colorGreenDark">#1a8d03</color>
     <color name="colorRed">#fc0227</color>
     <color name="colorOrange">#fc8c02</color>
     <color name="colorBlueGrey">#607D8B</color>

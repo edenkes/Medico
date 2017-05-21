@@ -41,10 +41,8 @@
         <NumberPicker
             android:id="@+id/numberPicker"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60sp"
-            android:scaleX="1.5"
-            android:scaleY="1.2" />
+            android:layout_height="80sp"
+            android:layout_marginStart="60sp" />
 
 
     </LinearLayout>
