@@ -38,8 +38,11 @@
             android:textColor="@color/colorWhite"
             android:textSize="24sp" />
 
+
+
         <NumberPicker
             android:id="@+id/numberPicker"
+            android:theme="@style/AppTheme.Picker"
             android:layout_width="wrap_content"
             android:layout_height="80sp"
             android:layout_marginStart="60sp" />
@@ -77,34 +80,53 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/listChangeTime"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginBottom="10sp"
-        android:layout_marginTop="10sp"
-        android:background="@color/colorDarkBlue"
-        android:padding="10sp" />
+        android:layout_height="match_parent">
 
+        <ListView
+            android:id="@+id/listChangeTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btAddAlert"
+            android:layout_marginTop="10sp"
+            android:background="@color/colorDarkBlue"
+            android:padding="10sp" />
 
-    <Button
-        android:id="@+id/btAddAlert"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        android:text="@string/btn_add_alert"
-        android:textColor="@color/colorWhite"
-        android:textSize="20sp" />
+        <Button
+            android:id="@+id/btAddAlert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btConfirm"
+            android:background="@color/transparent"
+            android:text="@string/btn_add_alert"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
 
+        <Button
+            android:id="@+id/btConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="@color/transparent"
+            android:text="@string/btn_confirm"
+            android:textColor="@color/colorWhite"
+            android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/btConfirm"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:background="@color/transparent"
-        android:text="@string/btn_confirm"
-        android:textColor="@color/colorWhite"
-        android:textSize="24sp" />
+        <Button
+            android:id="@+id/btDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/btConfirm"
+            android:background="@color/colorRed"
+            android:text="@string/delete_exercise_button"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>
