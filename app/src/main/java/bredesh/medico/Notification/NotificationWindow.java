@@ -25,6 +25,7 @@ public class NotificationWindow extends AppCompatActivity {
     private Intent toMain;
     private LocalDBManager db;
     private PartialVideoItem item= null;
+    private final int SNOOZE_TIME = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,10 @@ public class NotificationWindow extends AppCompatActivity {
         if(item != null) {
             String finalText = String.format(rscs.getString(R.string.alert_page_text), item.name, item.repeats);
             title.setText(finalText);
-            db.deleteRow(id);
+            if(item.temp) {
+                db.deleteRow(id);
+
+            }
         }
         else title.setText("FATAL ERROR!");
 
@@ -108,7 +112,7 @@ public class NotificationWindow extends AppCompatActivity {
                 if(item!=null) {
                     String timeSTR="";
                     Calendar cal = Calendar.getInstance();
-                    int minute =  (cal.get(Calendar.MINUTE) +5);
+                    int minute =  (cal.get(Calendar.MINUTE) + SNOOZE_TIME);
                     int hour = cal.get(Calendar.HOUR_OF_DAY);
                     if(minute >= 60)
                     {
