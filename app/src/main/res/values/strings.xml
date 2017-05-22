@@ -39,4 +39,5 @@
     <string name="several_times">%d פעמים ביום</string>
     <string name="times_splitter">", "</string>
     <string name="times_nice_separator">" | "</string>
+    <string name="remove_all_alerts">להסיר את כל ההתרעות?</string>
 </resources>
