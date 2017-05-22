@@ -4,7 +4,6 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.IBinder;
@@ -14,8 +13,8 @@ import android.widget.RemoteViews;
 
 import java.util.Calendar;
 
-import bredesh.medico.Camera.ChangeVideoData;
 import bredesh.medico.Camera.LocalDBManager;
+import bredesh.medico.Notification.ClickedNotification;
 import bredesh.medico.Notification.NotificationWindow;
 
 public class NotificationService extends Service {
@@ -31,9 +30,6 @@ public class NotificationService extends Service {
     private Cursor cursor;
     private int CURRENT_DAY;
     private boolean shouldStop = false;
-//    private int notificationID = 1;
-
-    private final String MyOnClick = "button_click";
 
     @Override
     public IBinder onBind(Intent intent) { return null; }
@@ -76,9 +72,9 @@ public class NotificationService extends Service {
     private void showNotification(String notiName, int times) {
         notification_id = (int) System.currentTimeMillis();
 
-        Intent button_intent = new Intent(getApplicationContext(),NotificationWindow.class);
-//        Intent button_intent = new Intent(MyOnClick);
+        Intent button_intent = new Intent(getApplicationContext(),ClickedNotification.class);
         button_intent.putExtra("id",notification_id);
+
         PendingIntent button_pending_event = PendingIntent.getActivity(getApplicationContext(),notification_id,
                 button_intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -87,17 +83,15 @@ public class NotificationService extends Service {
         remoteViews.setOnClickPendingIntent(R.id.btCancel, button_pending_event);
         remoteViews.setOnClickPendingIntent(R.id.btSnoozed, button_pending_event);
 
-        Intent getBack = new Intent(getApplicationContext(),NotificationWindow.class);
+        Intent getBack = new Intent(getApplicationContext(),ClickedNotification.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,getBack,0);
         remoteViews.setTextViewText(R.id.notif_title,notiName);
 
-        Intent acceptIntent = new Intent(this, NotificationWindow.class);
-        PendingIntent piAccept = PendingIntent.getActivity(this,0,acceptIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-        String msg = "Select to show alarm screen. "+notiName;
-//        String msg = "It's time to do "+notiName+".\n"+times+" repeats";
+        String msg = "Select to show alarm screen. "+notiName + " do " + times + " times";
 
         builder.setSmallIcon(R.mipmap.ic_medico_logo)
                 .setAutoCancel(true)
+                .setPriority(Notification.PRIORITY_MAX)
                 .setCustomBigContentView(remoteViews)
                 .setContentIntent(pendingIntent)
                 .setContentTitle(notiName)
@@ -128,61 +122,51 @@ public class NotificationService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Calendar calendar;
-                int currentHour;
-                int currentMinutes;
-                String time;
-                while (!shouldStop) {
-                    try {
-                        synchronized (this) {
-                            cursor = getAllTodayAlerts();
-                            if(cursor.getCount() > 0) {
-                                calendar = Calendar.getInstance();
-                                currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-                                currentMinutes = calendar.get(Calendar.MINUTE);
-                                Log.i("normal", "currentHour:    "+currentHour);
-                                Log.i("normal", "currentMinutes: "+currentMinutes);
-                                if(CURRENT_DAY != calendar.get(Calendar.DAY_OF_WEEK))
-                                {
-                                    cursor.moveToFirst();
-                                    while (cursor.moveToNext()) {
-                                        local.allTodaysAlertReset(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)));
-                                    }
-                                    CURRENT_DAY = calendar.get(Calendar.DAY_OF_WEEK);
-                                    cursor = getAllTodayAlerts();
-                                }
-                                Log.i("normal", "cursoe size: " + cursor.getCount());
-                                cursor.moveToFirst();
-                                do {
-                                    String allTimes=cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
-                                    String[] times = allTimes.split(getResources().getString(R.string.times_splitter));
-                                    for (int i=0; i< times.length; i++) {
-                                        time = times[i];
-                                        int gap = 2;
-                                        if (currentHour < 10) gap = 1;
-                                        int notificationHour = Integer.parseInt(time.substring(0, gap));
-                                        int notificationMinute = Integer.parseInt(time.substring(gap + 3));
-                                        String todayAlert = cursor.getString(cursor.getColumnIndex(LocalDBManager.ALERT_TODAY));
-                                        Log.i("normal", "notificationHour: " + notificationHour);
-                                        Log.i("normal", "notificationMinute: " + notificationMinute);
-                                        if (notificationHour == currentHour && notificationMinute == currentMinutes && todayAlert.compareTo(time) < 0) {
-                                            Log.i("normal", "enter alert");
-                                            //now we need to show notification!!
-                                            String notificationName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
-                                            int repeats = cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_REPEATS));
-                                            showNotification(notificationName, repeats);
-                                            local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)), time);
-                                        }
-                                    }
-                                } while (cursor.moveToNext());
-                            }
-                            Thread.sleep(10000);//60 sec
-                        }
-                    } catch (Exception e) {
-                        Log.i("Exception", "Exception: " + e.getMessage());
-                        shouldStop = true;
+            Calendar calendar;
+            int currentHour;
+            int currentMinutes;
+            String time;
+            while (!shouldStop) {  try { synchronized (this) {
+                cursor = getAllTodayAlerts();
+                if(cursor.getCount() > 0) {
+                    calendar = Calendar.getInstance();
+                    currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+                    currentMinutes = calendar.get(Calendar.MINUTE);
+                    if(CURRENT_DAY != calendar.get(Calendar.DAY_OF_WEEK))
+                    {
+                        cursor.moveToFirst();
+                        while (cursor.moveToNext())
+                            local.allTodaysAlertReset(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)));
+                        CURRENT_DAY = calendar.get(Calendar.DAY_OF_WEEK);
+                        cursor = getAllTodayAlerts();
                     }
+                    cursor.moveToFirst();
+                    do {
+                        String allTimes=cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
+                        String[] times = allTimes.split(getResources().getString(R.string.times_splitter));
+                        for (int i=0; i< times.length; i++) {
+                            time = times[i];
+                            int gap = 2;
+                            if (currentHour < 10) gap = 1;
+                            int notificationHour = Integer.parseInt(time.substring(0, gap));
+                            int notificationMinute = Integer.parseInt(time.substring(gap + 3));
+                            String todayAlert = cursor.getString(cursor.getColumnIndex(LocalDBManager.ALERT_TODAY));
+                            if (notificationHour == currentHour && notificationMinute == currentMinutes && todayAlert.compareTo(time) < 0) {
+                                //now we need to show notification!!
+                                String notificationName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
+                                int repeats = cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_REPEATS));
+                                showNotification(notificationName, repeats);
+                                local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)), time);
+                            }
+                        }
+                    } while (cursor.moveToNext());
                 }
+                Thread.sleep(10000);//60 sec
+                } /*sync*/ }/* try*/ catch (Exception e) {
+                    Log.i("Exception", "Exception: " + e.getMessage());
+                    shouldStop = true;
+                }
+            }
             }
         }).start();
     }

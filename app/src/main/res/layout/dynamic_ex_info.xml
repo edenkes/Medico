@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:weightSum="1">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="15sp"
+        android:text="@string/time_to_active"
+        android:textColor="@color/colorBlack"
+        android:textSize="30sp" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30sp"
+        android:adjustViewBounds="true"
+        android:background="@color/transparent"
+        android:maxHeight="150sp"
+        android:maxWidth="80sp"
+        android:padding="20sp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_play_circle_outline_black_24dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60sp"
+        android:layout_weight="0.25"
+        android:layoutDirection="inherit"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60sp"
+            android:layout_marginRight="30sp"
+            android:layout_weight="0.5"
+            android:text="@string/done"
+            android:background="@drawable/button_accept"/>
+
+        <Button
+            android:id="@+id/button_decline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30sp"
+            android:layout_marginRight="60sp"
+            android:layout_weight="0.5"
+            android:text="@string/giveup"
+            android:background="@drawable/button_decline" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/snooze"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="30sp"
+        android:background="@color/colorPrimary"
+        android:text="@string/snooz"
+        android:textSize="20sp" />
+
+
+</LinearLayout>

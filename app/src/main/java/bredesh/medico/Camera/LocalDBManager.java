@@ -27,7 +27,7 @@ public class LocalDBManager extends SQLiteOpenHelper{
     public static final String SATURDAY = "SATURDAY";
     public static final String ALERT_TODAY = "alerttoday";
 
-    private static final String DATABASE_NAME = "USER_ALERTS";
+    public static final String DATABASE_NAME = "Medico";
     private static final String TABLE_NAME = "ALERTS";
     private static final int VERSION = 1;
 
