@@ -12,7 +12,8 @@
     <color name="colorAppBar">#f8002e5c</color>
     <color name="colorExercisesBar">#dd6aa1d6</color>
     <color name="colorNotificationBackground">#dd6aa1d6</color>
-
+    <color name="titleColor">#073460</color>
+    <color name="titleMiddle">#0b5093</color>
 
     <color name="transparent">#00000000</color>
     <color name="colorDarkBlue">#0e3b9c</color>
@@ -27,6 +28,7 @@
     <color name="colorOrange">#fc8c02</color>
     <color name="colorBlueGrey">#607D8B</color>
     <color name="colorGrey">#9E9E9E</color>
+    <color name="colorLiteGrey">#EEEEEE</color>
     <color name="colorGreyLite">#f2e1e8eb</color>
     <color name="dim_foreground_light_inverse_disabled">#80bebebe</color>
 

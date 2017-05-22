@@ -1,27 +1,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl"
-    android:padding="5sp">
+    android:layoutDirection="rtl">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@drawable/exercises_bar_custom"
+        android:background="@color/colorWhiteTransparent"
         android:descendantFocusability="blocksDescendants"
-        android:padding="10sp"
-        android:id="@+id/relativeLayout">
+        android:paddingRight="15sp"
+        android:paddingBottom="5sp"
+        android:paddingTop="5sp"
+        android:paddingLeft="15sp"
+        android:id="@+id/relativeLayout"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
 
-        <ImageView
-            android:id="@+id/imageSync"
-            android:layout_width="15dp"
-            android:layout_height="20dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:background="@android:drawable/ic_popup_sync" />
-
-        <TextView
+        <TextView android:textColor="@color/titleColor"
             android:id="@+id/tvSAT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +27,7 @@
             android:text="@string/Saturday_Short"
             android:visibility="invisible" />
 
-        <TextView
+        <TextView android:textColor="@color/titleColor"
             android:id="@+id/tvFRI"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +37,7 @@
             android:text="@string/Friday_Short"
             android:visibility="invisible" />
 
-        <TextView
+        <TextView android:textColor="@color/titleColor"
             android:id="@+id/tvTHU"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +47,7 @@
             android:text="@string/Thursday_Short"
             android:visibility="invisible" />
 
-        <TextView
+        <TextView android:textColor="@color/titleColor"
             android:id="@+id/tvWED"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,7 +57,7 @@
             android:text="@string/Wednesday_Short"
             android:visibility="invisible" />
 
-        <TextView
+        <TextView android:textColor="@color/titleColor"
             android:id="@+id/tvTUE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,27 +67,25 @@
             android:text="@string/Tuesday_Short"
             android:visibility="invisible" />
 
-        <TextView
+        <TextView android:textColor="@color/titleColor"
             android:id="@+id/tvMON"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/tvSUN"
             android:text="@string/Monday_Short"
             android:visibility="invisible" />
 
-        <TextView
+        <TextView android:textColor="@color/titleColor"
             android:id="@+id/tvSUN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/imageSync"
             android:text="@string/Sunday_short"
             android:visibility="invisible" />
 
-        <TextView
+        <TextView android:textColor="@color/titleColor"
             android:id="@+id/tvExerciseTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,7 +99,7 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <TextView
+        <TextView android:textColor="@color/titleColor"
             android:id="@+id/tvExercisesName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,23 +112,24 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10sp"
+            android:layout_below="@id/tvExercisesName"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/lblExerciseRepeats"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/imageRepeat"
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_marginTop="3sp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="false"
-                android:layout_alignParentTop="true"
-                android:layout_weight="1"
-                android:text="@string/repetitions"
-                android:textDirection="rtl"
-                android:textSize="24sp" />
+                android:layout_alignParentTop="false"
+                android:scaleType="fitXY"
+                android:src="@drawable/repeats" />
 
-            <TextView
+
+            <TextView android:textColor="@color/titleColor"
                 android:id="@+id/lblExerciseNoOfRepeats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -152,17 +147,26 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="40sp"
             android:focusable="true"
-            android:background="@drawable/ic_play_circle_outline_black_24dp" />
+            android:background="@drawable/ic_play_circle_outline_black_24dp_blue" />
 
         <Button
             android:id="@+id/btAlerts"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@drawable/ic_alarm_black_48dp"
-            android:layout_above="@+id/tvExerciseTime"
+            android:layout_marginTop="10sp"
+            android:background="@drawable/ic_alarm_black_48dp_green"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:layout_weight="1"
+        android:layout_below="@id/relativeLayout"
+        android:background="@color/titleColor"
+        />
 
 </RelativeLayout>

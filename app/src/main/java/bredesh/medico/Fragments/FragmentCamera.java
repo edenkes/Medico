@@ -1,18 +1,15 @@
 package bredesh.medico.Fragments;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
-import bredesh.medico.Camera.LocalDBManager;
 import bredesh.medico.Camera.VideoData;
 import bredesh.medico.R;
 
@@ -30,9 +27,9 @@ public class FragmentCamera extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment_camera, container, false);
 
-        Button camera, video, removeAll;
+        ImageButton camera, video, removeAll;
 
-        camera = (Button) view.findViewById(R.id.btCamera);
+        camera = (ImageButton) view.findViewById(R.id.btCamera);
         camera.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -44,7 +41,7 @@ public class FragmentCamera extends Fragment {
             }
         });
 
-        video = (Button) view.findViewById(R.id.btVideo);
+        video = (ImageButton) view.findViewById(R.id.btVideo);
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -67,7 +67,7 @@
         android:layout_gravity="bottom"
         android:layout_margin="30sp"
         android:background="@color/colorPrimary"
-        android:text="@string/snooz"
+        android:text="@string/snooze"
         android:textSize="20sp" />
 
 

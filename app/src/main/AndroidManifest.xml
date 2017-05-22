@@ -23,7 +23,6 @@
         <activity android:name=".Camera.VideoData" />
         <activity android:name=".Camera.ChangeVideoData" />
         <activity android:name=".Notification.NotificationWindow" />
-        <activity android:name=".Notification.ClickedNotification" />
 
         <service
             android:name=".NotificationService"

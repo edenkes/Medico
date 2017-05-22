@@ -10,6 +10,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
+
+import bredesh.medico.Notification.PartialVideoItem;
 
 public class LocalDBManager extends SQLiteOpenHelper{
 
@@ -104,8 +107,20 @@ public class LocalDBManager extends SQLiteOpenHelper{
         Cursor cursor;
         SQLiteDatabase database = this.getReadableDatabase();
         try {
-            cursor = database.query(TABLE_NAME, new String[]{KEY_ID, KEY_NAME, KEY_TIME, KEY_REPEATS, URIVIDEO
-                    , SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY,ALERT_TODAY}, null, null, null, null, null);
+            String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_NAME +" NOT LIKE '_TEMP__%'";
+            cursor = database.rawQuery(sql, null);
+            cursor.moveToFirst();
+        } catch (SQLiteException e) { onCreate(database); return getAllAlerts(); }
+        return cursor;
+    }
+
+    public Cursor getAllTempAlerts() {
+        Cursor cursor;
+        SQLiteDatabase database = this.getReadableDatabase();
+        try {
+            String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_NAME +" LIKE '_TEMP__%'";
+            cursor = database.rawQuery(sql, null);
+            cursor.moveToFirst();
         } catch (SQLiteException e) { onCreate(database); return getAllAlerts(); }
         return cursor;
     }
@@ -156,5 +171,23 @@ public class LocalDBManager extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(ALERT_TODAY, "");
         db.update(TABLE_NAME, values, KEY_ID+"="+rowID, null);
+    }
+
+    public PartialVideoItem getItemByID(int id)
+    {
+        PartialVideoItem v;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_ID +" = "+id;
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        if(cursor.getCount() != 1) return null;
+
+        v = new PartialVideoItem(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
+                            cursor.getString(cursor.getColumnIndex(KEY_NAME)),
+                            Uri.parse(cursor.getString(cursor.getColumnIndex(URIVIDEO))),
+                            cursor.getInt(cursor.getColumnIndex(KEY_REPEATS)));
+        db.close();
+        return v;
     }
 }

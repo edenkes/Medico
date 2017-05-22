@@ -14,7 +14,6 @@ import android.widget.RemoteViews;
 import java.util.Calendar;
 
 import bredesh.medico.Camera.LocalDBManager;
-import bredesh.medico.Notification.ClickedNotification;
 import bredesh.medico.Notification.NotificationWindow;
 
 public class NotificationService extends Service {
@@ -69,11 +68,16 @@ public class NotificationService extends Service {
         return Service.START_STICKY;
     }
 
-    private void showNotification(String notiName, int times) {
+    private void showNotification(String notiName, int times, int notiID) {
         notification_id = (int) System.currentTimeMillis();
 
-        Intent button_intent = new Intent(getApplicationContext(),ClickedNotification.class);
+        if(notiName.length() >=7 && notiName.substring(0,7).equals("_TEMP__"))
+            notiName = notiName.substring(7);
+
+        Intent button_intent = new Intent(getApplicationContext(),NotificationWindow.class);
         button_intent.putExtra("id",notification_id);
+        button_intent.putExtra("db_id",notiID);
+        button_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         PendingIntent button_pending_event = PendingIntent.getActivity(getApplicationContext(),notification_id,
                 button_intent,PendingIntent.FLAG_UPDATE_CURRENT);
@@ -83,8 +87,10 @@ public class NotificationService extends Service {
         remoteViews.setOnClickPendingIntent(R.id.btCancel, button_pending_event);
         remoteViews.setOnClickPendingIntent(R.id.btSnoozed, button_pending_event);
 
-        Intent getBack = new Intent(getApplicationContext(),ClickedNotification.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,getBack,0);
+        Intent getBack = new Intent(getApplicationContext(),NotificationWindow.class);
+        getBack.putExtra("db_id",notiID);
+        getBack.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,getBack, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setTextViewText(R.id.notif_title,notiName);
 
         String msg = "Select to show alarm screen. "+notiName + " do " + times + " times";
@@ -155,7 +161,7 @@ public class NotificationService extends Service {
                                 //now we need to show notification!!
                                 String notificationName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
                                 int repeats = cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_REPEATS));
-                                showNotification(notificationName, repeats);
+                                showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)));
                                 local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)), time);
                             }
                         }

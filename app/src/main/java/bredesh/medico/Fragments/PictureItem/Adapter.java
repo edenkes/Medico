@@ -115,7 +115,7 @@ public class Adapter extends BaseAdapter {
         viewHolder.tvFRI = (TextView) convertView.findViewById(R.id.tvFRI);
         viewHolder.tvSAT = (TextView) convertView.findViewById(R.id.tvSAT);
 
-        viewHolder.imageSync = (ImageView) convertView.findViewById(R.id.imageSync);
+        viewHolder.imageSync = (ImageView) convertView.findViewById(R.id.imageRepeat);
         viewHolder.lblExerciseNoOfRepeats = (TextView) convertView.findViewById(R.id.lblExerciseNoOfRepeats);
 
         viewHolder.lblExerciseNoOfRepeats.setText(String.valueOf(item.getNoOfRepetitions()));
@@ -138,11 +138,9 @@ public class Adapter extends BaseAdapter {
             if (days[5] == 1) viewHolder.tvFRI.setVisibility(View.VISIBLE);
             if (days[6] == 1) viewHolder.tvSAT.setVisibility(View.VISIBLE);
             if(days[0] == 1 || days[1] == 1 || days[2] == 1 || days[3] == 1 || days[4] == 1 || days[5] == 1 || days[6] == 1) {
-                viewHolder.imageSync.setVisibility(View.VISIBLE);
                 viewHolder.tvExerciseTime.setVisibility(View.VISIBLE);
             }
             else {
-                viewHolder.imageSync.setVisibility(View.INVISIBLE);
                 viewHolder.tvExerciseTime.setVisibility(View.INVISIBLE);
             }
         }else {

@@ -8,6 +8,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="button_video">וידאו</string>
     <string name="exercises">תרגילים</string>
+    <string name="addMedia">הוספת התראה</string>
     <string name="button_camera">תמונה</string>
     <string name="extercise_name_hint">שם התרגיל</string>
     <string name="select_days">ימים</string>
@@ -32,12 +33,14 @@
     <string name="alert_dialog_set">אישור</string>
     <string name="alert_dialog_cancel">ביטול</string>
     <string name="btn_add_alert">הוסף התראה</string>
+    <string name="part1_timeToDO"> הגיע הזמן לבצע</string>
+    <string name="part2_repeats">מספר חזרות: </string>
     <string name="time_to_active">הגיע הזמן לבצע ____ יש לבצע X פעמים</string>
-    <string name="snooz">הזכר לי עוד 5 דקות</string>
+    <string name="snooze">הזכר לי עוד 5 דקות</string>
     <string name="done">ביצעתי</string>
-    <string name="giveup">ויתרתי</string>
+    <string name="giveup">ביטול</string>
     <string name="exercise_name_hint">שם התרגיל</string>
-    <string name="all_alerts_deleted">כל ההתרעות הוסרו</string>
+    <string name="all_alerts_deleted">כל ההתראות הוסרו</string>
     <string name="all_days">כל הימים</string>
     <string name="error_must_select_one_day">יש לבחור יום אחד לפחות</string>
     <string name="several_times">%d פעמים ביום</string>

@@ -33,7 +33,22 @@ public class MainActivity extends AppCompatActivity {
     private BottomBarTab personal;
     private BottomBarTab camera;
     private int counterHome;
-//    private Session session;
+
+    public static boolean active = false;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        active = true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        active = false;
+    }
+
+    //    private Session session;
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -150,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
+        ft.setCustomAnimations(R.animator.enter, R.animator.exit);
 
         switch (menuItemId) {
            /* case R.id.tab_recents:
@@ -168,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new FragmentCamera();
                 break;
         }
+
         ft.replace(R.id.fragment_place, fragment);
         ft.commit();
     }

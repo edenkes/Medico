@@ -2,45 +2,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorNotificationBackground"
+    android:background="@color/colorLiteGrey"
     android:layoutDirection="ltr"
     tools:context="bredesh.medico.Fragments.FragmentCamera">
 
 
+    <TextView
+        android:id="@+id/tvExercises"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="32sp"
+        android:fontFamily="casual"
+        android:background="@color/titleColor"
+        android:textColor="@color/colorWhite"
+        android:text="@string/addMedia" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp"
+        android:orientation="horizontal"
+        android:padding="15sp"
         android:layout_gravity="center"
         android:weightSum="2">
 
-
-        <Button
+        <ImageButton
             android:id="@+id/btVideo"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="150sp"
+            android:layout_height="150sp"
             android:layout_gravity="center"
+            android:layout_marginRight="10sp"
             android:layout_weight="1"
-            android:background="@drawable/ic_videocam_black_48dp"
-            android:fontFamily="cursive"
-            android:text="@string/button_video"
-            android:textSize="30sp"
+            android:background="@drawable/button_media"
+            android:maxHeight="50sp"
+            android:padding="20sp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_videocam_black_48dp"
             tools:ignore="ButtonStyle" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btCamera"
-            android:layout_width="250dp"
-            android:layout_height="200dp"
+            android:layout_width="150sp"
+            android:layout_height="150sp"
             android:layout_gravity="center"
+            android:layout_marginLeft="10sp"
             android:layout_weight="1"
-            android:background="@drawable/ic_photo_camera_black_48dp"
-            android:text="@string/button_camera"
-            android:textSize="28sp"
-            android:fontFamily="cursive"
+            android:adjustViewBounds="false"
+            android:background="@drawable/button_media"
+            android:padding="30sp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_photo_camera_black_48dp"
             tools:ignore="ButtonStyle" />
     </LinearLayout>
 

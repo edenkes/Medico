@@ -59,8 +59,6 @@ public class FragmentHome extends Fragment {
         lvHome.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                 /* Toast.makeText(getActivity().getApplicationContext(), "Enter to setting", Toast.LENGTH_SHORT).show(); */
-
                 Intent intent = new Intent(getActivity(), VideoData.class);
                 VideoItem vi = (VideoItem) parent.getItemAtPosition(position);
                 intent.putExtra("exerciseId", vi.getId());
