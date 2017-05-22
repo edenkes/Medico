@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,8 +40,9 @@ public class NotificationWindow extends AppCompatActivity {
         int id = getIntent().getIntExtra("db_id",-1);
         db = new LocalDBManager(getApplicationContext());
         item = db.getItemByID(id);
+        Resources rscs = getResources();
         if(item != null) {
-            String finalText = getResources().getString(R.string.part1_timeToDO) + " " + item.name + "\n" +getResources().getString(R.string.part2_repeats) + item.repeats;
+            String finalText = String.format(rscs.getString(R.string.alert_page_text), item.name, item.repeats);
             title.setText(finalText);
             db.deleteRow(id);
         }
@@ -59,38 +61,40 @@ public class NotificationWindow extends AppCompatActivity {
                             getApplicationContext().startActivity(intent);
                         }catch (RuntimeException e){
                             Toast.makeText(getApplicationContext(),
-                                    "Couldn't open the video/photo", Toast.LENGTH_SHORT).show();
+                                    getResources().getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
                         }
                     }
                     else    Toast.makeText(getApplicationContext(),
-                            "Couldn't find the video/photo", Toast.LENGTH_SHORT).show();
+                            getResources().getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+        final String goodJob = rscs.getString(R.string.good_job);
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Good job", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), goodJob , Toast.LENGTH_LONG).show();
                 moveToMain();
 
 
             }
         });
-
+        final String alertCancelled = rscs.getString(R.string.alert_cancelled);
         decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Alert been cancel, Try again later", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), alertCancelled , Toast.LENGTH_LONG).show();
                 moveToMain();
             }
         });
 
+        final String alertSnoozed = rscs.getString(R.string.alert_snoozed);
         snooze.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getApplicationContext(), "Alert been delay in five mints", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), alertSnoozed , Toast.LENGTH_LONG).show();
 /*
                 Long alertTime = new Long(System.currentTimeMillis() + (5 * 1000));
 

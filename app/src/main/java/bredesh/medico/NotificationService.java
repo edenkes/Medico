@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
@@ -93,7 +94,7 @@ public class NotificationService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,getBack, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setTextViewText(R.id.notif_title,notiName);
 
-        String msg = "Select to show alarm screen. "+notiName + " do " + times + " times";
+        String msg = String.format (getResources().getString(R.string.alert_text), notiName ,times);
 
         builder.setSmallIcon(R.mipmap.ic_medico_logo)
                 .setAutoCancel(true)
