@@ -46,4 +46,8 @@
     <string name="several_times">%d פעמים ביום</string>
     <string name="times_splitter">", "</string>
     <string name="times_nice_separator">" | "</string>
+    <string name="remove_all_alerts">להסיר את כל ההתרעות?</string>
+    <string name="delete_exercise_button">מחק</string>
+    <string name="delete_exercise_confirm">למחוק את התרגיל?</string>
+    <string name="exercise_deleted">התרגיל נמחק</string>
 </resources>

@@ -32,4 +32,10 @@
     <style name="BB_BottomBarBadge_Text" parent="TextAppearance.AppCompat.Body2">
         <item name="android:textColor">#FFFFFF</item>
     </style>
+
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+
 </resources>

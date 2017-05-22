@@ -2,6 +2,8 @@ package bredesh.medico.Camera;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,11 +30,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 
+import bredesh.medico.Fragments.FragmentHome;
 import bredesh.medico.R;
 
 public class VideoData extends Activity{
 
-    private Button btChangeFrequency, btConfirm, addAlert;
+    private Button btChangeFrequency, btConfirm, addAlert, btDelete;
     private EditText etExerciseName;
     private NumberPicker numberPicker;
     private ListView timeList;
@@ -50,6 +53,17 @@ public class VideoData extends Activity{
     private Resources rscs;
     private int exerciseId;
     private final int NewExercise = -6;
+
+    private DialogInterface.OnClickListener onDelete = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int id) {
+            LocalDBManager db = new LocalDBManager(getApplicationContext());
+            if (exerciseId != NewExercise)
+                db.deleteRow(exerciseId);
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.exercise_deleted) , Toast.LENGTH_LONG).show();
+            finish();
+        }
+    };
 
     private void setExistingExercise(Intent intent)
     {
@@ -76,6 +90,7 @@ public class VideoData extends Activity{
         rscs = getResources();
         btChangeFrequency = (Button) findViewById(R.id.btChangeFrequency);
         btConfirm = (Button) findViewById(R.id.btConfirm);
+        btDelete = (Button) findViewById(R.id.btDelete);
         addAlert = (Button) findViewById(R.id.btAddAlert);
         etExerciseName = (EditText) findViewById(R.id.etExerciseName);
         numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
@@ -142,6 +157,20 @@ public class VideoData extends Activity{
 
             }
         });
+
+        final AlertDialog deleteDialog = new AlertDialog.Builder(this)
+                .setPositiveButton(rscs.getString(R.string.alert_dialog_set), onDelete)
+                .setNegativeButton(rscs.getString(R.string.alert_dialog_cancel), null)
+                .setMessage(rscs.getString(R.string.delete_exercise_confirm)).create();
+
+        btDelete.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+            deleteDialog.show();
+            }
+        });
+
 
 
         // updating the list + adding another alert
