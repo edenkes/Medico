@@ -28,6 +28,18 @@ public class Adapter extends BaseAdapter {
     private int id;
     private ArrayList<VideoItem> arrayList;
 
+    @Override
+    public int getViewTypeCount() {
+
+        return getCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
+    }
+
     public Adapter(Context context, @LayoutRes int resource, ArrayList<VideoItem> objects) {
         super();
         this.context = context;
