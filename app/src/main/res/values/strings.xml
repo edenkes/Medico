@@ -56,4 +56,9 @@
     <string name="good_job">כל הכבוד!</string>
     <string name="alert_cancelled">ההתרעה בוטלה. ננסה בפעם הבאה.</string>
     <string name="alert_snoozed">נתראה עוד 5 דקות!</string>
+    <string name="personal_info">מידע אישי</string>
+    <string name="LastName">שם משפחה</string>
+    <string name="FirstName">שם פרטי</string>
+    <string name="EmailAddress">כתובת מייל</string>
+    <string name="Points">נקודות</string>
 </resources>

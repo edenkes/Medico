@@ -2,8 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/screen_background_artboard"
+    android:background="@color/colorLiteGrey"
     tools:context="bredesh.medico.Fragments.FragmentPersonal">
+
+    <TextView
+        android:id="@+id/tvExercises"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorAppBar"
+        android:fontFamily="casual"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/personal_info"
+        android:textColor="@color/colorWhite"
+        android:textSize="32sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,16 +26,13 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
+
         <TextView
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvFirstName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Parsonel Info"
             android:textColor="@color/colorLetters"
-            android:textSize="43sp"
-            android:fontFamily="casual"
-            android:layout_gravity="center"/>
+            android:text="@string/FirstName" />
 
         <EditText
             android:id="@+id/editTextFirstName"
@@ -34,6 +43,13 @@
             android:text="First Name"
             android:textColor="@color/colorLetters" />
 
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorLetters"
+            android:text="@string/LastName" />
+
         <EditText
             android:id="@+id/editTextLastName"
             android:layout_width="match_parent"
@@ -43,6 +59,12 @@
             android:text="Last Name"
             android:textColor="@color/colorLetters" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorLetters"
+            android:text="@string/EmailAddress" />
+
         <EditText
             android:id="@+id/editTextEmailAddress"
             android:layout_width="match_parent"
@@ -51,6 +73,13 @@
             android:inputType="textEmailAddress"
             android:text="Email Address"
             android:textColor="@color/colorLetters"/>
+
+        <TextView
+            android:id="@+id/tvPoints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorLetters"
+            android:text="@string/Points" />
 
         <EditText
             android:id="@+id/editTextPoints"

@@ -10,12 +10,12 @@
     <TextView
         android:id="@+id/tvExercises"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center_vertical|center_horizontal"
         android:textSize="32sp"
         android:fontFamily="casual"
-        android:background="@color/titleColor"
+        android:background="@color/colorAppBar"
         android:textColor="@color/colorWhite"
         android:text="@string/addMedia" />
 

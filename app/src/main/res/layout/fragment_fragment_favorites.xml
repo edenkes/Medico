@@ -17,7 +17,8 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:fontFamily="cursive"
-            android:text=" Welcome\nFavorites tab\n"
+            android:text=" Welco
+            me\nFavorites tab\n"
             android:textColor="@color/colorLetters"
             android:textSize="73dp" />
 
