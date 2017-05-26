@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.View;
@@ -43,6 +45,7 @@ public class VideoData extends Activity{
     private TimeAdapter adapter;
     private ArrayList<String> arrayList;
     private TextView lblSelectedDays;
+    private RecyclerView timeViews;
 
     private AlertDialog dialog;
     // array to keep the selected days
@@ -99,6 +102,10 @@ public class VideoData extends Activity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.exercises_data);
+
+        timeViews = (RecyclerView) findViewById(R.id.time_views);
+        timeViews.setLayoutManager(new LinearLayoutManager(this));
+
         rscs = getResources();
         btChangeFrequency = (Button) findViewById(R.id.btChangeFrequency);
         btConfirm = (Button) findViewById(R.id.btConfirm);
@@ -108,7 +115,7 @@ public class VideoData extends Activity{
         numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
         lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
 
-        timeList = (ListView) findViewById(R.id.listChangeTime);
+        //timeList = (ListView) findViewById(R.id.listChangeTime);
         db = new LocalDBManager(getApplicationContext());
         this.intent = getIntent();
         numberPicker.setMinValue(1);
@@ -127,8 +134,11 @@ public class VideoData extends Activity{
                 selectedDays[i] = true;
         }
 
-        adapter = new TimeAdapter(VideoData.this, R.layout.time_item, arrayList);
-        timeList.setAdapter(adapter);
+        //adapter = new TimeAdapter(VideoData.this, R.layout.time_item, arrayList);
+        //timeList.setAdapter(adapter);
+
+        final TimeAdapterRecycler timeAdapter = new TimeAdapterRecycler(VideoData.this,arrayList);
+        timeViews.setAdapter(timeAdapter);
         setDialog();
 
         btChangeFrequency.setOnClickListener(clickHandler);
@@ -184,7 +194,7 @@ public class VideoData extends Activity{
             public void onClick(View v) {
 
                 arrayList.add(makeTimeString());
-                ((BaseAdapter) timeList.getAdapter()).notifyDataSetChanged();
+                timeAdapter.notifyItemInserted(arrayList.size() - 1);
             }
         });
     }

@@ -31,6 +31,7 @@ public class FragmentHome extends Fragment {
     private Context context;
     List<VideoItem> arrayList;
     RecyclerView lvHome;
+    RecyclerAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +44,7 @@ public class FragmentHome extends Fragment {
         setArrayList();
 
        //final Adapter adapter = new Adapter(context, R.layout.exercises_item, arrayList);
-        final RecyclerAdapter adapter = new RecyclerAdapter(context,arrayList,getActivity());
+        adapter = new RecyclerAdapter(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
 
 
@@ -126,6 +127,10 @@ public class FragmentHome extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        lvHome.setAdapter(new RecyclerAdapter(context, arrayList,getActivity()));
+        setArrayList();
+        adapter = new RecyclerAdapter(context,arrayList,getActivity());
+        lvHome.setAdapter(adapter);
     }
+
+
 }

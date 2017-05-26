@@ -29,6 +29,7 @@
     <color name="colorBlueGrey">#607D8B</color>
     <color name="colorGrey">#9E9E9E</color>
     <color name="colorLiteGrey">#EEEEEE</color>
+    <color name="colorLiteBlueGrey">#EEEEFF</color>
     <color name="colorGreyLite">#f2e1e8eb</color>
     <color name="dim_foreground_light_inverse_disabled">#80bebebe</color>
 

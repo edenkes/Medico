@@ -139,15 +139,17 @@
             android:textColor="@color/textColor"
             android:textSize="20sp" />
 
-        <ListView
-            android:id="@+id/listChangeTime"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/time_views"
+            android:layout_marginTop="10sp"
             android:layout_above="@+id/btConfirm"
             android:layout_below="@+id/btAddAlert"
-            android:layout_marginTop="10sp"
-            android:background="@color/colorWhite"
-            android:padding="10sp" />
+            android:background="@color/colorGreyLite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
 
         <Button
             android:id="@+id/btConfirm"

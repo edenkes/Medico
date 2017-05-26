@@ -2,12 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="60sp"
+    android:layout_height="40sp"
     android:layoutDirection="ltr"
-    android:padding="10sp"
     android:layout_marginBottom="15sp"
     android:weightSum="1"
-    android:background="@color/colorBlueGrey">
+    android:background="@color/colorGreyLite">
 
     <ImageButton
         android:id="@+id/timePick"
@@ -15,7 +14,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:layout_weight="0.2"
-        android:background="@color/transparent"
+        android:scaleType="fitCenter"
+        android:background="@color/colorLiteBlueGrey"
         android:src="@drawable/ic_alarm_black_48dp" />
 
     <TextView
@@ -25,7 +25,7 @@
         android:layout_weight="0.6"
         android:gravity="center_horizontal|center_vertical"
         android:text="8 : 00"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/titleColor"
         android:textSize="25sp" />
 
     <ImageButton
@@ -34,7 +34,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:layout_weight="0.2"
-        android:background="@color/transparent"
+        android:scaleType="fitCenter"
+        android:background="@color/colorLiteBlueGrey"
         android:src="@drawable/ic_delete_black_48dp" />
 
 

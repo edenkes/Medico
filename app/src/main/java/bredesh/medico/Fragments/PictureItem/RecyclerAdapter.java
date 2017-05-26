@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
     public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_exercise_item, viewGroup, false);
         return new CustomViewHolder(view);
-
     }
 
     @Override
@@ -95,32 +95,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
 
 
     private void activateAlerts(RecyclerAdapter.CustomViewHolder viewHolder, VideoItem item) {
-        if(item.isAlertsActive()) {
-            int[] days = item.getDays();
-            if (days[0] == 1) viewHolder.tvSUN.setVisibility(View.VISIBLE);
-            if (days[1] == 1) viewHolder.tvMON.setVisibility(View.VISIBLE);
-            if (days[2] == 1) viewHolder.tvTUE.setVisibility(View.VISIBLE);
-            if (days[3] == 1) viewHolder.tvWED.setVisibility(View.VISIBLE);
-            if (days[4] == 1) viewHolder.tvTHU.setVisibility(View.VISIBLE);
-            if (days[5] == 1) viewHolder.tvFRI.setVisibility(View.VISIBLE);
-            if (days[6] == 1) viewHolder.tvSAT.setVisibility(View.VISIBLE);
-            if(days[0] == 1 || days[1] == 1 || days[2] == 1 || days[3] == 1 || days[4] == 1 || days[5] == 1 || days[6] == 1) {
-                viewHolder.tvExerciseTime.setVisibility(View.VISIBLE);
+        int[] days = item.getDays();
+        boolean isActive = false;
+        for(int i=0; i<days.length; i++)
+        {
+            if(days[i] == 1) {
+                viewHolder.days[i].setTextColor(ContextCompat.getColor(context, R.color.titleColor));
+                isActive = true;
             }
-            else {
-                viewHolder.tvExerciseTime.setVisibility(View.INVISIBLE);
-            }
-        }else {
-            viewHolder.tvSUN.setVisibility(View.INVISIBLE);
-            viewHolder.tvMON.setVisibility(View.INVISIBLE);
-            viewHolder.tvTUE.setVisibility(View.INVISIBLE);
-            viewHolder.tvWED.setVisibility(View.INVISIBLE);
-            viewHolder.tvTHU.setVisibility(View.INVISIBLE);
-            viewHolder.tvFRI.setVisibility(View.INVISIBLE);
-            viewHolder.tvSAT.setVisibility(View.INVISIBLE);
-            viewHolder.imageSync.setVisibility(View.INVISIBLE);
-            viewHolder.tvExerciseTime.setVisibility(View.INVISIBLE);
+            else viewHolder.days[i].setTextColor(ContextCompat.getColor(context, R.color.colorGreyLite));
+
         }
+        if(isActive)
+            viewHolder.tvExerciseTime.setTextColor(ContextCompat.getColor(context, R.color.titleColor));
+        else
+            viewHolder.tvExerciseTime.setTextColor(ContextCompat.getColor(context, R.color.colorGreyLite));
     }
 
 
@@ -136,7 +125,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
         private TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
         private Button btAlerts;
         private ImageButton btPlay;
-        private ImageView imageSync;
+        private TextView[] days;
         View v;
 
         private CustomViewHolder(View convertView) {
@@ -152,11 +141,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
             this.tvFRI = (TextView) convertView.findViewById(R.id.tvFRI);
             this.tvSAT = (TextView) convertView.findViewById(R.id.tvSAT);
 
-            this.imageSync = (ImageView) convertView.findViewById(R.id.imageRepeat);
             this.lblExerciseNoOfRepeats = (TextView) convertView.findViewById(R.id.lblExerciseNoOfRepeats);
 
             this.btPlay = (ImageButton) convertView.findViewById(R.id.btPlay);
             this.btAlerts = (Button) convertView.findViewById(R.id.btAlerts);
+
+            this.days = new TextView[]{tvSUN,tvMON,tvTUE,tvWED,tvTHU,tvFRI,tvSAT};
         }
     }
 }
