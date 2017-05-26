@@ -135,7 +135,7 @@ public class LocalDBManager extends SQLiteOpenHelper{
     }
 
     //same parameters as ADD NEW ALERT (WITHOUT VIDEO/IMAGE URI) BUT WITH ROWID. WE CAN GET IT FROM THE CURSOR OF THE CLICKED ITEM
-    public void updateRow(int rowID, String alert_name, String alert_time, int repeats, int[] days_to_alert){
+    public void updateRow(int rowID, String alert_name, String alert_time, int repeats, String videoUri, int[] days_to_alert){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, alert_name);
@@ -149,6 +149,8 @@ public class LocalDBManager extends SQLiteOpenHelper{
         values.put(FRIDAY, days_to_alert[5]);
         values.put(SATURDAY, days_to_alert[6]);
         values.put(ALERT_TODAY, "");
+        if (videoUri != null)
+            values.put(URIVIDEO, videoUri);
         db.update(TABLE_NAME, values, KEY_ID+"="+rowID, null);
     }
 

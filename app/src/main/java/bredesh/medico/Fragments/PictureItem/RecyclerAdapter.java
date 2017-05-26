@@ -51,6 +51,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
                 intent.putExtra("time", item.getAllTimes());
                 intent.putExtra("exercise_name", item.getName());
                 intent.putExtra("days", item.getDays());
+                Uri uri = item.getUri();
+                if (uri!=null)
+                    intent.putExtra("RecordedUri", item.getUri().toString());
                 activity.startActivityForResult(intent, 0x1987);
             }
         });

@@ -12,7 +12,7 @@
         android:id="@+id/etExerciseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10sp"
+        android:layout_margin="5sp"
         android:background="@color/colorWhiteTransparent"
         android:ems="13"
         android:fontFamily="casual"
@@ -29,7 +29,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10sp"
+        android:layout_marginStart="5sp"
         android:layoutDirection="rtl"
         android:orientation="horizontal">
 
@@ -38,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
+            android:paddingStart="5sp"
             android:text="@string/no_of_repetitions"
             android:textColor="@color/textColor"
             android:textSize="24sp" />
@@ -53,40 +54,47 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btPlay"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_centerHorizontal="false"
-                android:layout_gravity="center_vertical|center"
-                android:layout_marginBottom="10sp"
-                android:layout_marginStart="10sp"
-                android:layout_marginTop="10sp"
-                android:layout_weight="1"
-                android:background="@drawable/ic_play_circle_outline_black_24dp_blue"
-                android:focusable="true"
-                android:textAlignment="center" />
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20sp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"></LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btPlay"
+                android:layout_width="160sp"
+                android:layout_height="60sp"
+                android:layout_alignParentEnd="false"
+                android:layout_centerVertical="false"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10sp"
+                android:layout_marginStart="10sp"
+                android:layout_weight="1"
+                android:background="@drawable/button_round"
+                android:focusable="true"
+                android:src="@drawable/ic_play_circle_outline_black_24dp_blue" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/btShootVideo"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/ic_photo_camera_black_48dp" />
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_videocam_black_48dp" />
 
                 <Button
-                    android:id="@+id/btShootPhto"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/ic_videocam_black_48dp" />
+                    android:id="@+id/btShootPhoto"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="10sp"
+                    android:background="@drawable/ic_photo_camera_black_48dp"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
 
@@ -96,7 +104,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10sp"
+        android:layout_marginStart="5sp"
         android:layout_marginTop="5sp"
         android:orientation="horizontal">
 
@@ -105,10 +113,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@color/colorWhite"
-            android:padding="15sp"
+            android:gravity="center|start"
+            android:paddingStart="5sp"
             android:text="@string/select_days"
             android:textColor="@color/textColor"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:visibility="visible" />
 
         <TextView
@@ -133,11 +142,12 @@
             android:id="@+id/btAddAlert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/transparent"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorGreyLite"
             android:text="@string/btn_add_alert"
             android:textAlignment="center"
             android:textColor="@color/textColor"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
 
         <android.support.v7.widget.RecyclerView
