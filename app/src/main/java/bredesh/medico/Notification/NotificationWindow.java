@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 import bredesh.medico.Camera.LocalDBManager;
+import bredesh.medico.Game.ScoreDatabase;
 import bredesh.medico.MainActivity;
 import bredesh.medico.R;
 
@@ -24,6 +25,7 @@ public class NotificationWindow extends AppCompatActivity {
 
     private Intent toMain;
     private LocalDBManager db;
+    private ScoreDatabase scoreDatabase;
     private PartialVideoItem item= null;
     private final int SNOOZE_TIME = 5;
 
@@ -37,6 +39,8 @@ public class NotificationWindow extends AppCompatActivity {
         Button decline = (Button) findViewById(R.id.button_decline);
         Button snooze = (Button) findViewById(R.id.snooze);
         ImageButton play = (ImageButton) findViewById(R.id.imageButton);
+
+
         toMain = new Intent(NotificationWindow.this, MainActivity.class);
         int id = getIntent().getIntExtra("db_id",-1);
         db = new LocalDBManager(getApplicationContext());
@@ -78,6 +82,7 @@ public class NotificationWindow extends AppCompatActivity {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Toast.makeText(getApplicationContext(), goodJob , Toast.LENGTH_LONG).show();
                 moveToMain();
 

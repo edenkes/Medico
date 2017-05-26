@@ -150,6 +150,7 @@ public class Adapter extends BaseAdapter {
             if (days[4] == 1) viewHolder.tvTHU.setVisibility(View.VISIBLE);
             if (days[5] == 1) viewHolder.tvFRI.setVisibility(View.VISIBLE);
             if (days[6] == 1) viewHolder.tvSAT.setVisibility(View.VISIBLE);
+            viewHolder.imageSync.setVisibility(View.VISIBLE);
             if(days[0] == 1 || days[1] == 1 || days[2] == 1 || days[3] == 1 || days[4] == 1 || days[5] == 1 || days[6] == 1) {
                 viewHolder.tvExerciseTime.setVisibility(View.VISIBLE);
             }
