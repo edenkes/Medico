@@ -48,7 +48,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
                 Intent intent = new Intent(context, VideoData.class);
                 intent.putExtra("exerciseId", item.getId());
                 intent.putExtra("repeats", item.getNoOfRepetitions());
-                intent.putExtra("time", item.getTime());
+                intent.putExtra("time", item.getAllTimes());
                 intent.putExtra("exercise_name", item.getName());
                 intent.putExtra("days", item.getDays());
                 activity.startActivityForResult(intent, 0x1987);

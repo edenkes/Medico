@@ -27,6 +27,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 
@@ -145,6 +146,7 @@ public class VideoData extends Activity{
                     String videoUri = getIntent().getStringExtra("RecordedUri");
                     int repeats = numberPicker.getValue();
                     String times = "";
+                    Collections.sort(arrayList);
                     for(int i=0; i<arrayList.size(); i++)
                         times = times + (i > 0? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
                     if (exerciseId != NewExercise)

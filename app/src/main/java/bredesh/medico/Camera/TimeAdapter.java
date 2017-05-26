@@ -71,33 +71,39 @@ public class TimeAdapter extends BaseAdapter {
         return convertView;
     }
 
+    private String getZeroTrailedTime(int time)
+    {
+        String result = "0" + time;
+        return result.substring(result.length()-2);
+    }
 
-    private void setItemsView(View convertView, final ViewHolder viewHolder, String item, final int position) {
+    private void setItemsView(View convertView, final ViewHolder viewHolder, final String item, final int position) {
 
         viewHolder.tvTime = (TextView) convertView.findViewById(R.id.tvTime);
         viewHolder.alarm = (ImageButton) convertView.findViewById(R.id.timePick);
         viewHolder.remove = (ImageButton) convertView.findViewById(R.id.remove);
 
         viewHolder.tvTime.setText(item);
+        final String[] hourAndMinutes = item.split(" : ");
 
         viewHolder.alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Calendar calendar = Calendar.getInstance();
-                int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                int minute = calendar.get(Calendar.MINUTE);
+                int hour = Integer.parseInt(hourAndMinutes[0]);
+                int minute = Integer.parseInt(hourAndMinutes[1]);
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        String strSelectedHour = "" + selectedHour, strSelectedMinute;
-                        if(selectedMinute < 10)
-                            strSelectedMinute = "0" + selectedMinute;
-                        else
-                            strSelectedMinute = "" + selectedMinute;
+                        String strSelectedHour = getZeroTrailedTime(selectedHour);
+                        String strSelectedMinute = getZeroTrailedTime(selectedMinute);
+
                         String finalTime = strSelectedHour + " : " + strSelectedMinute;
                          viewHolder.tvTime.setText(finalTime);
+                        hourAndMinutes[0] = strSelectedHour;
+                        hourAndMinutes[1] = strSelectedMinute;
                         arrayList.set(position, finalTime);
                     }
                 }, hour, minute, DateFormat.is24HourFormat(context));//Yes 24 hour time

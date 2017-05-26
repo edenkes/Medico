@@ -100,6 +100,7 @@ public class FragmentHome extends Fragment {
             String time = c.getString(c.getColumnIndex(db.KEY_TIME));
             String [] times = time.split(Pattern.quote(getResources().getString(R.string.times_splitter)));
             boolean detailedTimes = true;
+            String allTimes = time;
             if (times.length > 3) {
                 time = String.format(getString(R.string.several_times), times.length);
                 detailedTimes = false;
@@ -117,7 +118,7 @@ public class FragmentHome extends Fragment {
             days[6] = c.getInt(c.getColumnIndex(db.SATURDAY));
             int noOfRepetitions = c.getInt(c.getColumnIndex(db.KEY_REPEATS));
 
-            arrayList.add(index, new VideoItem(id, time, name, uri, days, noOfRepetitions, detailedTimes));
+            arrayList.add(index, new VideoItem(id, time, name, uri, days, noOfRepetitions, detailedTimes, allTimes));
         }
         c.close();
     }
