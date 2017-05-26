@@ -8,77 +8,50 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
-import bredesh.medico.Camera.ChangeVideoData;
 import bredesh.medico.Camera.LocalDBManager;
-import bredesh.medico.Camera.VideoData;
-import bredesh.medico.Fragments.PictureItem.Adapter;
+import bredesh.medico.Fragments.PictureItem.RecyclerAdapter;
 import bredesh.medico.Fragments.PictureItem.VideoItem;
 import bredesh.medico.R;
 
-import static android.app.Activity.RESULT_OK;
-
 public class FragmentHome extends Fragment {
     private Context context;
-    ArrayList<VideoItem> arrayList;
-    ListView lvHome;
-
-//    private Uri videoUri;
-//    private int resource;
-/*
-    private NotificationCompat.Builder builder;
-    private NotificationManager notificationManager;
-    private int notification_id;
-    private RemoteViews remoteViews;
-*/
+    List<VideoItem> arrayList;
+    RecyclerView lvHome;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)  {
         View view = inflater.inflate(R.layout.fragment_fragment_home, container, false);
-        lvHome = (ListView) view.findViewById(R.id.lvHome);
+        lvHome = (RecyclerView) view.findViewById(R.id.recycler_view);
+        lvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
         context = getActivity().getApplicationContext();
-
-        setNotifications(view);
 
         setArrayList();
 
-        final Adapter adapter = new Adapter(context, R.layout.exercises_item, arrayList);
+       //final Adapter adapter = new Adapter(context, R.layout.exercises_item, arrayList);
+        final RecyclerAdapter adapter = new RecyclerAdapter(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
 
-        lvHome.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), VideoData.class);
-                VideoItem vi = (VideoItem) parent.getItemAtPosition(position);
-                intent.putExtra("exerciseId", vi.getId());
-                intent.putExtra("repeats", vi.getNoOfRepetitions());
-                intent.putExtra("time", vi.getTime());
-                intent.putExtra("exercise_name", vi.getName());
-                intent.putExtra("days", vi.getDays());
-                startActivityForResult(intent, 0x1987);
-                return true;
-            }
-        });
 
-        Resources rscs = getResources();
+        Resources resources = getResources();
 
         final AlertDialog dialog = new AlertDialog.Builder(this.getActivity())
-                .setMessage(rscs.getString(R.string.remove_all_alerts))
-                .setPositiveButton(rscs.getString(R.string.alert_dialog_set), new DialogInterface.OnClickListener() {
+                .setMessage(resources.getString(R.string.remove_all_alerts))
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                     LocalDBManager db = new LocalDBManager(getActivity().getApplicationContext());
@@ -93,10 +66,10 @@ public class FragmentHome extends Fragment {
                     ft.commit();
                     }
             })
-                .setNegativeButton(rscs.getString(R.string.alert_dialog_cancel), null)
+                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
                 .create();
 
-        ImageButton btDeleteForever = (ImageButton) view.findViewById(R.id.btDeleteForever);
+        FloatingActionButton btDeleteForever = (FloatingActionButton) view.findViewById(R.id.btDeleteForever);
         btDeleteForever.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,50 +122,9 @@ public class FragmentHome extends Fragment {
         c.close();
     }
 
-    private void setNotifications(View view) {
-/*
-        //Notifications
-        notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-        builder = new NotificationCompat.Builder(context);
-
-        remoteViews = new RemoteViews(context.getPackageName(),R.layout.custom_notification);
-        remoteViews.setImageViewResource(R.id.notif_icon,R.mipmap.ic_medico);
-        remoteViews.setTextViewText(R.id.notif_title,"TEXT");
-        remoteViews.setProgressBar(R.id.progressBar,100,40,true);
-
-
-
-        view.findViewById(R.id.button_show_notif).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                notification_id = (int) System.currentTimeMillis();
-
-                Intent button_intent = new Intent("button_click");
-                button_intent.putExtra("id",notification_id);
-                PendingIntent button_pending_event = PendingIntent.getBroadcast(context,notification_id,
-                        button_intent,0);
-
-                remoteViews.setOnClickPendingIntent(R.id.button,button_pending_event);
-
-                Intent notification_intent = new Intent(context,MainActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(context,0,notification_intent,0);
-
-                builder.setSmallIcon(R.mipmap.ic_launcher)
-                        .setAutoCancel(true)
-                        .setCustomBigContentView(remoteViews)
-                        .setContentIntent(pendingIntent);
-
-                notificationManager.notify(notification_id,builder.build());
-            }
-        });
-*/
-
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-        lvHome.setAdapter(new Adapter(context, R.layout.exercises_item, arrayList));
+        lvHome.setAdapter(new RecyclerAdapter(context, arrayList,getActivity()));
     }
 }

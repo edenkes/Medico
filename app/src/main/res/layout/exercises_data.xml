@@ -5,6 +5,7 @@
     android:background="@color/colorPrimaryDark"
     android:layoutDirection="rtl"
     android:orientation="vertical"
+    android:focusableInTouchMode="true"
     android:padding="5dp">
 
     <EditText
@@ -14,14 +15,17 @@
         android:layout_margin="10sp"
         android:background="@color/colorWhiteTransparent"
         android:ems="13"
+        android:requiresFadingEdge="vertical"
         android:fontFamily="casual"
         android:hint="@string/exercise_name_hint"
         android:inputType="textCapWords"
         android:maxLines="1"
         android:paddingStart="5sp"
+        android:paddingEnd="5sp"
         android:textColor="@color/textColor"
         android:textColorHint="@color/textColor"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

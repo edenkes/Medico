@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,7 +87,7 @@ public class Adapter extends BaseAdapter {
 
 
     private void setButtons(final View convertView, final ViewHolder viewHolder, final VideoItem item) {
-        viewHolder.btPlay = (Button) convertView.findViewById(R.id.btPlay);
+        viewHolder.btPlay = (ImageButton) convertView.findViewById(R.id.btPlay);
         viewHolder.btPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,7 +172,8 @@ public class Adapter extends BaseAdapter {
     private class ViewHolder{
         TextView tvExercisesName, tvExerciseTime, lblExerciseNoOfRepeats;
         TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
-        Button btPlay, btAlerts;
+        Button btAlerts;
+        ImageButton btPlay;
         ImageView imageSync;
     }
 

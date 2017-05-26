@@ -39,14 +39,16 @@
     <string name="snooze">הזכר לי עוד 5 דקות</string>
     <string name="done">ביצעתי</string>
     <string name="giveup">ביטול</string>
+    <string name="invalid_name">הכנס שם תרגיל</string>
     <string name="exercise_name_hint">שם התרגיל</string>
     <string name="all_alerts_deleted">כל ההתראות הוסרו</string>
     <string name="all_days">כל הימים</string>
     <string name="error_must_select_one_day">יש לבחור יום אחד לפחות</string>
     <string name="several_times">%d פעמים ביום</string>
     <string name="times_splitter">", "</string>
+    <string name="unaviable_media">תמונה / סרטון לא נמצאו</string>
     <string name="times_nice_separator">" | "</string>
-    <string name="remove_all_alerts">להסיר את כל ההתרעות?</string>
+    <string name="remove_all_alerts">להסיר את כל ההתראות?</string>
     <string name="delete_exercise_button">מחק</string>
     <string name="delete_exercise_confirm">למחוק את התרגיל?</string>
     <string name="exercise_deleted">התרגיל נמחק</string>
@@ -54,7 +56,7 @@
     <string name="alert_page_text" formatted="false">הגיע הזמן לבצע %s. %d חזרות!</string>
     <string name="media_not_found">הסרט או התמונה לא נמצאו.</string>
     <string name="good_job">כל הכבוד!</string>
-    <string name="alert_cancelled">ההתרעה בוטלה. ננסה בפעם הבאה.</string>
+    <string name="alert_cancelled">ההתראה בוטלה. ננסה בפעם הבאה.</string>
     <string name="alert_snoozed">נתראה עוד 5 דקות!</string>
     <string name="personal_info">מידע אישי</string>
     <string name="LastName">שם משפחה</string>
