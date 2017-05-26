@@ -64,6 +64,13 @@ public class VideoData extends Activity{
         }
     };
 
+    private DialogInterface.OnClickListener onReshootConfirm = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int id) {
+            ShootVideo();
+        }
+    };
+
     private void setExistingExercise(Intent intent)
     {
 
@@ -94,6 +101,15 @@ public class VideoData extends Activity{
 
     private static final int REQUEST_VIDEO_CAPTURE = 1;
     private static final int REQUEST_IMAGE_CAPTURE = 2;
+
+    private void ShootVideo()
+    {
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takeVideoIntent.resolveActivity(VideoData.this.getPackageManager()) != null) {
+            takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 15);
+            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,15 +145,20 @@ public class VideoData extends Activity{
             }
         });
 
+        final AlertDialog reShootConfirm = new AlertDialog.Builder(this)
+                .setPositiveButton(rscs.getString(R.string.alert_dialog_set), onReshootConfirm)
+                .setNegativeButton(rscs.getString(R.string.alert_dialog_cancel), null)
+                .setMessage(rscs.getString(R.string.reshootVideo)).create();
+
+
         video = (Button) findViewById(R.id.btShootVideo);
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                if (takeVideoIntent.resolveActivity(VideoData.this.getPackageManager()) != null) {
-                    takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 15);
-                    startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
-                }
+                if (videoUriString != null)
+                    reShootConfirm.show();
+                else
+                    ShootVideo();
             }
         });
 
@@ -228,6 +249,7 @@ public class VideoData extends Activity{
                 .setPositiveButton(rscs.getString(R.string.alert_dialog_set), onDelete)
                 .setNegativeButton(rscs.getString(R.string.alert_dialog_cancel), null)
                 .setMessage(rscs.getString(R.string.delete_exercise_confirm)).create();
+
 
         btDelete.setOnClickListener(new View.OnClickListener() {
 
