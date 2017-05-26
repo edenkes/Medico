@@ -83,6 +83,17 @@ public class VideoData extends Activity{
         updateSelectedDays();
     }
 
+    private View.OnClickListener clickHandler = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            for (int i=0; i< 7; i++)
+                newSelectedDays[i] = selectedDays[i];
+            dialog.show();
+            // alignDialogRTL(dialog, getApplicationContext());
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,16 +131,8 @@ public class VideoData extends Activity{
         timeList.setAdapter(adapter);
         setDialog();
 
-        btChangeFrequency.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                for (int i=0; i< 7; i++)
-                    newSelectedDays[i] = selectedDays[i];
-                dialog.show();
-                // alignDialogRTL(dialog, getApplicationContext());
-            }
-        });
+        btChangeFrequency.setOnClickListener(clickHandler);
+        lblSelectedDays.setOnClickListener(clickHandler);
 
         btConfirm.setOnClickListener(new View.OnClickListener() {
 

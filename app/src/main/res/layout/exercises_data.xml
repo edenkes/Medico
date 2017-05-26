@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorWhite"
+    android:focusableInTouchMode="true"
     android:layoutDirection="rtl"
     android:orientation="vertical"
-    android:focusableInTouchMode="true"
     android:padding="5dp">
 
     <EditText
@@ -15,22 +15,22 @@
         android:layout_margin="10sp"
         android:background="@color/colorWhiteTransparent"
         android:ems="13"
-        android:requiresFadingEdge="vertical"
         android:fontFamily="casual"
         android:hint="@string/exercise_name_hint"
         android:inputType="textCapWords"
         android:maxLines="1"
-        android:paddingStart="5sp"
         android:paddingEnd="5sp"
+        android:paddingStart="5sp"
+        android:requiresFadingEdge="vertical"
         android:textColor="@color/textColor"
         android:textColorHint="@color/textColor"
-        android:textSize="24sp"
-        />
+        android:textSize="24sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10sp"
+        android:layoutDirection="rtl"
         android:orientation="horizontal">
 
         <TextView
@@ -39,17 +39,56 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="@string/no_of_repetitions"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/textColor"
             android:textSize="24sp" />
-
 
 
         <NumberPicker
             android:id="@+id/numberPicker"
-            android:theme="@style/AppTheme.Picker"
             android:layout_width="wrap_content"
-            android:layout_height="80sp"
-            android:layout_marginStart="60sp" />
+            android:layout_height="100sp"
+            android:layout_marginStart="10sp"
+            android:theme="@style/AppTheme.Picker" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btPlay"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerHorizontal="false"
+                android:layout_gravity="center_vertical|center"
+                android:layout_marginBottom="10sp"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="10sp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_play_circle_outline_black_24dp_blue"
+                android:focusable="true"
+                android:textAlignment="center" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btShootVideo"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/ic_photo_camera_black_48dp" />
+
+                <Button
+                    android:id="@+id/btShootPhto"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/ic_videocam_black_48dp" />
+            </LinearLayout>
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -65,10 +104,10 @@
             android:id="@+id/btChangeFrequency"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/colorDarkBlue"
+            android:background="@color/colorWhite"
             android:padding="15sp"
             android:text="@string/select_days"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/textColor"
             android:textSize="20sp"
             android:visibility="visible" />
 
@@ -80,6 +119,7 @@
             android:gravity="center_vertical"
             android:text="@string/all_days"
             android:textAlignment="center"
+            android:textColor="@color/textColor"
             android:textSize="18sp" />
 
     </LinearLayout>
@@ -89,25 +129,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/listChangeTime"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/btAddAlert"
-            android:layout_marginTop="10sp"
-            android:background="@color/colorDarkBlue"
-            android:padding="10sp" />
-
         <Button
             android:id="@+id/btAddAlert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btConfirm"
             android:background="@color/transparent"
             android:text="@string/btn_add_alert"
             android:textAlignment="center"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/textColor"
             android:textSize="20sp" />
+
+        <ListView
+            android:id="@+id/listChangeTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btConfirm"
+            android:layout_below="@+id/btAddAlert"
+            android:layout_marginTop="10sp"
+            android:background="@color/colorWhite"
+            android:padding="10sp" />
 
         <Button
             android:id="@+id/btConfirm"
@@ -117,7 +157,7 @@
             android:layout_gravity="bottom"
             android:background="@color/transparent"
             android:text="@string/btn_confirm"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/textColor"
             android:textSize="24sp" />
 
         <Button
