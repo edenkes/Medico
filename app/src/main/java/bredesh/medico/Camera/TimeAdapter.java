@@ -108,6 +108,7 @@ public class TimeAdapter extends BaseAdapter {
                     }
                 }, hour, minute, DateFormat.is24HourFormat(context));//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
+
                 mTimePicker.show();
 
             }

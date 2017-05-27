@@ -2,11 +2,13 @@ package bredesh.medico.Camera;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -25,12 +27,24 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
 
     private List<String> chainTime;
     private Context context;
+    private Button[] buttons;
 
-    public TimeAdapterRecycler(Context context, List<String> chainTime)
+    public TimeAdapterRecycler(Context context, List<String> chainTime, Button[] buttons)
     {
         this.context = context;
         this.chainTime = chainTime;
+        this.buttons = buttons;
     }
+
+    private void showButtons(boolean show)
+    {
+        int state = show ? View.VISIBLE : View.INVISIBLE;
+        for (int i=0; i< buttons.length; i++)
+        {
+            buttons[i].setVisibility(state);
+        }
+    }
+
 
     @Override
     public TimeAdapterRecycler.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -73,6 +87,13 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
                 }, hour, minute, DateFormat.is24HourFormat(context));//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
+                mTimePicker.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        showButtons(true);
+                    }
+                });
+                showButtons(false);
 
             }
         });

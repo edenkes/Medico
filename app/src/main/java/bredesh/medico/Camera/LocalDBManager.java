@@ -44,6 +44,12 @@ public class LocalDBManager extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        createAlerts(db);
+        createPersonalInfo(db);
+    }
+
+    private void createAlerts(SQLiteDatabase db)
+    {
         String CREATE_ALERTS_TABLE = "CREATE TABLE " + ALERTS_TABLE_NAME +"( " +
                 KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 KEY_NAME + " TEXT, "+
@@ -64,13 +70,18 @@ public class LocalDBManager extends SQLiteOpenHelper{
         // create table
         db.execSQL(CREATE_ALERTS_TABLE);
 
+    }
+
+    private void createPersonalInfo(SQLiteDatabase db)
+    {
         String CREATE_TABLE = "CREATE TABLE " + PERSONAL_INFO_TABLE_NAME +"( " +
                 KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 KEY_FIRST_NAME + " TEXT, " +
                 KEY_LAST_NAME + " TEXT, " +
                 KEY_EMAIL + " TEXT, " +
                 KEY_POINTS + " INTEGER DEFAULT 0 )";
-        db.execSQL(CREATE_TABLE);        
+        db.execSQL(CREATE_TABLE);
+
     }
 
     @Override
@@ -86,7 +97,7 @@ public class LocalDBManager extends SQLiteOpenHelper{
 public void DeleteAllAlerts() {
     SQLiteDatabase db = this.getWritableDatabase();
     db.execSQL("DROP TABLE IF EXISTS " +ALERTS_TABLE_NAME + "");
-    onCreate(db);
+    createAlerts(db);
     db.close();
 }
 
@@ -126,7 +137,7 @@ public Cursor getAllAlerts() {
         String sql = "SELECT * FROM " + ALERTS_TABLE_NAME + " WHERE " + KEY_NAME +" NOT LIKE '_TEMP__%'";
         cursor = database.rawQuery(sql, null);
         cursor.moveToFirst();
-    } catch (SQLiteException e) { onCreate(database); return getAllAlerts(); }
+    } catch (SQLiteException e) { createAlerts(database); return getAllAlerts(); }
     return cursor;
 }
 
@@ -137,7 +148,7 @@ public Cursor getAllTempAlerts() {
         String sql = "SELECT * FROM " + ALERTS_TABLE_NAME + " WHERE " + KEY_NAME +" LIKE '_TEMP__%'";
         cursor = database.rawQuery(sql, null);
         cursor.moveToFirst();
-    } catch (SQLiteException e) { onCreate(database); return getAllAlerts(); }
+    } catch (SQLiteException e) { createAlerts(database); return getAllAlerts(); }
     return cursor;
 }
 

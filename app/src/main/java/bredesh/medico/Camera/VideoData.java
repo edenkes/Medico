@@ -95,6 +95,8 @@ public class VideoData extends Activity{
             for (int i=0; i< 7; i++)
                 newSelectedDays[i] = selectedDays[i];
             dialog.show();
+            showButtons(false);
+
             // alignDialogRTL(dialog, getApplicationContext());
         }
     };
@@ -189,7 +191,10 @@ public class VideoData extends Activity{
         //adapter = new TimeAdapter(VideoData.this, R.layout.time_item, arrayList);
         //timeList.setAdapter(adapter);
 
-        final TimeAdapterRecycler timeAdapter = new TimeAdapterRecycler(VideoData.this,arrayList);
+        Button [] buttons = new Button[] {btConfirm, btDelete};
+
+
+        final TimeAdapterRecycler timeAdapter = new TimeAdapterRecycler(VideoData.this,arrayList, buttons);
         timeViews.setAdapter(timeAdapter);
         setDialog();
 
@@ -329,6 +334,13 @@ public class VideoData extends Activity{
         lblSelectedDays.setText(result);
     }
 
+    private void showButtons(boolean show)
+    {
+        int state = show ? View.VISIBLE : View.INVISIBLE;
+        btDelete.setVisibility(state);
+        btConfirm.setVisibility(state);
+    }
+
     private void setDialog() {
         final Resources rscs = getResources();
         final CharSequence[] items = {
@@ -374,6 +386,13 @@ public class VideoData extends Activity{
                     public void onClick(DialogInterface dialog, int id) {
                         updateSelectedDays();
                         //  Your code when user clicked on Cancel
+                    }
+                }).setOnDismissListener(new DialogInterface.OnDismissListener()
+                {
+                    @Override
+                    public void onDismiss(DialogInterface dialog)
+                    {
+                        showButtons(true);
                     }
                 }).create();
 
