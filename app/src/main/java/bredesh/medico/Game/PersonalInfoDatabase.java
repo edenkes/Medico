@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 
 import bredesh.medico.Camera.LocalDBManager;
+import bredesh.medico.Notification.PartialVideoItem;
 
 public class PersonalInfoDatabase extends SQLiteOpenHelper {
     public static final String KEY_ID = "id";
@@ -17,7 +19,7 @@ public class PersonalInfoDatabase extends SQLiteOpenHelper {
 
     private static final String TABLE_NAME = "PersonalInfo";
 
-    private static final String DATABASE_NAME = "Medico";
+    private static final String DATABASE_NAME = "Medico2";
 
     private static final int VERSION = 1;
 
@@ -26,7 +28,7 @@ public class PersonalInfoDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +"( " +
-                KEY_ID + " INTEGER PRIMARY, " +
+                KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 KEY_FIRST_NAME + " TEXT, " +
                 KEY_LAST_NAME + " TEXT, " +
                 KEY_EMAIL + " TEXT, " +
@@ -110,12 +112,17 @@ public class PersonalInfoDatabase extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Cursor getFirstName(){
+    public String getFirstName(){
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT " + KEY_ID + " FROM " + TABLE_NAME;
+        String sql = "SELECT * FROM " + TABLE_NAME;
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
-        return cursor;
+
+
+        if(cursor.getCount() != 1) return null;
+        String str = cursor.getString(cursor.getColumnIndex(KEY_FIRST_NAME));
+
+        return str;
     }
 
     public Cursor getLastName(){
@@ -136,7 +143,7 @@ public class PersonalInfoDatabase extends SQLiteOpenHelper {
 
     public Cursor getPoints(){
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT " + KEY_POINTS + " FROM " + TABLE_NAME;
+        String sql = "SELECT * FROM " + TABLE_NAME;
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
         return cursor;

@@ -20,8 +20,7 @@ public class FragmentPersonal extends Fragment {
         PersonalInfoDatabase db = new PersonalInfoDatabase(getActivity().getApplicationContext());
         //Cursor cursor = db.getEmail();
         db.setFirstName("eden");
-        Cursor cursor = db.getFirstName();
-//        String str = cursor.getString(0);
+        String str = db.getFirstName();
 //        Toast.makeText(getActivity().getApplicationContext(), str , Toast.LENGTH_LONG).show();
 
         // Inflate the layout for this fragment
