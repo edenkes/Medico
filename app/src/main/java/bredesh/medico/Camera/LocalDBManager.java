@@ -212,9 +212,12 @@ public void allTodaysAlertReset(int rowID) {
         cursor.moveToFirst();
         if(cursor.getCount() != 1) return null;
 
+        String videoUri = cursor.getString(cursor.getColumnIndex(URIVIDEO));
+        Uri uri = videoUri != null? Uri.parse(videoUri) : null;
+
         v = new PartialVideoItem(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
                             cursor.getString(cursor.getColumnIndex(KEY_NAME)),
-                            Uri.parse(cursor.getString(cursor.getColumnIndex(URIVIDEO))),
+                            uri,
                             cursor.getInt(cursor.getColumnIndex(KEY_REPEATS)));
         db.close();
         return v;
