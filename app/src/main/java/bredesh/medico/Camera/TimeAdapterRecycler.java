@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -102,9 +103,17 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
             @Override
             public void onClick(View v) {
 
-                chainTime.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, chainTime.size());
+                if(chainTime.size() == 1)
+                {
+                    Toast.makeText(context.getApplicationContext(),
+                            context.getResources().getString(R.string.last_alert), Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    chainTime.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, chainTime.size());
+                }
             }
         });
 

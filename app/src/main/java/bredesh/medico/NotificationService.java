@@ -21,11 +21,9 @@ public class NotificationService extends Service {
     private NotificationCompat.Builder builder;
     private NotificationManager notificationManager;
     private int notification_id;
-    private RemoteViews remoteViews;
+     //private RemoteViews remoteViews;
 
 
-//    private NotificationManager mNotificationManager;
-//    private Notification.Builder NotificationBuilder;
     private LocalDBManager local;
     private Cursor cursor;
     private int CURRENT_DAY;
@@ -36,16 +34,15 @@ public class NotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //Notifications
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
         builder = new NotificationCompat.Builder(getApplicationContext());
-
+/*
         remoteViews = new RemoteViews(getApplicationContext().getPackageName(),R.layout.custom_notification);
         remoteViews.setImageViewResource(R.id.notif_icon, R.mipmap.ic_medico_logo);
         remoteViews.setTextViewText(R.id.notif_title,"TEXT");
         remoteViews.setProgressBar(R.id.progressBar,100,40,true);
         //End of Notifications
-
+*/
 
         Calendar calendar = Calendar.getInstance();
         local = new LocalDBManager(getApplicationContext());
@@ -69,17 +66,17 @@ public class NotificationService extends Service {
         return Service.START_STICKY;
     }
 
-    private void showNotification(String notiName, int times, int notiID) {
+    private void showNotification(String notificationName, int times, int notiID) {
         notification_id = (int) System.currentTimeMillis();
 
-        if(notiName.length() >=7 && notiName.substring(0,7).equals("_TEMP__"))
-            notiName = notiName.substring(7);
+        if(notificationName.length() >=7 && notificationName.substring(0,7).equals("_TEMP__"))
+            notificationName = notificationName.substring(7);
 
         Intent button_intent = new Intent(getApplicationContext(),NotificationWindow.class);
         button_intent.putExtra("id",notification_id);
         button_intent.putExtra("db_id",notiID);
         button_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
+/*
         PendingIntent button_pending_event = PendingIntent.getActivity(getApplicationContext(),notification_id,
                 button_intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -87,21 +84,21 @@ public class NotificationService extends Service {
         remoteViews.setOnClickPendingIntent(R.id.btDone, button_pending_event);
         remoteViews.setOnClickPendingIntent(R.id.btCancel, button_pending_event);
         remoteViews.setOnClickPendingIntent(R.id.btSnoozed, button_pending_event);
-
+*/
         Intent getBack = new Intent(getApplicationContext(),NotificationWindow.class);
         getBack.putExtra("db_id",notiID);
         getBack.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,getBack, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setTextViewText(R.id.notif_title,notiName);
+    //    remoteViews.setTextViewText(R.id.notif_title,notiName);
 
-        String msg = String.format (getResources().getString(R.string.alert_text), notiName ,times);
+        String msg = String.format (getResources().getString(R.string.alert_text), notificationName ,times);
 
         builder.setSmallIcon(R.mipmap.ic_medico_logo)
                 .setAutoCancel(true)
                 .setPriority(Notification.PRIORITY_MAX)
-                .setCustomBigContentView(remoteViews)
+           //     .setCustomBigContentView(remoteViews)
                 .setContentIntent(pendingIntent)
-                .setContentTitle(notiName)
+                .setContentTitle(notificationName)
                 .setWhen(System.currentTimeMillis())
                 .setContentText(msg)
                 .setDefaults(Notification.DEFAULT_ALL)
@@ -158,6 +155,11 @@ public class NotificationService extends Service {
                             int notificationHour = Integer.parseInt(time.substring(0, gap));
                             int notificationMinute = Integer.parseInt(time.substring(gap + 3));
                             String todayAlert = cursor.getString(cursor.getColumnIndex(LocalDBManager.ALERT_TODAY));
+                            Log.i("omri","notificationHour: "+notificationHour);
+                            Log.i("omri","currentHour: "+currentHour);
+                            Log.i("omri","notificationMinute: "+notificationMinute);
+                            Log.i("omri","currentMinutes: "+currentMinutes);
+                            Log.i("omri","todayAlert.compareTo(time): "+todayAlert.compareTo(time));
                             if (notificationHour == currentHour && notificationMinute == currentMinutes && todayAlert.compareTo(time) < 0) {
                                 //now we need to show notification!!
                                 String notificationName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));

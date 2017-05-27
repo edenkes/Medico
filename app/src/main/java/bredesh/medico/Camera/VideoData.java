@@ -1,6 +1,5 @@
 package bredesh.medico.Camera;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,15 +9,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,25 +29,21 @@ import java.util.Collections;
 
 import bredesh.medico.R;
 
-public class VideoData extends Activity{
+public class VideoData extends AppCompatActivity {
 
-    private Button btChangeFrequency, btConfirm, addAlert, btDelete;
     private EditText etExerciseName;
     private NumberPicker numberPicker;
-    private ListView timeList;
-    private TimeAdapter adapter;
     private ArrayList<String> arrayList;
     private TextView lblSelectedDays;
-    private RecyclerView timeViews;
+    private Button btDelete, btConfirm;
 
     private AlertDialog dialog;
     // array to keep the selected days
     private final boolean[] selectedDays = new boolean[7];
     private final boolean[] newSelectedDays = new boolean[7];
     private LocalDBManager db;
-    private final int maxSize = 20;
-    private Intent intent;
-    private Resources rscs;
+    private final int maxSize = 16;
+    private Resources resources;
     private int exerciseId;
     private final int NewExercise = -6;
     private ImageButton btPlay;
@@ -77,7 +73,7 @@ public class VideoData extends Activity{
         etExerciseName.setText(intent.getStringExtra("exercise_name"));
 
         String times = intent.getStringExtra("time");
-        String[] timeAL = times.split(rscs.getString(R.string.times_splitter));
+        String[] timeAL = times.split(resources.getString(R.string.times_splitter));
         arrayList = new ArrayList<>();
         Collections.addAll(arrayList, timeAL);
         int repeats = intent.getIntExtra("repeats",1);
@@ -119,21 +115,31 @@ public class VideoData extends Activity{
 
         setContentView(R.layout.exercises_data);
 
-        timeViews = (RecyclerView) findViewById(R.id.time_views);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
+        actionBar.setLogo(R.mipmap.ic_medico_logo);
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+
+        RecyclerView timeViews = (RecyclerView) findViewById(R.id.time_views);
         timeViews.setLayoutManager(new LinearLayoutManager(this));
 
-        rscs = getResources();
-        btChangeFrequency = (Button) findViewById(R.id.btChangeFrequency);
+        resources = getResources();
+        Button btChangeFrequency = (Button) findViewById(R.id.btChangeFrequency);
         btConfirm = (Button) findViewById(R.id.btConfirm);
         btDelete = (Button) findViewById(R.id.btDelete);
-        addAlert = (Button) findViewById(R.id.btAddAlert);
+        Button addAlert = (Button) findViewById(R.id.btAddAlert);
         etExerciseName = (EditText) findViewById(R.id.etExerciseName);
         numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
         lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
         btPlay = (ImageButton) findViewById(R.id.btPlay);
 
 
-        Button camera, video, removeAll;
+        Button camera;
+        ImageButton video;
 
         camera = (Button) findViewById(R.id.btShootPhoto);
         camera.setOnClickListener(new View.OnClickListener() {
@@ -148,12 +154,12 @@ public class VideoData extends Activity{
         });
 
         final AlertDialog reShootConfirm = new AlertDialog.Builder(this)
-                .setPositiveButton(rscs.getString(R.string.alert_dialog_set), onReshootConfirm)
-                .setNegativeButton(rscs.getString(R.string.alert_dialog_cancel), null)
-                .setMessage(rscs.getString(R.string.reshootVideo)).create();
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onReshootConfirm)
+                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
+                .setMessage(resources.getString(R.string.reshootVideo)).create();
 
 
-        video = (Button) findViewById(R.id.btShootVideo);
+        video = (ImageButton) findViewById(R.id.btShootVideo);
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,12 +171,8 @@ public class VideoData extends Activity{
         });
 
 
-
-
-
-        //timeList = (ListView) findViewById(R.id.listChangeTime);
         db = new LocalDBManager(getApplicationContext());
-        this.intent = getIntent();
+        Intent intent = getIntent();
         videoUriString = intent.getStringExtra("RecordedUri");
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(50);
@@ -187,9 +189,6 @@ public class VideoData extends Activity{
             for(int i=0; i<selectedDays.length; i++)
                 selectedDays[i] = true;
         }
-
-        //adapter = new TimeAdapter(VideoData.this, R.layout.time_item, arrayList);
-        //timeList.setAdapter(adapter);
 
         Button [] buttons = new Button[] {btConfirm, btDelete};
 
@@ -215,10 +214,10 @@ public class VideoData extends Activity{
                             context.startActivity(intent);
                         } catch (RuntimeException e) {
                             Toast.makeText(context.getApplicationContext(),
-                                    rscs.getString(R.string.unaviable_media), Toast.LENGTH_SHORT).show();
+                                    resources.getString(R.string.unaviable_media), Toast.LENGTH_SHORT).show();
                         }
                     } else Toast.makeText(context.getApplicationContext(),
-                            rscs.getString(R.string.unaviable_media), Toast.LENGTH_SHORT).show();
+                            resources.getString(R.string.unaviable_media), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -226,34 +225,37 @@ public class VideoData extends Activity{
 
             @Override
             public void onClick(View v) {
-                if(etExerciseName.getText().toString().length() < maxSize) {
-                    int[] days_to_alert = new int[selectedDays.length];
-                    for (int i = 0; i < days_to_alert.length; i++) {
-                        if (selectedDays[i])
-                            days_to_alert[i] = 1;
+                if(etExerciseName.getText().toString().length() == 0)
+                    Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short), Toast.LENGTH_SHORT).show();
+                else {
+                    if (etExerciseName.getText().toString().length() < maxSize) {
+                        int[] days_to_alert = new int[selectedDays.length];
+                        for (int i = 0; i < days_to_alert.length; i++) {
+                            if (selectedDays[i])
+                                days_to_alert[i] = 1;
+                            else
+                                days_to_alert[i] = 0;
+                        }
+                        int repeats = numberPicker.getValue();
+                        String times = "";
+                        Collections.sort(arrayList);
+                        for (int i = 0; i < arrayList.size(); i++)
+                            times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
+                        if (exerciseId != NewExercise)
+                            db.updateRow(exerciseId, etExerciseName.getText().toString(), times, repeats, videoUriString, days_to_alert);
                         else
-                            days_to_alert[i] = 0;
-                    }
-                    int repeats = numberPicker.getValue();
-                    String times = "";
-                    Collections.sort(arrayList);
-                    for(int i=0; i<arrayList.size(); i++)
-                        times = times + (i > 0? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
-                    if (exerciseId != NewExercise)
-                        db.updateRow(exerciseId, etExerciseName.getText().toString(), times, repeats, videoUriString, days_to_alert);
-                    else
-                        db.addAlert(etExerciseName.getText().toString(), times, repeats , videoUriString, days_to_alert);
-                    finish();
+                            db.addAlert(etExerciseName.getText().toString(), times, repeats, videoUriString, days_to_alert);
+                        finish();
+                    } else
+                        Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_long), Toast.LENGTH_SHORT).show();
                 }
-                else Toast.makeText(getApplicationContext(), "The name of the exercise is too long, please shorten it", Toast.LENGTH_SHORT).show();
-
             }
         });
 
         final AlertDialog deleteDialog = new AlertDialog.Builder(this)
-                .setPositiveButton(rscs.getString(R.string.alert_dialog_set), onDelete)
-                .setNegativeButton(rscs.getString(R.string.alert_dialog_cancel), null)
-                .setMessage(rscs.getString(R.string.delete_exercise_confirm)).create();
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onDelete)
+                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
+                .setMessage(resources.getString(R.string.delete_exercise_confirm)).create();
 
 
         btDelete.setOnClickListener(new View.OnClickListener() {
@@ -404,11 +406,11 @@ public class VideoData extends Activity{
             if(intent.getData() != null){
                 videoUriString = intent.getData().toString();
                 btPlay.setVisibility(View.VISIBLE);
-                Toast.makeText(VideoData.this.getApplicationContext(), rscs.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
+                Toast.makeText(VideoData.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
                 return;
             }
         }
-        Toast.makeText(VideoData.this.getApplicationContext(), rscs.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
+        Toast.makeText(VideoData.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
     }
     /*
         return string format of the current time.
