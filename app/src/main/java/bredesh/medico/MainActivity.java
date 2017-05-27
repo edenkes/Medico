@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 //        recents = bottomBar.getTabWithId(R.id.tab_recents);
 //        favorites = bottomBar.getTabWithId(R.id.tab_favorites);
         home = bottomBar.getTabWithId(R.id.tab_home);
-        personal = bottomBar.getTabWithId(R.id.tab_personal);
+//        personal = bottomBar.getTabWithId(R.id.tab_personal);
         camera = bottomBar.getTabWithId(R.id.tab_camera);
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
@@ -162,9 +162,9 @@ public class MainActivity extends AppCompatActivity {
                 home.setBadgeCount(counter);
                 counterHome = counter;
                 break;
-            case R.id.tab_personal:
-                personal.setBadgeCount(counter);
-                break;
+//            case R.id.tab_personal:
+//                personal.setBadgeCount(counter);
+//                break;
             case R.id.tab_camera:
                 camera.setBadgeCount(counter);
                 break;
@@ -187,9 +187,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.tab_home:
                 fragment = new FragmentHome();
                 break;
-            case R.id.tab_personal:
-                fragment = new FragmentPersonal();
-                break;
+//            case R.id.tab_personal:
+//                fragment = new FragmentPersonal();
+//                break;
             case R.id.tab_camera:
 
                 Intent intent = new Intent();

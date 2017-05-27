@@ -1,3 +1,5 @@
+////   This class is no longer in use, content was moved to LocalDbManager
+
 package bredesh.medico.Game;
 
 import android.content.ContentValues;

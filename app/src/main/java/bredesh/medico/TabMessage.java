@@ -18,9 +18,9 @@ public class TabMessage {
             case R.id.tab_home:
                 message += "home";
                 break;
-            case R.id.tab_personal:
-                message += "personal";
-                break;
+//            case R.id.tab_personal:
+//                message += "personal";
+//                break;
             case R.id.tab_camera:
                 message += "camera";
                 break;

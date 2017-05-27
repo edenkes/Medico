@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import bredesh.medico.Game.PersonalInfoDatabase;
+import bredesh.medico.Camera.LocalDBManager;
 import bredesh.medico.R;
 
 
@@ -17,7 +17,7 @@ public class FragmentPersonal extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        PersonalInfoDatabase db = new PersonalInfoDatabase(getActivity().getApplicationContext());
+        LocalDBManager db = new LocalDBManager(getActivity().getApplicationContext());
         //Cursor cursor = db.getEmail();
         db.setFirstName("eden");
         Cursor cursor = db.getFirstName();

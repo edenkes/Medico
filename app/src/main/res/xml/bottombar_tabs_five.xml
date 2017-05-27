@@ -10,11 +10,14 @@
         icon="@drawable/ic_add_a_photo_black_24dp"
         title="Camera" />
 
+    <!--
     <tab
         id="@+id/tab_personal"
         icon="@drawable/ic_friends"
-        title="Personal" />
-
+        title="Personal"
+        visible="false"
+        />
+-->
 
      <!--<tab-->
         <!--id="@+id/tab_favorites"-->
