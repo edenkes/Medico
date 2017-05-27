@@ -8,11 +8,16 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
+
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
@@ -34,51 +39,45 @@ public class NotificationWindow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifiction_window);
 
-        TextView title = (TextView) findViewById(R.id.textView);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
+        actionBar.setLogo(R.mipmap.ic_medico_logo);
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+
+        TextView title = (TextView) findViewById(R.id.name);
+        TextView repeats = (TextView) findViewById(R.id.tvrepeats);
         Button accept = (Button) findViewById(R.id.button_accept);
         Button decline = (Button) findViewById(R.id.button_decline);
         Button snooze = (Button) findViewById(R.id.snooze);
-        ImageButton play = (ImageButton) findViewById(R.id.imageButton);
-
+        VideoView video = (VideoView) findViewById(R.id.video);
+        MediaController medoMediaController = new MediaController(this);
 
         toMain = new Intent(NotificationWindow.this, MainActivity.class);
         int id = getIntent().getIntExtra("db_id",-1);
         db = new LocalDBManager(getApplicationContext());
         item = db.getItemByID(id);
-        Resources rscs = getResources();
+        Resources resources = getResources();
         if(item != null) {
-            String finalText = String.format(rscs.getString(R.string.alert_page_text), item.name, item.repeats);
-            title.setText(finalText);
+            title.setText(item.name);
+            repeats.setText(""+item.repeats);
+            video.setVideoURI(item.uri);
+            video.setMediaController(medoMediaController);
+            medoMediaController.setAnchorView(video);
+            video.start();
+
             if(item.temp) {
                 db.deleteRow(id);
-
             }
         }
-        else title.setText("FATAL ERROR!");
-
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(item!=null)
-                {
-                    Uri videoUri = item.uri;
-                    if(videoUri != null ) {
-                        try {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            getApplicationContext().startActivity(intent);
-                        }catch (RuntimeException e){
-                            Toast.makeText(getApplicationContext(),
-                                    getResources().getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else    Toast.makeText(getApplicationContext(),
-                            getResources().getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        final String goodJob = rscs.getString(R.string.good_job);
+        else {
+            Toast.makeText(getApplicationContext(), "FATAL ERROR" , Toast.LENGTH_LONG).show();
+            moveToMain();
+        }
+        final String goodJob = resources.getString(R.string.good_job);
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,10 +85,10 @@ public class NotificationWindow extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), goodJob , Toast.LENGTH_LONG).show();
                 moveToMain();
 
-
             }
         });
-        final String alertCancelled = rscs.getString(R.string.alert_cancelled);
+
+        final String alertCancelled = resources.getString(R.string.alert_cancelled);
         decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +97,7 @@ public class NotificationWindow extends AppCompatActivity {
             }
         });
 
-        final String alertSnoozed = rscs.getString(R.string.alert_snoozed);
+        final String alertSnoozed = resources.getString(R.string.alert_snoozed);
         snooze.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +114,7 @@ public class NotificationWindow extends AppCompatActivity {
                         PendingIntent.getBroadcast(NotificationWindow.this, 1, alertIntent,
                                 PendingIntent.FLAG_UPDATE_CURRENT));*/
                 if(item!=null) {
-                    String timeSTR="";
+                    String timeSTR;
                     Calendar cal = Calendar.getInstance();
                     int minute =  (cal.get(Calendar.MINUTE) + SNOOZE_TIME);
                     int hour = cal.get(Calendar.HOUR_OF_DAY);

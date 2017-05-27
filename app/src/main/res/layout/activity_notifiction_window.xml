@@ -1,62 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl"
-    android:weightSum="1">
+    android:layoutDirection="rtl">
 
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="15sp"
-        android:text="@string/time_to_active"
-        android:textColor="@color/colorBlack"
-        android:textSize="30sp" />
+        android:gravity="center_horizontal"
+        android:layout_below="@id/app_bar"
+        android:text="שם תרגיל"
+        android:padding="10sp"
+        android:textColor="@color/colorWhite"
+        android:background="@color/titleColor"
+        android:textSize="25sp" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30sp"
-        android:adjustViewBounds="true"
-        android:background="@color/transparent"
-        android:maxHeight="150sp"
-        android:maxWidth="80sp"
-        android:padding="20sp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_play_circle_outline_black_24dp" />
 
     <LinearLayout
+        android:id="@+id/repeat_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60sp"
-        android:layout_weight="0.25"
-        android:layoutDirection="inherit"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/name"
+        android:layout_alignParentStart="true">
 
-        <Button
-            android:id="@+id/button_accept"
+        <ImageView
+            android:id="@+id/imageRepeat"
+            android:layout_width="20sp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20sp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/repeats" />
+
+        <TextView
+            android:id="@+id/tvrepeats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60sp"
-            android:layout_marginRight="30sp"
-            android:layout_weight="0.5"
-            android:text="@string/done"
-            android:background="@drawable/button_accept"/>
-
-        <Button
-            android:id="@+id/button_decline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30sp"
-            android:layout_marginRight="60sp"
-            android:layout_weight="0.5"
-            android:text="@string/giveup"
-            android:background="@drawable/button_decline" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="10sp"
+            android:text="9"
+            android:textSize="25sp"
+            android:textColor="@color/titleColor" />
 
     </LinearLayout>
 
@@ -64,11 +56,54 @@
         android:id="@+id/snooze"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="30sp"
-        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:background="@color/titleColor"
+        android:textColor="@color/colorWhite"
         android:text="@string/snooze"
         android:textSize="20sp" />
 
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/accept_decline_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="inherit"
+        android:orientation="horizontal"
+        android:layout_above="@id/snooze"
+        android:layout_marginBottom="2sp"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/button_accept"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@color/titleColor"
+            android:text="@string/done"
+            android:layout_marginLeft="1sp"
+
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/button_decline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/giveup"
+            android:layout_marginRight="1sp"
+            android:textSize="25sp"
+            android:background="@color/titleColor"
+            android:textColor="@color/colorWhite"/>
+
+    </LinearLayout>
+
+    <VideoView
+        android:id="@+id/video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/repeat_layout"
+        android:layout_above="@id/accept_decline_layout"
+        android:layout_margin="30sp"/>
+
+</RelativeLayout>
