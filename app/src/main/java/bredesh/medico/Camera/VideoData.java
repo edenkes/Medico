@@ -2,38 +2,31 @@ package bredesh.medico.Camera;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 
-import bredesh.medico.Fragments.FragmentHome;
 import bredesh.medico.R;
 
 public class VideoData extends Activity{
@@ -57,6 +50,8 @@ public class VideoData extends Activity{
     private Resources rscs;
     private int exerciseId;
     private final int NewExercise = -6;
+    private ImageButton btPlay;
+    private String videoUriString;
 
     private DialogInterface.OnClickListener onDelete = new DialogInterface.OnClickListener() {
         @Override
@@ -66,6 +61,13 @@ public class VideoData extends Activity{
                 db.deleteRow(exerciseId);
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.exercise_deleted) , Toast.LENGTH_LONG).show();
             finish();
+        }
+    };
+
+    private DialogInterface.OnClickListener onReshootConfirm = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int id) {
+            ShootVideo();
         }
     };
 
@@ -97,6 +99,18 @@ public class VideoData extends Activity{
         }
     };
 
+    private static final int REQUEST_VIDEO_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
+
+    private void ShootVideo()
+    {
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takeVideoIntent.resolveActivity(VideoData.this.getPackageManager()) != null) {
+            takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 15);
+            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,10 +128,48 @@ public class VideoData extends Activity{
         etExerciseName = (EditText) findViewById(R.id.etExerciseName);
         numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
         lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
+        btPlay = (ImageButton) findViewById(R.id.btPlay);
+
+
+        Button camera, video, removeAll;
+
+        camera = (Button) findViewById(R.id.btShootPhoto);
+        camera.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent takeImageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takeImageIntent.resolveActivity(VideoData.this.getPackageManager()) != null) {
+                    startActivityForResult(takeImageIntent, REQUEST_IMAGE_CAPTURE);
+                }
+            }
+        });
+
+        final AlertDialog reShootConfirm = new AlertDialog.Builder(this)
+                .setPositiveButton(rscs.getString(R.string.alert_dialog_set), onReshootConfirm)
+                .setNegativeButton(rscs.getString(R.string.alert_dialog_cancel), null)
+                .setMessage(rscs.getString(R.string.reshootVideo)).create();
+
+
+        video = (Button) findViewById(R.id.btShootVideo);
+        video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (videoUriString != null)
+                    reShootConfirm.show();
+                else
+                    ShootVideo();
+            }
+        });
+
+
+
+
 
         //timeList = (ListView) findViewById(R.id.listChangeTime);
         db = new LocalDBManager(getApplicationContext());
         this.intent = getIntent();
+        videoUriString = intent.getStringExtra("RecordedUri");
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(50);
         numberPicker.setWrapSelectorWheel(false);
@@ -144,6 +196,27 @@ public class VideoData extends Activity{
         btChangeFrequency.setOnClickListener(clickHandler);
         lblSelectedDays.setOnClickListener(clickHandler);
 
+        if (videoUriString == null)
+            btPlay.setVisibility(View.INVISIBLE);
+        btPlay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = getApplicationContext();
+                    Uri videoUri = Uri.parse(videoUriString);
+                    if (videoUri != null) {
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                        } catch (RuntimeException e) {
+                            Toast.makeText(context.getApplicationContext(),
+                                    rscs.getString(R.string.unaviable_media), Toast.LENGTH_SHORT).show();
+                        }
+                    } else Toast.makeText(context.getApplicationContext(),
+                            rscs.getString(R.string.unaviable_media), Toast.LENGTH_SHORT).show();
+                }
+            });
+
         btConfirm.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -156,16 +229,15 @@ public class VideoData extends Activity{
                         else
                             days_to_alert[i] = 0;
                     }
-                    String videoUri = getIntent().getStringExtra("RecordedUri");
                     int repeats = numberPicker.getValue();
                     String times = "";
                     Collections.sort(arrayList);
                     for(int i=0; i<arrayList.size(); i++)
                         times = times + (i > 0? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
                     if (exerciseId != NewExercise)
-                        db.updateRow(exerciseId, etExerciseName.getText().toString(), times, repeats, days_to_alert);
+                        db.updateRow(exerciseId, etExerciseName.getText().toString(), times, repeats, videoUriString, days_to_alert);
                     else
-                        db.addAlert(etExerciseName.getText().toString(), times, repeats ,videoUri, days_to_alert);
+                        db.addAlert(etExerciseName.getText().toString(), times, repeats , videoUriString, days_to_alert);
                     finish();
                 }
                 else Toast.makeText(getApplicationContext(), "The name of the exercise is too long, please shorten it", Toast.LENGTH_SHORT).show();
@@ -177,6 +249,7 @@ public class VideoData extends Activity{
                 .setPositiveButton(rscs.getString(R.string.alert_dialog_set), onDelete)
                 .setNegativeButton(rscs.getString(R.string.alert_dialog_cancel), null)
                 .setMessage(rscs.getString(R.string.delete_exercise_confirm)).create();
+
 
         btDelete.setOnClickListener(new View.OnClickListener() {
 
@@ -306,7 +379,18 @@ public class VideoData extends Activity{
 
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if(resultCode == RESULT_OK && intent != null ){
+            if(intent.getData() != null){
+                videoUriString = intent.getData().toString();
+                btPlay.setVisibility(View.VISIBLE);
+                Toast.makeText(VideoData.this.getApplicationContext(), rscs.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+        Toast.makeText(VideoData.this.getApplicationContext(), rscs.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
+    }
     /*
         return string format of the current time.
         DO NOT CHANGE THIS FORMAT [database and other checks relying on that!!]

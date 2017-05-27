@@ -63,4 +63,7 @@
     <string name="FirstName">שם פרטי</string>
     <string name="EmailAddress">כתובת מייל</string>
     <string name="Points">נקודות</string>
+    <string name="AttachFailed">לא הצלחנו לקבל את התמונה או הסרט</string>
+    <string name="AttachSuccess">הסרט נקלט בהצלחה</string>
+    <string name="reshootVideo">האם לצלם את התרגיל מחדש?</string>
 </resources>
