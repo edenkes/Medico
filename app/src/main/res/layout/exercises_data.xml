@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
@@ -8,29 +9,58 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <EditText
-        android:id="@+id/etExerciseName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5sp"
-        android:background="@color/colorWhiteTransparent"
-        android:ems="13"
-        android:fontFamily="casual"
-        android:hint="@string/exercise_name_hint"
-        android:inputType="textCapWords"
-        android:maxLines="1"
-        android:paddingEnd="5sp"
-        android:paddingStart="5sp"
-        android:requiresFadingEdge="vertical"
-        android:textColor="@color/textColor"
-        android:textColorHint="@color/textColor"
-        android:textSize="24sp" />
+        android:layout_marginStart="5sp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/lbExerciseName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:gravity="center_vertical"
+            android:labelFor="@+id/etExerciseName"
+            android:maxLines="1"
+            android:paddingStart="5sp"
+            android:singleLine="true"
+            android:text="@string/exercise_name_label"
+            android:textColor="@color/textColor"
+            android:textSize="24sp" />
+
+
+        <EditText
+            android:id="@+id/etExerciseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.68"
+            android:background="@color/colorLiteGrey"
+            android:cursorVisible="true"
+            android:ems="13"
+            android:fontFamily="casual"
+            android:hint="@string/exercise_name_hint"
+            android:inputType="textCapWords"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:paddingEnd="5sp"
+            android:paddingStart="5sp"
+            android:requiresFadingEdge="vertical"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/colorGreyLite"
+            android:textIsSelectable="false"
+            android:textSize="24sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5sp"
         android:layoutDirection="rtl"
+        android:nextFocusForward="@null"
         android:orientation="horizontal">
 
         <TextView
@@ -136,7 +166,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <Button
             android:id="@+id/btAddAlert"
@@ -152,13 +183,13 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/time_views"
-            android:layout_marginTop="10sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_above="@+id/btConfirm"
             android:layout_below="@+id/btAddAlert"
+            android:layout_marginTop="10sp"
             android:background="@color/colorGreyLite"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
+            ></android.support.v7.widget.RecyclerView>
 
 
         <Button

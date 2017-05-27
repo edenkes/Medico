@@ -131,7 +131,8 @@ public class NotificationWindow extends AppCompatActivity {
                     else
                         str_minute = "" + minute;
                     timeSTR = hour + " : " + str_minute;
-                    db.addAlert("_TEMP__"+item.name, timeSTR, item.repeats, item.uri.toString(), new int[]{1, 1, 1, 1, 1, 1, 1});
+                    String uri =  item.uri != null ? item.uri.toString() : null;
+                    db.addAlert("_TEMP__"+item.name, timeSTR, item.repeats, uri, new int[]{1, 1, 1, 1, 1, 1, 1});
                 }
                 moveToMain();
             }

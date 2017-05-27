@@ -119,6 +119,7 @@ public class VideoData extends Activity{
 
         setContentView(R.layout.exercises_data);
 
+
         timeViews = (RecyclerView) findViewById(R.id.time_views);
         timeViews.setLayoutManager(new LinearLayoutManager(this));
 
@@ -131,7 +132,6 @@ public class VideoData extends Activity{
         numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
         lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
         btPlay = (ImageButton) findViewById(R.id.btPlay);
-
 
         Button camera, video, removeAll;
 
@@ -423,7 +423,15 @@ public class VideoData extends Activity{
             str_minute = "0" + minute;
         else
             str_minute = "" + minute;
-        return cal.get(Calendar.HOUR_OF_DAY) + " : " + str_minute;
+
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        String str_hour;
+        if(hour < 10)
+            str_hour = "0" + hour;
+        else
+            str_hour= "" + hour;
+
+        return  str_hour+ " : " + str_minute;
     }
 
 }
