@@ -277,12 +277,17 @@ public void allTodaysAlertReset(int rowID) {
         db.close();
     }
 
-    public Cursor getFirstName(){
+    public  String getFirstName(){
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT " + KEY_FIRST_NAME + " FROM " + PERSONAL_INFO_TABLE_NAME;
+        String sql = "SELECT * FROM " + PERSONAL_INFO_TABLE_NAME;
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
-        return cursor;
+
+
+        if(cursor.getCount() != 1) return null;
+        String str = cursor.getString(cursor.getColumnIndex(KEY_FIRST_NAME));
+
+        return str;
     }
 
     public Cursor getLastName(){
