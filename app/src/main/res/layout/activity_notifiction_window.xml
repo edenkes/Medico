@@ -98,12 +98,17 @@
 
     </LinearLayout>
 
-    <VideoView
-        android:id="@+id/video"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/repeat_layout"
-        android:layout_above="@id/accept_decline_layout"
-        android:layout_margin="30sp"/>
+
+    <ImageButton
+        android:id="@+id/play_button"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:scaleType="fitXY"
+        android:background="@drawable/button_round"
+        android:src="@drawable/ic_play_circle_outline_black_24dp_blue"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+
 
 </RelativeLayout>

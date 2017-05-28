@@ -132,7 +132,9 @@ public class NotificationService extends Service {
             String time;
             while (!shouldStop) {  try { synchronized (this) {
                 cursor = getAllTodayAlerts();
+
                 if(cursor.getCount() > 0) {
+
                     calendar = Calendar.getInstance();
                     currentHour = calendar.get(Calendar.HOUR_OF_DAY);
                     currentMinutes = calendar.get(Calendar.MINUTE);
@@ -145,9 +147,12 @@ public class NotificationService extends Service {
                         cursor = getAllTodayAlerts();
                     }
                     cursor.moveToFirst();
+                    Log.i("break","break2");
+
                     do {
                         String allTimes=cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
                         String[] times = allTimes.split(getResources().getString(R.string.times_splitter));
+
                         for (int i=0; i< times.length; i++) {
                             time = times[i];
                             int gap = 2;
@@ -173,7 +178,7 @@ public class NotificationService extends Service {
                 Thread.sleep(10000);//60 sec
                 } /*sync*/ }/* try*/ catch (Exception e) {
                     Log.i("Exception", "Exception: " + e.getMessage());
-                    shouldStop = true;
+                    //shouldStop = true;
                 }
             }
             }

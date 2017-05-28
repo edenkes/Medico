@@ -6,6 +6,9 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+
     <application
 
         android:allowBackup="true"
@@ -28,6 +31,13 @@
         <service
             android:name=".NotificationService"
             android:process=":my_process" />
+
+        <receiver android:name=".Notification.StartUp" >
+            <!-- This intent filter receives the boot completed event -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

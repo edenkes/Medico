@@ -5,13 +5,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,8 +57,7 @@ public class NotificationWindow extends AppCompatActivity {
         Button accept = (Button) findViewById(R.id.button_accept);
         Button decline = (Button) findViewById(R.id.button_decline);
         Button snooze = (Button) findViewById(R.id.snooze);
-        VideoView video = (VideoView) findViewById(R.id.video);
-        MediaController medoMediaController = new MediaController(this);
+        ImageButton playButton = (ImageButton) findViewById(R.id.play_button);
 
         toMain = new Intent(NotificationWindow.this, MainActivity.class);
         int id = getIntent().getIntExtra("db_id",-1);
@@ -64,10 +67,6 @@ public class NotificationWindow extends AppCompatActivity {
         if(item != null) {
             title.setText(item.name);
             repeats.setText(""+item.repeats);
-            video.setVideoURI(item.uri);
-            video.setMediaController(medoMediaController);
-            medoMediaController.setAnchorView(video);
-            video.start();
 
             if(item.temp) {
                 db.deleteRow(id);
@@ -133,6 +132,28 @@ public class NotificationWindow extends AppCompatActivity {
                     db.addAlert("_TEMP__"+item.name, timeSTR, item.repeats, item.uri.toString(), new int[]{1, 1, 1, 1, 1, 1, 1});
                 }
                 moveToMain();
+            }
+        });
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(item!=null)
+                {
+                    Uri videoUri = item.uri;
+                    if(videoUri != null ) {
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            getApplicationContext().startActivity(intent);
+                        }catch (RuntimeException e){
+                            Toast.makeText(getApplicationContext(),
+                                    getResources().getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else    Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
