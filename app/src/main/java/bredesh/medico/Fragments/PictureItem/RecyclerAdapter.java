@@ -2,10 +2,12 @@ package bredesh.medico.Fragments.PictureItem;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
 
+import bredesh.medico.Camera.LocalDBManager;
 import bredesh.medico.Camera.VideoData;
 import bredesh.medico.R;
 
@@ -41,7 +44,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
     @Override
     public void onBindViewHolder(final CustomViewHolder customViewHolder, int i) {
         final VideoItem  item = videoItems.get(i);
-
+        final int position = i;
         customViewHolder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,9 +61,38 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
             }
         });
 
+        final Resources resources = context.getResources();
+
+        DialogInterface.OnClickListener onDelete = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                LocalDBManager db = new LocalDBManager(context);
+                db.deleteRow(item.getId());
+                videoItems.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, videoItems.size());
+            }
+        };
+
+        final AlertDialog deleteDialog = new AlertDialog.Builder(activity)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onDelete)
+                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
+                .setMessage(resources.getString(R.string.delete_exercise_confirm)).create();
+
+
+        customViewHolder.v.setOnLongClickListener(new View.OnLongClickListener() {
+              @Override
+              public boolean onLongClick(View v) {
+                  deleteDialog.show();
+                  return true;
+              }
+          });
+
+
+
         customViewHolder.lblExerciseNoOfRepeats.setText(String.valueOf(item.getNoOfRepetitions()));
         customViewHolder.tvExercisesName.setText(item.getName());
-        final Resources resources = context.getResources();
+
         String times = item.getTime().replace(resources.getString(R.string.times_splitter), resources.getString(R.string.times_nice_separator));
         customViewHolder.tvExerciseTime.setText(times);
         if (!item.getDetailedTimes())
@@ -95,6 +127,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
             }
         });
     }
+
 
 
     private void activateAlerts(RecyclerAdapter.CustomViewHolder viewHolder, VideoItem item) {

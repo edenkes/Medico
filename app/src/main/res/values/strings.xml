@@ -6,6 +6,7 @@
     <string name="log_in">Log In</string>
     <string name="enter_password">Enter Password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="main_menu_title">תפריט ראשי</string>
     <string name="button_video">וידאו</string>
     <string name="exercises">תרגילים</string>
     <string name="addMedia">הוספת התראה</string>
@@ -69,4 +70,10 @@
     <string name="AttachFailed">לא הצלחנו לקבל את התמונה או הסרט</string>
     <string name="AttachSuccess">הסרט נקלט בהצלחה</string>
     <string name="reshootVideo">האם לצלם את התרגיל מחדש?</string>
+
+
+
+    <string name="menu_item_1">תרופות</string>
+    <string name="menu_item_2">פיזיותרפיה</string>
+
 </resources>
