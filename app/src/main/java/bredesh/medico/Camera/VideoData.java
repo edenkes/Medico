@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -113,7 +114,7 @@ public class VideoData extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.exercises_data);
+        setContentView(R.layout.activity_exercises_data);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -135,23 +136,12 @@ public class VideoData extends AppCompatActivity {
         etExerciseName = (EditText) findViewById(R.id.etExerciseName);
         numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
         lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
+        lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
+
         btPlay = (ImageButton) findViewById(R.id.btPlay);
 
 
-        Button camera;
         ImageButton video;
-
-        camera = (Button) findViewById(R.id.btShootPhoto);
-        camera.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent takeImageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takeImageIntent.resolveActivity(VideoData.this.getPackageManager()) != null) {
-                    startActivityForResult(takeImageIntent, REQUEST_IMAGE_CAPTURE);
-                }
-            }
-        });
 
         final AlertDialog reShootConfirm = new AlertDialog.Builder(this)
                 .setPositiveButton(resources.getString(R.string.alert_dialog_set), onReshootConfirm)
@@ -228,7 +218,7 @@ public class VideoData extends AppCompatActivity {
                 if(etExerciseName.getText().toString().length() == 0)
                     Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short), Toast.LENGTH_SHORT).show();
                 else {
-                    if (etExerciseName.getText().toString().length() < maxSize) {
+                    if (etExerciseName.getText().toString().length() <= maxSize) {
                         int[] days_to_alert = new int[selectedDays.length];
                         for (int i = 0; i < days_to_alert.length; i++) {
                             if (selectedDays[i])

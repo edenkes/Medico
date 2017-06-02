@@ -35,13 +35,23 @@
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
-        android:id="@+id/btDeleteForever"
+        android:id="@+id/addAlert"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_delete_black_48dp"
+        android:src="@drawable/ic_add_black_48dp"
         app:layout_anchor="@id/recycler_view"
         app:layout_anchorGravity="bottom|right|end" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:id="@+id/deleteAll"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_delete_black_48dp"
+        app:layout_anchor="@id/recycler_view"
+        app:layout_anchorGravity="bottom|left" />
 
 
 

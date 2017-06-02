@@ -4,20 +4,20 @@
         id="@+id/tab_home"
         icon="@drawable/ic_home_black_36dp"
         title="Home" />
-
-    <tab
-        id="@+id/tab_camera"
-        icon="@drawable/ic_add_a_photo_black_24dp"
-        title="Camera" />
-
     <!--
-    <tab
-        id="@+id/tab_personal"
-        icon="@drawable/ic_friends"
-        title="Personal"
-        visible="false"
-        />
--->
+       <tab
+           id="@+id/tab_camera"
+           icon="@drawable/ic_add_a_photo_black_24dp"
+           title="Camera" />
+
+
+       <tab
+           id="@+id/tab_personal"
+           icon="@drawable/ic_friends"
+           title="Personal"
+           visible="false"
+           />
+   -->
 
      <!--<tab-->
         <!--id="@+id/tab_favorites"-->

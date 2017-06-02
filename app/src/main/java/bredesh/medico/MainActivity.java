@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
@@ -16,26 +15,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.bottom_bar.BottomBar;
 import com.example.bottom_bar.BottomBarTab;
-import com.example.bottom_bar.OnTabReselectListener;
 import com.example.bottom_bar.OnTabSelectListener;
 
 import bredesh.medico.Camera.VideoData;
-import bredesh.medico.Fragments.FragmentCamera;
 import bredesh.medico.Fragments.FragmentHome;
-import bredesh.medico.Fragments.FragmentPersonal;
 
 
 public class MainActivity extends AppCompatActivity {
-//    private BottomBarTab recents;
-//    private BottomBarTab favorites;
+
     private BottomBarTab home;
-    private BottomBarTab personal;
-    private BottomBarTab camera;
-    private int counterHome;
 
     public static boolean active = false;
 
@@ -78,49 +69,18 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        counterHome = 0;
-
         final BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
-//        recents = bottomBar.getTabWithId(R.id.tab_recents);
-//        favorites = bottomBar.getTabWithId(R.id.tab_favorites);
         home = bottomBar.getTabWithId(R.id.tab_home);
-//        personal = bottomBar.getTabWithId(R.id.tab_personal);
-        camera = bottomBar.getTabWithId(R.id.tab_camera);
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-//                messageView.setText(TabMessage.get(tabId, false));
-                //setBadgeCount(R.id.tab_home, ++counterHome);
-                //setBadgeCount(tabId, 0);
 
-
-                if (tabId == R.id.tab_camera) {
-                    new android.os.Handler().postDelayed(
-                            new Runnable() {
-                                public void run() {
-                                    bottomBar.selectTabAtPosition(0, true);
-                                }
-                            },
-                            300);
-                }
                 changeFragment(tabId);
             }
 
         });
 
-        //bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
-        //    @Override
-        //    public void onTabReSelected(@IdRes int tabId) {
-        //        Toast.makeText(getApplicationContext(), TabMessage.get(tabId, true), Toast.LENGTH_LONG).show();
-        //        setBadgeCount(R.id.tab_home, ++counterHome);
-        //        setBadgeCount(tabId, 0);
-        //    }
-        //});
-
-//        setBadgeCount(R.id.tab_home, 6);
-//        setBadgeCount(R.id.tab_camera, 1);
-//        setBadgeCount(R.id.tab_personal, 3);
     }
 
     @Override
@@ -148,33 +108,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-   /* private void logout(){
-        session.setLoggedin(false);
-        finish();
-        startActivity(new Intent(MainActivity.this,MainLoginActivity.class));
-    }*/
-
-    private void setBadgeCount(@IdRes int menuItemId, int counter) {
-        switch (menuItemId) {
-            /*case R.id.tab_recents:
-                recents.setBadgeCount(counter);
-                break;
-            case R.id.tab_favorites:
-                favorites.setBadgeCount(counter);
-                break;*/
-            case R.id.tab_home:
-                home.setBadgeCount(counter);
-                counterHome = counter;
-                break;
-//            case R.id.tab_personal:
-//                personal.setBadgeCount(counter);
-//                break;
-            case R.id.tab_camera:
-                camera.setBadgeCount(counter);
-                break;
-        }
-    }
-
     public void changeFragment(@IdRes int menuItemId) {
         Fragment fragment = null;
         FragmentManager fm = getFragmentManager();
@@ -194,13 +127,6 @@ public class MainActivity extends AppCompatActivity {
 //            case R.id.tab_personal:
 //                fragment = new FragmentPersonal();
 //                break;
-            case R.id.tab_camera:
-
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, VideoData.class);
-                startActivity(intent);
-                fragment = null;
-                break;
         }
 
         if (fragment != null) {
@@ -208,6 +134,12 @@ public class MainActivity extends AppCompatActivity {
             ft.commit();
         }
     }
+
+   /* private void logout(){
+        session.setLoggedin(false);
+        finish();
+        startActivity(new Intent(MainActivity.this,MainLoginActivity.class));
+    }*/
 
     private void changeLanguage(Context context, String lang){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);

@@ -1,6 +1,5 @@
 package bredesh.medico.Menu;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -26,7 +25,7 @@ public class MainMenu extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_menu);
+        setContentView(R.layout.activity_menu);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);

@@ -24,9 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login.MainLoginActivity" android:screenOrientation="portrait" />
         <activity android:name=".Camera.VideoData" android:screenOrientation="portrait"/>
-        <activity android:name=".Camera.ChangeVideoData" android:screenOrientation="portrait"/>
         <activity android:name=".Notification.NotificationWindow" android:screenOrientation="portrait"/>
         <activity android:name=".MainActivity" android:screenOrientation="portrait"/>
 

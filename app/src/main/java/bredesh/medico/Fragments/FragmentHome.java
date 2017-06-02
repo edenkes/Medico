@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import bredesh.medico.Camera.LocalDBManager;
+import bredesh.medico.Camera.VideoData;
 import bredesh.medico.Fragments.PictureItem.RecyclerAdapter;
 import bredesh.medico.Fragments.PictureItem.VideoItem;
 import bredesh.medico.R;
@@ -70,11 +71,19 @@ public class FragmentHome extends Fragment {
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
                 .create();
 
-        FloatingActionButton btDeleteForever = (FloatingActionButton) view.findViewById(R.id.btDeleteForever);
+        FloatingActionButton btDeleteForever = (FloatingActionButton) view.findViewById(R.id.deleteAll);
         btDeleteForever.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.show();
+            }
+        });
+
+        FloatingActionButton btAddAlert = (FloatingActionButton) view.findViewById(R.id.addAlert);
+        btAddAlert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), VideoData.class));
             }
         });
 
