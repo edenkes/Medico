@@ -19,7 +19,6 @@
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:background="@color/colorAppBar"
-            android:fontFamily="casual"
             android:gravity="center_vertical|center_horizontal"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:text="@string/exercises"

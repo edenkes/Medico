@@ -73,7 +73,6 @@
     <string name="time_to_active">Это время, чтобы сделать ____ должно быть X раз</string>
     <string name="times_nice_separator">" | "</string>
     <string name="times_splitter">", "</string>
-    <string name="unaviable_media">Фото / Видео не найдено</string>
 
     <string name="main_menu_title">Главное меню</string>
     <string name="media_not_found">Пленка или изображение не найдено.</string>

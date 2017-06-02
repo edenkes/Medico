@@ -16,7 +16,6 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center_vertical|center_horizontal"
         android:textSize="32sp"
-        android:fontFamily="casual"
         android:background="@color/colorAppBar"
         android:textColor="@color/colorWhite"
         android:text="@string/main_menu_title"

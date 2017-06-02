@@ -6,7 +6,7 @@
     <string name="EmailAddress">Email address</string>
     <string name="FirstName">First name</string>
     <string name="Friday">friday</string>
-    <string name="Friday_Short">sat</string>
+    <string name="Friday_Short">fri</string>
     <string name="LastName">last name</string>
     <string name="Monday">monday</string>
     <string name="Monday_Short">mon</string>
@@ -23,7 +23,7 @@
     <string name="Wednesday_Short">wed</string>
     <string name="addMedia">add alerts</string>
     <string name="alert_cancelled">alert been canceled</string>
-    <string name="alert_dialog_cancel">cancel</string>
+    <string name="alert_dialog_cancel">Cancel</string>
     <string name="alert_dialog_select_days">select days for alert</string>
     <string name="btn_confirm">Approval</string>
     <string name="alert_dialog_set">Approval</string>
@@ -39,7 +39,7 @@
     <string name="confirm_password">Password Confirmation</string>
     <string name="delete_exercise_button">Delete</string>
     <string name="delete_exercise_confirm">Delete the exercise?</string>
-    <string name="done">I\'ve done</string>
+    <string name="done">Done</string>
     <string name="email">Email</string>
     <string name="enter_password">Enter a password</string>
     <string name="error_must_select_one_day">At least one day must be chosen</string>
@@ -47,18 +47,18 @@
     <string name="exercise_name_hint">Name of exercise</string>
     <string name="exercises">Exercises</string>
     <string name="extercise_name_hint">Name of exercise</string>
-    <string name="giveup">Cancellation</string>
+    <string name="giveup">Cancel</string>
     <string name="good_job">Well done!</string>
     <string name="invalid_name">Enter an exercise name</string>
     <string name="last_alert">There must be at least one alert</string>
     <string name="log_in">Login</string>
 
     <string name="main_menu_title">Main Menu</string>
-    <string name="media_not_found">The movie or picture was not found.</string>
+    <string name="media_not_found">video is missing</string>
     <string name="menu_item_1">Physiotherapy</string>
     <string name="menu_item_2">Medicines</string>
-    <string name="menu_item_3">Periodic checks</string>
-    <string name="menu_item_4">Personal reminders</string>
+    <string name="menu_item_3">Periodic Checks</string>
+    <string name="menu_item_4">Personal Reminders</string>
 
     <string name="name_too_long">Name too long (up to 16 characters)</string>
     <string name="name_too_short">Enter an exercise name</string>
@@ -76,5 +76,4 @@
     <string name="time_to_active">Time to perform ____ has to be performed X times</string>
     <string name="times_nice_separator">" | "</string>
     <string name="times_splitter">", "</string>
-    <string name="unaviable_media">Image / video not found</string>
 </resources>

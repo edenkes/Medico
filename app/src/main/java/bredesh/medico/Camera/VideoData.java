@@ -214,10 +214,10 @@ public class VideoData extends AppCompatActivity {
                             context.startActivity(intent);
                         } catch (RuntimeException e) {
                             Toast.makeText(context.getApplicationContext(),
-                                    resources.getString(R.string.unaviable_media), Toast.LENGTH_SHORT).show();
+                                    resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
                         }
                     } else Toast.makeText(context.getApplicationContext(),
-                            resources.getString(R.string.unaviable_media), Toast.LENGTH_SHORT).show();
+                            resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
                 }
             });
 

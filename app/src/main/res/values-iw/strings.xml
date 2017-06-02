@@ -52,7 +52,6 @@
     <string name="error_must_select_one_day">יש לבחור יום אחד לפחות</string>
     <string name="several_times">%d פעמים ביום</string>
     <string name="times_splitter">", "</string>
-    <string name="unaviable_media">תמונה / סרטון לא נמצאו</string>
     <string name="last_alert">חייבת להיות לפחות התראה אחת</string>
     <string name="times_nice_separator">" | "</string>
     <string name="remove_all_alerts">להסיר את כל ההתראות?</string>
