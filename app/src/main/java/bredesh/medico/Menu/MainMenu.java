@@ -43,12 +43,21 @@ public class MainMenu extends AppCompatActivity
         List<Item_Menu> menu_items = new ArrayList<>();
 
         // initiate list
-        menu_items.add(new Item_Menu(R.drawable.ic_pill,
+        menu_items.add(new Item_Menu(R.drawable.ic_rowing_black_48dp,
                 resources.getString(R.string.menu_item_1),
                 new Intent(MainMenu.this, MainActivity.class)));
-        menu_items.add(new Item_Menu(R.drawable.ic_rowing_black_48dp,
+
+        menu_items.add(new Item_Menu(R.drawable.ic_pill,
                 resources.getString(R.string.menu_item_2),
-                new Intent(MainMenu.this, MainActivity.class)));
+                null));
+
+        menu_items.add(new Item_Menu(R.drawable.ic_transfer_within_a_station_black_48dp,
+                resources.getString(R.string.menu_item_3),
+                null));
+
+        menu_items.add(new Item_Menu(R.drawable.ic_toys_black_48dp,
+                resources.getString(R.string.menu_item_4),
+                null));
 
         MenuAdapterRecycler adapterRecycler = new MenuAdapterRecycler(getApplicationContext(),menu_items, this);
         menu.setAdapter(adapterRecycler);

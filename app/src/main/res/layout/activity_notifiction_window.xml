@@ -105,7 +105,7 @@
         android:layout_height="100sp"
         android:scaleType="fitXY"
         android:background="@drawable/button_round"
-        android:src="@drawable/ic_play_circle_outline_black_24dp_blue"
+        android:src="@drawable/ic_play_arrow_black_48dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 

@@ -118,14 +118,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
                         resources.getString(R.string.unaviable_media), Toast.LENGTH_SHORT).show();
             }
         });
-
-        customViewHolder.btAlerts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                item.switchAlertsActive();
-                activateAlerts(customViewHolder, item);
-            }
-        });
     }
 
 
@@ -159,7 +151,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
     class CustomViewHolder extends RecyclerView.ViewHolder {
         private TextView tvExercisesName, tvExerciseTime, lblExerciseNoOfRepeats;
         private TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
-        private Button btAlerts;
         private ImageButton btPlay;
         private TextView[] days;
         View v;
@@ -176,12 +167,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
             this.tvTHU = (TextView) convertView.findViewById(R.id.tvTHU);
             this.tvFRI = (TextView) convertView.findViewById(R.id.tvFRI);
             this.tvSAT = (TextView) convertView.findViewById(R.id.tvSAT);
-
             this.lblExerciseNoOfRepeats = (TextView) convertView.findViewById(R.id.lblExerciseNoOfRepeats);
-
             this.btPlay = (ImageButton) convertView.findViewById(R.id.btPlay);
-            this.btAlerts = (Button) convertView.findViewById(R.id.btAlerts);
-
             this.days = new TextView[]{tvSUN,tvMON,tvTUE,tvWED,tvTHU,tvFRI,tvSAT};
         }
     }

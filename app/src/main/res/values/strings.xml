@@ -1,27 +1,29 @@
 <resources>
     <string name="app_name">Medico</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="log_in">Log In</string>
-    <string name="enter_password">Enter Password</string>
-    <string name="confirm_password">Confirm Password</string>
-    <string name="main_menu_title">תפריט ראשי</string>
+    <string name="email">מייל</string>
+    <string name="password">סיסמה</string>
+    <string name="log_in">התחברות</string>
+    <string name="enter_password">הכנס סיסמה</string>
+    <string name="confirm_password">אישור סיסמה</string>
+
     <string name="button_video">וידאו</string>
     <string name="exercises">תרגילים</string>
     <string name="addMedia">הוספת התראה</string>
     <string name="button_camera">תמונה</string>
     <string name="extercise_name_hint">שם התרגיל</string>
-    <string name="select_days">ימים</string>
     <string name="no_of_repetitions">מספר חזרות:</string>
     <string name="repetitions">חזרות:</string>
     <string name="btn_confirm">אישור</string>
+
     <string name="Sunday_short">א</string>
     <string name="Monday_Short">ב</string>
     <string name="Tuesday_Short">ג</string>
     <string name="Wednesday_Short">ד</string>
     <string name="Thursday_Short">ה</string>
     <string name="Friday_Short">ו</string>
+    <string name="Saturday_Short">ש</string>
+
+    <string name="select_days">ימים</string>
     <string name="Sunday">ראשון</string>
     <string name="Monday">שני</string>
     <string name="Tuesday">שלישי</string>
@@ -29,7 +31,7 @@
     <string name="Thursday">חמישי</string>
     <string name="Friday">שישי</string>
     <string name="Saturday">שבת</string>
-    <string name="Saturday_Short">ש</string>
+
     <string name="alert_dialog_select_days">בחירת ימים להתראה</string>
     <string name="alert_dialog_set">אישור</string>
     <string name="alert_dialog_cancel">ביטול</string>
@@ -72,8 +74,12 @@
     <string name="reshootVideo">האם לצלם את התרגיל מחדש?</string>
 
 
+    <string name="main_menu_title">תפריט ראשי</string>
+    <string name="coming_soon">בבניה</string>
+    <string name="menu_item_1">פיזיותרפיה</string>
+    <string name="menu_item_2">תרופות</string>
+    <string name="menu_item_3">בדיקות תקופתיות</string>
+    <string name="menu_item_4">תזכורות אישיות</string>
 
-    <string name="menu_item_1">תרופות</string>
-    <string name="menu_item_2">פיזיותרפיה</string>
 
 </resources>

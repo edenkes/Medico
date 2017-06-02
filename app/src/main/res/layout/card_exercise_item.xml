@@ -13,7 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/colorWhite"
+        android:background="@drawable/card_alert"
         android:padding="10sp">
 
         <LinearLayout
@@ -100,14 +100,6 @@
                 android:textColor="@color/titleColor" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btAlerts"
-            android:layout_width="20sp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20sp"
-            android:scaleType="fitXY"
-            android:visibility="gone"
-            android:src="@drawable/ic_alarm_black_48dp_green" />
 
         <TextView
             android:id="@+id/tvExercisesName"
@@ -142,7 +134,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:background="@drawable/button_round"
-            android:src="@drawable/ic_play_circle_outline_black_24dp_blue"
+            android:src="@drawable/ic_play_arrow_black_48dp"
             android:focusable="true" />
 
 

@@ -10,6 +10,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -49,7 +50,10 @@ public class MenuAdapterRecycler extends RecyclerView.Adapter<MenuAdapterRecycle
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.startActivity(item.nextScreen);
+                if(item.nextScreen != null)
+                    activity.startActivity(item.nextScreen);
+                else Toast.makeText(context.getApplicationContext(),
+                        context.getResources().getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
             }
         });
     }

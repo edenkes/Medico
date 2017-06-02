@@ -20,4 +20,13 @@
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
     </style>
+
+    <style name="starter" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/titleColor</item>
+        <item name="colorPrimaryDark">@color/colorDarkBlue</item>
+        <item name="colorAccent">@color/colorWhite</item>
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+
+    </style>
 </resources>

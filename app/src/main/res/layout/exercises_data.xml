@@ -80,7 +80,7 @@
             android:layout_marginRight="10sp"
             android:scaleType="center"
             android:background="@drawable/button_round"
-            android:src="@drawable/ic_play_circle_outline_black_24dp_blue" />
+            android:src="@drawable/ic_play_arrow_black_48dp" />
 
 
         <Button
