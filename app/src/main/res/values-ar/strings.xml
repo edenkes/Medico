@@ -1,2 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Medico</string>
+    <string name="email">بريد</string>
+    <string name="password">كلمة المرور</string>
+    <string name="log_in">دخول</string>
+    <string name="enter_password">كلمة المرور المؤتمر</string>
+    <string name="confirm_password">موافق كلمة المرور</string>
+
+    <string name="button_video">فيديو</string>
+    <string name="exercises">تمارين</string>
+    <string name="addMedia">إضافة تنبيه</string>
+    <string name="button_camera">صور</string>
+    <string name="extercise_name_hint">اسم التمرين</string>
+    <string name="no_of_repetitions">عدة مرات التكرار:</string>
+    <string name="repetitions">يكرر:</string>
+    <string name="btn_confirm">التأكيد</string>
+
+    <string name="Sunday_short">A</string>
+    <string name="Monday_Short">B</string>
+    <string name="Tuesday_Short">C</string>
+    <string name="Wednesday_Short">D</string>
+    <string name="Thursday_Short">E</string>
+    <string name="Friday_Short">F</string>
+    <string name="Saturday_Short">G</string>
+
+    <string name="select_days">ايام</string>
+    <string name="Sunday">الأحد</string>
+    <string name="Monday">اثنين</string>
+    <string name="Tuesday">ثلث</string>
+    <string name="Wednesday">الأربعاء</string>
+    <string name="Thursday">الخميس</string>
+    <string name="Friday">الجمعة</string>
+    <string name="Saturday">سبت</string>
+
+    <string name="alert_dialog_select_days">اختيار أيام التحذير</string>
+    <string name="alert_dialog_set">التأكيد</string>
+    <string name="alert_dialog_cancel">الغاء</string>
+    <string name="btn_add_alert">إضافة تنبيه</string>
+    <string name="part1_timeToDO">لقد حان الوقت لأداء</string>
+    <string name="name_too_long">اسم طويل جدا (تصل إلى 16 حرفا)</string>
+    <string name="name_too_short">أدخل اسما للتمرين</string>
+    <string name="part2_repeats">عدة مرات التكرار:</string>
+    <string name="time_to_active">لقد حان الوقت لجعل ____ ينبغي أن تكون مرات </string>
+    <string name="snooze">ذكرني في 5 دقائق</string>
+    <string name="done">لقد</string>
+    <string name="giveup">الغاء</string>
+    <string name="invalid_name">أدخل اسما للتمرين</string>
+    <string name="exercise_name_hint">اسم التمرين</string>
+    <string name="all_alerts_deleted">تتم إزالة كافة التنبيهات</string>
+    <string name="all_days">كل يوم</string>
+    <string name="error_must_select_one_day">الرجاء تحديد يوم واحد على الأقل</string>
+    <string name="several_times">٪d مرات في اليوم</string>
+    <string name="times_splitter">", "</string>
+    <string name="unaviable_media">صورة / فيديو لم يتم العثور على</string>
+    <string name="last_alert">يجب أن يكون هناك تنبيه واحد على الأقل</string>
+    <string name="times_nice_separator">" | "</string>
+    <string name="remove_all_alerts">لحذف كافة التنبيهات؟</string>
+    <string name="delete_exercise_button">حذف</string>
+    <string name="delete_exercise_confirm">حذف ممارسة؟</string>
+    <string name="exercise_deleted">ممارسة حذف</string>
+    <string name="alert_text" formatted="false">لقد حان الوقت لأداء %d التكرار!</string>
+    <string name="alert_page_text" formatted="false">لقد حان الوقت لجعل البروفات!</string>
+    <string name="media_not_found">لم يتم العثور على فيلم أو صورة.</string>
+    <string name="good_job">كل الاحترام!</string>
+    <string name="alert_cancelled">إلغاء حالة تأهب. حاول في المرة القادمة.</string>
+    <string name="alert_snoozed">نراكم في آخر 5 دقائق!</string>
+    <string name="personal_info">معلومات شخصية</string>
+    <string name="LastName">اسم عائلة</string>
+    <string name="FirstName">اسم شخصي</string>
+    <string name="EmailAddress">عنوان البريد الإلكتروني</string>
+    <string name="Points">نقاط</string>
+    <string name="AttachFailed">لم نتمكن من الحصول على صورة أو فيلم</string>
+    <string name="AttachSuccess">وكان في استقبال الفيلم بنجاح</string>
+    <string name="reshootVideo">وتصوير العملية مرة أخرى؟</string>
+
+
+    <string name="main_menu_title">القائمة الرئيسية</string>
+    <string name="coming_soon">قريبا</string>
+    <string name="menu_item_1">العلاج الطبيعي</string>
+    <string name="menu_item_2">المخدرات</string>
+    <string name="menu_item_3">فحوص دورية</string>
+    <string name="menu_item_4">تذكير الشخصية</string>
+</resources>

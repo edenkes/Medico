@@ -1,2 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Medico</string>
+    <string name="exercises">упражнения</string>
+    <string name="exercise_name_hint">название упражнения</string>
+    <string name="select_days">дней</string>
+
+    <string name="button_camera">изображение</string>
+    <string name="button_video">видео</string>
+    <string name="AttachFailed">Мы не могли получить изображение или фильм</string>
+    <string name="AttachSuccess">Фильм был успешно принят</string>
+
+    <string name="EmailAddress">Адрес электронной почты</string>
+    <string name="FirstName">Имя</string>
+    <string name="LastName">фамилия</string>
+    <string name="Points">точек</string>
+
+    <string name="Sunday">первый</string>
+    <string name="Sunday_short">א</string>
+    <string name="Monday">обе</string>
+    <string name="Monday_Short">ב</string>
+    <string name="Tuesday">третий</string>
+    <string name="Tuesday_Short">ג</string>
+    <string name="Wednesday">среда</string>
+    <string name="Wednesday_Short">ד</string>
+    <string name="Thursday">четверг</string>
+    <string name="Thursday_Short">ה</string>
+    <string name="Friday">пятница</string>
+    <string name="Friday_Short">ו</string>
+    <string name="Saturday">суббота</string>
+    <string name="Saturday_Short">ש</string>
+
+
+    <string name="addMedia">Добавить оповещение</string>
+    <string name="alert_cancelled">Оповещение отменено. Попробуйте в следующий раз.</string>
+    <string name="alert_dialog_cancel">отмена</string>
+    <string name="alert_dialog_select_days">Выбор предупреждающих дней</string>
+    <string name="alert_dialog_set">подтверждение</string>
+    <string name="alert_page_text">Пришло время, чтобы репетировать!</string>
+    <string name="alert_snoozed">Увидимся еще 5 минут!</string>
+    <string name="alert_text">Пришло время, чтобы репетировать!</string>
+    <string name="all_alerts_deleted">Все предупреждения удаляются</string>
+    <string name="all_days">весь день</string>
+    <string name="btn_add_alert">Добавить оповещение</string>
+    <string name="btn_confirm">подтверждение</string>
+    <string name="confirm_password">OK Пароль</string>
+    <string name="delete_exercise_button">удалять</string>
+    <string name="delete_exercise_confirm">Удалить упражнение?</string>
+    <string name="done">Я</string>
+    <string name="email">почта</string>
+    <string name="enter_password">пароль конференции</string>
+    <string name="error_must_select_one_day">Пожалуйста, выберите хотя бы один день</string>
+    <string name="exercise_deleted">Упражнение удалено</string>
+    <string name="extercise_name_hint">название упражнения</string>
+    <string name="giveup">отмена</string>
+    <string name="good_job">Молодцы!</string>
+    <string name="invalid_name">Введите имя для упражнения</string>
+    <string name="last_alert">Там должно быть по крайней мере один сигнал тревоги</string>
+    <string name="log_in">Войти</string>
+
+    <string name="name_too_long">Название слишком длинные (до 16 символов)</string>
+    <string name="name_too_short">Введите имя для упражнения</string>
+    <string name="no_of_repetitions">Несколько итераций:</string>
+    <string name="part1_timeToDO">Это время, чтобы выполнить</string>
+    <string name="part2_repeats">Несколько итераций:</string>
+    <string name="password">пароль</string>
+    <string name="personal_info">Персональная информация</string>
+    <string name="remove_all_alerts">Для того, чтобы удалить все предупреждения?</string>
+    <string name="repetitions">Повторы:</string>
+    <string name="reshootVideo">Вы хотите, чтобы сфотографировать упражнение снова?</string>
+    <string name="several_times">%d Раз в день</string>
+    <string name="snooze">Напомнить в течение 5 минут</string>
+    <string name="time_to_active">Это время, чтобы сделать ____ должно быть X раз</string>
+    <string name="times_nice_separator">" | "</string>
+    <string name="times_splitter">", "</string>
+    <string name="unaviable_media">Фото / Видео не найдено</string>
+
+    <string name="main_menu_title">Главное меню</string>
+    <string name="media_not_found">Пленка или изображение не найдено.</string>
+    <string name="menu_item_1">физиотерапия</string>
+    <string name="menu_item_2">наркотики</string>
+    <string name="menu_item_3">Периодические проверки</string>
+    <string name="menu_item_4">Личные напоминания</string>
+    <string name="coming_soon">скоро</string>
+</resources>
