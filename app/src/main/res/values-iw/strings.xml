@@ -80,4 +80,5 @@
     <string name="menu_item_2">תרופות</string>
     <string name="menu_item_3">בדיקות תקופתיות</string>
     <string name="menu_item_4">תזכורות אישיות</string>
+    <string name="exercise_name_label">שם התרגיל:</string>
 </resources>

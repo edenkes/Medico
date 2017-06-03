@@ -76,4 +76,5 @@
     <string name="time_to_active">Time to perform ____ has to be performed X times</string>
     <string name="times_nice_separator">" | "</string>
     <string name="times_splitter">", "</string>
+    <string name="exercise_name_label">Exercise name:</string>
 </resources>

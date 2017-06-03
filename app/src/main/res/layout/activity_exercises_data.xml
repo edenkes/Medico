@@ -11,22 +11,43 @@
         android:id="@+id/app_bar"
         layout="@layout/app_bar" />
 
-
-
-    <EditText
-        android:id="@+id/etExerciseName"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5sp"
-        android:maxLength="16"
-        android:paddingStart="10sp"
-        android:paddingEnd="10sp"
-        android:maxLines="1"
-        android:hint="@string/exercise_name_hint"
-        android:inputType="textPersonName"
-        android:textColor="@color/titleColor"
-        android:textColorHint="@color/titleColor"
-        android:textSize="24sp" />
+        android:layout_marginStart="5sp">
+
+        <TextView
+            android:id="@+id/lbExerciseName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:gravity="center_vertical"
+            android:labelFor="@+id/etExerciseName"
+            android:maxLines="1"
+            android:paddingStart="5sp"
+            android:singleLine="true"
+            android:text="@string/exercise_name_label"
+            android:textColor="@color/titleColor"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etExerciseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:layout_toEndOf="@+id/lbExerciseName"
+            android:maxLength="16"
+            android:maxLines="1"
+            android:paddingEnd="10sp"
+            android:paddingStart="10sp"
+            android:singleLine="true"
+            android:textColor="@color/titleColor"
+            android:textColorHint="@color/titleColor"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

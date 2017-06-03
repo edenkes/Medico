@@ -80,4 +80,5 @@
     <string name="menu_item_2">المخدرات</string>
     <string name="menu_item_3">فحوص دورية</string>
     <string name="menu_item_4">تذكير الشخصية</string>
+    <string name="exercise_name_label">اسم التمرين:</string>
 </resources>
