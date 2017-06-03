@@ -156,7 +156,7 @@ public class NotificationService extends Service {
                         for (int i=0; i< times.length; i++) {
                             time = times[i];
                             int gap = 2;
-                            if (currentHour < 10) gap = 1;
+                            //if (currentHour < 10) gap = 1;
                             int notificationHour = Integer.parseInt(time.substring(0, gap));
                             int notificationMinute = Integer.parseInt(time.substring(gap + 3));
                             String todayAlert = cursor.getString(cursor.getColumnIndex(LocalDBManager.ALERT_TODAY));
