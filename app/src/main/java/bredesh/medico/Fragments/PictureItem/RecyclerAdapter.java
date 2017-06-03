@@ -92,6 +92,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
 
         customViewHolder.lblExerciseNoOfRepeats.setText(String.valueOf(item.getNoOfRepetitions()));
         customViewHolder.tvExercisesName.setText(item.getName());
+        if (item.getUri() == null)
+            customViewHolder.btPlay.setVisibility(View.INVISIBLE);
+
 
         String times = item.getTime().replace(resources.getString(R.string.times_splitter), resources.getString(R.string.times_nice_separator));
         customViewHolder.tvExerciseTime.setText(times);

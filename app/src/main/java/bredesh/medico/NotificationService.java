@@ -91,7 +91,7 @@ public class NotificationService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,getBack, PendingIntent.FLAG_UPDATE_CURRENT);
     //    remoteViews.setTextViewText(R.id.notif_title,notiName);
 
-        String msg = String.format (getResources().getString(R.string.alert_text), notificationName ,times);
+        String msg = getResources().getString(R.string.alert_text, notificationName ,times);
 
         builder.setSmallIcon(R.mipmap.ic_medico_logo)
                 .setAutoCancel(true)

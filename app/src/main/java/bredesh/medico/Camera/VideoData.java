@@ -406,16 +406,21 @@ public class VideoData extends AppCompatActivity {
         return string format of the current time.
         DO NOT CHANGE THIS FORMAT [database and other checks relying on that!!]
      */
+
+    private String Right(String s, int count)
+    {
+        return s.substring(s.length() - 2);
+    }
+
     private String makeTimeString()
     {
         Calendar cal = Calendar.getInstance();
         int minute =  cal.get(Calendar.MINUTE);
-        String str_minute;
-        if(minute < 10)
-            str_minute = "0" + minute;
-        else
-            str_minute = "" + minute;
-        return cal.get(Calendar.HOUR_OF_DAY) + " : " + str_minute;
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+
+        String str_hour = Right ("0" + hour, 2);
+        String str_minute = Right("0" + minute, 2);
+        return  str_hour + " : " + str_minute;
     }
 
 }

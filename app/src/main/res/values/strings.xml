@@ -57,7 +57,7 @@
     <string name="delete_exercise_button">מחק</string>
     <string name="delete_exercise_confirm">למחוק את התרגיל?</string>
     <string name="exercise_deleted">התרגיל נמחק</string>
-    <string name="alert_text" formatted="false">הגיע הזמן לבצע %d חזרות!</string>
+    <string name="alert_text">Time to perform %1$s. %2$d repeats.</string>
     <string name="alert_page_text" formatted="false">הגיע הזמן לבצע חזרות!</string>
     <string name="media_not_found">הסרט או התמונה לא נמצאו.</string>
     <string name="good_job">כל הכבוד!</string>
