@@ -41,8 +41,7 @@ public class NotificationWindow extends AppCompatActivity {
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        TextView title = (TextView) findViewById(R.id.name);
-        TextView repeats = (TextView) findViewById(R.id.tvrepeats);
+        TextView alertText = (TextView) findViewById(R.id.txAlertText);
         Button accept = (Button) findViewById(R.id.button_accept);
         Button decline = (Button) findViewById(R.id.button_decline);
         Button snooze = (Button) findViewById(R.id.snooze);
@@ -54,9 +53,7 @@ public class NotificationWindow extends AppCompatActivity {
         item = db.getItemByID(id);
         Resources resources = getResources();
         if(item != null) {
-            title.setText(item.name);
-            repeats.setText(""+item.repeats);
-
+            alertText.setText(resources.getString(R.string.alert_text, item.name, item.repeats));
             if(item.temp) {
                 db.deleteRow(id);
             }
@@ -117,13 +114,17 @@ public class NotificationWindow extends AppCompatActivity {
                         str_minute = "0" + minute;
                     else
                         str_minute = "" + minute;
-                    timeSTR = hour + " : " + str_minute;
+                    String strHour = "0" + hour;
+                    strHour = strHour.substring(strHour.length()-2);
+                    timeSTR = strHour + " : " + str_minute;
                     db.addAlert("_TEMP__"+item.name, timeSTR, item.repeats, (item.uri !=null)? item.uri.toString(): null, new int[]{1, 1, 1, 1, 1, 1, 1});
                 }
                 moveToMain();
             }
         });
 
+        if (item == null || item.uri == null)
+            playButton.setVisibility(View.INVISIBLE);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

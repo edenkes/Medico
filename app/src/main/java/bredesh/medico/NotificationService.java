@@ -150,28 +150,34 @@ public class NotificationService extends Service {
                     Log.i("break","break2");
 
                     do {
-                        String allTimes=cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
-                        String[] times = allTimes.split(getResources().getString(R.string.times_splitter));
+                        try {
+                            String allTimes = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
+                            String[] times = allTimes.split(getResources().getString(R.string.times_splitter));
 
-                        for (int i=0; i< times.length; i++) {
-                            time = times[i];
-                            int gap = 2;
-                            //if (currentHour < 10) gap = 1;
-                            int notificationHour = Integer.parseInt(time.substring(0, gap));
-                            int notificationMinute = Integer.parseInt(time.substring(gap + 3));
-                            String todayAlert = cursor.getString(cursor.getColumnIndex(LocalDBManager.ALERT_TODAY));
-                            Log.i("omri","notificationHour: "+notificationHour);
-                            Log.i("omri","currentHour: "+currentHour);
-                            Log.i("omri","notificationMinute: "+notificationMinute);
-                            Log.i("omri","currentMinutes: "+currentMinutes);
-                            Log.i("omri","todayAlert.compareTo(time): "+todayAlert.compareTo(time));
-                            if (notificationHour == currentHour && notificationMinute == currentMinutes && todayAlert.compareTo(time) < 0) {
-                                //now we need to show notification!!
-                                String notificationName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
-                                int repeats = cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_REPEATS));
-                                showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)));
-                                local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)), time);
+                            for (int i = 0; i < times.length; i++) {
+                                time = times[i];
+                                int gap = 2;
+                                //if (currentHour < 10) gap = 1;
+                                int notificationHour = Integer.parseInt(time.substring(0, gap));
+                                int notificationMinute = Integer.parseInt(time.substring(gap + 3));
+                                String todayAlert = cursor.getString(cursor.getColumnIndex(LocalDBManager.ALERT_TODAY));
+                                Log.i("omri", "notificationHour: " + notificationHour);
+                                Log.i("omri", "currentHour: " + currentHour);
+                                Log.i("omri", "notificationMinute: " + notificationMinute);
+                                Log.i("omri", "currentMinutes: " + currentMinutes);
+                                Log.i("omri", "todayAlert.compareTo(time): " + todayAlert.compareTo(time));
+                                if (notificationHour == currentHour && notificationMinute == currentMinutes && todayAlert.compareTo(time) < 0) {
+                                    //now we need to show notification!!
+                                    String notificationName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
+                                    int repeats = cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_REPEATS));
+                                    showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)));
+                                    local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)), time);
+                                }
                             }
+                        }
+                        catch (Exception alertEx)
+                        {
+                            Log.i("Alert Exception", " Alert Exception: " + alertEx.getMessage());
                         }
                     } while (cursor.moveToNext());
                 }

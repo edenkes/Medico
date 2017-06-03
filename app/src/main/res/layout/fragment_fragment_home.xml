@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
-    android:layoutDirection="ltr"
+    android:layoutDirection="rtl"
     tools:context="bredesh.medico.Fragments.FragmentHome">
 
     <LinearLayout
@@ -13,17 +13,32 @@
         android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/tvExercises"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/colorAppBar"
-            android:gravity="center_vertical|center_horizontal"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:text="@string/exercises"
-            android:textColor="@color/colorWhite"
-            android:textSize="32sp" />
+            android:layout_height="70dp">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/addAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_add_black_48dp"
+                app:fabSize="mini"
+                app:layout_anchorGravity="start" />
+
+            <TextView
+                android:id="@+id/tvExercises"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colorAppBar"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/exercises"
+                android:textColor="@color/colorWhite"
+                android:textSize="32sp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </RelativeLayout>
 
 
         <android.support.v7.widget.RecyclerView
@@ -34,22 +49,13 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:id="@+id/addAlert"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add_black_48dp"
-        app:layout_anchor="@id/recycler_view"
-        app:layout_anchorGravity="bottom|right|end" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
         android:id="@+id/deleteAll"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
         android:layout_margin="16dp"
         android:src="@drawable/ic_delete_black_48dp"
+        android:visibility="invisible"
         app:layout_anchor="@id/recycler_view"
         app:layout_anchorGravity="bottom|left" />
 
