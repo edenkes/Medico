@@ -29,12 +29,14 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
     private List<String> chainTime;
     private Context context;
     private Button[] buttons;
+    private IRemoveLastAlert caller;
 
-    public TimeAdapterRecycler(Context context, List<String> chainTime, Button[] buttons)
+    public TimeAdapterRecycler(Context context, List<String> chainTime, Button[] buttons, IRemoveLastAlert caller)
     {
         this.context = context;
         this.chainTime = chainTime;
         this.buttons = buttons;
+        this.caller = caller;
     }
 
     private void showButtons(boolean show)
@@ -102,18 +104,11 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
         holder.remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(chainTime.size() == 1)
-                {
-                    Toast.makeText(context.getApplicationContext(),
-                            context.getResources().getString(R.string.last_alert), Toast.LENGTH_SHORT).show();
-
-                }
-                else {
-                    chainTime.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, chainTime.size());
-                }
+            if (chainTime.size() == 1)
+                caller.OnRemoveLastAlert();
+            chainTime.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, chainTime.size());
             }
         });
 

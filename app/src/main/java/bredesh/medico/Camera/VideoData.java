@@ -30,7 +30,12 @@ import java.util.Collections;
 
 import bredesh.medico.R;
 
-public class VideoData extends AppCompatActivity {
+interface IRemoveLastAlert
+{
+    void OnRemoveLastAlert();
+}
+
+public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
     private EditText etExerciseName;
     private NumberPicker numberPicker;
@@ -49,6 +54,20 @@ public class VideoData extends AppCompatActivity {
     private final int NewExercise = -6;
     private ImageButton btPlay;
     private String videoUriString;
+    private final Button[] alertPlanButtons = new Button[5];
+    private TimeAdapterRecycler timeAdapter = null;
+    private Button btAddAlert;
+    private TextView lbAddMultiAlert;
+
+    private final String[][] AlertPlans =
+            {
+                    {"08 : 00"},
+                    {"07 : 00", "18 : 00"},
+                    {"07 : 00", "12 : 00", "18 : 00"},
+                    {"07 : 00", "12 : 00", "17 : 00", "21 : 00"},
+                    {"07 : 00", "11 : 00", "15 : 00", "17 : 00", "21 : 00"}
+            };
+
 
     private DialogInterface.OnClickListener onDelete = new DialogInterface.OnClickListener() {
         @Override
@@ -68,21 +87,58 @@ public class VideoData extends AppCompatActivity {
         }
     };
 
+    public void OnRemoveLastAlert()
+    {
+        this.setAddAlertsButtons(true);
+    }
+
+    private void setAddAlertsButtons(boolean alertPlan)
+    {
+        int visibleAlertPlan = alertPlan? View.VISIBLE : View.GONE;
+        int invisibleAlertPlan = alertPlan? View.GONE : View.VISIBLE;
+        btAddAlert.setVisibility(invisibleAlertPlan);
+        lbAddMultiAlert.setVisibility(visibleAlertPlan);
+        for (int i=0; i< 5; i++)
+            alertPlanButtons[i].setVisibility(visibleAlertPlan);
+    }
+
+    private View.OnClickListener setAlertPlan = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            for (int i=0; i< 5; i++)
+            {
+                if (alertPlanButtons[i].getId() == view.getId())
+                {
+                    for (int j=0; j< i+1; j++)
+                        arrayList.add(AlertPlans[i][j]);
+                    timeAdapter.notifyItemInserted(arrayList.size() - 1);
+
+                }
+            }
+            setAddAlertsButtons(false);
+        }
+    };
+
+
     private void setExistingExercise(Intent intent)
     {
 
         etExerciseName.setText(intent.getStringExtra("exercise_name"));
 
         String times = intent.getStringExtra("time");
-        String[] timeAL = times.split(resources.getString(R.string.times_splitter));
+        String[] timeAL = null;
         arrayList = new ArrayList<>();
-        Collections.addAll(arrayList, timeAL);
+        if (times != null && !times.contentEquals("")) {
+            timeAL = times.split(resources.getString(R.string.times_splitter));
+            Collections.addAll(arrayList, timeAL);
+        }
         int repeats = intent.getIntExtra("repeats",1);
         numberPicker.setValue(repeats);
         int[] days = intent.getIntArrayExtra("days");
         for (int i=0; i< 7; i++)
             selectedDays[i] = days[i] != 0;
         updateSelectedDays();
+        this.setAddAlertsButtons(timeAL == null || timeAL.length == 0);
     }
 
     private View.OnClickListener clickHandler = new View.OnClickListener() {
@@ -139,6 +195,14 @@ public class VideoData extends AppCompatActivity {
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
         btPlay = (ImageButton) findViewById(R.id.btPlay);
+        alertPlanButtons[0] = (Button) findViewById(R.id.bt1time);
+        alertPlanButtons[1] = (Button) findViewById(R.id.bt2times);
+        alertPlanButtons[2] = (Button) findViewById(R.id.bt3times);
+        alertPlanButtons[3] = (Button) findViewById(R.id.bt4times);
+        alertPlanButtons[4] = (Button) findViewById(R.id.bt5times);
+        btAddAlert = (Button) findViewById(R.id.btAddAlert);
+        lbAddMultiAlert = (TextView) findViewById(R.id.lbAddMultiAlert);
+
 
 
         ImageButton video;
@@ -166,6 +230,7 @@ public class VideoData extends AppCompatActivity {
         videoUriString = intent.getStringExtra("RecordedUri");
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(50);
+
         numberPicker.setWrapSelectorWheel(false);
 
         this.exerciseId = intent.getIntExtra("exerciseId", NewExercise);
@@ -175,7 +240,7 @@ public class VideoData extends AppCompatActivity {
         }
         else {
             arrayList = new ArrayList<>();
-            arrayList.add(makeTimeString());
+            // arrayList.add(makeTimeString());
             for(int i=0; i<selectedDays.length; i++)
                 selectedDays[i] = true;
         }
@@ -183,12 +248,15 @@ public class VideoData extends AppCompatActivity {
         Button [] buttons = new Button[] {btConfirm, btDelete};
 
 
-        final TimeAdapterRecycler timeAdapter = new TimeAdapterRecycler(VideoData.this,arrayList, buttons);
+        timeAdapter = new TimeAdapterRecycler(VideoData.this,arrayList, buttons, this);
         timeViews.setAdapter(timeAdapter);
         setDialog();
 
         btChangeFrequency.setOnClickListener(clickHandler);
         lblSelectedDays.setOnClickListener(clickHandler);
+
+        for (int i=0; i< 5; i++)
+            alertPlanButtons[i].setOnClickListener(setAlertPlan);
 
         if (videoUriString == null)
             btPlay.setVisibility(View.INVISIBLE);

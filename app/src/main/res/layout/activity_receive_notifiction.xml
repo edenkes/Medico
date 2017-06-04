@@ -15,8 +15,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/app_bar"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="false"
+        android:layout_centerVertical="false"
+        android:layout_marginBottom="80sp"
+        android:layout_marginTop="80sp"
         android:layout_weight="1"
         android:text="TextView"
         android:textColor="@color/titleColor"
@@ -73,11 +76,12 @@
         android:id="@+id/play_button"
         android:layout_width="100sp"
         android:layout_height="100sp"
-        android:scaleType="fitXY"
-        android:background="@drawable/button_round"
-        android:src="@drawable/ic_play_arrow_black_48dp"
+        android:layout_below="@+id/txAlertText"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:background="@drawable/button_round"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_play_arrow_black_48dp" />
 
 
 

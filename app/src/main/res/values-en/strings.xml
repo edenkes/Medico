@@ -77,4 +77,5 @@
     <string name="times_nice_separator">" | "</string>
     <string name="times_splitter">", "</string>
     <string name="exercise_name_label">Exercise name:</string>
+    <string name="Add_multi_alert">Add</string>
 </resources>
