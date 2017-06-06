@@ -4,11 +4,14 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -35,6 +38,7 @@ public class NotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+
         builder = new NotificationCompat.Builder(getApplicationContext());
 /*
         remoteViews = new RemoteViews(getApplicationContext().getPackageName(),R.layout.custom_notification);
@@ -91,7 +95,8 @@ public class NotificationService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,getBack, PendingIntent.FLAG_UPDATE_CURRENT);
     //    remoteViews.setTextViewText(R.id.notif_title,notiName);
 
-        String msg = getResources().getString(R.string.alert_text, notificationName ,times);
+        Spanned msg;
+        String html = (getResources().getString(R.string.alert_text, notificationName ,times));
 
         builder.setSmallIcon(R.mipmap.ic_medico_logo)
                 .setAutoCancel(true)
@@ -100,7 +105,7 @@ public class NotificationService extends Service {
                 .setContentIntent(pendingIntent)
                 .setContentTitle(notificationName)
                 .setWhen(System.currentTimeMillis())
-                .setContentText(msg)
+                .setContentText(html)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setPriority(Notification.PRIORITY_HIGH);
 
@@ -123,6 +128,7 @@ public class NotificationService extends Service {
 
     private void startThreading()
     {
+        final ContextWrapper _this = this;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -170,6 +176,8 @@ public class NotificationService extends Service {
                                     //now we need to show notification!!
                                     String notificationName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
                                     int repeats = cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_REPEATS));
+                                    Localization.init(_this, local);
+
                                     showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)));
                                     local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)), time);
                                 }

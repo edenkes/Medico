@@ -17,8 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import bredesh.medico.Camera.LocalDBManager;
 import bredesh.medico.Localization;
 import bredesh.medico.MainActivity;
+import bredesh.medico.NotificationService;
 import bredesh.medico.R;
 
 /**
@@ -30,6 +32,7 @@ public class MainMenu extends AppCompatActivity
     private final int NUMBER_OF_COLUMNS = 2;
     private String language = "default";
     private Menu optionsMenu = null;
+    LocalDBManager dbManager = null;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -94,7 +97,7 @@ public class MainMenu extends AppCompatActivity
         if (languageToLoad != null)
         {
             Localization.setLanguage(languageToLoad, this);
-            Localization.saveLanguageInPrefs(languageToLoad, this);
+            Localization.saveLanguageInPrefs(languageToLoad, this.dbManager);
             this.setContentView(R.layout.activity_menu);
             PrepareMenu();
         }
@@ -105,7 +108,11 @@ public class MainMenu extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.language = Localization.init(this);
+        dbManager = new LocalDBManager(getApplicationContext());
+        final Intent SERVICE_INTENT = new Intent(getBaseContext(), NotificationService.class);
+        startService(SERVICE_INTENT);
+
+        this.language = Localization.init(this, dbManager);
         setContentView(R.layout.activity_menu);
         PrepareMenu();
     }

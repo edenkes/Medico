@@ -85,4 +85,6 @@
     <string name="Add_multi_alert">Add</string>
     <string name="set_language">Language</string>
     <string name="lang_default">Device default</string>
+    <string name="notification_alert_prefix">Time to perform:</string>
+    <string name="notification_alert_repeats">%1$d times.</string>
 </resources>

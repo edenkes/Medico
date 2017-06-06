@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.Calendar;
 
 import bredesh.medico.Camera.LocalDBManager;
@@ -41,7 +43,10 @@ public class NotificationWindow extends AppCompatActivity {
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        TextView alertText = (TextView) findViewById(R.id.txAlertText);
+        TextView alertPrefixText = (TextView) findViewById(R.id.txAlertPrefixText);
+        TextView alertName = (TextView) findViewById(R.id.txAlertName);
+        TextView alertRepeats = (TextView) findViewById(R.id.txRepeats);
+
         Button accept = (Button) findViewById(R.id.button_accept);
         Button decline = (Button) findViewById(R.id.button_decline);
         Button snooze = (Button) findViewById(R.id.snooze);
@@ -53,7 +58,9 @@ public class NotificationWindow extends AppCompatActivity {
         item = db.getItemByID(id);
         Resources resources = getResources();
         if(item != null) {
-            alertText.setText(resources.getString(R.string.alert_text, item.name, item.repeats));
+            alertPrefixText.setText(resources.getString(R.string.notification_alert_prefix));
+            alertName.setText(item.name);
+            alertRepeats.setText(resources.getString(R.string.notification_alert_repeats, item.repeats));
             if(item.temp) {
                 db.deleteRow(id);
             }

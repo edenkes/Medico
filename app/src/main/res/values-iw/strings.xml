@@ -84,4 +84,6 @@
     <string name="Add_multi_alert">כמה פעמים ביום?</string>
     <string name="set_language">שפה</string>
     <string name="lang_default">ברירת מחדל של המכשיר</string>
+    <string name="notification_alert_prefix">הגיע הזמן לבצע:</string>
+    <string name="notification_alert_repeats">%1$d חזרות.</string>
 </resources>

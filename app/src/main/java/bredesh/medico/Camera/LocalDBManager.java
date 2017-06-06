@@ -28,17 +28,19 @@ public class LocalDBManager extends SQLiteOpenHelper{
     public static final String FRIDAY = "FRIDAY";
     public static final String SATURDAY = "SATURDAY";
     public static final String ALERT_TODAY = "alerttoday";
+    public static final String LANG="LANG";
 
     public static final String DATABASE_NAME = "Medico";
     private static final String ALERTS_TABLE_NAME = "ALERTS";
-    private static final int VERSION = 2;
+    private static final int VERSION = 5;
     public static final String KEY_ID = "id";
     public static final String KEY_FIRST_NAME = "first_name";
     public static final String KEY_LAST_NAME = "last_name";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_POINTS = "points";
 
-    private static final String PERSONAL_INFO_TABLE_NAME = "PersonalInfo";    
+    private static final String PERSONAL_INFO_TABLE_NAME = "PersonalInfo";
+    private static final String LANG_TABLE_NAME = "Language";
 
     public LocalDBManager(Context context) { super(context, DATABASE_NAME, null, VERSION); }
 
@@ -79,19 +81,37 @@ public class LocalDBManager extends SQLiteOpenHelper{
                 KEY_FIRST_NAME + " TEXT, " +
                 KEY_LAST_NAME + " TEXT, " +
                 KEY_EMAIL + " TEXT, " +
-                KEY_POINTS + " INTEGER DEFAULT 0 )";
+                KEY_POINTS + " INTEGER DEFAULT 0)";
         db.execSQL(CREATE_TABLE);
 
     }
 
+    private void createLang(SQLiteDatabase db)
+    {
+        String CREATE_TABLE = "CREATE TABLE " + LANG_TABLE_NAME +"( " +
+                KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                LANG+ " TEXT )";
+        db.execSQL(CREATE_TABLE);
+        ContentValues values = new ContentValues();
+        values.put(LANG, "");
+        db.insert(LANG_TABLE_NAME, null, values);
+    }
+
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " +ALERTS_TABLE_NAME + "");
+        if (oldVersion < 2) {
+            db.execSQL("DROP TABLE IF EXISTS " + ALERTS_TABLE_NAME + "");
+            createAlerts(db);
+        }
         // create fresh table
-        db.execSQL("DROP TABLE IF EXISTS " +PERSONAL_INFO_TABLE_NAME + "");
-        // create fresh table
-        this.onCreate(db);
+        if (oldVersion < 5) {
+            db.execSQL("DROP TABLE IF EXISTS " + PERSONAL_INFO_TABLE_NAME + "");
+            createPersonalInfo(db);
+            db.execSQL("DROP TABLE IF EXISTS " + LANG_TABLE_NAME + "");
+            createLang(db);
+        }
     }
 
 public void DeleteAllAlerts() {
@@ -240,6 +260,23 @@ public void allTodaysAlertReset(int rowID) {
         db.close();
     }
 
+    public void setLang(String language){
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. create ContentValues to add key "column"/value
+        ContentValues values = new ContentValues();
+        values.put(LANG, language);
+
+        // 3. insert
+        db.update(LANG_TABLE_NAME, // table
+                values, null, null); // key/value -> keys = column names/ values = column values
+
+        // 4. close
+        db.close();
+    }
+
+
     public void setLastName(String lastName){
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -303,6 +340,20 @@ public void allTodaysAlertReset(int rowID) {
 
         return str;
     }
+
+    public  String getLang(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + LANG_TABLE_NAME;
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+
+
+        if(cursor.getCount() != 1) return null;
+        String str = cursor.getString(cursor.getColumnIndex(LANG));
+
+        return str;
+    }
+
 
     public Cursor getLastName(){
         SQLiteDatabase db = this.getReadableDatabase();
