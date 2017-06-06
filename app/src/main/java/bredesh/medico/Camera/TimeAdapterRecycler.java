@@ -61,14 +61,15 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
         return result.substring(result.length()-2);
     }
 
+
+
     @Override
     public void onBindViewHolder(final TimeAdapterRecycler.CustomViewHolder holder, final int position) {
         final String timeItem = chainTime.get(position);
 
-        holder.tvTime.setText(timeItem);
         final String[] hourAndMinutes = timeItem.split(" : ");
 
-        holder.timePick.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -99,7 +100,11 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
                 showButtons(false);
 
             }
-        });
+        };
+
+        holder.timePick.setOnClickListener(listener);
+        holder.tvTime.setText(timeItem);
+        holder.tvTime.setOnClickListener(listener);
 
         holder.remove.setOnClickListener(new View.OnClickListener() {
             @Override
