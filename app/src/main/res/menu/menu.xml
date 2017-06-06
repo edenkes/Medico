@@ -13,4 +13,36 @@
         android:orderInCategory="200"
         app:showAsAction="always" />
 -->
+    <item android:id="@+id/action_change_language"
+        android:title="@string/set_language"
+        android:orderInCategory="200"
+        app:showAsAction="always">
+        <menu xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            >
+            <group android:checkableBehavior="single" android:id="@+id/action_languages">
+                <item android:id="@+id/action_lang_hebrew"
+                    android:title="@string/lang_heb"
+                    android:checkable="true"
+                    android:orderInCategory="100" />
+                <item android:id="@+id/action_lang_arabic"
+                    android:title="@string/lang_ara"
+                    android:checkable="true"
+                    android:orderInCategory="200"/>
+                <item android:id="@+id/action_lang_russian"
+                    android:title="@string/lang_rus"
+                    android:checkable="true"
+                    android:orderInCategory="300"/>
+                <item android:id="@+id/action_lang_english"
+                    android:title="@string/lang_eng"
+                    android:checkable="true"
+                    android:orderInCategory="400"/>
+                <item android:id="@+id/action_lang_default"
+                    android:title="@string/lang_default"
+                    android:checkable="true"
+                    android:orderInCategory="50"/>
+            </group>
+        </menu>
+    </item>
+
 </menu>

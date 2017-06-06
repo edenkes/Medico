@@ -82,4 +82,6 @@
     <string name="menu_item_4">تذكير الشخصية</string>
     <string name="exercise_name_label">اسم التمرين:</string>
     <string name="Add_multi_alert">הוסף</string>
+    <string name="set_language">Language</string>
+    <string name="lang_default">Device default</string>
 </resources>

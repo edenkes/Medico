@@ -1,16 +1,23 @@
 package bredesh.medico.Menu;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import bredesh.medico.Localization;
 import bredesh.medico.MainActivity;
 import bredesh.medico.R;
 
@@ -21,11 +28,91 @@ import bredesh.medico.R;
 public class MainMenu extends AppCompatActivity
 {
     private final int NUMBER_OF_COLUMNS = 2;
+    private String language = "default";
+    private Menu optionsMenu = null;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.optionsMenu = menu;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        if (this.language == null)
+            this.language = "";
+        switch (this.language)
+        {
+            default:
+                menu.findItem(R.id.action_lang_default).setChecked(true);
+                break;
+            case "iw":
+                menu.findItem(R.id.action_lang_hebrew).setChecked(true);
+                break;
+            case "ar":
+                menu.findItem(R.id.action_lang_arabic).setChecked(true);
+                break;
+            case "en":
+                menu.findItem(R.id.action_lang_english).setChecked(true);
+                break;
+            case "ru":
+                menu.findItem(R.id.action_lang_russian).setChecked(true);
+                break;
+
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        String languageToLoad = null;
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.action_lang_english:
+                languageToLoad = Locale.ENGLISH.toString(); // your language
+                break;
+            case R.id.action_lang_hebrew:
+                 languageToLoad = "iw"; // your language
+                break;
+            case R.id.action_lang_arabic:
+                languageToLoad = "ar"; // your language
+                break;
+            case R.id.action_lang_russian:
+                languageToLoad = "ru"; // your language
+                break;
+            case R.id.action_lang_default:
+                languageToLoad = "";
+            default:
+                break;
+
+        }
+
+        this.language = languageToLoad;
+        this.optionsMenu.findItem(itemId).setChecked(true);
+        this.invalidateOptionsMenu();
+
+        if (languageToLoad != null)
+        {
+            Localization.setLanguage(languageToLoad, this);
+            Localization.saveLanguageInPrefs(languageToLoad, this);
+            this.setContentView(R.layout.activity_menu);
+            PrepareMenu();
+        }
+
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.language = Localization.init(this);
         setContentView(R.layout.activity_menu);
+        PrepareMenu();
+    }
+
+    void PrepareMenu()
+    {
+        View root = (View) findViewById(R.id.main_menu_root);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -60,5 +147,6 @@ public class MainMenu extends AppCompatActivity
 
         MenuAdapterRecycler adapterRecycler = new MenuAdapterRecycler(getApplicationContext(),menu_items, this);
         menu.setAdapter(adapterRecycler);
+
     }
 }

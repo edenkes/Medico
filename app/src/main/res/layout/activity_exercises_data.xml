@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorLiteGrey"
     android:focusableInTouchMode="true"
-    android:layoutDirection="rtl"
+    android:layoutDirection="locale"
     android:orientation="vertical">
 
     <include
@@ -53,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5sp"
-        android:layoutDirection="rtl"
+        android:layoutDirection="locale"
         android:orientation="horizontal">
 
         <TextView

@@ -25,14 +25,14 @@
     <string name="alert_cancelled">alert been canceled</string>
     <string name="alert_dialog_cancel">Cancel</string>
     <string name="alert_dialog_select_days">select days for alert</string>
-    <string name="btn_confirm">Approval</string>
-    <string name="alert_dialog_set">Approval</string>
+    <string name="btn_confirm">OK</string>
+    <string name="alert_dialog_set">OK</string>
     <string name="alert_page_text">Time to rehearse!</string>
     <string name="alert_snoozed">See you in 5 minutes!</string>
     <string name="alert_text">Time to rehearse!</string>
     <string name="all_alerts_deleted">All notifications have been removed</string>
     <string name="all_days">All the days</string>
-    <string name="btn_add_alert">Add notification</string>
+    <string name="btn_add_alert">Add alert</string>
     <string name="button_camera">Image</string>
     <string name="button_video">video</string>
     <string name="coming_soon">coming soon</string>
@@ -77,5 +77,7 @@
     <string name="times_nice_separator">" | "</string>
     <string name="times_splitter">", "</string>
     <string name="exercise_name_label">Exercise name:</string>
-    <string name="Add_multi_alert">Add</string>
+    <string name="Add_multi_alert">How many times a day?</string>
+    <string name="set_language">Language</string>
+    <string name="lang_default">Device default</string>
 </resources>

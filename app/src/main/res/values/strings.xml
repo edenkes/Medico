@@ -81,6 +81,12 @@
     <string name="menu_item_4">תזכורות אישיות</string>
     <string name="exercise_name_label">Exercise name:</string>
     <string name="Add_multi_alert">Add</string>
+    <string name="set_language">Language</string>
+    <string name="lang_heb" translatable="false">עברית</string>
+    <string name="lang_eng" translatable="false">English</string>
+    <string name="lang_rus" translatable="false">русский</string>
+    <string name="lang_ara" translatable="false">عربيه</string>
+    <string name="lang_default">Device default</string>
 
 
 </resources>

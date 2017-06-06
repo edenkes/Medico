@@ -61,9 +61,9 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
     private final String[][] AlertPlans =
             {
-                    {"08 : 00"},
-                    {"07 : 00", "18 : 00"},
-                    {"07 : 00", "12 : 00", "18 : 00"},
+                    {"07 : 00"},
+                    {"07 : 00", "19 : 00"},
+                    {"07 : 00", "12 : 00", "19 : 00"},
                     {"07 : 00", "12 : 00", "17 : 00", "21 : 00"},
                     {"07 : 00", "11 : 00", "15 : 00", "17 : 00", "21 : 00"}
             };

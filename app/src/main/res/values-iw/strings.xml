@@ -82,4 +82,6 @@
     <string name="menu_item_4">תזכורות אישיות</string>
     <string name="exercise_name_label">שם התרגיל:</string>
     <string name="Add_multi_alert">כמה פעמים ביום?</string>
+    <string name="set_language">שפה</string>
+    <string name="lang_default">ברירת מחדל של המכשיר</string>
 </resources>

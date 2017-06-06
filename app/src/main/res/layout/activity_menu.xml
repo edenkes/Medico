@@ -3,7 +3,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl">
+    android:id="@+id/main_menu_root"
+    android:layoutDirection="locale"
+>
 
     <include
         android:id="@+id/app_bar"
