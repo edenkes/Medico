@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="bredesh.medico.Fragments.EditInfo">
+
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+
+
+    <LinearLayout
+        android:id="@+id/subLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:background="@color/titleColor"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <Button
+            android:id="@+id/btConfirm"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/btn_confirm"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btClear"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/ClearInfo"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <!--<TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/app_bar"
+        android:textColor="@color/titleColor"
+        android:gravity="end"
+        android:paddingStart="5sp"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:text="באפשרותך למלא מידע אישי:" />-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/app_bar"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_above="@+id/subLayout">
+
+        <EditText
+            android:id="@+id/etFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/FirstName"
+            android:inputType="textPersonName"
+            android:textColor="@color/textColor"
+            android:textColorHighlight="@color/colorOrange"
+            android:textColorHint="@color/titleColor" />
+
+        <EditText
+            android:id="@+id/etLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/LastName"
+            android:inputType="textPersonName"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/titleColor" />
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/EmailAddress"
+            android:inputType="textPersonName"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/titleColor"
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>

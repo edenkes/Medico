@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import bredesh.medico.Camera.LocalDBManager;
 import bredesh.medico.Camera.VideoData;
 import bredesh.medico.Fragments.PictureItem.RecyclerAdapter;
 import bredesh.medico.Fragments.PictureItem.VideoItem;
+import bredesh.medico.MedicoDB;
 import bredesh.medico.R;
 
 public class FragmentHome extends Fragment {
@@ -56,7 +56,7 @@ public class FragmentHome extends Fragment {
                 .setPositiveButton(resources.getString(R.string.alert_dialog_set), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                    LocalDBManager db = new LocalDBManager(getActivity().getApplicationContext());
+                MedicoDB db = new MedicoDB(getActivity().getApplicationContext());
                     db.DeleteAllAlerts();
                     Toast.makeText(getActivity().getApplicationContext(), getResources().getString(R.string.all_alerts_deleted) , Toast.LENGTH_LONG).show();
 
@@ -100,7 +100,7 @@ public class FragmentHome extends Fragment {
     }
 
     private void setArrayList() {
-        LocalDBManager db = new LocalDBManager(getActivity().getApplicationContext());
+        MedicoDB db = new MedicoDB(getActivity().getApplicationContext());
         Cursor c = db.getAllAlerts();
         arrayList = new ArrayList<>();
         int index;

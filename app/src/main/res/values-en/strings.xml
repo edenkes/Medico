@@ -48,7 +48,7 @@
     <string name="exercises">Exercises</string>
     <string name="extercise_name_hint">Name of exercise</string>
     <string name="giveup">Cancel</string>
-    <string name="good_job">Well done!</string>
+    <string name="good_job">Well done! You received 10 points</string>
     <string name="invalid_name">Enter an exercise name</string>
     <string name="last_alert">There must be at least one alert</string>
     <string name="log_in">Login</string>
@@ -82,4 +82,6 @@
     <string name="lang_default">Device default</string>
     <string name="notification_alert_prefix">Time to perform:</string>
     <string name="notification_alert_repeats">%1$d times.</string>
+    <string name="EditProfile">Edit your profile</string>
+    <string name="ClearInfo">Clear personal information</string>
 </resources>

@@ -21,7 +21,6 @@
     <string name="Wednesday_Short">ד</string>
     <string name="Thursday_Short">ה</string>
     <string name="Friday_Short">ו</string>
-    <string name="Saturday_Short">ש</string>
 
     <string name="select_days">ימים</string>
     <string name="Sunday">ראשון</string>
@@ -60,7 +59,7 @@
     <string name="alert_text">Time to perform %1$s. <b>%2$d</b> repeats.</string>
     <string name="alert_page_text" formatted="false">הגיע הזמן לבצע חזרות!</string>
     <string name="media_not_found">הסרט או התמונה לא נמצאו.</string>
-    <string name="good_job">כל הכבוד!</string>
+    <string name="good_job">כל הכבוד! קיבלת 10 נקודות</string>
     <string name="alert_cancelled">ההתראה בוטלה. ננסה בפעם הבאה.</string>
     <string name="alert_snoozed">נתראה עוד 5 דקות!</string>
     <string name="personal_info">מידע אישי</string>
@@ -68,6 +67,8 @@
     <string name="FirstName">שם פרטי</string>
     <string name="EmailAddress">כתובת מייל</string>
     <string name="Points">נקודות</string>
+    <string name="EditProfile">ערוך את הפרופיל שלך</string>
+
     <string name="AttachFailed">לא הצלחנו לקבל את התמונה או הסרט</string>
     <string name="AttachSuccess">הסרט נקלט בהצלחה</string>
     <string name="reshootVideo">האם לצלם את התרגיל מחדש?</string>
@@ -89,9 +90,7 @@
     <string name="lang_default">Device default</string>
     <string name="notification_alert_prefix">Time to perform:</string>
     <string name="notification_alert_repeats">%1$d times.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="Saturday_Short">ש</string>
+    <string name="ClearInfo">נקה מידע אישי</string>
 
 </resources>

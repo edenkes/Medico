@@ -16,13 +16,13 @@
     <string name="repetitions">يكرر:</string>
     <string name="btn_confirm">التأكيد</string>
 
-    <string name="Sunday_short">A</string>
-    <string name="Monday_Short">B</string>
-    <string name="Tuesday_Short">C</string>
-    <string name="Wednesday_Short">D</string>
-    <string name="Thursday_Short">E</string>
-    <string name="Friday_Short">F</string>
-    <string name="Saturday_Short">G</string>
+    <string name="Sunday_short">sun</string>
+    <string name="Monday_Short">mon</string>
+    <string name="Tuesday_Short">tue</string>
+    <string name="Wednesday_Short">wed</string>
+    <string name="Thursday_Short">thu</string>
+    <string name="Friday_Short">fri</string>
+    <string name="Saturday_Short">sat</string>
 
     <string name="select_days">ايام</string>
     <string name="Sunday">الأحد</string>
@@ -61,7 +61,7 @@
     <string name="alert_text" formatted="false">لقد حان الوقت لأداء %d التكرار!</string>
     <string name="alert_page_text" formatted="false">لقد حان الوقت لجعل البروفات!</string>
     <string name="media_not_found">لم يتم العثور على فيلم أو صورة.</string>
-    <string name="good_job">كل الاحترام!</string>
+    <string name="good_job">كل الاحترام! حصل على 10 نقطة</string>
     <string name="alert_cancelled">إلغاء حالة تأهب. حاول في المرة القادمة.</string>
     <string name="alert_snoozed">نراكم في آخر 5 دقائق!</string>
     <string name="personal_info">معلومات شخصية</string>
@@ -86,4 +86,6 @@
     <string name="lang_default">Device default</string>
     <string name="notification_alert_prefix">Time to perform:</string>
     <string name="notification_alert_repeats">%1$d times.</string>
+    <string name="EditProfile">تعديل ملفك الشخصي</string>
+    <string name="ClearInfo">المعلومات الشخصية واضحة</string>
 </resources>

@@ -12,15 +12,11 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.bottom_bar.BottomBar;
 import com.example.bottom_bar.BottomBarTab;
 import com.example.bottom_bar.OnTabSelectListener;
 
-import bredesh.medico.Camera.LocalDBManager;
 import bredesh.medico.Fragments.FragmentHome;
 import bredesh.medico.Fragments.PersonalFragment;
 

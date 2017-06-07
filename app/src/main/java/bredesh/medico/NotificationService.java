@@ -17,7 +17,6 @@ import android.widget.RemoteViews;
 
 import java.util.Calendar;
 
-import bredesh.medico.Camera.LocalDBManager;
 import bredesh.medico.Notification.NotificationWindow;
 
 public class NotificationService extends Service {
@@ -27,7 +26,7 @@ public class NotificationService extends Service {
      //private RemoteViews remoteViews;
 
 
-    private LocalDBManager local;
+    private MedicoDB local;
     private Cursor cursor;
     private int CURRENT_DAY;
     private boolean shouldStop = false;
@@ -49,7 +48,7 @@ public class NotificationService extends Service {
 */
 
         Calendar calendar = Calendar.getInstance();
-        local = new LocalDBManager(getApplicationContext());
+        local = new MedicoDB(getApplicationContext());
 
         CURRENT_DAY = calendar.get(Calendar.DAY_OF_WEEK);
         cursor = getAllTodayAlerts();
@@ -115,13 +114,13 @@ public class NotificationService extends Service {
     private Cursor getAllTodayAlerts()
     {
         switch (CURRENT_DAY) {
-            case Calendar.SUNDAY:    return local.getAllAlertsByDay(LocalDBManager.SUNDAY);
-            case Calendar.MONDAY:    return local.getAllAlertsByDay(LocalDBManager.MONDAY);
-            case Calendar.TUESDAY:   return local.getAllAlertsByDay(LocalDBManager.TUESDAY);
-            case Calendar.WEDNESDAY: return local.getAllAlertsByDay(LocalDBManager.WEDNESDAY);
-            case Calendar.THURSDAY:  return local.getAllAlertsByDay(LocalDBManager.THURSDAY);
-            case Calendar.FRIDAY:    return local.getAllAlertsByDay(LocalDBManager.FRIDAY);
-            case Calendar.SATURDAY:  return local.getAllAlertsByDay(LocalDBManager.SATURDAY);
+            case Calendar.SUNDAY:    return local.getAllAlertsByDay(MedicoDB.SUNDAY);
+            case Calendar.MONDAY:    return local.getAllAlertsByDay(MedicoDB.MONDAY);
+            case Calendar.TUESDAY:   return local.getAllAlertsByDay(MedicoDB.TUESDAY);
+            case Calendar.WEDNESDAY: return local.getAllAlertsByDay(MedicoDB.WEDNESDAY);
+            case Calendar.THURSDAY:  return local.getAllAlertsByDay(MedicoDB.THURSDAY);
+            case Calendar.FRIDAY:    return local.getAllAlertsByDay(MedicoDB.FRIDAY);
+            case Calendar.SATURDAY:  return local.getAllAlertsByDay(MedicoDB.SATURDAY);
             default:                 return local.getAllAlerts();
         }//now cursor initiated with all the alerts today
     }
@@ -148,7 +147,7 @@ public class NotificationService extends Service {
                     {
                         cursor.moveToFirst();
                         while (cursor.moveToNext())
-                            local.allTodaysAlertReset(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)));
+                            local.allTodaysAlertReset(cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)));
                         CURRENT_DAY = calendar.get(Calendar.DAY_OF_WEEK);
                         cursor = getAllTodayAlerts();
                     }
@@ -157,7 +156,7 @@ public class NotificationService extends Service {
 
                     do {
                         try {
-                            String allTimes = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_TIME));
+                            String allTimes = cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_TIME));
                             String[] times = allTimes.split(getResources().getString(R.string.times_splitter));
 
                             for (int i = 0; i < times.length; i++) {
@@ -166,7 +165,7 @@ public class NotificationService extends Service {
                                 //if (currentHour < 10) gap = 1;
                                 int notificationHour = Integer.parseInt(time.substring(0, gap));
                                 int notificationMinute = Integer.parseInt(time.substring(gap + 3));
-                                String todayAlert = cursor.getString(cursor.getColumnIndex(LocalDBManager.ALERT_TODAY));
+                                String todayAlert = cursor.getString(cursor.getColumnIndex(MedicoDB.ALERT_TODAY));
                                 Log.i("omri", "notificationHour: " + notificationHour);
                                 Log.i("omri", "currentHour: " + currentHour);
                                 Log.i("omri", "notificationMinute: " + notificationMinute);
@@ -174,12 +173,12 @@ public class NotificationService extends Service {
                                 Log.i("omri", "todayAlert.compareTo(time): " + todayAlert.compareTo(time));
                                 if (notificationHour == currentHour && notificationMinute == currentMinutes && todayAlert.compareTo(time) < 0) {
                                     //now we need to show notification!!
-                                    String notificationName = cursor.getString(cursor.getColumnIndex(LocalDBManager.KEY_NAME));
-                                    int repeats = cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_REPEATS));
+                                    String notificationName = cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_NAME));
+                                    int repeats = cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_REPEATS));
                                     Localization.init(_this, local);
 
-                                    showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)));
-                                    local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(LocalDBManager.KEY_ID)), time);
+                                    showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)));
+                                    local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)), time);
                                 }
                             }
                         }

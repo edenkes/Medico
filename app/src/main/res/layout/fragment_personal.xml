@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/tvPersonalInfo"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:layout_gravity="center_horizontal"
         android:background="@color/colorAppBar"
         android:fontFamily="casual"
@@ -20,8 +20,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_gravity="center"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
@@ -32,70 +33,78 @@
             android:id="@+id/tvFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorLetters"
-            android:text="@string/FirstName" />
+            android:text="@string/FirstName"
+            android:textColor="@color/colorLetters" />
 
-        <EditText
+        <TextView
             android:id="@+id/etFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="First Name"
+            android:text="@string/FirstName"
+            android:textSize="20sp"
+            android:paddingBottom="10dp"
+            android:shadowColor="@color/colorOrange"
+            android:textColorLink="@color/colorGreen"
             android:textColor="@color/colorLetters" />
 
         <TextView
             android:id="@+id/tvLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorLetters"
-            android:text="@string/LastName" />
+            android:text="@string/LastName"
+            android:textColor="@color/colorLetters" />
 
-        <EditText
+        <TextView
             android:id="@+id/etLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:text="Last Name"
+            android:text="@string/LastName"
+            android:textSize="20sp"
+            android:paddingBottom="10dp"
             android:textColor="@color/colorLetters" />
 
         <TextView
             android:id="@+id/tvEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorLetters"
-            android:text="@string/EmailAddress" />
+            android:text="@string/EmailAddress"
+            android:textColor="@color/colorLetters" />
 
-        <EditText
+        <TextView
             android:id="@+id/etEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:text="Email Address"
-            android:textColor="@color/colorLetters"/>
+            android:text="@string/EmailAddress"
+            android:textSize="20sp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/colorLetters" />
 
         <TextView
             android:id="@+id/tvPoints"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorLetters"
-            android:text="@string/Points" />
+            android:text="@string/Points"
+            android:textColor="@color/colorLetters" />
 
-        <EditText
+        <TextView
             android:id="@+id/etPoints"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:text="0 points"
-            android:textColor="@color/colorLetters"/>
+            android:text="@string/Points"
+            android:textSize="20sp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/colorLetters" />
 
         <Button
-            android:id="@+id/btAddPoints"
+            android:id="@+id/btEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/app_bar"
-            android:layout_toEndOf="@+id/points"
-            android:text="add_points" />
+            android:background="@drawable/button_edit"
+            android:textColor="@color/textColor"
+            android:text="@string/EditProfile" />
+
 
     </LinearLayout>
 

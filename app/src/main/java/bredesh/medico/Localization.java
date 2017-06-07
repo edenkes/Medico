@@ -7,7 +7,6 @@ import android.content.res.Configuration;
 
 import java.util.Locale;
 
-import bredesh.medico.Camera.LocalDBManager;
 
 /**
  * Created by ophir on 6/6/2017.
@@ -20,7 +19,7 @@ public class Localization {
     private static Locale _deviceDefaultLocale = null;
     static ContextWrapper currentContextWrapper = null;
 
-    public static String init(ContextWrapper activity, LocalDBManager dbManager)
+    public static String init(ContextWrapper activity, MedicoDB dbManager)
     {
         currentContextWrapper = activity;
         if (_deviceDefaultLocale == null) {
@@ -32,7 +31,7 @@ public class Localization {
     }
 
 
-    private static String setLanguageFromPrefs(ContextWrapper activity, LocalDBManager dbManager) {
+    private static String setLanguageFromPrefs(ContextWrapper activity, MedicoDB dbManager) {
         String language = dbManager.getLang();
         if (language != null) {
             setLanguage(language, activity);
@@ -52,7 +51,7 @@ public class Localization {
         activity.getResources().getConfiguration().setLayoutDirection(locale);
     }
 
-    public static void saveLanguageInPrefs(String language, LocalDBManager dbManager)
+    public static void saveLanguageInPrefs(String language, MedicoDB dbManager)
     {
         dbManager.setLang(language);
     }

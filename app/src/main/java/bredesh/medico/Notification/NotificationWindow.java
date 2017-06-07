@@ -12,20 +12,16 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.Calendar;
 
-import bredesh.medico.Camera.LocalDBManager;
-import bredesh.medico.Game.ScoreDatabase;
 import bredesh.medico.MainActivity;
+import bredesh.medico.MedicoDB;
 import bredesh.medico.R;
 
 public class NotificationWindow extends AppCompatActivity {
 
     private Intent toMain;
-    private LocalDBManager db;
-    private ScoreDatabase scoreDatabase;
+    private MedicoDB db;
     private PartialVideoItem item= null;
     private final int SNOOZE_TIME = 5;
 
@@ -54,7 +50,7 @@ public class NotificationWindow extends AppCompatActivity {
 
         toMain = new Intent(NotificationWindow.this, MainActivity.class);
         int id = getIntent().getIntExtra("db_id",-1);
-        db = new LocalDBManager(getApplicationContext());
+        db = new MedicoDB(getApplicationContext());
         item = db.getItemByID(id);
         Resources resources = getResources();
         if(item != null) {
@@ -73,10 +69,9 @@ public class NotificationWindow extends AppCompatActivity {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                db.addPoints(10);
                 Toast.makeText(getApplicationContext(), goodJob , Toast.LENGTH_LONG).show();
                 moveToMain();
-
             }
         });
 

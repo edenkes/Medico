@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 
+import bredesh.medico.MedicoDB;
 import bredesh.medico.R;
 
 interface IRemoveLastAlert
@@ -47,7 +48,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
     // array to keep the selected days
     private final boolean[] selectedDays = new boolean[7];
     private final boolean[] newSelectedDays = new boolean[7];
-    private LocalDBManager db;
+    private MedicoDB db;
     private final int maxSize = 16;
     private Resources resources;
     private int exerciseId;
@@ -72,7 +73,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
     private DialogInterface.OnClickListener onDelete = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int id) {
-            LocalDBManager db = new LocalDBManager(getApplicationContext());
+            MedicoDB db = new MedicoDB(getApplicationContext());
             if (exerciseId != NewExercise)
                 db.deleteRow(exerciseId);
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.exercise_deleted) , Toast.LENGTH_LONG).show();
@@ -225,7 +226,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         });
 
 
-        db = new LocalDBManager(getApplicationContext());
+        db = new MedicoDB(getApplicationContext());
         Intent intent = getIntent();
         videoUriString = intent.getStringExtra("RecordedUri");
         numberPicker.setMinValue(1);

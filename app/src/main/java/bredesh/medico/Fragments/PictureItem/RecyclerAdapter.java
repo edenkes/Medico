@@ -19,8 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
 
-import bredesh.medico.Camera.LocalDBManager;
 import bredesh.medico.Camera.VideoData;
+import bredesh.medico.MedicoDB;
 import bredesh.medico.R;
 
 
@@ -66,7 +66,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
         DialogInterface.OnClickListener onDelete = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                LocalDBManager db = new LocalDBManager(context);
+                MedicoDB db = new MedicoDB(context);
                 db.deleteRow(item.getId());
                 videoItems.remove(position);
                 notifyItemRemoved(position);
