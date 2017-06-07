@@ -16,7 +16,7 @@ public class MedicoDB extends SQLiteOpenHelper {
     private static final String ALERTS_TABLE_NAME = "ALERTS";
     private static final String PERSONAL_INFO_TABLE_NAME = "PersonalInfo";
     private static final String LANG_TABLE_NAME = "Language";
-    private static final int VERSION = 5;
+    private static final int VERSION = 7;
 
     /*Alerts Table*/
     public static final String KEY_NAME = "name";
@@ -83,6 +83,9 @@ public class MedicoDB extends SQLiteOpenHelper {
                 KEY_EMAIL + " TEXT, " +
                 KEY_POINTS + " INTEGER DEFAULT 0)";
         db.execSQL(CREATE_TABLE);
+        ContentValues values = new ContentValues();
+        values.put(KEY_FIRST_NAME,"");
+        db.insert(PERSONAL_INFO_TABLE_NAME, null, values);
 
     }
 
@@ -105,7 +108,7 @@ public class MedicoDB extends SQLiteOpenHelper {
             createAlerts(db);
         }
         // create fresh table
-        if (oldVersion < 5) {
+        if (oldVersion < 7) {
             db.execSQL("DROP TABLE IF EXISTS " + PERSONAL_INFO_TABLE_NAME + "");
             createPersonalInfo(db);
             db.execSQL("DROP TABLE IF EXISTS " + LANG_TABLE_NAME + "");

@@ -31,8 +31,6 @@ public class PersonalFragment extends Fragment {
 
         dbManager  = new MedicoDB(getActivity().getApplicationContext());
 
-        dbManager.setFirstName("eden");
-
         setupInfoFromDB(view);
 
         Button btEdit = (Button) view.findViewById(R.id.btEdit);
