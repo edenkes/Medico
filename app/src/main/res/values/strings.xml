@@ -80,7 +80,7 @@
     <string name="menu_item_3">בדיקות תקופתיות</string>
     <string name="menu_item_4">תזכורות אישיות</string>
     <string name="exercise_name_label">Exercise name:</string>
-    <string name="Add_multi_alert">Add</string>
+    <string name="Add_multi_alert">כמה פעמים ביום?</string>
     <string name="set_language">Language</string>
     <string name="lang_heb" translatable="false">עברית</string>
     <string name="lang_eng" translatable="false">English</string>

@@ -81,7 +81,7 @@
     <string name="menu_item_3">فحوص دورية</string>
     <string name="menu_item_4">تذكير الشخصية</string>
     <string name="exercise_name_label">اسم التمرين:</string>
-    <string name="Add_multi_alert">הוסף</string>
+    <string name="Add_multi_alert">كم مرة في اليوم؟</string>
     <string name="set_language">Language</string>
     <string name="lang_default">Device default</string>
     <string name="notification_alert_prefix">Time to perform:</string>
