@@ -46,6 +46,7 @@ public class MedicoDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        createLang(db);
         createAlerts(db);
         createPersonalInfo(db);
     }
@@ -96,7 +97,6 @@ public class MedicoDB extends SQLiteOpenHelper {
         values.put(LANG, "");
         db.insert(LANG_TABLE_NAME, null, values);
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -338,7 +338,7 @@ public class MedicoDB extends SQLiteOpenHelper {
     public  String getLang(){
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM " + LANG_TABLE_NAME;
-        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(sql, null);
+        Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
 
 

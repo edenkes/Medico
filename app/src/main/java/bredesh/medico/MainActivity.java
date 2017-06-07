@@ -130,10 +130,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this,MainLoginActivity.class));
     }*/
 
-    private void changeLanguage(Context context, String lang){
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("Language", lang);
-        editor.apply();
-    }
 }

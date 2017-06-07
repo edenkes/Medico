@@ -76,7 +76,6 @@
             android:hint="@string/FirstName"
             android:inputType="textPersonName"
             android:textColor="@color/textColor"
-            android:textColorHighlight="@color/colorOrange"
             android:textColorHint="@color/titleColor" />
 
         <EditText
