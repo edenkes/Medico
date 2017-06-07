@@ -32,7 +32,7 @@ public class LocalDBManager extends SQLiteOpenHelper{
 
     public static final String DATABASE_NAME = "Medico";
     private static final String ALERTS_TABLE_NAME = "ALERTS";
-    private static final int VERSION = 5;
+    private static final int VERSION = 6;
     public static final String KEY_ID = "id";
     public static final String KEY_FIRST_NAME = "first_name";
     public static final String KEY_LAST_NAME = "last_name";
@@ -48,6 +48,7 @@ public class LocalDBManager extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         createAlerts(db);
         createPersonalInfo(db);
+        createLang(db);
     }
 
     private void createAlerts(SQLiteDatabase db)
@@ -109,6 +110,9 @@ public class LocalDBManager extends SQLiteOpenHelper{
         if (oldVersion < 5) {
             db.execSQL("DROP TABLE IF EXISTS " + PERSONAL_INFO_TABLE_NAME + "");
             createPersonalInfo(db);
+        }
+        if (oldVersion < 6)
+        {
             db.execSQL("DROP TABLE IF EXISTS " + LANG_TABLE_NAME + "");
             createLang(db);
         }
