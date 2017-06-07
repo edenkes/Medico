@@ -51,8 +51,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         createPersonalInfo(db);
     }
 
-    private void createAlerts(SQLiteDatabase db)
-    {
+    private void createAlerts(SQLiteDatabase db) {
         String CREATE_ALERTS_TABLE = "CREATE TABLE " + ALERTS_TABLE_NAME +"( " +
                 KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 KEY_NAME + " TEXT, "+
@@ -340,7 +339,6 @@ public class MedicoDB extends SQLiteOpenHelper {
         String sql = "SELECT * FROM " + LANG_TABLE_NAME;
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
-
 
         if(cursor.getCount() != 1) return null;
 
