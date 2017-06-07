@@ -78,9 +78,9 @@ public class MedicoDB extends SQLiteOpenHelper {
     {
         String CREATE_TABLE = "CREATE TABLE " + PERSONAL_INFO_TABLE_NAME +"( " +
                 KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                KEY_FIRST_NAME + " TEXT DEFAULT \"\", " +
-                KEY_LAST_NAME + " TEXT DEFAULT \"\", " +
-                KEY_EMAIL + " TEXT DEFAULT \"\", " +
+                KEY_FIRST_NAME + " TEXT, " +
+                KEY_LAST_NAME + " TEXT, " +
+                KEY_EMAIL + " TEXT, " +
                 KEY_POINTS + " INTEGER DEFAULT 0)";
         db.execSQL(CREATE_TABLE);
         ContentValues values = new ContentValues();
