@@ -252,9 +252,8 @@ public void allTodaysAlertReset(int rowID) {
         values.put(KEY_FIRST_NAME, firstName);
 
         // 3. insert
-        db.insert(PERSONAL_INFO_TABLE_NAME, // table
-                null, //nullColumnHack
-                values); // key/value -> keys = column names/ values = column values
+        db.update(PERSONAL_INFO_TABLE_NAME, // table
+                values, null, null); // key/value -> keys = column names/ values = column values
 
         // 4. close
         db.close();
@@ -286,9 +285,8 @@ public void allTodaysAlertReset(int rowID) {
         values.put(KEY_LAST_NAME, lastName);
 
         // 3. insert
-        db.insert(PERSONAL_INFO_TABLE_NAME, // table
-                null, //nullColumnHack
-                values); // key/value -> keys = column names/ values = column values
+        db.update(PERSONAL_INFO_TABLE_NAME, // table
+                values, null, null); // key/value -> keys = column names/ values = column values
 
         // 4. close
         db.close();
@@ -303,9 +301,8 @@ public void allTodaysAlertReset(int rowID) {
         values.put(KEY_EMAIL, email);
 
         // 3. insert
-        db.insert(PERSONAL_INFO_TABLE_NAME, // table
-                null, //nullColumnHack
-                values); // key/value -> keys = column names/ values = column values
+        db.update(PERSONAL_INFO_TABLE_NAME, // table
+                values, null, null); // key/value -> keys = column names/ values = column values
 
         // 4. close
         db.close();
@@ -320,9 +317,8 @@ public void allTodaysAlertReset(int rowID) {
         values.put(KEY_POINTS, points);
 
         // 3. insert
-        db.insert(PERSONAL_INFO_TABLE_NAME, // table
-                null, //nullColumnHack
-                values); // key/value -> keys = column names/ values = column values
+        db.update(PERSONAL_INFO_TABLE_NAME, // table
+                values, null, null); // key/value -> keys = column names/ values = column values
 
         // 4. close
         db.close();
@@ -333,7 +329,6 @@ public void allTodaysAlertReset(int rowID) {
         String sql = "SELECT * FROM " + PERSONAL_INFO_TABLE_NAME;
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
-
 
         if(cursor.getCount() != 1) return null;
         String str = cursor.getString(cursor.getColumnIndex(KEY_FIRST_NAME));
@@ -355,27 +350,39 @@ public void allTodaysAlertReset(int rowID) {
     }
 
 
-    public Cursor getLastName(){
+    public String getLastName(){
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT " + KEY_LAST_NAME + " FROM " + PERSONAL_INFO_TABLE_NAME;
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
-        return cursor;
+
+        if(cursor.getCount() != 1) return null;
+        String str = cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME));
+
+        return  str;
     }
 
-    public Cursor getEmail(){
+    public String getEmail(){
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT " + KEY_EMAIL + " FROM " + PERSONAL_INFO_TABLE_NAME;
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
-        return cursor;
+
+        if(cursor.getCount() != 1) return null;
+        String str = cursor.getString(cursor.getColumnIndex(KEY_EMAIL));
+
+        return  str;
     }
 
-    public Cursor getPoints(){
+    public int getPoints(){
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT " + KEY_POINTS + " FROM " + PERSONAL_INFO_TABLE_NAME;
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
-        return cursor;
+
+        if(cursor.getCount() != 1) return -1;
+        int points = cursor.getInt(cursor.getColumnIndex(KEY_POINTS));
+
+        return points;
     }    
 }

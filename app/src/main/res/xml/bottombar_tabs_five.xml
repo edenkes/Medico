@@ -4,6 +4,14 @@
         id="@+id/tab_home"
         icon="@drawable/ic_home_black_36dp"
         title="Home" />
+
+    <tab
+        id="@+id/tab_personal"
+        icon="@drawable/ic_friends"
+        title="Personal"
+        visible="false"
+        />
+
     <!--
        <tab
            id="@+id/tab_camera"
@@ -11,12 +19,7 @@
            title="Camera" />
 
 
-       <tab
-           id="@+id/tab_personal"
-           icon="@drawable/ic_friends"
-           title="Personal"
-           visible="false"
-           />
+
    -->
 
      <!--<tab-->
