@@ -16,7 +16,14 @@ public class MedicoDB extends SQLiteOpenHelper {
     private static final String ALERTS_TABLE_NAME = "ALERTS";
     private static final String PERSONAL_INFO_TABLE_NAME = "PersonalInfo";
     private static final String LANG_TABLE_NAME = "Language";
-    private static final int VERSION = 7;
+    private static final int VERSION = 8;
+
+    public static final int PhysioTherapy = 1;
+    public static final int Drugs = 2;
+    public static final int PeriodicChecks = 3;
+    public static final int Memgraphy = 4;
+
+
 
     /*Alerts Table*/
     public static final String KEY_NAME = "name";
@@ -42,6 +49,15 @@ public class MedicoDB extends SQLiteOpenHelper {
     /*Language Table*/
     public static final String LANG="LANG";
 
+    // Point table
+    private static final String POINTS_TABLE_NAME = "Points";
+
+    public static final String KEY_POINTS_CONTEXT = "CONTEXT";
+    public static final String KEY_POINTS_ITEM_ID = "ITEM_ID";
+    public static final String KEY_POINTS_ITEM_NAME = "ITEM_NAME";
+    public static final String KEY_POINTS_POINTS = "POINTS";
+    public static final String KEY_POINTS_TIME = "TIME";
+
     public MedicoDB(Context context) { super(context, DATABASE_NAME, null, VERSION); }
 
     @Override
@@ -49,7 +65,21 @@ public class MedicoDB extends SQLiteOpenHelper {
         createLang(db);
         createAlerts(db);
         createPersonalInfo(db);
+        createPoints(db);
     }
+
+    private void createPoints(SQLiteDatabase db) {
+        String CREATE_POINTS_TABLE = "CREATE TABLE IF NOT EXISTS " + POINTS_TABLE_NAME +"( " +
+                KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                KEY_POINTS_CONTEXT + " INTEGER, "+
+                KEY_POINTS_ITEM_ID + " INTEGER, "+
+                KEY_POINTS_ITEM_NAME + " TEXT, "+
+                KEY_POINTS_TIME + " TEXT, "+
+                KEY_POINTS_POINTS + " INTEGER) ";
+        db.execSQL(CREATE_POINTS_TABLE);
+
+    }
+
 
     private void createAlerts(SQLiteDatabase db) {
         String CREATE_ALERTS_TABLE = "CREATE TABLE " + ALERTS_TABLE_NAME +"( " +
@@ -114,6 +144,7 @@ public class MedicoDB extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + LANG_TABLE_NAME + "");
             createLang(db);
         }
+        createPoints(db);
     }
 
     public void DeleteAllAlerts() {
@@ -382,19 +413,17 @@ public class MedicoDB extends SQLiteOpenHelper {
         return cursor.getInt(cursor.getColumnIndex(KEY_POINTS));
     }
 
-    public void addPoints(int points_to_add){
+    public void addPoints(int context, int itemId, String itemName, int points_to_add){
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT " + KEY_POINTS + " FROM " + PERSONAL_INFO_TABLE_NAME;
-        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(sql, null);
-        cursor.moveToFirst();
+        ContentValues values = new ContentValues();
 
-        if(cursor.getCount() != 1){
-            setPoints(points_to_add);
-            return;
-        }
-        int points = cursor.getInt(cursor.getColumnIndex(KEY_POINTS));
+        values.put(KEY_POINTS_CONTEXT, context);
+        values.put(KEY_POINTS_ITEM_ID, itemId);
+        values.put(KEY_POINTS_ITEM_NAME, itemName);
+        values.put(KEY_POINTS_POINTS, points_to_add);
+        values.put(KEY_POINTS_TIME, "now localtime");
 
-        setPoints(points + points_to_add);
+        db.insert(POINTS_TABLE_NAME, null, values);
     }
 
     public void clearInfo() {

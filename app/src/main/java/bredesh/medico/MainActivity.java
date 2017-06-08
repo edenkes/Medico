@@ -19,6 +19,7 @@ import com.example.bottom_bar.OnTabSelectListener;
 
 import bredesh.medico.Fragments.FragmentHome;
 import bredesh.medico.Fragments.PersonalFragment;
+import bredesh.medico.Fragments.PersonalProfileFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new FragmentHome();
                 break;
             case R.id.tab_personal:
-                fragment = new PersonalFragment();
+                fragment = new PersonalProfileFragment();
                 break;
         }
 

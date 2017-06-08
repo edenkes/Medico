@@ -8,7 +8,7 @@
     <tab
         id="@+id/tab_personal"
         icon="@drawable/ic_friends"
-        title="Personal"
+        title="@string/personal_profile"
         visible="false"
         />
 

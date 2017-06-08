@@ -88,4 +88,5 @@
     <string name="notification_alert_repeats">%1$d times.</string>
     <string name="EditProfile">تعديل ملفك الشخصي</string>
     <string name="ClearInfo">المعلومات الشخصية واضحة</string>
+    <string name="personal_profile">Personal profile</string>
 </resources>
