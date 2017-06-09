@@ -23,6 +23,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import bredesh.medico.CalculatedPoints;
@@ -37,6 +38,7 @@ public class PersonalProfileFragment extends Fragment {
     private TextView txCurrentUserName, txPointsGathered, txPossiblePoints;
     private PointsCalculator pointsCalculator;
     private Resources resources;
+    private final int daysOfTheWeek = 7;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,59 +72,51 @@ public class PersonalProfileFragment extends Fragment {
             readContactInfo();
         }
 
-        txPointsGathered = (TextView) view.findViewById(R.id.txPointsGathered);
-        txPossiblePoints = (TextView) view.findViewById(R.id.txPossiblePoints);
         pointsCalculator = new PointsCalculator(getActivity());
+
+        /*txPointsGathered = (TextView) view.findViewById(R.id.txPointsGathered);
+        txPossiblePoints = (TextView) view.findViewById(R.id.txPossiblePoints);
 
         CalculatedPoints points = pointsCalculator.CalculatePoints(new GregorianCalendar(), new GregorianCalendar());
 
         txPointsGathered.setText(Integer.toString(points.gainedPoints));
         txPossiblePoints.setText(Integer.toString(points.possiblePoints));
-
-
-        Calendar start = new GregorianCalendar();
-        Calendar end = new GregorianCalendar();
-        CalculatedPoints points2 = pointsCalculator.CalculatePoints(start, end);
-
-        txPointsGathered.setText(Integer.toString(points.gainedPoints));
-        txPossiblePoints.setText(Integer.toString(points.possiblePoints));
+*/
 
     }
 
     private void setBarChart(View view) {
         BarChart barChart = (BarChart) view.findViewById(R.id.chart);
 
-        ArrayList<String> labels = new ArrayList<String>();
-        labels.add(resources.getString(R.string.Sunday_short));
-        labels.add(resources.getString(R.string.Monday_Short));
-        labels.add(resources.getString(R.string.Tuesday_Short));
-        labels.add(resources.getString(R.string.Wednesday_Short));
-        labels.add(resources.getString(R.string.Thursday_Short));
-        labels.add(resources.getString(R.string.Friday_Short));
-        labels.add(resources.getString(R.string.Saturday_Short));
+        String[] days = new String[] { resources.getString(R.string.Sunday_short), resources.getString(R.string.Monday_Short),
+                resources.getString(R.string.Tuesday_Short), resources.getString(R.string.Wednesday_Short),
+                resources.getString(R.string.Thursday_Short), resources.getString(R.string.Friday_Short),
+                resources.getString(R.string.Saturday_Short) };
 
-//         for create Grouped Bar chart
-        ArrayList<BarEntry> groupGainedPoints = new ArrayList<>();
-        groupGainedPoints.add(new BarEntry(4f, 0));
-        groupGainedPoints.add(new BarEntry(8f, 1));
-        groupGainedPoints.add(new BarEntry(6f, 2));
-        groupGainedPoints.add(new BarEntry(12f, 3));
-        groupGainedPoints.add(new BarEntry(18f, 4));
-        groupGainedPoints.add(new BarEntry(9f, 5));
-        groupGainedPoints.add(new BarEntry(13f, 6));
 
-        ArrayList<BarEntry> groupPossiblePoints = new ArrayList<>();
-        groupPossiblePoints.add(new BarEntry(6f, 0));
-        groupPossiblePoints.add(new BarEntry(10f, 1));
-        groupPossiblePoints.add(new BarEntry(8f, 2));
-        groupPossiblePoints.add(new BarEntry(12f, 3));
-        groupPossiblePoints.add(new BarEntry(20f, 4));
-        groupPossiblePoints.add(new BarEntry(21f, 5));
-        groupPossiblePoints.add(new BarEntry(15f, 6));
+        ArrayList<String> daysLabels = new ArrayList<String>();
+        ArrayList<BarEntry> groupGainedPoints = new ArrayList<>();      //         for create Grouped Bar chart
+        ArrayList<BarEntry> groupPossiblePoints = new ArrayList<>();    //         for create Grouped Bar chart
+        for (int i = 0; i < daysOfTheWeek; i++) {
+            Calendar timeCalendar = new GregorianCalendar();
+            int year = timeCalendar.get(Calendar.YEAR) - 1900;
+            int month = timeCalendar.get(Calendar.MONTH);
+            int date = timeCalendar.get(Calendar.DATE) - (6 - i);
+            timeCalendar.setTime(new Date(year, month, date));
 
+            String dayStr = days[timeCalendar.get(Calendar.DAY_OF_WEEK) - 1];
+            daysLabels.add(dayStr);                    // adding the the day name to label list
+
+            CalculatedPoints points = pointsCalculator.CalculatePoints(timeCalendar, timeCalendar);
+            float value_gainedPoints = points.gainedPoints;
+            float value_possiblePoints = points.possiblePoints;
+            groupGainedPoints.add(new BarEntry(value_gainedPoints, i));         //adding the gained points
+            groupPossiblePoints.add(new BarEntry(value_possiblePoints, i));     //adding the max points for this day
+        }
         BarDataSet barDataSet1 = new BarDataSet(groupGainedPoints, "נקודות שצברת");
         barDataSet1.setColor(Color.rgb(0, 155, 0));
-//        barDataSet1.setColors(ColorTemplate.COLORFUL_COLORS);
+
+//        barDataSet1.setColors(ColorTemplate.LIBERTY_COLORS);
 
         BarDataSet barDataSet2 = new BarDataSet(groupPossiblePoints, "מקסימום הנקודות שניתן לצבור ביום זה");
 //        barDataSet2.setColors(ColorTemplate.COLORFUL_COLORS);
@@ -132,7 +126,7 @@ public class PersonalProfileFragment extends Fragment {
         dataset.add(barDataSet1);
         dataset.add(barDataSet2);
 
-        BarData data = new BarData(labels, dataset);
+        BarData data = new BarData(daysLabels, dataset);
 //        dataset.setColors(ColorTemplate.LIBERTY_COLORS); //
         barChart.setData(data);
         barChart.animateY(5000);
