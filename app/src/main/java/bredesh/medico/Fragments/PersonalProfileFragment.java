@@ -3,7 +3,9 @@ package bredesh.medico.Fragments;
 import android.Manifest;
 import android.app.Fragment;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -13,6 +15,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import bredesh.medico.CalculatedPoints;
@@ -26,6 +36,7 @@ public class PersonalProfileFragment extends Fragment {
 
     private TextView txCurrentUserName, txPointsGathered, txPossiblePoints;
     private PointsCalculator pointsCalculator;
+    private Resources resources;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,7 +45,12 @@ public class PersonalProfileFragment extends Fragment {
 
         dbManager  = new MedicoDB(getActivity().getApplicationContext());
 
+         resources = getResources();
+
         setupInfoFromDB(view);
+
+        setBarChart(view);
+
 
         // Inflate the layout for this fragment
         return view;
@@ -62,6 +78,65 @@ public class PersonalProfileFragment extends Fragment {
 
         txPointsGathered.setText(Integer.toString(points.gainedPoints));
         txPossiblePoints.setText(Integer.toString(points.possiblePoints));
+
+
+        Calendar start = new GregorianCalendar();
+        Calendar end = new GregorianCalendar();
+        CalculatedPoints points2 = pointsCalculator.CalculatePoints(start, end);
+
+        txPointsGathered.setText(Integer.toString(points.gainedPoints));
+        txPossiblePoints.setText(Integer.toString(points.possiblePoints));
+
+    }
+
+    private void setBarChart(View view) {
+        BarChart barChart = (BarChart) view.findViewById(R.id.chart);
+
+        ArrayList<String> labels = new ArrayList<String>();
+        labels.add(resources.getString(R.string.Sunday_short));
+        labels.add(resources.getString(R.string.Monday_Short));
+        labels.add(resources.getString(R.string.Tuesday_Short));
+        labels.add(resources.getString(R.string.Wednesday_Short));
+        labels.add(resources.getString(R.string.Thursday_Short));
+        labels.add(resources.getString(R.string.Friday_Short));
+        labels.add(resources.getString(R.string.Saturday_Short));
+
+//         for create Grouped Bar chart
+        ArrayList<BarEntry> groupGainedPoints = new ArrayList<>();
+        groupGainedPoints.add(new BarEntry(4f, 0));
+        groupGainedPoints.add(new BarEntry(8f, 1));
+        groupGainedPoints.add(new BarEntry(6f, 2));
+        groupGainedPoints.add(new BarEntry(12f, 3));
+        groupGainedPoints.add(new BarEntry(18f, 4));
+        groupGainedPoints.add(new BarEntry(9f, 5));
+        groupGainedPoints.add(new BarEntry(13f, 6));
+
+        ArrayList<BarEntry> groupPossiblePoints = new ArrayList<>();
+        groupPossiblePoints.add(new BarEntry(6f, 0));
+        groupPossiblePoints.add(new BarEntry(10f, 1));
+        groupPossiblePoints.add(new BarEntry(8f, 2));
+        groupPossiblePoints.add(new BarEntry(12f, 3));
+        groupPossiblePoints.add(new BarEntry(20f, 4));
+        groupPossiblePoints.add(new BarEntry(21f, 5));
+        groupPossiblePoints.add(new BarEntry(15f, 6));
+
+        BarDataSet barDataSet1 = new BarDataSet(groupGainedPoints, "נקודות שצברת");
+        barDataSet1.setColor(Color.rgb(0, 155, 0));
+//        barDataSet1.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        BarDataSet barDataSet2 = new BarDataSet(groupPossiblePoints, "מקסימום הנקודות שניתן לצבור ביום זה");
+//        barDataSet2.setColors(ColorTemplate.COLORFUL_COLORS);
+        barDataSet2.setColor(Color.rgb(12, 13, 43));
+
+        ArrayList<BarDataSet> dataset = new ArrayList<>();
+        dataset.add(barDataSet1);
+        dataset.add(barDataSet2);
+
+        BarData data = new BarData(labels, dataset);
+//        dataset.setColors(ColorTemplate.LIBERTY_COLORS); //
+        barChart.setData(data);
+        barChart.animateY(5000);
+        barChart.setDescription("");
     }
 
     public void readContactInfo()

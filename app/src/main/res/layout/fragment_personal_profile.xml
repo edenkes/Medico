@@ -43,6 +43,15 @@
             android:layout_height="wrap_content"
             android:text="Translate - possible points"
             android:textColor="@color/titleColor" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
     </LinearLayout>
+
+
+
 
 </FrameLayout>
