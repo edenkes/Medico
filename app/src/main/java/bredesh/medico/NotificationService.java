@@ -6,17 +6,15 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
-import android.widget.RemoteViews;
 
 import java.util.Calendar;
 
+import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Notification.NotificationWindow;
 
 public class NotificationService extends Service {

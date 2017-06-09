@@ -27,7 +27,22 @@
             android:id="@+id/txCurrentUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/titleColor"
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txPointsGathered"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Translate - points today"
+            android:textColor="@color/titleColor" />
+
+        <TextView
+            android:id="@+id/txPossiblePoints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Translate - possible points"
+            android:textColor="@color/titleColor" />
     </LinearLayout>
 
 </FrameLayout>

@@ -1,4 +1,4 @@
-package bredesh.medico;
+package bredesh.medico.DAL;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -9,7 +9,13 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import bredesh.medico.Notification.PartialVideoItem;
+import bredesh.medico.Utils.Utils;
 
 public class MedicoDB extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Medico";
@@ -57,8 +63,12 @@ public class MedicoDB extends SQLiteOpenHelper {
     public static final String KEY_POINTS_ITEM_NAME = "ITEM_NAME";
     public static final String KEY_POINTS_POINTS = "POINTS";
     public static final String KEY_POINTS_TIME = "TIME";
+    public Context dbContext;
 
-    public MedicoDB(Context context) { super(context, DATABASE_NAME, null, VERSION); }
+    public MedicoDB(Context context) {
+        super(context, DATABASE_NAME, null, VERSION);
+        dbContext = context;
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -193,6 +203,62 @@ public class MedicoDB extends SQLiteOpenHelper {
         } catch (SQLiteException e) { createAlerts(database); return getAllAlerts(); }
         return cursor;
     }
+
+    public Exercise[] getAlerts()
+    {
+        Cursor alerts = getAllAlerts();
+        ArrayList<Exercise> result = new ArrayList<Exercise>();
+        int len = alerts.getCount();
+        if (alerts != null && len > 0)
+        {
+            for (int i=0; i< len; i++)
+            {
+                Exercise newEx = new Exercise(alerts, this);
+                result.add(newEx);
+                alerts.moveToNext();
+            }
+            return (Exercise[]) result.toArray(new Exercise[result.size()]);
+        }
+        return null;
+    }
+
+    private String getDateString(Calendar calendar)
+    {
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        return Integer.toString(year) + '-' + Utils.noToString(month,2) + '-' + Utils.noToString(day,2);
+    }
+
+    private String getStartOfdateString(Calendar calendar)
+    {
+        return "datetime('" + getDateString(calendar) + "')";
+    }
+
+    private String getEndOfdateString(Calendar calendar)
+    {
+        return "datetime('" + getDateString(calendar) + "','+1 day','-0.001 seconds')";
+    }
+
+
+    public int getTotalPointsByDates(Calendar startDate, Calendar endDate) {
+        Cursor cursor;
+        SQLiteDatabase database = this.getReadableDatabase();
+        try {
+            String sql = "SELECT SUM(" + KEY_POINTS_POINTS + ") FROM " + POINTS_TABLE_NAME + " WHERE " + KEY_POINTS_TIME +" between ";
+            sql += getStartOfdateString(startDate);
+            sql += " and ";
+            sql += getEndOfdateString(endDate);
+            cursor = database.rawQuery(sql, null);
+            if (cursor != null && cursor.getCount() == 1) {
+                cursor.moveToFirst();
+                return cursor.getInt(0);
+            }
+            return 0;
+        } catch (SQLiteException e) { createPoints(database); return getTotalPointsByDates(startDate, endDate); }
+    }
+
 
     public Cursor getAllTempAlerts() {
         Cursor cursor;
@@ -421,7 +487,10 @@ public class MedicoDB extends SQLiteOpenHelper {
         values.put(KEY_POINTS_ITEM_ID, itemId);
         values.put(KEY_POINTS_ITEM_NAME, itemName);
         values.put(KEY_POINTS_POINTS, points_to_add);
-        values.put(KEY_POINTS_TIME, "now localtime");
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        values.put(KEY_POINTS_TIME, dateFormat.format(date));
 
         db.insert(POINTS_TABLE_NAME, null, values);
     }

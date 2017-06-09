@@ -15,7 +15,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 import bredesh.medico.MainActivity;
-import bredesh.medico.MedicoDB;
+import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
 
 public class NotificationWindow extends AppCompatActivity {

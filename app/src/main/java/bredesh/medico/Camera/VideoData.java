@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 
-import bredesh.medico.MedicoDB;
+import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
 
 interface IRemoveLastAlert

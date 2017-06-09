@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 import bredesh.medico.Camera.VideoData;
 import bredesh.medico.Fragments.PictureItem.RecyclerAdapter;
 import bredesh.medico.Fragments.PictureItem.VideoItem;
-import bredesh.medico.MedicoDB;
+import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
 
 public class FragmentHome extends Fragment {

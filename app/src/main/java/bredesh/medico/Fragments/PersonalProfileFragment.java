@@ -2,9 +2,6 @@ package bredesh.medico.Fragments;
 
 import android.Manifest;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
@@ -13,23 +10,22 @@ import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
+import java.util.GregorianCalendar;
 
-import bredesh.medico.Fragments.PictureItem.RecyclerAdapter;
-import bredesh.medico.MedicoDB;
+import bredesh.medico.CalculatedPoints;
+import bredesh.medico.DAL.MedicoDB;
+import bredesh.medico.PointsCalculator;
 import bredesh.medico.R;
 
 
 public class PersonalProfileFragment extends Fragment {
     private MedicoDB dbManager;
 
-    private TextView txCurrentUserName;
+    private TextView txCurrentUserName, txPointsGathered, txPossiblePoints;
+    private PointsCalculator pointsCalculator;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +53,15 @@ public class PersonalProfileFragment extends Fragment {
             // Android version is lesser than 6.0 or the permission is already granted.
             readContactInfo();
         }
+
+        txPointsGathered = (TextView) view.findViewById(R.id.txPointsGathered);
+        txPossiblePoints = (TextView) view.findViewById(R.id.txPossiblePoints);
+        pointsCalculator = new PointsCalculator(getActivity());
+
+        CalculatedPoints points = pointsCalculator.CalculatePoints(new GregorianCalendar(), new GregorianCalendar());
+
+        txPointsGathered.setText(Integer.toString(points.gainedPoints));
+        txPossiblePoints.setText(Integer.toString(points.possiblePoints));
     }
 
     public void readContactInfo()
