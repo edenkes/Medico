@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Medico</string>
+    <string name="app_name">Medigo</string>
     <string name="exercises">упражнения</string>
     <string name="exercise_name_hint">название упражнения</string>
     <string name="select_days">дней</string>
@@ -16,19 +16,19 @@
     <string name="Points">точек</string>
 
     <string name="Sunday">первый</string>
-    <string name="Sunday_short">א</string>
+    <string name="Sunday_short">sun</string>
     <string name="Monday">обе</string>
-    <string name="Monday_Short">ב</string>
+    <string name="Monday_Short">mon</string>
     <string name="Tuesday">третий</string>
-    <string name="Tuesday_Short">ג</string>
+    <string name="Tuesday_Short">tue</string>
     <string name="Wednesday">среда</string>
-    <string name="Wednesday_Short">ד</string>
+    <string name="Wednesday_Short">wed</string>
     <string name="Thursday">четверг</string>
-    <string name="Thursday_Short">ה</string>
+    <string name="Thursday_Short">thu</string>
     <string name="Friday">пятница</string>
-    <string name="Friday_Short">ו</string>
+    <string name="Friday_Short">fri</string>
     <string name="Saturday">суббота</string>
-    <string name="Saturday_Short">ש</string>
+    <string name="Saturday_Short">sat</string>
 
 
     <string name="addMedia">Добавить оповещение</string>
@@ -53,18 +53,18 @@
     <string name="exercise_deleted">Упражнение удалено</string>
     <string name="extercise_name_hint">название упражнения</string>
     <string name="giveup">отмена</string>
-    <string name="good_job">Молодцы!</string>
-    <string name="invalid_name">Введите имя для упражнения</string>
+    <string name="good_job">Молодцы! Поступило 10 баллов</string>
+    <string name="invalid_name">تتم إزالة كافة التنبيهات</string>
     <string name="last_alert">Там должно быть по крайней мере один сигнал тревоги</string>
-    <string name="log_in">Войти</string>
+    <string name="log_in">Соединение</string>
 
     <string name="name_too_long">Название слишком длинные (до 16 символов)</string>
-    <string name="name_too_short">Введите имя для упражнения</string>
+    <string name="name_too_short">Введите название упражнения</string>
     <string name="no_of_repetitions">Несколько итераций:</string>
     <string name="part1_timeToDO">Это время, чтобы выполнить</string>
     <string name="part2_repeats">Несколько итераций:</string>
     <string name="password">пароль</string>
-    <string name="personal_info">Персональная информация</string>
+    <string name="personal_info">личный</string>
     <string name="remove_all_alerts">Для того, чтобы удалить все предупреждения?</string>
     <string name="repetitions">Повторы:</string>
     <string name="reshootVideo">Вы хотите, чтобы сфотографировать упражнение снова?</string>
@@ -82,9 +82,12 @@
     <string name="menu_item_4">Личные напоминания</string>
     <string name="coming_soon">скоро</string>
     <string name="exercise_name_label">название упражнения:</string>
-    <string name="Add_multi_alert">Add</string>
+    <string name="Add_multi_alert">Сколько раз в день?</string>
     <string name="set_language">Language</string>
-    <string name="lang_default">Device default</string>
+    <string name="lang_default">Установки аппарата</string>
     <string name="notification_alert_prefix">Time to perform:</string>
     <string name="notification_alert_repeats">%1$d times.</string>
+    <string name="EditProfile">Изменить профиль</string>
+    <string name="ClearInfo">Очистить личные данные</string>
+    <string name="personal_profile">Personal profile</string>
 </resources>
