@@ -16,13 +16,13 @@
     <string name="repetitions">يكرر:</string>
     <string name="btn_confirm">التأكيد</string>
 
-    <string name="Sunday_short">sun</string>
-    <string name="Monday_Short">mon</string>
-    <string name="Tuesday_Short">tue</string>
-    <string name="Wednesday_Short">wed</string>
-    <string name="Thursday_Short">thu</string>
-    <string name="Friday_Short">fri</string>
-    <string name="Saturday_Short">sat</string>
+    <string name="Sunday_short">ا</string>
+    <string name="Monday_Short">ب</string>
+    <string name="Tuesday_Short">ج</string>
+    <string name="Wednesday_Short">د</string>
+    <string name="Thursday_Short">ه</string>
+    <string name="Friday_Short">و</string>
+    <string name="Saturday_Short">ش</string>
 
     <string name="select_days">ايام</string>
     <string name="Sunday">الأحد</string>
@@ -67,7 +67,6 @@
     <string name="personal_info">معلومات شخصية</string>
     <string name="LastName">اسم عائلة</string>
     <string name="FirstName">اسم شخصي</string>
-    <string name="EmailAddress">عنوان البريد الإلكتروني</string>
     <string name="Points">نقاط</string>
     <string name="AttachFailed">لم نتمكن من الحصول على صورة أو فيلم</string>
     <string name="AttachSuccess">وكان في استقبال الفيلم بنجاح</string>
@@ -81,12 +80,13 @@
     <string name="menu_item_3">فحوص دورية</string>
     <string name="menu_item_4">تذكير الشخصية</string>
     <string name="exercise_name_label">اسم التمرين:</string>
-    <string name="Add_multi_alert">كم مرة في اليوم؟</string>
-    <string name="set_language">Language</string>
-    <string name="lang_default">Device default</string>
-    <string name="notification_alert_prefix">Time to perform:</string>
+    <string name="Add_multi_alert">إضافة</string>
+    <string name="set_language">اللغة</string>
+    <string name="lang_default">الجهاز الافتراضي</string>
+    <string name="notification_alert_prefix">وقت التنفيذ:</string>
     <string name="notification_alert_repeats">%1$d times.</string>
     <string name="EditProfile">تعديل ملفك الشخصي</string>
     <string name="ClearInfo">المعلومات الشخصية واضحة</string>
     <string name="personal_profile">Personal profile</string>
+    <string name="EmailAddress">عنوان البريد الإلكتروني</string>
 </resources>
