@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Medico</string>
+    <string name="app_name">Medigo</string>
     <string name="AttachFailed">We could not get the image or movie</string>
     <string name="AttachSuccess">The Movie successfully recorded</string>
     <string name="EmailAddress">Email address</string>

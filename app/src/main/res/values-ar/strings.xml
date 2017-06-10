@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Medico</string>
+    <string name="app_name">Medigo</string>
     <string name="email">بريد</string>
     <string name="password">كلمة المرور</string>
     <string name="log_in">دخول</string>

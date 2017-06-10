@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Medico</string>
+    <string name="app_name">Medigo</string>
     <string name="email">מייל</string>
     <string name="password">סיסמה</string>
     <string name="log_in">התחברות</string>

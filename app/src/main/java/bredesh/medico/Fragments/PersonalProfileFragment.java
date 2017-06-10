@@ -9,18 +9,17 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,13 +33,12 @@ import bredesh.medico.R;
 
 
 public class PersonalProfileFragment extends Fragment {
-    private MedicoDB dbManager;
-
-    private TextView txCurrentUserName, txPointsGathered, txPossiblePoints;
+    private TextView txCurrentUserName;
     private PointsCalculator pointsCalculator;
     private Resources resources;
-    private final int daysOfTheWeek = 7;
     private boolean isOnlyGainedPoint = false;
+
+    final int daysOfTheWeek = 7;
     final String EasingStr = "en", RussianStr = "ru";
 
     @Override
@@ -48,14 +46,12 @@ public class PersonalProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal_profile, container, false);
 
-        dbManager  = new MedicoDB(getActivity().getApplicationContext());
 
-         resources = getResources();
+        resources = getResources();
 
         setupInfoFromDB(view);
 
         setBarChart(view);
-
 
         // Inflate the layout for this fragment
         return view;
@@ -90,14 +86,17 @@ public class PersonalProfileFragment extends Fragment {
 
     private void setBarChart(View view) {
         final BarChart barChart = (BarChart) view.findViewById(R.id.chart);
+        MedicoDB dbManager  = new MedicoDB(getActivity().getApplicationContext());
 
-        String[] days = new String[] { resources.getString(R.string.Sunday_short), resources.getString(R.string.Monday_Short),
+        String[] days;
+        days = new String[] { resources.getString(R.string.Sunday_short), resources.getString(R.string.Monday_Short),
                 resources.getString(R.string.Tuesday_Short), resources.getString(R.string.Wednesday_Short),
                 resources.getString(R.string.Thursday_Short), resources.getString(R.string.Friday_Short),
                 resources.getString(R.string.Saturday_Short) };
 
 
-        ArrayList<String> daysLabels = new ArrayList<String>();
+        ArrayList<String> daysLabels;
+        daysLabels = new ArrayList<>();
         ArrayList<BarEntry> groupGainedPoints = new ArrayList<>();      //         for create Grouped Bar chart
         ArrayList<BarEntry> groupPossiblePoints = new ArrayList<>();    //         for create Grouped Bar chart
         for (int i = 0; i < daysOfTheWeek; i++) {
@@ -124,12 +123,10 @@ public class PersonalProfileFragment extends Fragment {
         }
         BarDataSet barDataSet1 = new BarDataSet(groupGainedPoints, "נקודות שצברת");
         barDataSet1.setColor(Color.rgb(0, 155, 0));
-
 //        barDataSet1.setColors(ColorTemplate.LIBERTY_COLORS);
 
         BarDataSet barDataSet2 = new BarDataSet(groupPossiblePoints, "מקסימום הנקודות שניתן לצבור ביום זה");
-//        barDataSet2.setColors(ColorTemplate.COLORFUL_COLORS);
-        barDataSet2.setColor(Color.rgb(12, 13, 43));
+        barDataSet2.setColor(Color.rgb(12, 13, 73));
 
         ArrayList<BarDataSet> dataset = new ArrayList<>();
         dataset.add(barDataSet1);
@@ -141,7 +138,6 @@ public class PersonalProfileFragment extends Fragment {
         final BarData data = new BarData(daysLabels, dataset);
         final BarData data2 = new BarData(daysLabels, dataset2);
 
-//        dataset.setColors(ColorTemplate.LIBERTY_COLORS); //
         barChart.setData(data);
         barChart.animateY(5000);
         barChart.setDescription("");
@@ -163,8 +159,7 @@ public class PersonalProfileFragment extends Fragment {
         });
     }
 
-    public void readContactInfo()
-    {
+    public void readContactInfo() {
         Cursor c = getActivity().getApplication().getContentResolver().query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
         if (c != null && c.getCount() > 0) {
             c.moveToFirst();
@@ -174,20 +169,16 @@ public class PersonalProfileFragment extends Fragment {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission is granted
                 readContactInfo();
-            } else {
+            } else
                 Toast.makeText(getActivity(), "Until you grant the permission, we cannot display the names", Toast.LENGTH_SHORT).show();
-            }
         }
-
-
     }
-
 
     @Override
     public void onResume() {
