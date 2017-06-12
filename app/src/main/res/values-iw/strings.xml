@@ -89,4 +89,14 @@
     <string name="EditProfile">ערוך את הפרופיל שלך</string>
     <string name="ClearInfo">נקה מידע אישי</string>
     <string name="personal_profile">פרופיל אישי</string>
+    <string name="you_gained_points">צברת\n%1$d נקודות\nמתוך %2$d</string>
+    <string name="points_msg_noexercises">אין תרגילים לבצע</string>
+    <string name="points_msg_can_do_better">יש מקום לשיפור</string>
+    <string name="points_msg_not_bad">לא רע!</string>
+    <string name="points_msg_very_good">טוב מאד!</string>
+    <string name="points_msg_well_done">כל הכבוד! זכית בכל הנקודות האפשריות!</string>
+    <string name="days_today">היום</string>
+    <string name="days_yesterday">אתמול</string>
+    <string name="days_2_days_ago">שלשום</string>
+    <string name="days_days_ago">לפני %1$d ימים</string>
 </resources>

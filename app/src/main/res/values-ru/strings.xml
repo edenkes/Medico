@@ -90,4 +90,14 @@
     <string name="ClearInfo">Очистить личные данные</string>
     <string name="personal_profile">Personal profile</string>
     <string name="Monday">Понедельник</string>
+    <string name="you_gained_points">You gained\n%1$d points\nout of %2$d</string>
+    <string name="points_msg_noexercises">No exercises to perform</string>
+    <string name="points_msg_can_do_better">You can do better</string>
+    <string name="points_msg_not_bad">Not bad!</string>
+    <string name="points_msg_very_good">Very good!</string>
+    <string name="points_msg_well_done">Well done! You\'ve gained all possible points!</string>
+    <string name="days_today">Today</string>
+    <string name="days_yesterday">Yesterday</string>
+    <string name="days_2_days_ago">2 days ago</string>
+    <string name="days_days_ago">%1$d days ago</string>
 </resources>

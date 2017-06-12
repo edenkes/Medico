@@ -1,11 +1,13 @@
 package bredesh.medico.Fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -13,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,36 +23,85 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.sccomponents.widgets.ScArcGauge;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 import bredesh.medico.CalculatedPoints;
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.PointsCalculator;
 import bredesh.medico.R;
+import bredesh.medico.Utils.SwipeDetector;
 
+
+class PointsInfo
+{
+    public float low;
+    public int id;
+
+    public PointsInfo(float low, int id)
+    {
+        this.low = low;
+        this.id = id;
+    }
+}
 
 public class PersonalProfileFragment extends Fragment {
     private TextView txCurrentUserName;
     private PointsCalculator pointsCalculator;
     private Resources resources;
     private boolean isOnlyGainedPoint = false;
+    private ScArcGauge gauge;
+    TextView txPointsGained, tvPointsMessage, tvCurrentDayText, tvCurrentDayDate;
+    ImageView ivTrophy;
 
     final int daysOfTheWeek = 7;
     final String EasingStr = "en", RussianStr = "ru";
+    private GregorianCalendar currentDate, yesterday, twoDaysAgo;
+    private GregorianCalendar today = new GregorianCalendar();
+
+
+    final PointsInfo[] pointsInfos =
+            {
+                    new PointsInfo(0f, R.string.points_msg_noexercises),
+                    new PointsInfo(1f, R.string.points_msg_well_done),
+                    new PointsInfo(0.7f, R.string.points_msg_very_good),
+                    new PointsInfo(0.35f, R.string.points_msg_not_bad),
+                    new PointsInfo(0f, R.string.points_msg_can_do_better)
+            };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal_profile, container, false);
 
+        SwipeDetector swipeDetector = new SwipeDetector(view);
 
         resources = getResources();
 
         setupInfoFromDB(view);
+
+        swipeDetector.setOnSwipeListener(new SwipeDetector.onSwipeEvent() {
+            @Override
+            public void SwipeEventDetected(View v, SwipeDetector.SwipeTypeEnum SwipeType) {
+                if (SwipeType == SwipeDetector.SwipeTypeEnum.LEFT_TO_RIGHT) {
+                    if (currentDate.compareTo(today) == -1) {
+                        currentDate.add(Calendar.DATE, 1);
+                        setDayPoints(v, pointsCalculator.CalculatePoints(currentDate, currentDate));
+                    }
+                }
+                else if (SwipeType == SwipeDetector.SwipeTypeEnum.RIGHT_TO_LEFT) {
+                    currentDate.add(Calendar.DATE, -1);
+                    setDayPoints(v, pointsCalculator.CalculatePoints(currentDate, currentDate));
+                }
+
+            }
+        });
 
         setBarChart(view);
 
@@ -59,6 +111,66 @@ public class PersonalProfileFragment extends Fragment {
 
 
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+
+    private long daysBetween(GregorianCalendar first, GregorianCalendar second)
+    {
+        long firstTime = first.getTime().getTime();
+        long secondTime = second.getTime().getTime();
+        return ( firstTime - secondTime )/ (1000*60*60*24);
+    }
+
+
+    private void setDayPoints(View view, CalculatedPoints calculatedPoints)
+    {
+        gauge.setHighValue(calculatedPoints.gainedPoints, 0, calculatedPoints.possiblePoints);
+        txPointsGained.setText(resources.getString(R.string.you_gained_points, calculatedPoints.gainedPoints, calculatedPoints.possiblePoints));
+        int pointsMsgId;
+        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getActivity());
+        String dateText = dateFormat.format(currentDate.getTime());
+        tvCurrentDayDate.setText(dateText);
+
+        int dayDiff =(int)daysBetween(today, currentDate );
+
+        switch (dayDiff)
+        {
+            case 0:
+                tvCurrentDayText.setText(resources.getString(R.string.days_today));
+                break;
+            case 1:
+                tvCurrentDayText.setText(resources.getString(R.string.days_yesterday));
+                break;
+            case 2:
+                tvCurrentDayText.setText(resources.getString(R.string.days_2_days_ago));
+                break;
+            default:
+                tvCurrentDayText.setText(resources.getString(R.string.days_days_ago,dayDiff));
+                break;
+        }
+
+
+        float pointsRatio = calculatedPoints.possiblePoints > 0? calculatedPoints.gainedPoints / (float) calculatedPoints.possiblePoints : -1;
+        if (calculatedPoints.possiblePoints == 0 || calculatedPoints.gainedPoints == 0) {
+            ivTrophy.setVisibility(View.GONE);
+        }
+        else {
+            ivTrophy.setVisibility(View.VISIBLE);
+            if (calculatedPoints.gainedPoints / (float) calculatedPoints.possiblePoints > 0.5)
+                ivTrophy.setImageDrawable(resources.getDrawable(R.drawable.icons8_trophy_gold_100, null));
+            else
+                ivTrophy.setImageDrawable(resources.getDrawable(R.drawable.icons8_trophy_blue_100, null));
+        }
+        pointsMsgId = pointsInfos[0].id;
+        if (pointsRatio >=0) {
+            for (int i = 1; i < pointsInfos.length; i++) {
+                if (pointsRatio>=pointsInfos[i].low) {
+                    pointsMsgId = pointsInfos[i].id;
+                    break;
+                }
+            }
+        }
+        tvPointsMessage.setText(resources.getString(pointsMsgId));
+    }
+
     private void setupInfoFromDB(View view) {
 
         txCurrentUserName = (TextView) view.findViewById(R.id.txCurrentUserName);
@@ -71,7 +183,42 @@ public class PersonalProfileFragment extends Fragment {
             readContactInfo();
         }
 
-        pointsCalculator = new PointsCalculator(getActivity());
+        Activity activity = getActivity();
+        Resources resources = activity.getResources();
+        pointsCalculator = new PointsCalculator(activity);
+        today.set(Calendar.HOUR_OF_DAY,0);
+        today.set(Calendar.MINUTE,0);
+        today.set(Calendar.SECOND,0);
+        today.set(Calendar.MILLISECOND,0);
+        currentDate = new GregorianCalendar();
+        currentDate.set(Calendar.HOUR_OF_DAY,0);
+        currentDate.set(Calendar.MINUTE,0);
+        currentDate.set(Calendar.SECOND,0);
+        currentDate.set(Calendar.MILLISECOND,0);
+        
+        
+        CalculatedPoints pointsToday = pointsCalculator.CalculatePoints(currentDate, currentDate);
+
+        tvCurrentDayDate = (TextView) view.findViewById(R.id.tvCurrentDayDate);
+        tvCurrentDayText = (TextView) view.findViewById(R.id.tvCurrentDayText);
+        gauge = (ScArcGauge) view.findViewById(R.id.gauge);
+        txPointsGained = (TextView) view.findViewById(R.id.txPointsGained);
+
+        // Set the features stroke cap style to rounded
+        gauge.findFeature(ScArcGauge.BASE_IDENTIFIER)
+                .getPainter().setStrokeCap(Paint.Cap.ROUND);
+        gauge.findFeature(ScArcGauge.PROGRESS_IDENTIFIER)
+                .getPainter().setStrokeCap(Paint.Cap.ROUND);
+        ivTrophy = (ImageView) view.findViewById(R.id.ivTrophy);
+        tvPointsMessage = (TextView) view.findViewById(R.id.tvPointsMessage);
+
+        setDayPoints(view, pointsToday);
+
+
+
+        // If you set the value from the xml that not produce an event so I will change the
+        // value from code.
+        //gauge.setHighValue(60);
 
         /*txPointsGathered = (TextView) view.findViewById(R.id.txPointsGathered);
         txPossiblePoints = (TextView) view.findViewById(R.id.txPossiblePoints);
