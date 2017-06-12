@@ -89,6 +89,8 @@
     <string name="EditProfile">ערוך את הפרופיל שלך</string>
     <string name="ClearInfo">נקה מידע אישי</string>
     <string name="personal_profile">פרופיל אישי</string>
+    <string name="pointsGained">נקודות שצברת</string>
+    <string name="possiblePoints">מקסימום הנקודות שניתן לצבור ביום זה</string>
     <string name="you_gained_points">צברת\n%1$d נקודות\nמתוך %2$d</string>
     <string name="points_msg_noexercises">אין תרגילים לבצע</string>
     <string name="points_msg_can_do_better">יש מקום לשיפור</string>

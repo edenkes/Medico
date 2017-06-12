@@ -29,9 +29,7 @@ import com.sccomponents.widgets.ScArcGauge;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 
 import bredesh.medico.CalculatedPoints;
 import bredesh.medico.DAL.MedicoDB;
@@ -42,10 +40,10 @@ import bredesh.medico.Utils.SwipeDetector;
 
 class PointsInfo
 {
-    public float low;
+    float low;
     public int id;
 
-    public PointsInfo(float low, int id)
+    PointsInfo(float low, int id)
     {
         this.low = low;
         this.id = id;
@@ -64,7 +62,8 @@ public class PersonalProfileFragment extends Fragment {
 
     final int daysOfTheWeek = 7;
     final String EasingStr = "en", RussianStr = "ru";
-    private GregorianCalendar currentDate, yesterday, twoDaysAgo;
+    BarChart barChart;
+    private GregorianCalendar currentDate;
     private GregorianCalendar today = new GregorianCalendar();
 
 
@@ -81,6 +80,7 @@ public class PersonalProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal_profile, container, false);
+        barChart = (BarChart) view.findViewById(R.id.chart);
 
         SwipeDetector swipeDetector = new SwipeDetector(view);
 
@@ -94,18 +94,18 @@ public class PersonalProfileFragment extends Fragment {
                 if (SwipeType == SwipeDetector.SwipeTypeEnum.LEFT_TO_RIGHT) {
                     if (currentDate.compareTo(today) == -1) {
                         currentDate.add(Calendar.DATE, 1);
-                        setDayPoints(v, pointsCalculator.CalculatePoints(currentDate, currentDate));
+                        setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
                     }
                 }
                 else if (SwipeType == SwipeDetector.SwipeTypeEnum.RIGHT_TO_LEFT) {
                     currentDate.add(Calendar.DATE, -1);
-                    setDayPoints(v, pointsCalculator.CalculatePoints(currentDate, currentDate));
+                    setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
                 }
 
             }
         });
 
-        setBarChart(view);
+        setBarChart();
 
         // Inflate the layout for this fragment
         return view;
@@ -122,7 +122,7 @@ public class PersonalProfileFragment extends Fragment {
     }
 
 
-    private void setDayPoints(View view, CalculatedPoints calculatedPoints)
+    private void setDayPoints(CalculatedPoints calculatedPoints)
     {
         gauge.setHighValue(calculatedPoints.gainedPoints, 0, calculatedPoints.possiblePoints);
         txPointsGained.setText(resources.getString(R.string.you_gained_points, calculatedPoints.gainedPoints, calculatedPoints.possiblePoints));
@@ -161,6 +161,7 @@ public class PersonalProfileFragment extends Fragment {
             else
                 ivTrophy.setImageDrawable(resources.getDrawable(R.drawable.icons8_trophy_blue_100, null));
         }
+
         pointsMsgId = pointsInfos[0].id;
         if (pointsRatio >=0) {
             for (int i = 1; i < pointsInfos.length; i++) {
@@ -230,32 +231,16 @@ public class PersonalProfileFragment extends Fragment {
                 {
                     dailyView.setVisibility(View.VISIBLE);
                     graphView.setVisibility(View.GONE);
+                    barChart.animateY(5000);
                     ((ImageButton) v).setImageDrawable(resources.getDrawable(R.drawable.ic_insert_chart_black_24dp, null));
                 }
             }
         });
 
-        setDayPoints(view, pointsToday);
-
-
-
-        // If you set the value from the xml that not produce an event so I will change the
-        // value from code.
-        //gauge.setHighValue(60);
-
-        /*txPointsGathered = (TextView) view.findViewById(R.id.txPointsGathered);
-        txPossiblePoints = (TextView) view.findViewById(R.id.txPossiblePoints);
-
-        CalculatedPoints points = pointsCalculator.CalculatePoints(new GregorianCalendar(), new GregorianCalendar());
-
-        txPointsGathered.setText(Integer.toString(points.gainedPoints));
-        txPossiblePoints.setText(Integer.toString(points.possiblePoints));
-*/
-
+        setDayPoints(pointsToday);
     }
 
-    private void setBarChart(View view) {
-        final BarChart barChart = (BarChart) view.findViewById(R.id.chart);
+    private void setBarChart() {
         MedicoDB dbManager  = new MedicoDB(getActivity().getApplicationContext());
 
         String[] days;
@@ -272,16 +257,11 @@ public class PersonalProfileFragment extends Fragment {
         for (int i = 0; i < daysOfTheWeek; i++) {
 
             Calendar timeCalendar = new GregorianCalendar();
-            int year = timeCalendar.get(Calendar.YEAR) - 1900;
-            int month = timeCalendar.get(Calendar.MONTH);
             //  Check the language for deciding if to read left to right.
             String language = dbManager.getLang();
-            int date;
             if(language.compareTo(EasingStr)==0 || language.compareTo(RussianStr)==0)
-                date = timeCalendar.get(Calendar.DATE) - (6 - i);
-            else date = timeCalendar.get(Calendar.DATE) - i;
-            timeCalendar.setTime(new Date(year, month, date));
-
+                timeCalendar.add(Calendar.DATE, i);
+            else    timeCalendar.add(Calendar.DATE, -i);
             String dayStr = days[timeCalendar.get(Calendar.DAY_OF_WEEK) - 1];
             daysLabels.add(dayStr);                    // adding the the day name to label list
 
@@ -291,11 +271,12 @@ public class PersonalProfileFragment extends Fragment {
             groupGainedPoints.add(new BarEntry(value_gainedPoints, i));         //adding the gained points
             groupPossiblePoints.add(new BarEntry(value_possiblePoints, i));     //adding the max points for this day
         }
-        BarDataSet barDataSet1 = new BarDataSet(groupGainedPoints, "נקודות שצברת");
-        barDataSet1.setColor(Color.rgb(0, 155, 0));
+
+        BarDataSet barDataSet1 = new BarDataSet(groupGainedPoints, getResources().getString(R.string.pointsGained));
+        barDataSet1.setColor(Color.rgb(35, 155, 100));
 //        barDataSet1.setColors(ColorTemplate.LIBERTY_COLORS);
 
-        BarDataSet barDataSet2 = new BarDataSet(groupPossiblePoints, "מקסימום הנקודות שניתן לצבור ביום זה");
+        BarDataSet barDataSet2 = new BarDataSet(groupPossiblePoints, getResources().getString(R.string.possiblePoints));
         barDataSet2.setColor(Color.rgb(12, 13, 73));
 
         ArrayList<BarDataSet> dataset = new ArrayList<>();
@@ -353,6 +334,7 @@ public class PersonalProfileFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        setBarChart();
     }
 
 }

@@ -14,26 +14,10 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-        <!--
-        <TextView
-            android:id="@+id/txPointsGathered"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Translate - points today"
-            android:textColor="@color/titleColor" />
-
-        <TextView
-            android:id="@+id/txPossiblePoints"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Translate - possible points"
-            android:textColor="@color/titleColor" />
--->
-
         <TextView
             android:id="@+id/tvPersonalInfo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_gravity="center_horizontal"
             android:background="@color/colorAppBar"
             android:fontFamily="casual"
@@ -100,7 +84,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
-                    android:text="TextView"
+                    android:text=""
                     android:visibility="invisible" />
 
                 <FrameLayout
@@ -157,7 +141,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.2"
-                app:srcCompat="@drawable/icons8_trophy_blue_100" />
+                app:srcCompat="@drawable/icons8_trophy_blue_100"
+                android:contentDescription="" />
 
             <TextView
                 android:id="@+id/tvPointsMessage"
