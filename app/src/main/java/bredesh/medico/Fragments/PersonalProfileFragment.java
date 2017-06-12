@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,7 @@ public class PersonalProfileFragment extends Fragment {
     private ScArcGauge gauge;
     TextView txPointsGained, tvPointsMessage, tvCurrentDayText, tvCurrentDayDate;
     ImageView ivTrophy;
+    ImageButton btGraph;
 
     final int daysOfTheWeek = 7;
     final String EasingStr = "en", RussianStr = "ru";
@@ -171,7 +173,7 @@ public class PersonalProfileFragment extends Fragment {
         tvPointsMessage.setText(resources.getString(pointsMsgId));
     }
 
-    private void setupInfoFromDB(View view) {
+    private void setupInfoFromDB(final View view) {
 
         txCurrentUserName = (TextView) view.findViewById(R.id.txCurrentUserName);
 
@@ -184,7 +186,7 @@ public class PersonalProfileFragment extends Fragment {
         }
 
         Activity activity = getActivity();
-        Resources resources = activity.getResources();
+        final Resources resources = activity.getResources();
         pointsCalculator = new PointsCalculator(activity);
         today.set(Calendar.HOUR_OF_DAY,0);
         today.set(Calendar.MINUTE,0);
@@ -211,6 +213,27 @@ public class PersonalProfileFragment extends Fragment {
                 .getPainter().setStrokeCap(Paint.Cap.ROUND);
         ivTrophy = (ImageView) view.findViewById(R.id.ivTrophy);
         tvPointsMessage = (TextView) view.findViewById(R.id.tvPointsMessage);
+        btGraph = (ImageButton) view.findViewById(R.id.btGraph);
+
+        btGraph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View dailyView = view.findViewById(R.id.llDailyPoints);
+                View graphView= view.findViewById(R.id.llGraphLayout);
+                if (dailyView.getVisibility() != View.GONE)
+                {
+                    dailyView.setVisibility(View.GONE);
+                    graphView.setVisibility(View.VISIBLE);
+                    ((ImageButton) v).setImageDrawable(resources.getDrawable(R.drawable.icons8_trophy_blue_100, null));
+                }
+                else
+                {
+                    dailyView.setVisibility(View.VISIBLE);
+                    graphView.setVisibility(View.GONE);
+                    ((ImageButton) v).setImageDrawable(resources.getDrawable(R.drawable.ic_insert_chart_black_24dp, null));
+                }
+            }
+        });
 
         setDayPoints(view, pointsToday);
 

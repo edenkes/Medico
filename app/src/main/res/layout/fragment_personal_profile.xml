@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:orientation="vertical"
         android:weightSum="1">
 
@@ -167,12 +168,31 @@
                 android:textColor="@color/titleColor"
                 android:textSize="20sp" />
         </LinearLayout>
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chart"
+
+        <LinearLayout
+            android:id="@+id/llGraphLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:visibility="gone" />
+            android:layout_weight="0.8"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btGraph"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.1"
+            android:background="@color/transparent"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_insert_chart_black_24dp" />
     </LinearLayout>
 
 
