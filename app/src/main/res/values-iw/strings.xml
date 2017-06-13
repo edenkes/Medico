@@ -94,11 +94,17 @@
     <string name="you_gained_points">צברת\n%1$d נקודות\nמתוך %2$d</string>
     <string name="points_msg_noexercises">אין תרגילים לבצע</string>
     <string name="points_msg_can_do_better">יש מקום לשיפור</string>
-    <string name="points_msg_not_bad">לא רע!</string>
-    <string name="points_msg_very_good">טוב מאד!</string>
-    <string name="points_msg_well_done">כל הכבוד! צברת  את מלוא הנקודות היומיות!</string>
+    <string name="points_msg_very_good">יפה מאד! כמעט הגעת למלוא הניקוד היומי.</string>
+    <string name="points_msg_well_done">כל הכבוד! צברת את מלוא הנקודות היומיות!</string>
     <string name="days_today">היום</string>
     <string name="days_yesterday">אתמול</string>
     <string name="days_2_days_ago">שלשום</string>
     <string name="days_days_ago">לפני %1$d ימים</string>
+    <string name="points_msg_well_done_prev">כל הכבוד! ביום זה צברת את מלוא הנקודות היומיות!</string>
+    <string name="points_msg_very_good_prev">יפה מאד! כמעט הגעת למלוא הניקוד היומי ביום הזה.</string>
+    <string name="points_msg_not_bad">"אתה קרוב ליעד היומי! חסרות לך רק עוד %1$d נקודות! "</string>
+    <string name="points_msg_not_bad_prev">זה היה קרוב! חסרו לך רק עוד %1$d נקודות להגיע ליעד היומי ביום הזה.</string>
+    <string name="points_msg_need_work">חסרות לך עוד %1$d נקודות ליעד היומי!</string>
+    <string name="points_msg_need_work_prev"> </string>
+    <string name="points_msg_noexercises_prev">לא היו תרגילים לבצע ביום זה.</string>
 </resources>

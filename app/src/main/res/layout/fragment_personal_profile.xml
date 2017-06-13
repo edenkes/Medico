@@ -32,7 +32,9 @@
             android:id="@+id/txCurrentUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/titleColor"
+            android:layout_marginBottom="10sp"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="25dp" />
@@ -79,13 +81,14 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <TextView
-                    android:id="@+id/textView2"
+                <ImageView
+                    android:id="@+id/imageView"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:layout_weight="0.2"
-                    android:text=""
-                    android:visibility="invisible" />
+                    android:adjustViewBounds="false"
+                    app:srcCompat="@drawable/ic_gesture_icons_source" />
 
                 <FrameLayout
                     android:layout_width="0dp"
@@ -152,6 +155,7 @@
                 android:gravity="center"
                 android:textColor="@color/titleColor"
                 android:textSize="20sp" />
+
         </LinearLayout>
 
         <LinearLayout

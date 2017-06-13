@@ -41,12 +41,16 @@ import bredesh.medico.Utils.SwipeDetector;
 class PointsInfo
 {
     float low;
-    public int id;
+    public int todayMsgId;
+    public int prevDaysMsgId;
+    public int iconId;
 
-    PointsInfo(float low, int id)
+    PointsInfo(float low, int id, int prevId, int iconId)
     {
         this.low = low;
-        this.id = id;
+        this.todayMsgId = id;
+        this.prevDaysMsgId = prevId;
+        this.iconId = iconId;
     }
 }
 
@@ -69,11 +73,12 @@ public class PersonalProfileFragment extends Fragment {
 
     final PointsInfo[] pointsInfos =
             {
-                    new PointsInfo(0f, R.string.points_msg_noexercises),
-                    new PointsInfo(1f, R.string.points_msg_well_done),
-                    new PointsInfo(0.7f, R.string.points_msg_very_good),
-                    new PointsInfo(0.35f, R.string.points_msg_not_bad),
-                    new PointsInfo(0f, R.string.points_msg_can_do_better)
+                    new PointsInfo(0f, R.string.points_msg_noexercises, R.string.points_msg_noexercises_prev,0),
+                    new PointsInfo(1f, R.string.points_msg_well_done,R.string.points_msg_well_done_prev,R.drawable.icons8_trophy_gold_100),
+                    new PointsInfo(0.9f, R.string.points_msg_very_good,R.string.points_msg_very_good_prev,R.drawable.icons8_trophy_blue_100),
+                    new PointsInfo(0.8f, R.string.points_msg_not_bad,R.string.points_msg_not_bad_prev,R.drawable.icons8_diploma_100),
+                    new PointsInfo(0.7f, R.string.points_msg_need_work,R.string.points_msg_need_work_prev,R.drawable.icons8_thumb_up_100),
+                    new PointsInfo(0f, R.string.points_msg_need_work,R.string.points_msg_need_work_prev,0)
             };
 
     @Override
@@ -133,10 +138,13 @@ public class PersonalProfileFragment extends Fragment {
 
         int dayDiff =(int)daysBetween(today, currentDate );
 
+        boolean today = false;
+
         switch (dayDiff)
         {
             case 0:
                 tvCurrentDayText.setText(resources.getString(R.string.days_today));
+                today = true;
                 break;
             case 1:
                 tvCurrentDayText.setText(resources.getString(R.string.days_yesterday));
@@ -151,27 +159,29 @@ public class PersonalProfileFragment extends Fragment {
 
 
         float pointsRatio = calculatedPoints.possiblePoints > 0? calculatedPoints.gainedPoints / (float) calculatedPoints.possiblePoints : -1;
-        if (calculatedPoints.possiblePoints == 0 || calculatedPoints.gainedPoints == 0) {
-            ivTrophy.setVisibility(View.GONE);
-        }
-        else {
-            ivTrophy.setVisibility(View.VISIBLE);
-            if (calculatedPoints.gainedPoints / (float) calculatedPoints.possiblePoints > 0.5)
-                ivTrophy.setImageDrawable(resources.getDrawable(R.drawable.icons8_trophy_gold_100, null));
-            else
-                ivTrophy.setImageDrawable(resources.getDrawable(R.drawable.icons8_trophy_blue_100, null));
-        }
 
-        pointsMsgId = pointsInfos[0].id;
+        int trophyIconId = 0;
+
+        pointsMsgId = pointsInfos[0].todayMsgId;
         if (pointsRatio >=0) {
             for (int i = 1; i < pointsInfos.length; i++) {
                 if (pointsRatio>=pointsInfos[i].low) {
-                    pointsMsgId = pointsInfos[i].id;
+                    pointsMsgId = today? pointsInfos[i].todayMsgId : pointsInfos[i].prevDaysMsgId;
+                    trophyIconId = pointsInfos[i].iconId;
                     break;
                 }
             }
         }
-        tvPointsMessage.setText(resources.getString(pointsMsgId));
+        tvPointsMessage.setText(resources.getString(pointsMsgId, calculatedPoints.possiblePoints - calculatedPoints.gainedPoints));
+        if (trophyIconId != 0)
+        {
+            ivTrophy.setImageDrawable(resources.getDrawable(trophyIconId, null));
+            ivTrophy.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            ivTrophy.setVisibility(View.GONE);
+        }
     }
 
     private void setupInfoFromDB(final View view) {
