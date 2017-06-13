@@ -4,32 +4,16 @@ import android.net.Uri;
 
 import bredesh.medico.MedicoDB;
 
-public class VideoItem {
-    private int id;
-    private String name;
-    public MedicoDB.KIND kind;
-    private String time;
-    private Uri uri;
-    private int[] days;
-    private final String[] daysNames = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+public class VideoItem extends Item{
+
     private boolean isAlertsActive;
     private int noOfRepetitions;
-    private boolean detailedTimes;
-    private String allTimes;
+
 
     public VideoItem(int id, String time, String name, String uri, int[] days, int noOfRepetitions, boolean detailedTimes, String allTimes, MedicoDB.KIND kind){
-        this.id = id;
-        this.time = time;
-        this.name = name;
-        this.days = days;
-        if (uri != null && !uri.equals("null")) {
-            this.uri = Uri.parse(uri);
-        }else this.uri = null;
+        super(id,time,name,uri,days,detailedTimes,allTimes,kind);
         isAlertsActive = true;
         this.noOfRepetitions = noOfRepetitions;
-        this.detailedTimes = detailedTimes;
-        this.allTimes = allTimes;
-        this.kind = kind;
     }
 
     public Uri getUri() { return  uri;}

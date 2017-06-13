@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import bredesh.medico.Camera.VideoData;
-import bredesh.medico.Fragments.PictureItem.RecyclerAdapter;
+import bredesh.medico.Fragments.PictureItem.ExerciseRecyclerAdapter;
 import bredesh.medico.Fragments.PictureItem.VideoItem;
 import bredesh.medico.MedicoDB;
 import bredesh.medico.R;
@@ -32,7 +32,7 @@ public class FragmentHome extends Fragment {
     private Context context;
     List<VideoItem> arrayList;
     RecyclerView lvHome;
-    RecyclerAdapter adapter;
+    ExerciseRecyclerAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +45,7 @@ public class FragmentHome extends Fragment {
         setArrayList();
 
        //final Adapter adapter = new Adapter(context, R.layout.exercises_item, arrayList);
-        adapter = new RecyclerAdapter(context,arrayList,getActivity());
+        adapter = new ExerciseRecyclerAdapter(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
 
 
@@ -137,7 +137,7 @@ public class FragmentHome extends Fragment {
     public void onResume() {
         super.onResume();
         setArrayList();
-        adapter = new RecyclerAdapter(context,arrayList,getActivity());
+        adapter = new ExerciseRecyclerAdapter(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
     }
 

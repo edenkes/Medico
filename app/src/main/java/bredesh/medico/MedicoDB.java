@@ -13,6 +13,7 @@ import bredesh.medico.Notification.PartialVideoItem;
 
 public class MedicoDB extends SQLiteOpenHelper {
 
+
     public enum KIND { Exercise, Medicine }
     public static final String DATABASE_NAME = "Medico";
     private static final String ALERTS_TABLE_NAME = "ALERTS";
@@ -449,6 +450,19 @@ public class MedicoDB extends SQLiteOpenHelper {
         setPoints(points + points_to_add);
     }
 
+
+
+
+
+/*
+                  _   _       _                                   _
+                 | | (_)     (_)                             _   (_)
+   ____   ____ _ | |_  ____ _ ____   ____     ___  ____ ____| |_  _  ___  ____
+  |    \ / _  ) || | |/ ___) |  _ \ / _  )   /___)/ _  ) ___)  _)| |/ _ \|  _ \
+  | | | ( (/ ( (_| | ( (___| | | | ( (/ /   |___ ( (/ ( (___| |__| | |_| | | | |
+  |_|_|_|\____)____|_|\____)_|_| |_|\____)  (___/ \____)____)\___)_|\___/|_| |_|
+
+*/
     public void addMedicine(String type, String special, String notes, double amount)
     {
         int id = getLastID();
@@ -472,6 +486,27 @@ public class MedicoDB extends SQLiteOpenHelper {
         // 4. close
         db.close();
     }
+
+    public void updateMedicine(int rowID, String type, String special, String notes, double amount){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_TYPE, type);
+        values.put(KEY_SPECIAL, special);
+        values.put(KEY_NOTES, notes);
+        values.put(KEY_AMOUNT, amount);
+        db.update(MEDICINE_TABLE_NAME, values, KEY_ID+"="+rowID, null);
+        db.close();
+    }
+
+    public Cursor getMedicineByID(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + MEDICINE_TABLE_NAME + " WHERE " + KEY_ID +" = "+id;
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        return cursor;
+    }
+
+
 
     public void clearInfo() {
         setFirstName("");

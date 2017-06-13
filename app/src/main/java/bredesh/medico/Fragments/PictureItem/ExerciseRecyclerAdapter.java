@@ -12,9 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
@@ -24,12 +22,12 @@ import bredesh.medico.MedicoDB;
 import bredesh.medico.R;
 
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
+public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecyclerAdapter.CustomViewHolder> {
     private List<VideoItem> videoItems;
     private Context context;
     private Activity activity;
 
-    public RecyclerAdapter(Context context, List<VideoItem> videoItems, Activity activity) {
+    public ExerciseRecyclerAdapter(Context context, List<VideoItem> videoItems, Activity activity) {
         this.videoItems = videoItems;
         this.context = context;
         this.activity = activity;
@@ -125,7 +123,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
 
 
 
-    private void activateAlerts(RecyclerAdapter.CustomViewHolder viewHolder, VideoItem item) {
+    private void activateAlerts(ExerciseRecyclerAdapter.CustomViewHolder viewHolder, VideoItem item) {
         int[] days = item.getDays();
         boolean isActive = false;
         for(int i=0; i<days.length; i++)

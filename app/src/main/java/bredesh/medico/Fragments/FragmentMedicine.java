@@ -24,7 +24,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import bredesh.medico.Camera.MedicineData;
-import bredesh.medico.Fragments.PictureItem.RecyclerAdapter;
+import bredesh.medico.Fragments.PictureItem.ExerciseRecyclerAdapter;
+import bredesh.medico.Fragments.PictureItem.MedicineItem;
+import bredesh.medico.Fragments.PictureItem.MedicineRecyclerAdapter;
 import bredesh.medico.Fragments.PictureItem.VideoItem;
 import bredesh.medico.MedicoDB;
 import bredesh.medico.R;
@@ -35,9 +37,9 @@ import bredesh.medico.R;
 
 public class FragmentMedicine extends Fragment {
         private Context context;
-        List<VideoItem> arrayList;
+        List<MedicineItem> arrayList;
         RecyclerView lvHome;
-        RecyclerAdapter adapter;
+        MedicineRecyclerAdapter adapter;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +54,7 @@ public class FragmentMedicine extends Fragment {
 
             setArrayList();
 
-            adapter = new RecyclerAdapter(context,arrayList,getActivity());
+            adapter = new MedicineRecyclerAdapter(context,arrayList,getActivity());
             lvHome.setAdapter(adapter);
 
 
@@ -109,13 +111,14 @@ public class FragmentMedicine extends Fragment {
         private void setArrayList() {
             MedicoDB db = new MedicoDB(getActivity().getApplicationContext());
             Cursor c = db.getAllAlertsByKind(MedicoDB.KIND.Medicine);
+
             arrayList = new ArrayList<>();
             int index;
 
-            for ( c.moveToFirst(),  index=0; !c.isAfterLast(); c.moveToNext(), index++){
+            for (c.moveToFirst(), index = 0; !c.isAfterLast(); c.moveToNext(), index++) {
                 int id = c.getInt(c.getColumnIndex(MedicoDB.KEY_ID));
                 String time = c.getString(c.getColumnIndex(MedicoDB.KEY_TIME));
-                String [] times = time.split(Pattern.quote(getResources().getString(R.string.times_splitter)));
+                String[] times = time.split(Pattern.quote(getResources().getString(R.string.times_splitter)));
                 boolean detailedTimes = true;
                 String allTimes = time;
                 if (times.length > 3) {
@@ -133,19 +136,24 @@ public class FragmentMedicine extends Fragment {
                 days[4] = c.getInt(c.getColumnIndex(MedicoDB.THURSDAY));
                 days[5] = c.getInt(c.getColumnIndex(MedicoDB.FRIDAY));
                 days[6] = c.getInt(c.getColumnIndex(MedicoDB.SATURDAY));
-                int noOfRepetitions = c.getInt(c.getColumnIndex(MedicoDB.KEY_REPEATS));
 
-                arrayList.add(index, new VideoItem(id, time, name, uri, days, noOfRepetitions,
-                                                detailedTimes, allTimes, MedicoDB.KIND.Medicine));
+                Cursor cMedicine = db.getMedicineByID(id);
+                double amount =  cMedicine.getDouble(cMedicine.getColumnIndex(MedicoDB.KEY_AMOUNT));
+                String type =    cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_TYPE));
+                String special = cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_SPECIAL));
+                String notes =   cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_NOTES));
+
+                arrayList.add(index, new MedicineItem(id, time, name, uri, days, detailedTimes, allTimes,
+                        MedicoDB.KIND.Medicine, type, special, notes, ""+ amount));
+                c.close();
             }
-            c.close();
         }
 
         @Override
         public void onResume() {
             super.onResume();
             setArrayList();
-            adapter = new RecyclerAdapter(context,arrayList,getActivity());
+            adapter = new MedicineRecyclerAdapter(context,arrayList,getActivity());
             lvHome.setAdapter(adapter);
         }
 }

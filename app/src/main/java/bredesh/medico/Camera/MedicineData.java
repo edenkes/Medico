@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 
@@ -44,7 +45,6 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
     private Button btDelete, btConfirm;
 
 
-    private Button btType, btSpecial, btNotes;
     private TextView tvType, tvSpecial, tvNotes;
     private AlertDialog dialogType, dialogSpecial, dialogNotes;
     private EditText etAmount;
@@ -115,8 +115,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
             {
                 if (alertPlanButtons[i].getId() == view.getId())
                 {
-                    for (int j=0; j< i+1; j++)
-                        arrayList.add(AlertPlans[i][j]);
+                    arrayList.addAll(Arrays.asList(AlertPlans[i]).subList(0, i + 1));
                     timeAdapter.notifyItemInserted(arrayList.size() - 1);
 
                 }
@@ -126,10 +125,13 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
     };
 
 
-    private void setExistingExercise(Intent intent)
+    private void setExistingMedicine(Intent intent)
     {
-
-        etMedicineName.setText(intent.getStringExtra("exercise_name"));
+        etMedicineName.setText(intent.getStringExtra("medicine_name"));
+        tvType.setText(intent.getStringExtra("medicine_type"));
+        tvSpecial.setText(intent.getStringExtra("medicine_special"));
+        tvNotes.setText(intent.getStringExtra("medicine_notes"));
+        etAmount.setText(intent.getStringExtra("medicine_amount"));
 
         String times = intent.getStringExtra("time");
         String[] timeAL = null;
@@ -149,17 +151,14 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
         @Override
         public void onClick(View v) {
-            for (int i=0; i< 7; i++)
-                newSelectedDays[i] = selectedDays[i];
+            System.arraycopy(selectedDays, 0, newSelectedDays, 0, 7);
             dialogDays.show();
             showButtons(false);
 
-            // alignDialogRTL(dialogDays, getApplicationContext());
         }
     };
 
     private static final int REQUEST_VIDEO_CAPTURE = 1;
-    private static final int REQUEST_IMAGE_CAPTURE = 2;
 
     private void ShootVideo()
     {
@@ -222,7 +221,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
         input.setLayoutParams(lp);
-
+        input.setText(tvNotes.getText().toString());
         dialogNotes = new AlertDialog.Builder(this)
                 .setTitle(resources.getString(R.string.medicine_notes))
                 .setView(input)
@@ -275,7 +274,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
         etAmount = (EditText) findViewById(R.id.amount_number);
 
-        btType = (Button) findViewById(R.id.btType);
+        Button btType = (Button) findViewById(R.id.btType);
         tvType = (TextView) findViewById(R.id.tv_type);
         initTypeDialog();
         btType.setOnClickListener(new View.OnClickListener() {
@@ -285,7 +284,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
             }
         });
 
-        btSpecial = (Button) findViewById(R.id.btSpecial);
+        Button btSpecial = (Button) findViewById(R.id.btSpecial);
         tvSpecial = (TextView) findViewById(R.id.tv_special);
         tvSpecial.setMovementMethod(new ScrollingMovementMethod());
         initSpecialDialog();
@@ -296,10 +295,9 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
             }
         });
 
-        btNotes = (Button) findViewById(R.id.btNotes);
+        Button btNotes = (Button) findViewById(R.id.btNotes);
         tvNotes = (TextView) findViewById(R.id.tv_notes);
         tvNotes.setMovementMethod(new ScrollingMovementMethod());
-        initNotesDialog();
         btNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -333,7 +331,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         this.exerciseId = intent.getIntExtra("exerciseId", NewExercise);
         if (this.exerciseId != NewExercise)
         {
-            setExistingExercise(intent);
+            setExistingMedicine(intent);
         }
         else {
             arrayList = new ArrayList<>();
@@ -341,6 +339,9 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
             for(int i=0; i<selectedDays.length; i++)
                 selectedDays[i] = true;
         }
+
+        //doing it here becasue if we update somthing its after the intent
+        initNotesDialog();
 
         Button [] buttons = new Button[] {btConfirm, btDelete};
 
@@ -402,7 +403,14 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                         for (int i = 0; i < arrayList.size(); i++)
                             times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
                         if (exerciseId != NewExercise)
+                        {
                             db.updateRow(exerciseId, etMedicineName.getText().toString(), times, 0, videoUriString, days_to_alert);
+                            db.updateMedicine(exerciseId,
+                                                tvType.getText().toString(),
+                                                tvSpecial.getText().toString(),
+                                                tvNotes.getText().toString(),
+                                                Double.parseDouble(etAmount.getText().toString()));
+                        }
                         else
                         {
                             db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Medicine, times, 0, videoUriString, days_to_alert);
@@ -511,8 +519,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                 }).setPositiveButton(rscs.getString(R.string.alert_dialog_set), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        for (int i=0; i< 7; i++)
-                            selectedDays[i] = newSelectedDays[i];
+                        System.arraycopy(newSelectedDays, 0, selectedDays, 0, 7);
                         updateSelectedDays();
                         //  Your code when user clicked on OK
                         //  You can write the code  to save the selected item here
