@@ -1,5 +1,7 @@
 package bredesh.medico.Utils;
 
+import java.util.Locale;
+
 /**
  * Created by ophir on 6/9/2017.
  */
@@ -12,7 +14,7 @@ public class Utils {
 
     public static String noToString(int input, int charsCount)
     {
-        String zeros = String.format("%0" + charsCount + "d", 0);
+        String zeros = String.format(Locale.ENGLISH, "%0" + charsCount + "d", 0);
         return right(zeros + Integer.toString(input), charsCount);
     }
 }

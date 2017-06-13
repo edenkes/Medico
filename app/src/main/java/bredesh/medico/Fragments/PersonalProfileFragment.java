@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.util.LayoutDirection;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -268,18 +269,28 @@ public class PersonalProfileFragment extends Fragment {
 
             Calendar timeCalendar = new GregorianCalendar();
             //  Check the language for deciding if to read left to right.
-            String language = dbManager.getLang();
-            if(language.compareTo(EasingStr)==0 || language.compareTo(RussianStr)==0)
-                timeCalendar.add(Calendar.DATE, i);
-            else    timeCalendar.add(Calendar.DATE, -i);
+
+            timeCalendar.add(Calendar.DATE, -i);
             String dayStr = days[timeCalendar.get(Calendar.DAY_OF_WEEK) - 1];
-            daysLabels.add(dayStr);                    // adding the the day name to label list
+            int layoutDirection = getResources().getConfiguration().getLayoutDirection();
+
+            int index;
+            if (layoutDirection == LayoutDirection.LTR) {
+                daysLabels.add(0, dayStr);                    // adding the the day name to label list
+                index = daysOfTheWeek - i - 1;
+            }
+            else
+            {
+                daysLabels.add(dayStr);
+                index = i;
+            }
 
             CalculatedPoints points = pointsCalculator.CalculatePoints(timeCalendar, timeCalendar);
             float value_gainedPoints = points.gainedPoints;
             float value_possiblePoints = points.possiblePoints;
-            groupGainedPoints.add(new BarEntry(value_gainedPoints, i));         //adding the gained points
-            groupPossiblePoints.add(new BarEntry(value_possiblePoints, i));     //adding the max points for this day
+
+            groupGainedPoints.add(new BarEntry(value_gainedPoints, index));         //adding the gained points
+            groupPossiblePoints.add(new BarEntry(value_possiblePoints, index));     //adding the max points for this day
         }
 
         BarDataSet barDataSet1 = new BarDataSet(groupGainedPoints, getResources().getString(R.string.pointsGained));
