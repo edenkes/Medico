@@ -69,7 +69,7 @@ public class MedicoDB extends SQLiteOpenHelper {
                 KEY_TYPE + " TEXT, "+
                 KEY_SPECIAL + " TEXT, "+
                 KEY_NOTES + " TEXT, "+
-                KEY_AMOUNT+ " REAL)";
+                KEY_AMOUNT+ " INTEGER)";
         // create table
         db.execSQL(CREATE_ALERTS_TABLE);
 
@@ -463,7 +463,7 @@ public class MedicoDB extends SQLiteOpenHelper {
   |_|_|_|\____)____|_|\____)_|_| |_|\____)  (___/ \____)____)\___)_|\___/|_| |_|
 
 */
-    public void addMedicine(String type, String special, String notes, double amount)
+    public void addMedicine(String type, String special, String notes, int amount)
     {
         int id = getLastID();
         if(id == -1) return;
@@ -487,7 +487,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updateMedicine(int rowID, String type, String special, String notes, double amount){
+    public void updateMedicine(int rowID, String type, String special, String notes, int amount){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_TYPE, type);
@@ -505,6 +505,8 @@ public class MedicoDB extends SQLiteOpenHelper {
         cursor.moveToFirst();
         return cursor;
     }
+
+
 
 
 

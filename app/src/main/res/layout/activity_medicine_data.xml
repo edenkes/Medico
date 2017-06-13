@@ -90,7 +90,7 @@
                         android:textColor="@color/titleColor"
                         android:textSize="20sp"
                         android:text="1"
-                        android:inputType="numberDecimal" />
+                        android:inputType="number" />
 
                 </LinearLayout>
 
@@ -196,21 +196,22 @@
                         android:paddingStart="10sp"
                         android:background="@color/colorWhite"
                         android:elevation="2sp"
+                        android:scrollbars="vertical"
                         android:scrollbarAlwaysDrawVerticalTrack="true"
-                        android:scrollHorizontally="true"
-                        android:text="@string/menu2_item1"
+                        android:scrollHorizontally="false"
+                        android:text=""
                         android:textColor="@color/titleColor"
                         android:textSize="20sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
                     android:layout_marginEnd="10sp"
                     android:layout_marginStart="10sp"
                     android:layout_marginTop="5sp"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <ImageButton

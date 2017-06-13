@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,8 @@ import java.util.Collections;
 
 import bredesh.medico.MedicoDB;
 import bredesh.medico.R;
+
+import static android.view.MotionEvent.ACTION_DOWN;
 
 /**
  * Created by Omri on 12/06/2017.
@@ -264,6 +267,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
         btPlay = (ImageButton) findViewById(R.id.btPlay);
+
         alertPlanButtons[0] = (Button) findViewById(R.id.bt1time);
         alertPlanButtons[1] = (Button) findViewById(R.id.bt2times);
         alertPlanButtons[2] = (Button) findViewById(R.id.bt3times);
@@ -298,6 +302,16 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         Button btNotes = (Button) findViewById(R.id.btNotes);
         tvNotes = (TextView) findViewById(R.id.tv_notes);
         tvNotes.setMovementMethod(new ScrollingMovementMethod());
+        tvNotes.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                tvNotes.getParent().requestDisallowInterceptTouchEvent(true);
+
+                return false;
+            }
+        });
         btNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -404,20 +418,20 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                             times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
                         if (exerciseId != NewExercise)
                         {
-                            db.updateRow(exerciseId, etMedicineName.getText().toString(), times, 0, videoUriString, days_to_alert);
+                            db.updateRow(exerciseId, etMedicineName.getText().toString(), times,  Integer.parseInt(etAmount.getText().toString()), videoUriString, days_to_alert);
                             db.updateMedicine(exerciseId,
                                                 tvType.getText().toString(),
                                                 tvSpecial.getText().toString(),
                                                 tvNotes.getText().toString(),
-                                                Double.parseDouble(etAmount.getText().toString()));
+                                                Integer.parseInt(etAmount.getText().toString()));
                         }
                         else
                         {
-                            db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Medicine, times, 0, videoUriString, days_to_alert);
+                            db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Medicine, times,  Integer.parseInt(etAmount.getText().toString()), videoUriString, days_to_alert);
                             db.addMedicine(tvType.getText().toString(),
                                             tvSpecial.getText().toString(),
                                             tvNotes.getText().toString(),
-                                            Double.parseDouble(etAmount.getText().toString()));
+                                            Integer.parseInt(etAmount.getText().toString()));
                         }
                         finish();
                     } else

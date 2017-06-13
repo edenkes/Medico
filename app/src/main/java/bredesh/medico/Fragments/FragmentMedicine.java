@@ -138,7 +138,7 @@ public class FragmentMedicine extends Fragment {
                 days[6] = c.getInt(c.getColumnIndex(MedicoDB.SATURDAY));
 
                 Cursor cMedicine = db.getMedicineByID(id);
-                double amount =  cMedicine.getDouble(cMedicine.getColumnIndex(MedicoDB.KEY_AMOUNT));
+                int amount =  cMedicine.getInt(cMedicine.getColumnIndex(MedicoDB.KEY_AMOUNT));
                 String type =    cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_TYPE));
                 String special = cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_SPECIAL));
                 String notes =   cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_NOTES));

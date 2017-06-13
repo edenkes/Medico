@@ -2,10 +2,12 @@ package bredesh.medico.Notification;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -54,9 +56,38 @@ public class NotificationWindow extends AppCompatActivity {
         item = db.getItemByID(id);
         Resources resources = getResources();
         if(item != null) {
-            alertPrefixText.setText(resources.getString(R.string.notification_alert_prefix));
-            alertName.setText(item.name);
-            alertRepeats.setText(resources.getString(R.string.notification_alert_repeats, item.repeats));
+
+            switch (item.kind)
+            {
+                case Exercise:
+                    alertPrefixText.setText(resources.getString(R.string.notification_alert_prefix));
+                    alertName.setText(item.name);
+                    alertRepeats.setText(resources.getString(R.string.notification_alert_repeats, item.repeats));
+                    break;
+                case Medicine:
+                    Cursor c = (new MedicoDB(getApplicationContext())).getMedicineByID(item.id);
+                    int amount = c.getInt(c.getColumnIndex(MedicoDB.KEY_AMOUNT));
+                    String type = c.getString(c.getColumnIndex(MedicoDB.KEY_TYPE));
+                    String special = c.getString(c.getColumnIndex(MedicoDB.KEY_SPECIAL));
+                    String notes = c.getString(c.getColumnIndex(MedicoDB.KEY_NOTES));
+                    alertPrefixText.setText(resources.getString(R.string.notification_alert_prefix_medicine));
+                    alertName.setText(item.name);
+                    alertRepeats.setText(""+amount +" "+type);
+
+                    TextView tvSpecial = (TextView) findViewById(R.id.tv_special);
+                    tvSpecial.setText(resources.getString(R.string.menu2_title) + ": " +special);
+                    if(!notes.equals(""))
+                    {
+                        TextView tvNotes = (TextView) findViewById(R.id.tv_notes);
+                        tvNotes.setText("* " +notes);
+                        tvNotes.setMovementMethod(new ScrollingMovementMethod());
+                    }
+                    playButton.setVisibility(View.GONE);
+
+                    break;
+
+            }
+
             if(item.temp) {
                 db.deleteRow(id);
             }
