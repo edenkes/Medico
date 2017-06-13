@@ -12,6 +12,8 @@ import android.net.Uri;
 import bredesh.medico.Notification.PartialVideoItem;
 
 public class MedicoDB extends SQLiteOpenHelper {
+
+    public enum KIND { Exercise, Medicine }
     public static final String DATABASE_NAME = "Medico";
     private static final String ALERTS_TABLE_NAME = "ALERTS";
     private static final String PERSONAL_INFO_TABLE_NAME = "PersonalInfo";
@@ -20,6 +22,7 @@ public class MedicoDB extends SQLiteOpenHelper {
 
     /*Alerts Table*/
     public static final String KEY_NAME = "name";
+    public static final String KEY_KIND = "kind";
     public static final String KEY_TIME = "time";
     public static final String KEY_REPEATS = "repeats";
     public static final String URIVIDEO = "urivideo";
@@ -55,6 +58,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         String CREATE_ALERTS_TABLE = "CREATE TABLE " + ALERTS_TABLE_NAME +"( " +
                 KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 KEY_NAME + " TEXT, "+
+                KEY_KIND + " TEXT, "+
                 KEY_TIME + " TEXT, "+
                 KEY_REPEATS+ " INTEGER, "+
                 URIVIDEO + " TEXT, "+
@@ -123,7 +127,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addAlert(String alert_name, String alert_time, int repeats, String alert_uri, int[] days_to_alert){
+    public void addAlert(String alert_name,KIND kind, String alert_time, int repeats, String alert_uri, int[] days_to_alert){
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -131,6 +135,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, alert_name);
+        values.put(KEY_KIND, kind.toString());
         values.put(KEY_TIME, alert_time);
         values.put(KEY_REPEATS, repeats);
         values.put(URIVIDEO, alert_uri);
@@ -157,6 +162,19 @@ public class MedicoDB extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getReadableDatabase();
         try {
             String sql = "SELECT * FROM " + ALERTS_TABLE_NAME + " WHERE " + KEY_NAME +" NOT LIKE '_TEMP__%'";
+            cursor = database.rawQuery(sql, null);
+            cursor.moveToFirst();
+        } catch (SQLiteException e) { createAlerts(database); return getAllAlerts(); }
+        return cursor;
+    }
+
+
+    public Cursor getAllAlertsByKind(KIND kind) {
+        Cursor cursor;
+        SQLiteDatabase database = this.getReadableDatabase();
+        try {
+            String sql = "SELECT * FROM " + ALERTS_TABLE_NAME + " WHERE " + KEY_NAME +" NOT LIKE '_TEMP__%'" +
+                    " AND " + KEY_KIND + " LIKE '"+kind.toString()+"'";
             cursor = database.rawQuery(sql, null);
             cursor.moveToFirst();
         } catch (SQLiteException e) { createAlerts(database); return getAllAlerts(); }
@@ -234,13 +252,15 @@ public class MedicoDB extends SQLiteOpenHelper {
         cursor.moveToFirst();
         if(cursor.getCount() != 1) return null;
 
+        String kind = cursor.getString(cursor.getColumnIndex(KEY_KIND));
         String videoUri = cursor.getString(cursor.getColumnIndex(URIVIDEO));
         Uri uri = videoUri != null? Uri.parse(videoUri) : null;
 
         v = new PartialVideoItem(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
                 cursor.getString(cursor.getColumnIndex(KEY_NAME)),
                 uri,
-                cursor.getInt(cursor.getColumnIndex(KEY_REPEATS)));
+                cursor.getInt(cursor.getColumnIndex(KEY_REPEATS)),
+                (kind.equals(KIND.Exercise)? KIND.Exercise : KIND.Medicine));
         db.close();
         return v;
     }

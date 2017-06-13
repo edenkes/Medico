@@ -94,4 +94,37 @@
 
     <string name="ClearInfo">נקה מידע אישי</string>
 
+    //description - no need to translate
+    <string name="desc_pic_play">play the video</string>
+    <string name="desc_pic_shoot">shoot the video</string>
+
+
+
+    //medicine - TODO: need to translate
+    <string name="medicine_name_label">שם תרופה:</string>
+    <string name="medicine_amount">כמות:</string>
+    <string name="medicine_type">סוג</string>
+    <string name="medicine_special">הוראות מיוחדות</string>
+    <string name="medicine_notes">הערות</string>
+
+    <string name="menu1_title">בחירת סוג</string>
+    <string name="menu1_item1">כדור</string>
+    <string name="menu1_item2">קפסולה</string>
+    <string name="menu1_item3">מ"ל (CC)</string>
+    <string name="menu1_item4">יחידות</string>
+    <string name="menu1_item5">מדבקה</string>
+    <string name="menu1_item6">פתיליה (נר)</string>
+
+    <string name="menu2_title">הוראות מיוחדות</string>
+    <string name="menu2_item1">ללא</string>
+    <string name="menu2_item2">לפני האוכל</string>
+    <string name="menu2_item3">אחרי האוכל</string>
+    <string name="menu2_item4">שעתיים לפני האוכל</string>
+    <string name="menu2_item5">שעתיים אחרי האוכל</string>
+
+
+    <string name="reshootPic">האם לצלם את התרופה מחדש?</string>
+
+
+
 </resources>

@@ -18,7 +18,11 @@ import com.example.bottom_bar.BottomBarTab;
 import com.example.bottom_bar.OnTabSelectListener;
 
 import bredesh.medico.Fragments.FragmentHome;
+import bredesh.medico.Fragments.FragmentMedicine;
 import bredesh.medico.Fragments.PersonalFragment;
+import bredesh.medico.Menu.MainMenu;
+
+import static bredesh.medico.Menu.MainMenu.MODE.Medicine;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -111,7 +115,16 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new FragmentFavorites();
                 break;*/
             case R.id.tab_home:
-                fragment = new FragmentHome();
+                switch (MainMenu.CURRENT)
+                {
+                    case Exercise:
+                        fragment = new FragmentHome();
+                        break;
+                    case Medicine:
+                        fragment = new FragmentMedicine();
+                        break;
+
+                }
                 break;
             case R.id.tab_personal:
                 fragment = new PersonalFragment();

@@ -7,7 +7,7 @@
     <color name="colorWindowBackground">#ffffff</color>
     <color name="colorLetters">#00124c</color>
     <color name="textColor">#000000</color>
-    <color name="textColorPrimary">#ded4e3</color>
+    <color name="textColorPrimary">#FFFFFF</color>
     <color name="textColorSecondary">#0dccb2</color>
     <color name="colorAppBar">#f8002e5c</color>
     <color name="colorExercisesBar">#dd6aa1d6</color>

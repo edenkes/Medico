@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import bredesh.medico.Fragments.FragmentMedicine;
 import bredesh.medico.Localization;
 import bredesh.medico.MainActivity;
 import bredesh.medico.MedicoDB;
@@ -29,7 +30,8 @@ import bredesh.medico.R;
 
 public class MainMenu extends AppCompatActivity
 {
-    private final int NUMBER_OF_COLUMNS = 2;
+    public enum MODE {Exercise,Medicine}
+    public static MODE CURRENT;
     private String language = "default";
     private Menu optionsMenu = null;
     MedicoDB dbManager = null;
@@ -119,6 +121,8 @@ public class MainMenu extends AppCompatActivity
 
     void PrepareMenu()
     {
+        final int NUMBER_OF_COLUMNS = 2;
+
         View root = (View) findViewById(R.id.main_menu_root);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -138,18 +142,22 @@ public class MainMenu extends AppCompatActivity
         // initiate list
         menu_items.add(new Item_Menu(R.drawable.ic_rowing_black_48dp,
                 resources.getString(R.string.menu_item_1),
-                new Intent(MainMenu.this, MainActivity.class)));
+                new Intent(MainMenu.this, MainActivity.class),
+                MODE.Exercise));
 
         menu_items.add(new Item_Menu(R.drawable.ic_pill,
                 resources.getString(R.string.menu_item_2),
-                null));
+                new Intent(MainMenu.this, MainActivity.class),
+                MODE.Medicine));
 
         menu_items.add(new Item_Menu(R.drawable.ic_transfer_within_a_station_black_48dp,
                 resources.getString(R.string.menu_item_3),
+                null,
                 null));
 
         menu_items.add(new Item_Menu(R.drawable.ic_toys_black_48dp,
                 resources.getString(R.string.menu_item_4),
+                null,
                 null));
 
         MenuAdapterRecycler adapterRecycler = new MenuAdapterRecycler(getApplicationContext(),menu_items, this);

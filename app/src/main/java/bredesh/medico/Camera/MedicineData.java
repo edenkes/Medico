@@ -1,6 +1,5 @@
 package bredesh.medico.Camera;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,13 +13,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,20 +28,27 @@ import java.util.Collections;
 import bredesh.medico.MedicoDB;
 import bredesh.medico.R;
 
-interface IRemoveLastAlert
-{
-    void OnRemoveLastAlert();
-}
+/**
+ * Created by Omri on 12/06/2017.
+ */
 
-public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
-    private EditText etExerciseName;
-    private NumberPicker numberPicker;
+
+public class MedicineData extends AppCompatActivity implements IRemoveLastAlert {
+
+
+
+    private EditText etMedicineName;
     private ArrayList<String> arrayList;
     private TextView lblSelectedDays;
     private Button btDelete, btConfirm;
 
-    private AlertDialog dialog;
+
+    private Button btType, btSpecial, btNotes;
+    private TextView tvType, tvSpecial, tvNotes;
+    private AlertDialog dialogType, dialogSpecial, dialogNotes;
+
+    private AlertDialog dialogDays;
     // array to keep the selected days
     private final boolean[] selectedDays = new boolean[7];
     private final boolean[] newSelectedDays = new boolean[7];
@@ -124,7 +128,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
     private void setExistingExercise(Intent intent)
     {
 
-        etExerciseName.setText(intent.getStringExtra("exercise_name"));
+        etMedicineName.setText(intent.getStringExtra("exercise_name"));
 
         String times = intent.getStringExtra("time");
         String[] timeAL = null;
@@ -133,8 +137,6 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
             timeAL = times.split(resources.getString(R.string.times_splitter));
             Collections.addAll(arrayList, timeAL);
         }
-        int repeats = intent.getIntExtra("repeats",1);
-        numberPicker.setValue(repeats);
         int[] days = intent.getIntArrayExtra("days");
         for (int i=0; i< 7; i++)
             selectedDays[i] = days[i] != 0;
@@ -148,10 +150,10 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         public void onClick(View v) {
             for (int i=0; i< 7; i++)
                 newSelectedDays[i] = selectedDays[i];
-            dialog.show();
+            dialogDays.show();
             showButtons(false);
 
-            // alignDialogRTL(dialog, getApplicationContext());
+            // alignDialogRTL(dialogDays, getApplicationContext());
         }
     };
 
@@ -161,17 +163,85 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
     private void ShootVideo()
     {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        if (takeVideoIntent.resolveActivity(VideoData.this.getPackageManager()) != null) {
+        if (takeVideoIntent.resolveActivity(MedicineData.this.getPackageManager()) != null) {
             takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 15);
             startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
         }
+    }
+
+    private void initTypeDialog()
+    {
+        final Resources resources = getResources();
+        final CharSequence[] items = {
+                resources.getString(R.string.menu1_item1),
+                resources.getString(R.string.menu1_item2),
+                resources.getString(R.string.menu1_item3),
+                resources.getString(R.string.menu1_item4),
+                resources.getString(R.string.menu1_item5),
+                resources.getString(R.string.menu1_item6)};
+
+        dialogType = new AlertDialog.Builder(this)
+                .setTitle(resources.getString(R.string.menu1_title))
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        tvType.setText(items[which]);
+                    }
+                })
+                .create();
+    }
+
+    private void initSpecialDialog()
+    {
+        final Resources resources = getResources();
+        final CharSequence[] items = {
+                resources.getString(R.string.menu2_item1),
+                resources.getString(R.string.menu2_item2),
+                resources.getString(R.string.menu2_item3),
+                resources.getString(R.string.menu2_item4),
+                resources.getString(R.string.menu2_item5)};
+
+        dialogSpecial = new AlertDialog.Builder(this)
+                .setTitle(resources.getString(R.string.menu2_title))
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        tvSpecial.setText(items[which]);
+                    }
+                })
+                .create();
+    }
+
+    private void initNotesDialog()
+    {
+        final Resources resources = getResources();
+
+        final EditText input = new EditText(MedicineData.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+
+        dialogNotes = new AlertDialog.Builder(this)
+                .setTitle(resources.getString(R.string.medicine_notes))
+                .setView(input)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        tvNotes.setText(input.getText().toString());
+                    }
+                }).setNegativeButton(resources.getString(R.string.alert_dialog_cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {}
+                })
+                .create();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_exercises_data);
+        setContentView(R.layout.activity_medicine_data);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -189,9 +259,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         Button btChangeFrequency = (Button) findViewById(R.id.btChangeFrequency);
         btConfirm = (Button) findViewById(R.id.btConfirm);
         btDelete = (Button) findViewById(R.id.btDelete);
-        Button addAlert = (Button) findViewById(R.id.btAddAlert);
-        etExerciseName = (EditText) findViewById(R.id.etExerciseName);
-        numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
+        etMedicineName = (EditText) findViewById(R.id.etExerciseName);
         lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
@@ -205,16 +273,46 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         lbAddMultiAlert = (TextView) findViewById(R.id.lbAddMultiAlert);
 
 
+        btType = (Button) findViewById(R.id.btType);
+        tvType = (TextView) findViewById(R.id.tv_type);
+        initTypeDialog();
+        btType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogType.show();
+            }
+        });
 
-        ImageButton video;
+        btSpecial = (Button) findViewById(R.id.btSpecial);
+        tvSpecial = (TextView) findViewById(R.id.tv_special);
+        tvSpecial.setMovementMethod(new ScrollingMovementMethod());
+        initSpecialDialog();
+        btSpecial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogSpecial.show();
+            }
+        });
+
+        btNotes = (Button) findViewById(R.id.btNotes);
+        tvNotes = (TextView) findViewById(R.id.tv_notes);
+        tvNotes.setMovementMethod(new ScrollingMovementMethod());
+        initNotesDialog();
+        btNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogNotes.show();
+            }
+        });
+
 
         final AlertDialog reShootConfirm = new AlertDialog.Builder(this)
                 .setPositiveButton(resources.getString(R.string.alert_dialog_set), onReshootConfirm)
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
-                .setMessage(resources.getString(R.string.reshootVideo)).create();
+                .setMessage(resources.getString(R.string.reshootPic)).create();
 
 
-        video = (ImageButton) findViewById(R.id.btShootVideo);
+        ImageButton video = (ImageButton) findViewById(R.id.btShootVideo);
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,10 +327,6 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         db = new MedicoDB(getApplicationContext());
         Intent intent = getIntent();
         videoUriString = intent.getStringExtra("RecordedUri");
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(50);
-
-        numberPicker.setWrapSelectorWheel(false);
 
         this.exerciseId = intent.getIntExtra("exerciseId", NewExercise);
         if (this.exerciseId != NewExercise)
@@ -249,7 +343,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         Button [] buttons = new Button[] {btConfirm, btDelete};
 
 
-        timeAdapter = new TimeAdapterRecycler(VideoData.this,arrayList, buttons, this);
+        timeAdapter = new TimeAdapterRecycler(MedicineData.this,arrayList, buttons, this);
         timeViews.setAdapter(timeAdapter);
         setDialog();
 
@@ -262,32 +356,32 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         if (videoUriString == null)
             btPlay.setVisibility(View.INVISIBLE);
         btPlay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Context context = getApplicationContext();
-                    Uri videoUri = Uri.parse(videoUriString);
-                    if (videoUri != null) {
-                        try {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(intent);
-                        } catch (RuntimeException e) {
-                            Toast.makeText(context.getApplicationContext(),
-                                    resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
-                        }
-                    } else Toast.makeText(context.getApplicationContext(),
-                            resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
-                }
-            });
+            @Override
+            public void onClick(View view) {
+                Context context = getApplicationContext();
+                Uri videoUri = Uri.parse(videoUriString);
+                if (videoUri != null) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    } catch (RuntimeException e) {
+                        Toast.makeText(context.getApplicationContext(),
+                                resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+                    }
+                } else Toast.makeText(context.getApplicationContext(),
+                        resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         btConfirm.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if(etExerciseName.getText().toString().length() == 0)
+                if(etMedicineName.getText().toString().length() == 0)
                     Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short), Toast.LENGTH_SHORT).show();
                 else {
-                    if (etExerciseName.getText().toString().length() <= maxSize) {
+                    if (etMedicineName.getText().toString().length() <= maxSize) {
                         int[] days_to_alert = new int[selectedDays.length];
                         for (int i = 0; i < days_to_alert.length; i++) {
                             if (selectedDays[i])
@@ -295,15 +389,14 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                             else
                                 days_to_alert[i] = 0;
                         }
-                        int repeats = numberPicker.getValue();
                         String times = "";
                         Collections.sort(arrayList);
                         for (int i = 0; i < arrayList.size(); i++)
                             times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
                         if (exerciseId != NewExercise)
-                            db.updateRow(exerciseId, etExerciseName.getText().toString(), times, repeats, videoUriString, days_to_alert);
+                            db.updateRow(exerciseId, etMedicineName.getText().toString(), times, 0, videoUriString, days_to_alert);
                         else
-                            db.addAlert(etExerciseName.getText().toString(), MedicoDB.KIND.Exercise, times, repeats, videoUriString, days_to_alert);
+                            db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Exercise, times, 0, videoUriString, days_to_alert);
                         finish();
                     } else
                         Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_long), Toast.LENGTH_SHORT).show();
@@ -321,14 +414,14 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
             @Override
             public void onClick(View v) {
-            deleteDialog.show();
+                deleteDialog.show();
             }
         });
 
 
 
         // updating the list + adding another alert
-        addAlert.setOnClickListener(new View.OnClickListener() {
+        btAddAlert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -336,38 +429,6 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                 timeAdapter.notifyItemInserted(arrayList.size() - 1);
             }
         });
-    }
-
-    public static void alignDialogRTL(Dialog dialog, Context context) {
-        // Get message text view
-        TextView message = (TextView)dialog.findViewById(android.R.id.message);
-
-        // Defy gravity
-        if (message != null) message.setGravity(Gravity.RIGHT);
-
-        // Get title text view
-        TextView title = (TextView)dialog.findViewById(context.getResources().getIdentifier("alertTitle", "id", "android"));
-
-        // Defy gravity (again)
-        if (title != null) {
-            title.setGravity(Gravity.RIGHT);
-            // Get title's parent layout
-            LinearLayout parent = ((LinearLayout) title.getParent());
-            if (parent != null) {
-
-                // Get layout params
-                LinearLayout.LayoutParams originalParams = (LinearLayout.LayoutParams) parent.getLayoutParams();
-
-                // Set width to WRAP_CONTENT
-                originalParams.width = LinearLayout.LayoutParams.WRAP_CONTENT;
-
-                // Defy gravity (last time)
-                originalParams.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
-
-                // Set updated layout params
-                parent.setLayoutParams(originalParams);
-            }
-        }
     }
 
     private void updateSelectedDays()
@@ -413,7 +474,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                 rscs.getString(R.string.Friday),
                 rscs.getString(R.string.Saturday)};
 
-        dialog = new AlertDialog.Builder(this)
+        dialogDays = new AlertDialog.Builder(this)
                 .setTitle(rscs.getString(R.string.alert_dialog_select_days))
                 .setMultiChoiceItems(items, newSelectedDays, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
@@ -465,18 +526,18 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
             if(intent.getData() != null){
                 videoUriString = intent.getData().toString();
                 btPlay.setVisibility(View.VISIBLE);
-                Toast.makeText(VideoData.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
+                Toast.makeText(MedicineData.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
                 return;
             }
         }
-        Toast.makeText(VideoData.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
+        Toast.makeText(MedicineData.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
     }
     /*
         return string format of the current time.
         DO NOT CHANGE THIS FORMAT [database and other checks relying on that!!]
      */
 
-    private String Right(String s, int count)
+    private String Right(String s)
     {
         return s.substring(s.length() - 2);
     }
@@ -487,8 +548,8 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         int minute =  cal.get(Calendar.MINUTE);
         int hour = cal.get(Calendar.HOUR_OF_DAY);
 
-        String str_hour = Right ("0" + hour, 2);
-        String str_minute = Right("0" + minute, 2);
+        String str_hour = Right ("0" + hour);
+        String str_minute = Right("0" + minute);
         return  str_hour + " : " + str_minute;
     }
 

@@ -50,8 +50,10 @@ public class MenuAdapterRecycler extends RecyclerView.Adapter<MenuAdapterRecycle
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(item.nextScreen != null)
+                if(item.nextScreen != null) {
+                    MainMenu.CURRENT = item.mode;
                     activity.startActivity(item.nextScreen);
+                }
                 else Toast.makeText(context.getApplicationContext(),
                         context.getResources().getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
             }

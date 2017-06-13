@@ -2,9 +2,12 @@ package bredesh.medico.Fragments.PictureItem;
 
 import android.net.Uri;
 
+import bredesh.medico.MedicoDB;
+
 public class VideoItem {
     private int id;
     private String name;
+    public MedicoDB.KIND kind;
     private String time;
     private Uri uri;
     private int[] days;
@@ -14,7 +17,7 @@ public class VideoItem {
     private boolean detailedTimes;
     private String allTimes;
 
-    public VideoItem(int id, String time, String name, String uri, int[] days, int noOfRepetitions, boolean detailedTimes, String allTimes){
+    public VideoItem(int id, String time, String name, String uri, int[] days, int noOfRepetitions, boolean detailedTimes, String allTimes, MedicoDB.KIND kind){
         this.id = id;
         this.time = time;
         this.name = name;
@@ -26,6 +29,7 @@ public class VideoItem {
         this.noOfRepetitions = noOfRepetitions;
         this.detailedTimes = detailedTimes;
         this.allTimes = allTimes;
+        this.kind = kind;
     }
 
     public Uri getUri() { return  uri;}

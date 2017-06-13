@@ -101,7 +101,7 @@ public class FragmentHome extends Fragment {
 
     private void setArrayList() {
         MedicoDB db = new MedicoDB(getActivity().getApplicationContext());
-        Cursor c = db.getAllAlerts();
+        Cursor c = db.getAllAlertsByKind(MedicoDB.KIND.Exercise);
         arrayList = new ArrayList<>();
         int index;
 
@@ -128,7 +128,7 @@ public class FragmentHome extends Fragment {
             days[6] = c.getInt(c.getColumnIndex(db.SATURDAY));
             int noOfRepetitions = c.getInt(c.getColumnIndex(db.KEY_REPEATS));
 
-            arrayList.add(index, new VideoItem(id, time, name, uri, days, noOfRepetitions, detailedTimes, allTimes));
+            arrayList.add(index, new VideoItem(id, time, name, uri, days, noOfRepetitions, detailedTimes, allTimes, MedicoDB.KIND.Exercise));
         }
         c.close();
     }

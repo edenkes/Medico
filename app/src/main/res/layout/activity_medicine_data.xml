@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLiteGrey"
+    android:focusableInTouchMode="true"
+    android:layoutDirection="locale"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/subLayout">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5sp">
+
+                    <TextView
+                        android:id="@+id/lbMedicineName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:focusable="false"
+                        android:gravity="center_vertical"
+                        android:labelFor="@+id/etExerciseName"
+                        android:maxLines="1"
+                        android:paddingEnd="5sp"
+                        android:paddingStart="5sp"
+                        android:text="@string/medicine_name_label"
+                        android:textColor="@color/titleColor"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/etExerciseName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5sp"
+                        android:layout_toEndOf="@+id/lbMedicineName"
+                        android:inputType="textCapWords"
+                        android:maxLength="16"
+                        android:maxLines="1"
+                        android:paddingEnd="10sp"
+                        android:paddingStart="10sp"
+                        android:textColor="@color/titleColor"
+                        android:textSize="24sp" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5sp"
+                    android:layoutDirection="locale"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingEnd="5sp"
+                        android:paddingStart="5sp"
+                        android:text="@string/medicine_amount"
+                        android:textColor="@color/titleColor"
+                        android:textSize="20sp" />
+
+
+                    <EditText
+                        android:id="@+id/amount_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginStart="10sp"
+                        android:textColor="@color/titleColor"
+                        android:textSize="20sp"
+                        android:text="1"
+                        android:inputType="numberDecimal" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5sp"
+                    android:layoutDirection="locale"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5sp"
+                        android:layout_marginStart="5sp"
+                        android:background="@drawable/button_item_data"
+                        android:gravity="center"
+                        android:text="@string/medicine_type"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="20sp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginStart="10sp"
+                        android:text="@string/menu1_item1"
+                        android:textColor="@color/titleColor"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5sp"
+                    android:layoutDirection="locale"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btSpecial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5sp"
+                        android:layout_marginStart="5sp"
+                        android:background="@drawable/button_item_data"
+                        android:gravity="center"
+                        android:paddingEnd="5sp"
+                        android:paddingStart="5sp"
+                        android:text="@string/medicine_special"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="20sp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_special"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginStart="10sp"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:scrollHorizontally="true"
+                        android:text="@string/menu2_item1"
+                        android:textColor="@color/titleColor"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5sp"
+                    android:layoutDirection="locale"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btNotes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5sp"
+                        android:layout_marginStart="5sp"
+                        android:background="@drawable/button_item_data"
+                        android:gravity="center"
+                        android:paddingEnd="5sp"
+                        android:paddingStart="5sp"
+                        android:text="@string/medicine_notes"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="20sp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_notes"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5sp"
+                        android:gravity="start|center_vertical"
+                        android:maxLines="2"
+                        android:paddingEnd="10sp"
+                        android:paddingStart="10sp"
+                        android:background="@color/colorWhite"
+                        android:elevation="2sp"
+                        android:scrollbarAlwaysDrawVerticalTrack="true"
+                        android:scrollHorizontally="true"
+                        android:text="@string/menu2_item1"
+                        android:textColor="@color/titleColor"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:layout_marginEnd="10sp"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="5sp"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btShootVideo"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/button_round"
+                        android:contentDescription="@string/desc_pic_shoot"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_videocam_black_48dp" />
+
+                    <ImageButton
+                        android:id="@+id/btPlay"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginStart="10sp"
+                        android:background="@drawable/button_round"
+                        android:contentDescription="@string/desc_pic_play"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_play_arrow_black_48dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/days_alert_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5sp"
+                    android:layout_marginTop="10sp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btChangeFrequency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_item_data"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:paddingEnd="5sp"
+                        android:paddingStart="5sp"
+                        android:text="@string/select_days"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/lblSelectedDays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginStart="10sp"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:scrollbars="vertical"
+                        android:text="@string/all_days"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10sp">
+
+
+                    <TextView
+                        android:id="@+id/lbAddMultiAlert"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="5sp"
+                        android:layout_marginStart="5sp"
+                        android:text="@string/Add_multi_alert"
+                        android:textColor="@color/titleColor"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:id="@+id/laAddMultiAlert"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lbAddMultiAlert"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <Button
+                            android:id="@+id/bt1time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5sp"
+                            android:layout_marginStart="5sp"
+                            android:layout_weight="0.2"
+                            android:background="@drawable/button_item_data"
+                            android:text="1"
+                            android:textColor="@color/colorWhite" />
+
+                        <Button
+                            android:id="@+id/bt2times"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5sp"
+                            android:layout_marginStart="5sp"
+                            android:layout_weight="0.2"
+                            android:background="@drawable/button_item_data"
+                            android:text="2"
+                            android:textColor="@color/colorWhite" />
+
+                        <Button
+                            android:id="@+id/bt3times"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5sp"
+                            android:layout_marginStart="5sp"
+                            android:layout_weight="0.2"
+                            android:background="@drawable/button_item_data"
+                            android:text="3"
+                            android:textColor="@color/colorWhite" />
+
+                        <Button
+                            android:id="@+id/bt4times"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5sp"
+                            android:layout_marginStart="5sp"
+                            android:layout_weight="0.2"
+                            android:background="@drawable/button_item_data"
+                            android:text="4"
+                            android:textColor="@color/colorWhite" />
+
+                        <Button
+                            android:id="@+id/bt5times"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5sp"
+                            android:layout_marginStart="5sp"
+                            android:layout_weight="0.2"
+                            android:background="@drawable/button_item_data"
+                            android:text="5"
+                            android:textColor="@color/colorWhite" />
+
+                        <Button
+                            android:id="@+id/btAddAlert"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="5sp"
+                            android:background="@drawable/button_item_data"
+                            android:padding="5sp"
+                            android:text="@string/btn_add_alert"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/time_views"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/laAddMultiAlert"
+                        android:background="@color/colorGreyLite" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+        <LinearLayout
+            android:id="@+id/subLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/titleColor"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/btConfirm"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="0.5"
+                android:text="@string/btn_confirm"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btDelete"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/delete_exercise_button"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
