@@ -124,6 +124,11 @@
 
 
     <string name="reshootPic">האם לצלם את התרופה מחדש?</string>
+    <string name="name_too_short_medicine">הכנס שם תרופה</string>
+    <string name="amount_too_short_medicine">הכנס כמות</string>
+    <string name="delete_medicine_confirm">למחוק את התרופה?</string>
+
+
 
 
 

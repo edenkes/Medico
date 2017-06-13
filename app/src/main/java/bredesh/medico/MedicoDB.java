@@ -17,6 +17,7 @@ public class MedicoDB extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Medico";
     private static final String ALERTS_TABLE_NAME = "ALERTS";
     private static final String PERSONAL_INFO_TABLE_NAME = "PersonalInfo";
+    private static final String MEDICINE_TABLE_NAME = "Medicine";
     private static final String LANG_TABLE_NAME = "Language";
     private static final int VERSION = 7;
 
@@ -42,6 +43,12 @@ public class MedicoDB extends SQLiteOpenHelper {
     public static final String KEY_EMAIL = "email";
     public static final String KEY_POINTS = "points";
 
+    /* Medicine Table */
+    public static final String KEY_TYPE = "type";
+    public static final String KEY_SPECIAL = "special";
+    public static final String KEY_NOTES = "notes";
+    public static final String KEY_AMOUNT = "amount";
+
     /*Language Table*/
     public static final String LANG="LANG";
 
@@ -52,6 +59,19 @@ public class MedicoDB extends SQLiteOpenHelper {
         createLang(db);
         createAlerts(db);
         createPersonalInfo(db);
+        createMedicine(db);
+    }
+
+    private void createMedicine(SQLiteDatabase db) {
+        String CREATE_ALERTS_TABLE = "CREATE TABLE " + MEDICINE_TABLE_NAME +"( " +
+                KEY_ID + " INTEGER PRIMARY KEY, " +
+                KEY_TYPE + " TEXT, "+
+                KEY_SPECIAL + " TEXT, "+
+                KEY_NOTES + " TEXT, "+
+                KEY_AMOUNT+ " REAL)";
+        // create table
+        db.execSQL(CREATE_ALERTS_TABLE);
+
     }
 
     private void createAlerts(SQLiteDatabase db) {
@@ -167,6 +187,18 @@ public class MedicoDB extends SQLiteOpenHelper {
         } catch (SQLiteException e) { createAlerts(database); return getAllAlerts(); }
         return cursor;
     }
+
+    public int getLastID() {
+        Cursor cursor;
+        SQLiteDatabase database = this.getReadableDatabase();
+        try {
+            String sql = "SELECT MAX("+KEY_ID+") FROM " + ALERTS_TABLE_NAME + " WHERE " + KEY_NAME +" NOT LIKE '_TEMP__%'";
+            cursor = database.rawQuery(sql, null);
+            cursor.moveToFirst();
+        } catch (SQLiteException e) { return -1; }
+        return cursor.getInt(0);
+    }
+
 
 
     public Cursor getAllAlertsByKind(KIND kind) {
@@ -415,6 +447,30 @@ public class MedicoDB extends SQLiteOpenHelper {
         int points = cursor.getInt(cursor.getColumnIndex(KEY_POINTS));
 
         setPoints(points + points_to_add);
+    }
+
+    public void addMedicine(String type, String special, String notes, double amount)
+    {
+        int id = getLastID();
+        if(id == -1) return;
+
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. create ContentValues to add key "column"/value
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, id);
+        values.put(KEY_TYPE, type);
+        values.put(KEY_SPECIAL, special);
+        values.put(KEY_NOTES, notes);
+        values.put(KEY_AMOUNT, amount);
+        // 3. insert
+        db.insert(MEDICINE_TABLE_NAME, // table
+                null, //nullColumnHack
+                values); // key/value -> keys = column names/ values = column values
+
+        // 4. close
+        db.close();
     }
 
     public void clearInfo() {

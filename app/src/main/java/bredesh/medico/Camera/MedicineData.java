@@ -47,6 +47,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
     private Button btType, btSpecial, btNotes;
     private TextView tvType, tvSpecial, tvNotes;
     private AlertDialog dialogType, dialogSpecial, dialogNotes;
+    private EditText etAmount;
 
     private AlertDialog dialogDays;
     // array to keep the selected days
@@ -272,6 +273,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         btAddAlert = (Button) findViewById(R.id.btAddAlert);
         lbAddMultiAlert = (TextView) findViewById(R.id.lbAddMultiAlert);
 
+        etAmount = (EditText) findViewById(R.id.amount_number);
 
         btType = (Button) findViewById(R.id.btType);
         tvType = (TextView) findViewById(R.id.tv_type);
@@ -378,8 +380,14 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
             @Override
             public void onClick(View v) {
-                if(etMedicineName.getText().toString().length() == 0)
-                    Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short), Toast.LENGTH_SHORT).show();
+                if(etMedicineName.getText().toString().length() == 0) {
+                    Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short_medicine), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(etAmount.getText().toString().length() == 0)
+                {
+                    Toast.makeText(getApplicationContext(), resources.getString(R.string.amount_too_short_medicine), Toast.LENGTH_SHORT).show();
+                }
                 else {
                     if (etMedicineName.getText().toString().length() <= maxSize) {
                         int[] days_to_alert = new int[selectedDays.length];
@@ -396,7 +404,13 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                         if (exerciseId != NewExercise)
                             db.updateRow(exerciseId, etMedicineName.getText().toString(), times, 0, videoUriString, days_to_alert);
                         else
-                            db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Exercise, times, 0, videoUriString, days_to_alert);
+                        {
+                            db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Medicine, times, 0, videoUriString, days_to_alert);
+                            db.addMedicine(tvType.getText().toString(),
+                                            tvSpecial.getText().toString(),
+                                            tvNotes.getText().toString(),
+                                            Double.parseDouble(etAmount.getText().toString()));
+                        }
                         finish();
                     } else
                         Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_long), Toast.LENGTH_SHORT).show();
@@ -407,7 +421,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         final AlertDialog deleteDialog = new AlertDialog.Builder(this)
                 .setPositiveButton(resources.getString(R.string.alert_dialog_set), onDelete)
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
-                .setMessage(resources.getString(R.string.delete_exercise_confirm)).create();
+                .setMessage(resources.getString(R.string.delete_medicine_confirm)).create();
 
 
         btDelete.setOnClickListener(new View.OnClickListener() {
