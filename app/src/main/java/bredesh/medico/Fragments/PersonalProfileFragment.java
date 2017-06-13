@@ -66,7 +66,6 @@ public class PersonalProfileFragment extends Fragment {
     ImageButton btGraph;
 
     final int daysOfTheWeek = 7;
-    final String EasingStr = "en", RussianStr = "ru";
     BarChart barChart;
     private GregorianCalendar currentDate;
     private GregorianCalendar today = new GregorianCalendar();
@@ -188,14 +187,16 @@ public class PersonalProfileFragment extends Fragment {
     private void setupInfoFromDB(final View view) {
 
         txCurrentUserName = (TextView) view.findViewById(R.id.txCurrentUserName);
+/*
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && getContext().checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-//            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
-//            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
-//        } else {
-//            // Android version is lesser than 6.0 or the permission is already granted.
-//            readContactInfo();
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && getContext().checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
+            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+        } else {
+            // Android version is lesser than 6.0 or the permission is already granted.
+            readContactInfo();
+        }
+*/
 
         Activity activity = getActivity();
         final Resources resources = activity.getResources();
@@ -252,8 +253,6 @@ public class PersonalProfileFragment extends Fragment {
     }
 
     private void setBarChart() {
-        MedicoDB dbManager  = new MedicoDB(getActivity().getApplicationContext());
-
         String[] days;
         days = new String[] { resources.getString(R.string.Sunday_short), resources.getString(R.string.Monday_Short),
                 resources.getString(R.string.Tuesday_Short), resources.getString(R.string.Wednesday_Short),
@@ -266,7 +265,6 @@ public class PersonalProfileFragment extends Fragment {
         ArrayList<BarEntry> groupGainedPoints = new ArrayList<>();      //         for create Grouped Bar chart
         ArrayList<BarEntry> groupPossiblePoints = new ArrayList<>();    //         for create Grouped Bar chart
         for (int i = 0; i < daysOfTheWeek; i++) {
-
             Calendar timeCalendar = new GregorianCalendar();
             //  Check the language for deciding if to read left to right.
 
@@ -357,5 +355,4 @@ public class PersonalProfileFragment extends Fragment {
         super.onResume();
         setBarChart();
     }
-
 }
