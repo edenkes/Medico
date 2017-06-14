@@ -69,7 +69,6 @@
     <string name="reshootVideo">Сфотографировать снова упражнение?</string>
     <string name="several_times">%d Раз в день</string>
     <string name="snooze">Напомни мне через 5 минут</string>
-    <string name="time_to_active">Пришло время заниматься---- нужно выполнить *раз</string>
     <string name="times_nice_separator">" | "</string>
     <string name="times_splitter">", "</string>
 

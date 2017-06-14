@@ -26,6 +26,8 @@ public class NotificationWindow extends AppCompatActivity {
     private MedicoDB db;
     private PartialVideoItem item= null;
     private final int SNOOZE_TIME = 5;
+    String type, special, notes;
+    int amount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +68,10 @@ public class NotificationWindow extends AppCompatActivity {
                     break;
                 case Medicine:
                     Cursor c = (new MedicoDB(getApplicationContext())).getMedicineByID(item.id);
-                    int amount = c.getInt(c.getColumnIndex(MedicoDB.KEY_AMOUNT));
-                    String type = c.getString(c.getColumnIndex(MedicoDB.KEY_TYPE));
-                    String special = c.getString(c.getColumnIndex(MedicoDB.KEY_SPECIAL));
-                    String notes = c.getString(c.getColumnIndex(MedicoDB.KEY_NOTES));
+                    amount = c.getInt(c.getColumnIndex(MedicoDB.KEY_AMOUNT));
+                    type = c.getString(c.getColumnIndex(MedicoDB.KEY_TYPE));
+                    special = c.getString(c.getColumnIndex(MedicoDB.KEY_SPECIAL));
+                    notes = c.getString(c.getColumnIndex(MedicoDB.KEY_NOTES));
                     alertPrefixText.setText(resources.getString(R.string.notification_alert_prefix_medicine));
                     alertName.setText(item.name);
                     alertRepeats.setText(""+amount +" "+type);
@@ -151,6 +153,7 @@ public class NotificationWindow extends AppCompatActivity {
                     strHour = strHour.substring(strHour.length()-2);
                     timeSTR = strHour + " : " + str_minute;
                     db.addAlert("_TEMP__"+item.name, item.kind, timeSTR, item.repeats, (item.uri !=null)? item.uri.toString(): null, new int[]{1, 1, 1, 1, 1, 1, 1});
+                    if(item.kind == MedicoDB.KIND.Medicine) db.addMedicine(type, special,notes,amount);
                 }
                 moveToMain();
             }

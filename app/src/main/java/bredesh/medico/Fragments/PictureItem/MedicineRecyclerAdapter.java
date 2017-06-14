@@ -78,7 +78,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
         final AlertDialog deleteDialog = new AlertDialog.Builder(activity)
                 .setPositiveButton(resources.getString(R.string.alert_dialog_set), onDelete)
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
-                .setMessage(resources.getString(R.string.delete_exercise_confirm)).create();
+                .setMessage(resources.getString(R.string.delete_medicine_confirm)).create();
 
 
         customViewHolder.v.setOnLongClickListener(new View.OnLongClickListener() {

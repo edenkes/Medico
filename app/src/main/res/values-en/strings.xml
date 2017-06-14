@@ -73,7 +73,6 @@
     <string name="select_days">Days</string>
     <string name="several_times">%d times per day</string>
     <string name="snooze">Remind me in 5 minutes</string>
-    <string name="time_to_active">Time to perform ____ has to be performed X times</string>
     <string name="times_nice_separator">" | "</string>
     <string name="times_splitter">", "</string>
     <string name="exercise_name_label">Exercise name:</string>

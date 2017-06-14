@@ -24,11 +24,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import bredesh.medico.Camera.MedicineData;
-import bredesh.medico.Fragments.PictureItem.ExerciseRecyclerAdapter;
+import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Fragments.PictureItem.MedicineItem;
 import bredesh.medico.Fragments.PictureItem.MedicineRecyclerAdapter;
-import bredesh.medico.Fragments.PictureItem.VideoItem;
-import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
 
 /**
@@ -115,7 +113,7 @@ public class FragmentMedicine extends Fragment {
             arrayList = new ArrayList<>();
             int index;
 
-            for (c.moveToFirst(), index = 0; !c.isAfterLast(); c.moveToNext(), index++) {
+                for (c.moveToFirst(), index = 0; !c.isAfterLast(); c.moveToNext(), index++) {
                 int id = c.getInt(c.getColumnIndex(MedicoDB.KEY_ID));
                 String time = c.getString(c.getColumnIndex(MedicoDB.KEY_TIME));
                 String[] times = time.split(Pattern.quote(getResources().getString(R.string.times_splitter)));
@@ -145,8 +143,8 @@ public class FragmentMedicine extends Fragment {
 
                 arrayList.add(index, new MedicineItem(id, time, name, uri, days, detailedTimes, allTimes,
                         MedicoDB.KIND.Medicine, type, special, notes, ""+ amount));
-                c.close();
             }
+            c.close();
         }
 
         @Override

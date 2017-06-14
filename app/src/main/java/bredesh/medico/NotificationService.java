@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.text.Spanned;
 import android.util.Log;
 
 import java.util.Calendar;
@@ -18,12 +17,9 @@ import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Notification.NotificationWindow;
 
 public class NotificationService extends Service {
+
     private NotificationCompat.Builder builder;
     private NotificationManager notificationManager;
-    private int notification_id;
-     //private RemoteViews remoteViews;
-
-
     private MedicoDB local;
     private Cursor cursor;
     private int CURRENT_DAY;
@@ -37,13 +33,6 @@ public class NotificationService extends Service {
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
 
         builder = new NotificationCompat.Builder(getApplicationContext());
-/*
-        remoteViews = new RemoteViews(getApplicationContext().getPackageName(),R.layout.custom_notification);
-        remoteViews.setImageViewResource(R.id.notif_icon, R.mipmap.ic_medico_logo);
-        remoteViews.setTextViewText(R.id.notif_title,"TEXT");
-        remoteViews.setProgressBar(R.id.progressBar,100,40,true);
-        //End of Notifications
-*/
 
         Calendar calendar = Calendar.getInstance();
         local = new MedicoDB(getApplicationContext());
@@ -51,58 +40,48 @@ public class NotificationService extends Service {
         CURRENT_DAY = calendar.get(Calendar.DAY_OF_WEEK);
         cursor = getAllTodayAlerts();
 
-        /*
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationBuilder = new Notification.Builder(getApplicationContext());
-
-        //return to the last open activity
-        Intent getBack = new Intent(this, MainActivity.class);
-        getBack.setAction(Intent.ACTION_MAIN);
-        getBack.addCategory(Intent.CATEGORY_LAUNCHER);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, getBack, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationBuilder.setContentIntent(pendingIntent);
-*/
         startThreading();
         return Service.START_STICKY;
     }
 
     private void showNotification(String notificationName, int times, int notiID) {
-        notification_id = (int) System.currentTimeMillis();
+        int notification_id = (int) System.currentTimeMillis();
 
         if(notificationName.length() >=7 && notificationName.substring(0,7).equals("_TEMP__"))
             notificationName = notificationName.substring(7);
 
         Intent button_intent = new Intent(getApplicationContext(),NotificationWindow.class);
-        button_intent.putExtra("id",notification_id);
+        button_intent.putExtra("id", notification_id);
         button_intent.putExtra("db_id",notiID);
         button_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-/*
-        PendingIntent button_pending_event = PendingIntent.getActivity(getApplicationContext(),notification_id,
-                button_intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-        remoteViews.setOnClickPendingIntent(R.id.btDone, button_pending_event);
-        remoteViews.setOnClickPendingIntent(R.id.btCancel, button_pending_event);
-        remoteViews.setOnClickPendingIntent(R.id.btSnoozed, button_pending_event);
-*/
         Intent getBack = new Intent(getApplicationContext(),NotificationWindow.class);
         getBack.putExtra("db_id",notiID);
         getBack.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,getBack, PendingIntent.FLAG_UPDATE_CURRENT);
-    //    remoteViews.setTextViewText(R.id.notif_title,notiName);
 
-        Spanned msg;
-        String html = (getResources().getString(R.string.alert_text, notificationName ,times));
+        String notiString = "";
+        switch (local.getKindByID(notiID))
+        {
+            case Exercise:
+                notiString = (getResources().getString(R.string.alert_text, notificationName ,times));
+                break;
+            case Medicine:
+                Cursor c = local.getMedicineByID(notiID);
+                notiString = (getResources().getString(R.string.alert_text_medicine,
+                        times,
+                        c.getString(c.getColumnIndex(MedicoDB.KEY_TYPE))));
+                break;
+        }
+
 
         builder.setSmallIcon(R.mipmap.ic_medico_logo)
                 .setAutoCancel(true)
                 .setPriority(Notification.PRIORITY_MAX)
-           //     .setCustomBigContentView(remoteViews)
                 .setContentIntent(pendingIntent)
                 .setContentTitle(notificationName)
                 .setWhen(System.currentTimeMillis())
-                .setContentText(html)
+                .setContentText(notiString)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setPriority(Notification.PRIORITY_HIGH);
 
@@ -150,8 +129,6 @@ public class NotificationService extends Service {
                         cursor = getAllTodayAlerts();
                     }
                     cursor.moveToFirst();
-                    Log.i("break","break2");
-
                     do {
                         try {
                             String allTimes = cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_TIME));
@@ -164,11 +141,6 @@ public class NotificationService extends Service {
                                 int notificationHour = Integer.parseInt(time.substring(0, gap));
                                 int notificationMinute = Integer.parseInt(time.substring(gap + 3));
                                 String todayAlert = cursor.getString(cursor.getColumnIndex(MedicoDB.ALERT_TODAY));
-                                Log.i("omri", "notificationHour: " + notificationHour);
-                                Log.i("omri", "currentHour: " + currentHour);
-                                Log.i("omri", "notificationMinute: " + notificationMinute);
-                                Log.i("omri", "currentMinutes: " + currentMinutes);
-                                Log.i("omri", "todayAlert.compareTo(time): " + todayAlert.compareTo(time));
                                 if (notificationHour == currentHour && notificationMinute == currentMinutes && todayAlert.compareTo(time) < 0) {
                                     //now we need to show notification!!
                                     String notificationName = cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_NAME));
@@ -189,7 +161,6 @@ public class NotificationService extends Service {
                 Thread.sleep(10000);//60 sec
                 } /*sync*/ }/* try*/ catch (Exception e) {
                     Log.i("Exception", "Exception: " + e.getMessage());
-                    //shouldStop = true;
                 }
             }
             }

@@ -41,7 +41,6 @@
     <string name="name_too_long">שם ארוך מידי (עד 16 תוים)</string>
     <string name="name_too_short">הכנס שם תרגיל</string>
     <string name="part2_repeats">מספר חזרות: </string>
-    <string name="time_to_active">הגיע הזמן לבצע ____ יש לבצע X פעמים</string>
     <string name="snooze">הזכר לי עוד 5 דקות</string>
     <string name="done">ביצעתי</string>
     <string name="giveup">ביטול</string>

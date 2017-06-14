@@ -20,8 +20,8 @@ import bredesh.medico.Utils.Utils;
 public class MedicoDB extends SQLiteOpenHelper {
 
     public enum KIND { Exercise, Medicine }
-    public static final String DATABASE_NAME = "Medico";
-    public static final String EXERCISE_STR = KIND.Exercise.toString();
+    private static final String DATABASE_NAME = "Medico";
+    private static final String EXERCISE_STR = KIND.Exercise.toString();
     private static final String ALERTS_TABLE_NAME = "ALERTS";
     private static final String PERSONAL_INFO_TABLE_NAME = "PersonalInfo";
     private static final String MEDICINE_TABLE_NAME = "Medicine";
@@ -264,7 +264,7 @@ public class MedicoDB extends SQLiteOpenHelper {
                     " AND " + KEY_KIND + " LIKE '"+kind.toString()+"'";
             cursor = database.rawQuery(sql, null);
             cursor.moveToFirst();
-        } catch (SQLiteException e) { createAlerts(database); return getAllAlerts(); }
+        } catch (SQLiteException e) { createAlerts(database); return getAllAlertsByKind(kind); }
         return cursor;
     }
 
@@ -368,7 +368,8 @@ public class MedicoDB extends SQLiteOpenHelper {
     public boolean deleteRow(int rowID)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(ALERTS_TABLE_NAME, KEY_ID+"="+rowID, null) >0;
+        return (db.delete(ALERTS_TABLE_NAME, KEY_ID+"="+rowID, null) >0) &&
+                (db.delete(MEDICINE_TABLE_NAME, KEY_ID+"="+rowID, null) >0);
     }
 
     public void updateAlertToday(int rowID, String time) {
@@ -617,9 +618,19 @@ public class MedicoDB extends SQLiteOpenHelper {
         return cursor;
     }
 
-
-
-
+    public KIND getKindByID(int id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT "+KEY_KIND+" FROM " + ALERTS_TABLE_NAME + " WHERE " + KEY_ID +" = "+id;
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        String kind = cursor.getString(0);
+        cursor.close();
+        db.close();
+        if(kind.equals(KIND.Exercise.toString())) return KIND.Exercise;
+        else if(kind.equals(KIND.Medicine.toString())) return KIND.Medicine;
+        return null;
+    }
 
     public void clearInfo() {
         setFirstName("");

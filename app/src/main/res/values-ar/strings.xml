@@ -41,7 +41,6 @@
     <string name="name_too_long">اسم طويل جدا (تصل إلى 16 حرفا)</string>
     <string name="name_too_short">أدخل اسما للتمرين</string>
     <string name="part2_repeats">عدة مرات التكرار:</string>
-    <string name="time_to_active">لقد حان الوقت لجعل ____ ينبغي أن تكون مرات </string>
     <string name="snooze">ذكرني في 5 دقائق</string>
     <string name="done">لقد</string>
     <string name="giveup">الغاء</string>
