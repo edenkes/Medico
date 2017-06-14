@@ -18,12 +18,15 @@ import bredesh.medico.Notification.PartialVideoItem;
 import bredesh.medico.Utils.Utils;
 
 public class MedicoDB extends SQLiteOpenHelper {
+
+    public enum KIND { Exercise, Medicine }
     public static final String DATABASE_NAME = "Medico";
+    public static final String EXERCISE_STR = KIND.Exercise.toString();
     private static final String ALERTS_TABLE_NAME = "ALERTS";
     private static final String PERSONAL_INFO_TABLE_NAME = "PersonalInfo";
     private static final String MEDICINE_TABLE_NAME = "Medicine";
     private static final String LANG_TABLE_NAME = "Language";
-    private static final int VERSION = 8;
+    private static final int VERSION = 20;
 
     public static final int PhysioTherapy = 1;
     public static final int Drugs = 2;
@@ -88,7 +91,7 @@ public class MedicoDB extends SQLiteOpenHelper {
     }
 
     private void createMedicine(SQLiteDatabase db) {
-        String CREATE_ALERTS_TABLE = "CREATE TABLE " + MEDICINE_TABLE_NAME +"( " +
+        String CREATE_ALERTS_TABLE = "CREATE TABLE IF NOT EXISTS " + MEDICINE_TABLE_NAME +"( " +
                 KEY_ID + " INTEGER PRIMARY KEY, " +
                 KEY_TYPE + " TEXT, "+
                 KEY_SPECIAL + " TEXT, "+
@@ -97,6 +100,15 @@ public class MedicoDB extends SQLiteOpenHelper {
         // create table
         db.execSQL(CREATE_ALERTS_TABLE);
 
+    }
+
+    private void addAlertKind(SQLiteDatabase db)
+    {
+        String addAlertKindSql = "ALTER TABLE " + ALERTS_TABLE_NAME + " ADD COLUMN " + KEY_KIND + " TEXT";
+        db.execSQL(addAlertKindSql);
+        ContentValues values = new ContentValues();
+        values.put(KEY_KIND, EXERCISE_STR);
+        db.update(ALERTS_TABLE_NAME, values, null, null);
     }
 
     private void createPoints(SQLiteDatabase db) {
@@ -178,6 +190,8 @@ public class MedicoDB extends SQLiteOpenHelper {
         }
         createPoints(db);
         createMedicine(db);
+        if (oldVersion < 20)
+            addAlertKind(db);
 
     }
 
@@ -389,7 +403,7 @@ public class MedicoDB extends SQLiteOpenHelper {
                 cursor.getString(cursor.getColumnIndex(KEY_NAME)),
                 uri,
                 cursor.getInt(cursor.getColumnIndex(KEY_REPEATS)),
-                (kind.equals(KIND.Exercise)? KIND.Exercise : KIND.Medicine));
+                (kind.equals(KIND.Exercise.toString())? KIND.Exercise : KIND.Medicine));
         db.close();
         return v;
     }

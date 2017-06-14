@@ -1,8 +1,6 @@
 package bredesh.medico;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.support.design.widget.BaseTransientBottomBar;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;

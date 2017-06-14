@@ -27,7 +27,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 
-import bredesh.medico.MedicoDB;
+import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
 
 import static android.view.MotionEvent.ACTION_DOWN;

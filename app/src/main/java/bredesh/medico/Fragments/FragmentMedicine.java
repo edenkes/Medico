@@ -28,7 +28,7 @@ import bredesh.medico.Fragments.PictureItem.ExerciseRecyclerAdapter;
 import bredesh.medico.Fragments.PictureItem.MedicineItem;
 import bredesh.medico.Fragments.PictureItem.MedicineRecyclerAdapter;
 import bredesh.medico.Fragments.PictureItem.VideoItem;
-import bredesh.medico.MedicoDB;
+import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
 
 /**

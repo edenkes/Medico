@@ -1,6 +1,6 @@
 package bredesh.medico.Fragments.PictureItem;
 
-import bredesh.medico.MedicoDB;
+import bredesh.medico.DAL.MedicoDB;
 
 /**
  * Created by Omri on 13/06/2017.

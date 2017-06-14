@@ -2,7 +2,7 @@ package bredesh.medico.Fragments.PictureItem;
 
 import android.net.Uri;
 
-import bredesh.medico.MedicoDB;
+import bredesh.medico.DAL.MedicoDB;
 
 public class VideoItem extends Item{
 

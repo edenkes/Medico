@@ -2,7 +2,7 @@ package bredesh.medico.Notification;
 
 import android.net.Uri;
 
-import bredesh.medico.MedicoDB;
+import bredesh.medico.DAL.MedicoDB;
 
 /**
  * Created by Omri on 22/05/2017.

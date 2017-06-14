@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import bredesh.medico.Camera.MedicineData;
-import bredesh.medico.MedicoDB;
+import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
 
 /**
