@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Medico</string>
-    <string name="AttachFailed">We could not get the image or movie</string>
-    <string name="AttachSuccess">The Movie successfully recorded</string>
+    <string name="app_name">Medigo</string>
+    <string name="AttachFailed">Attach of media failed</string>
+    <string name="AttachSuccess">Succesfully attached</string>
     <string name="EmailAddress">Email address</string>
     <string name="FirstName">First name</string>
     <string name="Friday">friday</string>
@@ -22,9 +22,9 @@
     <string name="Wednesday">wednesday</string>
     <string name="Wednesday_Short">wed</string>
     <string name="addMedia">add alerts</string>
-    <string name="alert_cancelled">alert been canceled</string>
+    <string name="alert_cancelled">Alert cancelled. Try again next time.</string>
     <string name="alert_dialog_cancel">Cancel</string>
-    <string name="alert_dialog_select_days">select days for alert</string>
+    <string name="alert_dialog_select_days">Days selection</string>
     <string name="btn_confirm">OK</string>
     <string name="alert_dialog_set">OK</string>
     <string name="alert_page_text">Time to rehearse!</string>
@@ -84,4 +84,23 @@
     <string name="notification_alert_repeats">%1$d times.</string>
     <string name="EditProfile">Edit your profile</string>
     <string name="ClearInfo">Clear personal information</string>
+    <string name="personal_profile">Personal profile</string>
+    <string name="pointsGained">Points earned</string>
+    <string name="possiblePoints">Maximum points that can be earned on this day</string>
+    <string name="you_gained_points">You gained\n%1$d points\nout of %2$d</string>
+    <string name="points_msg_noexercises">No exercises to perform</string>
+    <string name="points_msg_can_do_better">You can do better</string>
+    <string name="points_msg_not_bad">You\'re getting close! You only need %1$d more points to reach the daily goal.</string>
+    <string name="points_msg_very_good">Very good! You have almost reached the maximum possible points.</string>
+    <string name="points_msg_well_done">Well done! You\'ve gained all possible points!</string>
+    <string name="days_today">Today</string>
+    <string name="days_yesterday">Yesterday</string>
+    <string name="days_2_days_ago">2 days ago</string>
+    <string name="days_days_ago">%1$d days ago</string>
+    <string name="points_msg_well_done_prev">Well done! You gained the maximum possible points that day!</string>
+    <string name="points_msg_very_good_prev">Very good! You almost reached the maximum possible points that day.</string>
+    <string name="points_msg_not_bad_prev">You got close! You only needed %1$d more points to reach the daily goal that day.</string>
+    <string name="points_msg_need_work">You need %1$d more points to reach the daily goal!</string>
+    <string name="points_msg_need_work_prev"> </string>
+    <string name="points_msg_noexercises_prev">You had no exercises to perform that day.</string>
 </resources>

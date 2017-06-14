@@ -1,7 +1,6 @@
 package bredesh.medico.Menu;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +19,7 @@ import java.util.Locale;
 import bredesh.medico.Fragments.FragmentMedicine;
 import bredesh.medico.Localization;
 import bredesh.medico.MainActivity;
-import bredesh.medico.MedicoDB;
+import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.NotificationService;
 import bredesh.medico.R;
 

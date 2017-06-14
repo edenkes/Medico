@@ -23,6 +23,7 @@ import bredesh.medico.Fragments.PersonalFragment;
 import bredesh.medico.Menu.MainMenu;
 
 import static bredesh.medico.Menu.MainMenu.MODE.Medicine;
+import bredesh.medico.Fragments.PersonalProfileFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.tab_personal:
-                fragment = new PersonalFragment();
+                fragment = new PersonalProfileFragment();
                 break;
         }
 

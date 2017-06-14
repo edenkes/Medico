@@ -18,7 +18,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import bredesh.medico.Camera.VideoData;
-import bredesh.medico.MedicoDB;
+import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
 
 

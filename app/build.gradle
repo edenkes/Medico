@@ -7,8 +7,8 @@ android {
         applicationId "bredesh.medico"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 5
-        versionName "1.5"
+        versionCode 6
+        versionName "1.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+repositories {
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -33,4 +37,7 @@ dependencies {
     compile 'com.android.support:design:25.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
+    compile 'com.github.paroca72:sc-widgets:2.2.0'
+
 }

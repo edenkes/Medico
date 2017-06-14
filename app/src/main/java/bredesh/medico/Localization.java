@@ -1,11 +1,11 @@
 package bredesh.medico;
 
-import android.app.Activity;
 import android.content.ContextWrapper;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 
 import java.util.Locale;
+
+import bredesh.medico.DAL.MedicoDB;
 
 
 /**
