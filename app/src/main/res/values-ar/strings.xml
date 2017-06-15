@@ -97,7 +97,7 @@
     <string name="days_2_days_ago">2 days ago</string>
     <string name="days_days_ago">%1$d days ago</string>
     <string name="pointsGained">נקודות שצברת</string>
-    <string name="possiblePoints">מקסימום הנקודות שניתן לצבור ביום זה</string>
+    <string name="possiblePoints">מקסימום יומי</string>
     <string name="points_msg_well_done_prev">Well done! You gained the maximum possible points that day!</string>
     <string name="points_msg_very_good_prev">Very good! You almost reached the maximum possible points that day.</string>
     <string name="points_msg_not_bad_prev">You got close! You only needed %1$d more points to reach the daily goal that day.</string>

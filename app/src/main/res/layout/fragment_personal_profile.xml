@@ -12,7 +12,8 @@
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
         android:orientation="vertical"
-        android:weightSum="1">
+        android:weightSum="1"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/tvPersonalInfo"
@@ -136,7 +137,6 @@
                     android:layout_weight="0.2"
                     android:text="TextView"
                     android:visibility="invisible" />
-
             </LinearLayout>
 
             <ImageView
@@ -166,22 +166,51 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <com.github.mikephil.charting.charts.BarChart
+            <com.github.mikephil.charting.charts.CombinedChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btGraph"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.1"
-            android:background="@color/transparent"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_insert_chart_black_24dp" />
+            android:layout_height="wrap_content"
+            android:layoutDirection="ltr"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btLeftPrevious"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.02"
+                android:background="@color/transparent"
+                android:scaleType="fitCenter"
+                app:srcCompat="@android:drawable/ic_media_previous"
+                />
+
+            <ImageButton
+                android:id="@+id/btGraph"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.02"
+                android:background="@color/transparent"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_insert_chart_black_24dp" />
+
+            <ImageButton
+                android:id="@+id/btRightNext"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.02"
+                android:background="@color/transparent"
+                android:scaleType="fitCenter"
+                app:srcCompat="@android:drawable/ic_media_next" />
+        </LinearLayout>
+
     </LinearLayout>
 
 
