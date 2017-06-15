@@ -1,6 +1,6 @@
 package bredesh.medico.Fragments;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.pm.PackageManager;
@@ -8,7 +8,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
@@ -21,33 +20,41 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CombinedData;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.sccomponents.widgets.ScArcGauge;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 import bredesh.medico.CalculatedPoints;
-import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.PointsCalculator;
 import bredesh.medico.R;
 import bredesh.medico.Utils.SwipeDetector;
 
-
-class PointsInfo
-{
+class PointsInfo {
     float low;
-    public int todayMsgId;
-    public int prevDaysMsgId;
-    public int iconId;
+    int todayMsgId;
+    int prevDaysMsgId;
+    int iconId;
 
-    PointsInfo(float low, int id, int prevId, int iconId)
-    {
+    PointsInfo(float low, int id, int prevId, int iconId) {
         this.low = low;
         this.todayMsgId = id;
         this.prevDaysMsgId = prevId;
@@ -56,40 +63,52 @@ class PointsInfo
 }
 
 public class PersonalProfileFragment extends Fragment {
+    private CombinedChart mChart;
     private TextView txCurrentUserName;
     private PointsCalculator pointsCalculator;
     private Resources resources;
-    private boolean isOnlyGainedPoint = false;
     private ScArcGauge gauge;
-    TextView txPointsGained, tvPointsMessage, tvCurrentDayText, tvCurrentDayDate;
-    ImageView ivTrophy;
-    ImageButton btGraph;
-
+    private TextView txPointsGained, tvPointsMessage, tvCurrentDayText, tvCurrentDayDate;
+    private ImageView ivTrophy;
+    private ImageButton btGraph, btRightNext, btLeftPrevious;
     final int daysOfTheWeek = 7;
-    BarChart barChart;
+    //    BarChart barChart;
     private GregorianCalendar currentDate;
     private GregorianCalendar today = new GregorianCalendar();
 
+    final PointsInfo[] pointsInfos = {
+            new PointsInfo(0f, R.string.points_msg_noexercises, R.string.points_msg_noexercises_prev,0),
+            new PointsInfo(1f, R.string.points_msg_well_done,R.string.points_msg_well_done_prev,R.drawable.icons8_trophy_gold_100),
+            new PointsInfo(0.9f, R.string.points_msg_very_good,R.string.points_msg_very_good_prev,R.drawable.icons8_trophy_blue_100),
+            new PointsInfo(0.8f, R.string.points_msg_not_bad,R.string.points_msg_not_bad_prev,R.drawable.icons8_diploma_100),
+            new PointsInfo(0.7f, R.string.points_msg_need_work,R.string.points_msg_need_work_prev,R.drawable.icons8_thumb_up_100),
+            new PointsInfo(0f, R.string.points_msg_need_work,R.string.points_msg_need_work_prev,0)
+    };
 
-    final PointsInfo[] pointsInfos =
-            {
-                    new PointsInfo(0f, R.string.points_msg_noexercises, R.string.points_msg_noexercises_prev,0),
-                    new PointsInfo(1f, R.string.points_msg_well_done,R.string.points_msg_well_done_prev,R.drawable.icons8_trophy_gold_100),
-                    new PointsInfo(0.9f, R.string.points_msg_very_good,R.string.points_msg_very_good_prev,R.drawable.icons8_trophy_blue_100),
-                    new PointsInfo(0.8f, R.string.points_msg_not_bad,R.string.points_msg_not_bad_prev,R.drawable.icons8_diploma_100),
-                    new PointsInfo(0.7f, R.string.points_msg_need_work,R.string.points_msg_need_work_prev,R.drawable.icons8_thumb_up_100),
-                    new PointsInfo(0f, R.string.points_msg_need_work,R.string.points_msg_need_work_prev,0)
-            };
+//    protected String[] days = new String[] {
+//            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"
+//    };
+
+    protected String[] days;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal_profile, container, false);
-        barChart = (BarChart) view.findViewById(R.id.chart);
+//        barChart = (BarChart) view.findViewById(R.id.chart);
+        mChart = (CombinedChart) view.findViewById(R.id.chart);
 
         SwipeDetector swipeDetector = new SwipeDetector(view);
 
         resources = getResources();
+
+        /*days = new String[] {
+                resources.getString(R.string.Sunday_short), resources.getString(R.string.Monday_Short),
+                resources.getString(R.string.Tuesday_Short), resources.getString(R.string.Wednesday_Short),
+                resources.getString(R.string.Thursday_Short), resources.getString(R.string.Friday_Short),
+                resources.getString(R.string.Saturday_Short)
+        };*/
 
         setupInfoFromDB(view);
 
@@ -100,37 +119,34 @@ public class PersonalProfileFragment extends Fragment {
                     if (currentDate.compareTo(today) == -1) {
                         currentDate.add(Calendar.DATE, 1);
                         setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
+                        setGraph();
                     }
                 }
                 else if (SwipeType == SwipeDetector.SwipeTypeEnum.RIGHT_TO_LEFT) {
                     currentDate.add(Calendar.DATE, -1);
                     setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
+                    setGraph();
                 }
 
             }
         });
 
-        setBarChart();
-
         // Inflate the layout for this fragment
         return view;
     }
-
-
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
 
-    private long daysBetween(GregorianCalendar first, GregorianCalendar second)
-    {
+    private long daysBetween(GregorianCalendar first, GregorianCalendar second) {
         long firstTime = first.getTime().getTime();
         long secondTime = second.getTime().getTime();
         return ( firstTime - secondTime )/ (1000*60*60*24);
     }
 
 
-    private void setDayPoints(CalculatedPoints calculatedPoints)
-    {
+    private void setDayPoints(CalculatedPoints calculatedPoints) {
         gauge.setHighValue(calculatedPoints.gainedPoints, 0, calculatedPoints.possiblePoints);
-        txPointsGained.setText(resources.getString(R.string.you_gained_points, calculatedPoints.gainedPoints, calculatedPoints.possiblePoints));
+        txPointsGained.setText(resources.getString(R.string.you_gained_points, calculatedPoints.gainedPoints,
+                calculatedPoints.possiblePoints));
         int pointsMsgId;
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getActivity());
         String dateText = dateFormat.format(currentDate.getTime());
@@ -172,7 +188,8 @@ public class PersonalProfileFragment extends Fragment {
                 }
             }
         }
-        tvPointsMessage.setText(resources.getString(pointsMsgId, calculatedPoints.possiblePoints - calculatedPoints.gainedPoints));
+        tvPointsMessage.setText(resources.getString(pointsMsgId,
+                calculatedPoints.possiblePoints - calculatedPoints.gainedPoints));
         if (trophyIconId != 0)
         {
             ivTrophy.setImageDrawable(resources.getDrawable(trophyIconId, null));
@@ -210,8 +227,8 @@ public class PersonalProfileFragment extends Fragment {
         currentDate.set(Calendar.MINUTE,0);
         currentDate.set(Calendar.SECOND,0);
         currentDate.set(Calendar.MILLISECOND,0);
-        
-        
+
+
         CalculatedPoints pointsToday = pointsCalculator.CalculatePoints(currentDate, currentDate);
 
         tvCurrentDayDate = (TextView) view.findViewById(R.id.tvCurrentDayDate);
@@ -243,8 +260,45 @@ public class PersonalProfileFragment extends Fragment {
                 {
                     dailyView.setVisibility(View.VISIBLE);
                     graphView.setVisibility(View.GONE);
-                    barChart.animateY(5000);
+                    mChart.animateY(5000);
                     ((ImageButton) v).setImageDrawable(resources.getDrawable(R.drawable.ic_insert_chart_black_24dp, null));
+                }
+            }
+        });
+
+        btRightNext = (ImageButton) view.findViewById(R.id.btRightNext);
+        btRightNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int layoutDirection = getResources().getConfiguration().getLayoutDirection();
+                if (layoutDirection == LayoutDirection.LTR) {
+                    if (currentDate.compareTo(today) == -1) {
+                        currentDate.add(Calendar.DATE, 1);
+                        setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
+                        setGraph();
+                    }
+                }else {
+                    currentDate.add(Calendar.DATE, -1);
+                    setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
+                    setGraph();
+                }
+            }
+        });
+        btLeftPrevious = (ImageButton) view.findViewById(R.id.btLeftPrevious);
+        btLeftPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int layoutDirection = getResources().getConfiguration().getLayoutDirection();
+                if (layoutDirection == LayoutDirection.LTR) {
+                    currentDate.add(Calendar.DATE, -1);
+                    setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
+                    setGraph();
+                }else{
+                    if (currentDate.compareTo(today) == -1) {
+                        currentDate.add(Calendar.DATE, 1);
+                        setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
+                        setGraph();
+                    }
                 }
             }
         });
@@ -252,85 +306,131 @@ public class PersonalProfileFragment extends Fragment {
         setDayPoints(pointsToday);
     }
 
-    private void setBarChart() {
-        String[] days;
-        days = new String[] { resources.getString(R.string.Sunday_short), resources.getString(R.string.Monday_Short),
-                resources.getString(R.string.Tuesday_Short), resources.getString(R.string.Wednesday_Short),
-                resources.getString(R.string.Thursday_Short), resources.getString(R.string.Friday_Short),
-                resources.getString(R.string.Saturday_Short) };
+    private void setGraph() {
+        mChart.getDescription().setEnabled(false);
+//        mChart.setBackgroundColor(Color.WHITE);
+        mChart.setDrawGridBackground(false);
+        mChart.setDrawBarShadow(false);
+        mChart.setHighlightFullBarEnabled(false);
 
+        // draw bars behind lines
+        mChart.setDrawOrder(new CombinedChart.DrawOrder[]{
+                CombinedChart.DrawOrder.BAR, CombinedChart.DrawOrder.BUBBLE, CombinedChart.DrawOrder.CANDLE,
+                CombinedChart.DrawOrder.LINE, CombinedChart.DrawOrder.SCATTER
+        });
 
-        ArrayList<String> daysLabels;
-        daysLabels = new ArrayList<>();
-        ArrayList<BarEntry> groupGainedPoints = new ArrayList<>();      //         for create Grouped Bar chart
-        ArrayList<BarEntry> groupPossiblePoints = new ArrayList<>();    //         for create Grouped Bar chart
-        for (int i = 0; i < daysOfTheWeek; i++) {
-            Calendar timeCalendar = new GregorianCalendar();
-            //  Check the language for deciding if to read left to right.
+        Legend legend = mChart.getLegend();
+        legend.setWordWrapEnabled(true);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setDrawInside(false);
 
-            timeCalendar.add(Calendar.DATE, -i);
-            String dayStr = days[timeCalendar.get(Calendar.DAY_OF_WEEK) - 1];
-            int layoutDirection = getResources().getConfiguration().getLayoutDirection();
+        YAxis rightAxis = mChart.getAxisRight();
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
-            int index;
-            if (layoutDirection == LayoutDirection.LTR) {
-                daysLabels.add(0, dayStr);                    // adding the the day name to label list
-                index = daysOfTheWeek - i - 1;
-            }
-            else
-            {
-                daysLabels.add(dayStr);
-                index = i;
-            }
+        YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
-            CalculatedPoints points = pointsCalculator.CalculatePoints(timeCalendar, timeCalendar);
-            float value_gainedPoints = points.gainedPoints;
-            float value_possiblePoints = points.possiblePoints;
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+        xAxis.setAxisMinimum(0f);
+        xAxis.setGranularity(1f);
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
 
-            groupGainedPoints.add(new BarEntry(value_gainedPoints, index));         //adding the gained points
-            groupPossiblePoints.add(new BarEntry(value_possiblePoints, index));     //adding the max points for this day
-        }
+            @SuppressLint("SimpleDateFormat")
+            private SimpleDateFormat mFormat = new SimpleDateFormat("E");
 
-        BarDataSet barDataSet1 = new BarDataSet(groupGainedPoints, getResources().getString(R.string.pointsGained));
-        barDataSet1.setColor(Color.rgb(35, 155, 100));
-//        barDataSet1.setColors(ColorTemplate.LIBERTY_COLORS);
-
-        BarDataSet barDataSet2 = new BarDataSet(groupPossiblePoints, getResources().getString(R.string.possiblePoints));
-        barDataSet2.setColor(Color.rgb(12, 13, 73));
-
-        ArrayList<BarDataSet> dataset = new ArrayList<>();
-        dataset.add(barDataSet1);
-        dataset.add(barDataSet2);
-
-        ArrayList<BarDataSet> dataset2 = new ArrayList<>();
-        dataset2.add(barDataSet1);
-
-        final BarData data = new BarData(daysLabels, dataset);
-        final BarData data2 = new BarData(daysLabels, dataset2);
-
-        barChart.setData(data);
-        barChart.animateY(5000);
-        barChart.setDescription("");
-        barChart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (isOnlyGainedPoint) {
-                    barChart.setData(data);
-                    barChart.animateY(3000);
+            public String getFormattedValue(float value, AxisBase axis) {
+//                Toast.makeText(getActivity(), "value="+value,Toast.LENGTH_LONG).show();
+                int layoutDirection = getResources().getConfiguration().getLayoutDirection();
+                if (layoutDirection == LayoutDirection.LTR) {
+                    value = value - daysOfTheWeek + 1 + differenceTime();
+                }else    value = daysOfTheWeek - value + differenceTime();
 
-                    isOnlyGainedPoint = false;
-                }else{
-                    barChart.setData(data2);
-                    barChart.animateY(3000);
+                long millis = TimeUnit.DAYS.toMillis((long) value);
 
-                    isOnlyGainedPoint = true;
-                }
+                return mFormat.format((new Date(millis)));
             }
         });
+
+        CombinedData data = new CombinedData();
+
+        data.setData(generateLineData());
+        data.setData(generateBarData());
+
+        xAxis.setAxisMaximum(data.getXMax() + 0.25f);
+
+        mChart.setData(data);
+        mChart.invalidate();
+        mChart.setDoubleTapToZoomEnabled(false);
+    }
+
+    private BarData generateBarData() {
+        ArrayList<BarEntry> groupPossiblePoints = new ArrayList<>();
+
+        for (int i = 0; i < daysOfTheWeek; i++) {
+//            Calendar timeCalendar = new GregorianCalendar();
+            Calendar timeCalendar = new GregorianCalendar();
+            timeCalendar.setTime(currentDate.getTime());
+            int layoutDirection = getResources().getConfiguration().getLayoutDirection();
+            if (layoutDirection == LayoutDirection.LTR) {
+                timeCalendar.add(Calendar.DATE, i-daysOfTheWeek+1);
+            }
+            else                    timeCalendar.add(Calendar.DATE, -i);
+            groupPossiblePoints.add(new BarEntry(i,
+                    pointsCalculator.CalculatePoints(timeCalendar, timeCalendar).possiblePoints)); //adding the max points for this day
+        }
+
+        BarDataSet set1 = new BarDataSet(groupPossiblePoints, getResources().getString(R.string.possiblePoints));
+        set1.setColor(Color.rgb(12, 13, 73));
+        set1.setValueTextColor(Color.rgb(12, 13, 73));
+        set1.setValueTextSize(10f);
+        set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        return new BarData(set1);
+    }
+
+    private LineData generateLineData() {
+        LineData d = new LineData();
+        ArrayList<Entry> groupGainedPoints = new ArrayList<>();
+
+        for (int i = 0; i < daysOfTheWeek; i++) {
+//            Calendar timeCalendar = new GregorianCalendar();
+            Calendar timeCalendar = new GregorianCalendar();
+            timeCalendar.setTime(currentDate.getTime());
+            int layoutDirection = getResources().getConfiguration().getLayoutDirection();
+            if (layoutDirection == LayoutDirection.LTR) {
+                timeCalendar.add(Calendar.DATE, i-daysOfTheWeek+1);
+            }
+            else    timeCalendar.add(Calendar.DATE, -i);
+            groupGainedPoints.add(new BarEntry(i,
+                    pointsCalculator.CalculatePoints(timeCalendar, timeCalendar).gainedPoints));  //adding the gained points
+        }
+
+        LineDataSet set = new LineDataSet(groupGainedPoints, getResources().getString(R.string.pointsGained));
+        set.setColor(Color.rgb(35, 155, 100));
+        set.setLineWidth(7.5f);
+        set.setCircleColor(Color.rgb(35, 155, 100));
+        set.setCircleRadius(8f);
+        set.setFillColor(Color.rgb(35, 155, 100));
+        set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        set.setDrawValues(true);
+        set.setValueTextSize(12f);
+        set.setValueTextColor(Color.rgb(35, 155, 100));
+
+        set.setAxisDependency(YAxis.AxisDependency.LEFT);
+        d.addDataSet(set);
+
+        return d;
     }
 
     public void readContactInfo() {
-        Cursor c = getActivity().getApplication().getContentResolver().query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
+        Cursor c = getActivity().getApplication().getContentResolver().query(ContactsContract.Profile.CONTENT_URI,
+                null, null, null, null);
         if (c != null && c.getCount() > 0) {
             c.moveToFirst();
             txCurrentUserName.setText(c.getString(c.getColumnIndex("display_name")));
@@ -346,13 +446,19 @@ public class PersonalProfileFragment extends Fragment {
                 // Permission is granted
                 readContactInfo();
             } else
-                Toast.makeText(getActivity(), "Until you grant the permission, we cannot display the names", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Until you grant the permission, we cannot display the names",
+                        Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private long differenceTime(){
+        long days = currentDate.get(Calendar.DAY_OF_MONTH) - today.get(Calendar.DAY_OF_MONTH);
+        return days;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        setBarChart();
+        setGraph();
     }
 }

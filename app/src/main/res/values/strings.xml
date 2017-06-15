@@ -95,7 +95,7 @@
     <string name="ClearInfo">נקה מידע אישי</string>
     <string name="personal_profile">Personal profile</string>
     <string name="pointsGained">נקודות שצברת</string>
-    <string name="possiblePoints">מקסימום הנקודות שניתן לצבור ביום זה</string>
+    <string name="possiblePoints">מקסימום יומי</string>
 
     <string name="you_gained_points">You gained\n%1$d points\nout of %2$d</string>
     <string name="points_msg_noexercises">No exercises to perform</string>
