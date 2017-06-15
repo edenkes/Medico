@@ -70,7 +70,6 @@ public class PersonalProfileFragment extends Fragment {
     private ScArcGauge gauge;
     private TextView txPointsGained, tvPointsMessage, tvCurrentDayText, tvCurrentDayDate;
     private ImageView ivTrophy;
-    private ImageButton btGraph, btRightNext, btLeftPrevious;
     final int daysOfTheWeek = 7;
     //    BarChart barChart;
     private GregorianCalendar currentDate;
@@ -84,13 +83,6 @@ public class PersonalProfileFragment extends Fragment {
             new PointsInfo(0.7f, R.string.points_msg_need_work,R.string.points_msg_need_work_prev,R.drawable.icons8_thumb_up_100),
             new PointsInfo(0f, R.string.points_msg_need_work,R.string.points_msg_need_work_prev,0)
     };
-
-//    protected String[] days = new String[] {
-//            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"
-//    };
-
-    protected String[] days;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -243,7 +235,7 @@ public class PersonalProfileFragment extends Fragment {
                 .getPainter().setStrokeCap(Paint.Cap.ROUND);
         ivTrophy = (ImageView) view.findViewById(R.id.ivTrophy);
         tvPointsMessage = (TextView) view.findViewById(R.id.tvPointsMessage);
-        btGraph = (ImageButton) view.findViewById(R.id.btGraph);
+        ImageButton btGraph = (ImageButton) view.findViewById(R.id.btGraph);
 
         btGraph.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,7 +258,7 @@ public class PersonalProfileFragment extends Fragment {
             }
         });
 
-        btRightNext = (ImageButton) view.findViewById(R.id.btRightNext);
+        ImageButton btRightNext = (ImageButton) view.findViewById(R.id.btRightNext);
         btRightNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -284,7 +276,7 @@ public class PersonalProfileFragment extends Fragment {
                 }
             }
         });
-        btLeftPrevious = (ImageButton) view.findViewById(R.id.btLeftPrevious);
+        ImageButton btLeftPrevious = (ImageButton) view.findViewById(R.id.btLeftPrevious);
         btLeftPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -452,8 +444,7 @@ public class PersonalProfileFragment extends Fragment {
     }
 
     private long differenceTime(){
-        long days = currentDate.get(Calendar.DAY_OF_MONTH) - today.get(Calendar.DAY_OF_MONTH);
-        return days;
+        return (long) (currentDate.get(Calendar.DAY_OF_MONTH) - today.get(Calendar.DAY_OF_MONTH));
     }
 
     @Override
