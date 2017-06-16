@@ -85,6 +85,25 @@ public class PersonalProfileFragment extends Fragment {
             new PointsInfo(0f, R.string.points_msg_need_work,R.string.points_msg_need_work_prev,0)
     };
 
+    SwipeDetector.onSwipeEvent dragHandler = new SwipeDetector.onSwipeEvent() {
+        @Override
+        public void SwipeEventDetected(View v, SwipeDetector.SwipeTypeEnum SwipeType) {
+            if (SwipeType == SwipeDetector.SwipeTypeEnum.DRAG_LEFT_TO_RIGHT) {
+                if (currentDate.compareTo(today) == -1) {
+                    currentDate.add(Calendar.DATE, 1);
+                    setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
+                    setGraph();
+                }
+            }
+            else if (SwipeType == SwipeDetector.SwipeTypeEnum.DRAG_RIGHT_TO_LEFT) {
+                currentDate.add(Calendar.DATE, -1);
+                setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
+                setGraph();
+            }
+
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,24 +117,9 @@ public class PersonalProfileFragment extends Fragment {
 
         setupInfoFromDB(view);
 
-        swipeDetector.setOnSwipeListener(new SwipeDetector.onSwipeEvent() {
-            @Override
-            public void SwipeEventDetected(View v, SwipeDetector.SwipeTypeEnum SwipeType) {
-                if (SwipeType == SwipeDetector.SwipeTypeEnum.DRAG_LEFT_TO_RIGHT) {
-                    if (currentDate.compareTo(today) == -1) {
-                        currentDate.add(Calendar.DATE, 1);
-                        setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
-                        setGraph();
-                    }
-                }
-                else if (SwipeType == SwipeDetector.SwipeTypeEnum.DRAG_RIGHT_TO_LEFT) {
-                    currentDate.add(Calendar.DATE, -1);
-                    setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
-                    setGraph();
-                }
-
-            }
-        });
+        swipeDetector.setOnSwipeListener(dragHandler);
+        SwipeDetector graphSwipeDetector = new SwipeDetector(view.findViewById(R.id.chart));
+        graphSwipeDetector.setOnSwipeListener(dragHandler);
 
         // Inflate the layout for this fragment
         return view;
@@ -360,6 +364,8 @@ public class PersonalProfileFragment extends Fragment {
         xAxis.setAxisMinimum(data.getXMin() - 0.50f);
 
         mChart.setData(data);
+        mChart.setHighlightPerDragEnabled(false);
+        mChart.setHighlightPerTapEnabled(false);
         mChart.invalidate();
         mChart.setDoubleTapToZoomEnabled(false);
     }
@@ -414,6 +420,7 @@ public class PersonalProfileFragment extends Fragment {
         dataSet.setColors(COLOR_GAINED, COLOR_MAX);
         dataSet.setValueTextColor(COLOR_MAX);
         dataSet.setValueTextSize(10f);
+        dataSet.setDrawValues(false);
         dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 
         return new BarData(dataSet);
