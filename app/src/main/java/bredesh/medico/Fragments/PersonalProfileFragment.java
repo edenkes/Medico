@@ -29,9 +29,6 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.CombinedData;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.sccomponents.widgets.ScArcGauge;
 
@@ -68,14 +65,14 @@ public class PersonalProfileFragment extends Fragment {
     private PointsCalculator pointsCalculator;
     private Resources resources;
     private ScArcGauge gauge;
-    private TextView txPointsGained, tvPointsMessage, tvCurrentDayText, tvCurrentDayDate;
+    private TextView txPointsGained, tvPointsMessage, tvCurrentDayText, tvCurrentDayDate, txData;
     private ImageView ivTrophy;
 
     final int NUMBER_OF_DAYS = 7;
     final int COLOR_MAX = Color.rgb(1, 179, 205);
     final int COLOR_GAINED = Color.rgb(102, 55, 0);
 
-    private GregorianCalendar currentDate;
+    private GregorianCalendar currentDate, endData;
     private GregorianCalendar today = new GregorianCalendar();
 
 
@@ -193,6 +190,7 @@ public class PersonalProfileFragment extends Fragment {
     private void setupInfoFromDB(final View view) {
 
         txCurrentUserName = (TextView) view.findViewById(R.id.txCurrentUserName);
+        txData = (TextView) view.findViewById(R.id.txData);
 /*
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && getContext().checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
@@ -296,6 +294,13 @@ public class PersonalProfileFragment extends Fragment {
     }
 
     private void setGraph() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat mFormat = new SimpleDateFormat("d MMM");
+        endData = new GregorianCalendar();
+        endData.setTime(currentDate.getTime());
+        endData.add(Calendar.DATE, -NUMBER_OF_DAYS+1);
+
+        txData.setText(mFormat.format(endData.getTimeInMillis()) + " - " + mFormat.format(currentDate.getTimeInMillis()));
+
         mChart.getDescription().setEnabled(false);
 //        mChart.setBackgroundColor(Color.WHITE);
         mChart.setDrawGridBackground(false);
