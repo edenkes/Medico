@@ -337,8 +337,8 @@ public class PersonalProfileFragment extends Fragment {
 //                Toast.makeText(getActivity(), "value="+value,Toast.LENGTH_LONG).show();
                 int layoutDirection = getResources().getConfiguration().getLayoutDirection();
                 if (layoutDirection == LayoutDirection.LTR) {
-                    value = value - NUMBER_OF_DAYS + 1 + differenceTime();
-                }else    value = NUMBER_OF_DAYS - value + differenceTime();
+                    value = value - NUMBER_OF_DAYS + 1 + differenceTime() + 1;
+                }else    value = NUMBER_OF_DAYS - value + differenceTime() + 1;
 
                 long millis = TimeUnit.DAYS.toMillis((long) value);
 
@@ -351,7 +351,8 @@ public class PersonalProfileFragment extends Fragment {
         data.setData(generateLineData());
         data.setData(generateBarData());
 
-        xAxis.setAxisMaximum(data.getXMax() + 0.25f);
+        xAxis.setAxisMaximum(data.getXMax() + 0.5f);
+        xAxis.setAxisMinimum(data.getXMin() - 0.50f);
 
         mChart.setData(data);
         mChart.invalidate();
