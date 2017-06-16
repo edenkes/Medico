@@ -164,8 +164,9 @@
             android:id="@+id/llGraphLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.8"
+            android:layout_weight="0.95"
             android:orientation="vertical"
+            android:paddingBottom="20sp"
             android:visibility="gone">
 
             <TextView
@@ -174,8 +175,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/titleColor"
-                android:textSize="16sp"
-                />
+                android:textSize="16sp" />
 
             <com.github.mikephil.charting.charts.CombinedChart
                 android:id="@+id/chart"
@@ -187,19 +187,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layoutDirection="ltr"
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/btLeftPrevious"
+                android:id="@+id/btPrevious"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0.02"
                 android:background="@color/transparent"
                 android:scaleType="fitCenter"
-                app:srcCompat="@android:drawable/ic_media_previous"
-                />
+                app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
 
             <ImageButton
                 android:id="@+id/btGraph"
@@ -212,14 +210,14 @@
                 app:srcCompat="@drawable/ic_insert_chart_black_24dp" />
 
             <ImageButton
-                android:id="@+id/btRightNext"
+                android:id="@+id/btNext"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0.02"
                 android:background="@color/transparent"
                 android:scaleType="fitCenter"
-                app:srcCompat="@android:drawable/ic_media_next" />
+                app:srcCompat="@drawable/ic_chevron_right_black_24dp" />
         </LinearLayout>
 
     </LinearLayout>

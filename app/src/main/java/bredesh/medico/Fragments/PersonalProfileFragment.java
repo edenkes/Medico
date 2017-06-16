@@ -67,6 +67,7 @@ public class PersonalProfileFragment extends Fragment {
     private ScArcGauge gauge;
     private TextView txPointsGained, tvPointsMessage, tvCurrentDayText, tvCurrentDayDate, txData;
     private ImageView ivTrophy;
+    private int layoutDirection;
 
     final int NUMBER_OF_DAYS = 7;
     final int COLOR_MAX = Color.argb(20, 1, 179, 205);
@@ -74,6 +75,7 @@ public class PersonalProfileFragment extends Fragment {
 
     private GregorianCalendar currentDate, endData;
     private GregorianCalendar today = new GregorianCalendar();
+    private ImageButton btNext, btPrevious;
 
 
     final PointsInfo[] pointsInfos = {
@@ -88,14 +90,16 @@ public class PersonalProfileFragment extends Fragment {
     SwipeDetector.onSwipeEvent dragHandler = new SwipeDetector.onSwipeEvent() {
         @Override
         public void SwipeEventDetected(View v, SwipeDetector.SwipeTypeEnum SwipeType) {
-            if (SwipeType == SwipeDetector.SwipeTypeEnum.DRAG_LEFT_TO_RIGHT) {
+            if (SwipeType == SwipeDetector.SwipeTypeEnum.DRAG_LEFT_TO_RIGHT && layoutDirection == LayoutDirection.RTL ||
+                    SwipeType == SwipeDetector.SwipeTypeEnum.DRAG_RIGHT_TO_LEFT && layoutDirection == LayoutDirection.LTR    ) {
                 if (currentDate.compareTo(today) == -1) {
                     currentDate.add(Calendar.DATE, 1);
                     setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
                     setGraph();
                 }
             }
-            else if (SwipeType == SwipeDetector.SwipeTypeEnum.DRAG_RIGHT_TO_LEFT) {
+            else if (SwipeType == SwipeDetector.SwipeTypeEnum.DRAG_RIGHT_TO_LEFT && layoutDirection == LayoutDirection.RTL ||
+                    SwipeType == SwipeDetector.SwipeTypeEnum.DRAG_LEFT_TO_RIGHT && layoutDirection == LayoutDirection.LTR) {
                 currentDate.add(Calendar.DATE, -1);
                 setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
                 setGraph();
@@ -109,11 +113,12 @@ public class PersonalProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal_profile, container, false);
 
-         mChart = (CombinedChart) view.findViewById(R.id.chart);
+        mChart = (CombinedChart) view.findViewById(R.id.chart);
 
         SwipeDetector swipeDetector = new SwipeDetector(view);
 
         resources = getResources();
+        this.layoutDirection = resources.getConfiguration().getLayoutDirection();
 
         setupInfoFromDB(view);
 
@@ -163,7 +168,7 @@ public class PersonalProfileFragment extends Fragment {
                 break;
         }
 
-
+        btNext.setVisibility(today? View.INVISIBLE : View.VISIBLE);
         float pointsRatio = calculatedPoints.possiblePoints > 0? calculatedPoints.gainedPoints / (float) calculatedPoints.possiblePoints : -1;
 
         int trophyIconId = 0;
@@ -259,40 +264,24 @@ public class PersonalProfileFragment extends Fragment {
             }
         });
 
-        ImageButton btRightNext = (ImageButton) view.findViewById(R.id.btRightNext);
-        btRightNext.setOnClickListener(new View.OnClickListener() {
+        btNext = (ImageButton) view.findViewById(R.id.btNext);
+        btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int layoutDirection = getResources().getConfiguration().getLayoutDirection();
-                if (layoutDirection == LayoutDirection.LTR) {
                     if (currentDate.compareTo(today) == -1) {
                         currentDate.add(Calendar.DATE, 1);
                         setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
                         setGraph();
                     }
-                }else {
-                    currentDate.add(Calendar.DATE, -1);
-                    setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
-                    setGraph();
-                }
             }
         });
-        ImageButton btLeftPrevious = (ImageButton) view.findViewById(R.id.btLeftPrevious);
-        btLeftPrevious.setOnClickListener(new View.OnClickListener() {
+        btPrevious = (ImageButton) view.findViewById(R.id.btPrevious);
+        btPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int layoutDirection = getResources().getConfiguration().getLayoutDirection();
-                if (layoutDirection == LayoutDirection.LTR) {
                     currentDate.add(Calendar.DATE, -1);
                     setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
                     setGraph();
-                }else{
-                    if (currentDate.compareTo(today) == -1) {
-                        currentDate.add(Calendar.DATE, 1);
-                        setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
-                        setGraph();
-                    }
-                }
             }
         });
 
