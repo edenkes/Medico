@@ -89,7 +89,7 @@
     <string name="ClearInfo">Очистить личные данные</string>
     <string name="personal_profile">Personal profile</string>
     <string name="pointsGained">Набранные очки</string>
-    <string name="possiblePoints">Daily maximum</string>
+    <string name="possiblePoints">Ежедневный максимум</string>
     <string name="Monday">Понедельник</string>
     <string name="you_gained_points">You gained\n%1$d points\nout of %2$d</string>
     <string name="points_msg_noexercises">No exercises to perform</string>

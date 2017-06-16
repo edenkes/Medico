@@ -72,8 +72,8 @@ public class PersonalProfileFragment extends Fragment {
     private ImageView ivTrophy;
 
     final int NUMBER_OF_DAYS = 7;
-    final int COLOR_LINE = Color.rgb(255, 178, 102);
-    final int COLOR_BAR = Color.rgb(12, 13, 73);
+    final int COLOR_LINE = Color.rgb(220, 39, 38);
+    final int COLOR_BAR = Color.rgb(1, 179, 205);
 
     private GregorianCalendar currentDate;
     private GregorianCalendar today = new GregorianCalendar();
@@ -402,9 +402,9 @@ public class PersonalProfileFragment extends Fragment {
 
         LineDataSet set = new LineDataSet(groupPossiblePoints, getResources().getString(R.string.possiblePoints));
         set.setColor(COLOR_LINE);
-        set.setLineWidth(4.5f);
+        set.setLineWidth(3.0f);
         set.setCircleColor(COLOR_LINE);
-        set.setCircleRadius(4f);
+        set.setCircleRadius(3f);
         set.setFillColor(COLOR_LINE);
         set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set.setDrawValues(true);
