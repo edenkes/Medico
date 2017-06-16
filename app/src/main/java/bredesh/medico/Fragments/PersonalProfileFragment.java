@@ -70,10 +70,14 @@ public class PersonalProfileFragment extends Fragment {
     private ScArcGauge gauge;
     private TextView txPointsGained, tvPointsMessage, tvCurrentDayText, tvCurrentDayDate;
     private ImageView ivTrophy;
-    final int daysOfTheWeek = 7;
-    //    BarChart barChart;
+
+    final int NUMBER_OF_DAYS = 7;
+    final int COLOR_LINE = Color.rgb(255, 178, 102);
+    final int COLOR_BAR = Color.rgb(12, 13, 73);
+
     private GregorianCalendar currentDate;
     private GregorianCalendar today = new GregorianCalendar();
+
 
     final PointsInfo[] pointsInfos = {
             new PointsInfo(0f, R.string.points_msg_noexercises, R.string.points_msg_noexercises_prev,0),
@@ -88,19 +92,12 @@ public class PersonalProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal_profile, container, false);
-//        barChart = (BarChart) view.findViewById(R.id.chart);
-        mChart = (CombinedChart) view.findViewById(R.id.chart);
+
+         mChart = (CombinedChart) view.findViewById(R.id.chart);
 
         SwipeDetector swipeDetector = new SwipeDetector(view);
 
         resources = getResources();
-
-        /*days = new String[] {
-                resources.getString(R.string.Sunday_short), resources.getString(R.string.Monday_Short),
-                resources.getString(R.string.Tuesday_Short), resources.getString(R.string.Wednesday_Short),
-                resources.getString(R.string.Thursday_Short), resources.getString(R.string.Friday_Short),
-                resources.getString(R.string.Saturday_Short)
-        };*/
 
         setupInfoFromDB(view);
 
@@ -340,8 +337,8 @@ public class PersonalProfileFragment extends Fragment {
 //                Toast.makeText(getActivity(), "value="+value,Toast.LENGTH_LONG).show();
                 int layoutDirection = getResources().getConfiguration().getLayoutDirection();
                 if (layoutDirection == LayoutDirection.LTR) {
-                    value = value - daysOfTheWeek + 1 + differenceTime();
-                }else    value = daysOfTheWeek - value + differenceTime();
+                    value = value - NUMBER_OF_DAYS + 1 + differenceTime();
+                }else    value = NUMBER_OF_DAYS - value + differenceTime();
 
                 long millis = TimeUnit.DAYS.toMillis((long) value);
 
@@ -362,23 +359,24 @@ public class PersonalProfileFragment extends Fragment {
     }
 
     private BarData generateBarData() {
-        ArrayList<BarEntry> groupPossiblePoints = new ArrayList<>();
+        ArrayList<BarEntry> groupGainedPoints = new ArrayList<>();
 
-        for (int i = 0; i < daysOfTheWeek; i++) {
+        for (int i = 0; i < NUMBER_OF_DAYS; i++) {
 //            Calendar timeCalendar = new GregorianCalendar();
             Calendar timeCalendar = new GregorianCalendar();
             timeCalendar.setTime(currentDate.getTime());
             int layoutDirection = getResources().getConfiguration().getLayoutDirection();
             if (layoutDirection == LayoutDirection.LTR) {
-                timeCalendar.add(Calendar.DATE, i-daysOfTheWeek+1);
+                timeCalendar.add(Calendar.DATE, i-NUMBER_OF_DAYS+1);
             }
-            else                    timeCalendar.add(Calendar.DATE, -i);
-            groupPossiblePoints.add(new BarEntry(i,
-                    pointsCalculator.CalculatePoints(timeCalendar, timeCalendar).possiblePoints)); //adding the max points for this day
+            else    timeCalendar.add(Calendar.DATE, -i);
+            groupGainedPoints.add(new BarEntry(i,
+                    pointsCalculator.CalculatePoints(timeCalendar, timeCalendar).gainedPoints));  //adding the gained points
         }
 
-        BarDataSet set1 = new BarDataSet(groupPossiblePoints, getResources().getString(R.string.possiblePoints));
-        set1.setColor(Color.rgb(12, 13, 73));
+        BarDataSet set1 = new BarDataSet(groupGainedPoints, getResources().getString(R.string.pointsGained));
+
+        set1.setColor(COLOR_BAR);
         set1.setValueTextColor(Color.rgb(12, 13, 73));
         set1.setValueTextSize(10f);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -388,31 +386,30 @@ public class PersonalProfileFragment extends Fragment {
 
     private LineData generateLineData() {
         LineData d = new LineData();
-        ArrayList<Entry> groupGainedPoints = new ArrayList<>();
+        ArrayList<Entry> groupPossiblePoints = new ArrayList<>();
 
-        for (int i = 0; i < daysOfTheWeek; i++) {
-//            Calendar timeCalendar = new GregorianCalendar();
+        for (int i = 0; i < NUMBER_OF_DAYS ; i++) {
             Calendar timeCalendar = new GregorianCalendar();
             timeCalendar.setTime(currentDate.getTime());
             int layoutDirection = getResources().getConfiguration().getLayoutDirection();
             if (layoutDirection == LayoutDirection.LTR) {
-                timeCalendar.add(Calendar.DATE, i-daysOfTheWeek+1);
+                timeCalendar.add(Calendar.DATE, i-NUMBER_OF_DAYS+1);
             }
-            else    timeCalendar.add(Calendar.DATE, -i);
-            groupGainedPoints.add(new BarEntry(i,
-                    pointsCalculator.CalculatePoints(timeCalendar, timeCalendar).gainedPoints));  //adding the gained points
+            else                    timeCalendar.add(Calendar.DATE, -i);
+            groupPossiblePoints.add(new BarEntry(i,
+                    pointsCalculator.CalculatePoints(timeCalendar, timeCalendar).possiblePoints)); //adding the max points for this day
         }
 
-        LineDataSet set = new LineDataSet(groupGainedPoints, getResources().getString(R.string.pointsGained));
-        set.setColor(Color.rgb(35, 155, 100));
-        set.setLineWidth(7.5f);
-        set.setCircleColor(Color.rgb(35, 155, 100));
-        set.setCircleRadius(8f);
-        set.setFillColor(Color.rgb(35, 155, 100));
+        LineDataSet set = new LineDataSet(groupPossiblePoints, getResources().getString(R.string.possiblePoints));
+        set.setColor(COLOR_LINE);
+        set.setLineWidth(4.5f);
+        set.setCircleColor(COLOR_LINE);
+        set.setCircleRadius(4f);
+        set.setFillColor(COLOR_LINE);
         set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set.setDrawValues(true);
-        set.setValueTextSize(12f);
-        set.setValueTextColor(Color.rgb(35, 155, 100));
+        set.setValueTextSize(10f);
+        set.setValueTextColor(COLOR_LINE);
 
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
         d.addDataSet(set);
