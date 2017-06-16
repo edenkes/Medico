@@ -241,6 +241,8 @@ public class PersonalProfileFragment extends Fragment {
                 {
                     dailyView.setVisibility(View.GONE);
                     graphView.setVisibility(View.VISIBLE);
+                    mChart.animateY(5000);
+
                     ((ImageButton) v).setImageDrawable(resources.getDrawable(R.drawable.icons8_trophy_blue_100, null));
                 }
                 else
