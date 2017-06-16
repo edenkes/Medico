@@ -11,7 +11,7 @@ import android.view.View;
 public class SwipeDetector implements View.OnTouchListener{
 
     private int min_distance = 100;
-    private float downX, downY, upX, upY;
+    private float downX, downY, upX, upY, moveX, moveY;
     private View v;
 
     private onSwipeEvent swipeEventListener;
@@ -42,6 +42,23 @@ public class SwipeDetector implements View.OnTouchListener{
             Log.e("SwipeDetector error","please pass SwipeDetector.onSwipeEvent Interface instance");
     }
 
+    public void onDragLeftToRight()
+    {
+        if (swipeEventListener!= null)
+            swipeEventListener.SwipeEventDetected(v, SwipeTypeEnum.DRAG_LEFT_TO_RIGHT);
+        else
+            Log.e("SwipeDetector error","please pass SwipeDetector.onSwipeEvent Interface instance");
+    }
+
+    public void onDragRightToLeft()
+    {
+        if (swipeEventListener!= null)
+            swipeEventListener.SwipeEventDetected(v, SwipeTypeEnum.DRAG_RIGHT_TO_LEFT);
+        else
+            Log.e("SwipeDetector error","please pass SwipeDetector.onSwipeEvent Interface instance");
+    }
+
+
     public void onLeftToRightSwipe(){
         if(swipeEventListener!=null)
             swipeEventListener.SwipeEventDetected(v,SwipeTypeEnum.LEFT_TO_RIGHT);
@@ -63,16 +80,44 @@ public class SwipeDetector implements View.OnTouchListener{
             Log.e("SwipeDetector error","please pass SwipeDetector.onSwipeEvent Interface instance");
     }
 
+    private boolean currentlyDown = false;
+
     public boolean onTouch(View v, MotionEvent event) {
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN: {
                 downX = event.getX();
                 downY = event.getY();
+                currentlyDown = true;
                 return true;
             }
+
+            case MotionEvent.ACTION_MOVE:
+                if (currentlyDown)
+                {
+                    moveX = event.getX();
+                    moveY = event.getY();
+                    float deltaX = downX - moveX;
+
+                    if (deltaX < -min_distance) {
+                        this.onDragLeftToRight();
+                        downX = moveX;
+                        downY = moveY;
+                        return true;
+                    }
+                    if (deltaX > min_distance)
+                    {
+                        downX = moveX;
+                        downY = moveY;
+                        this.onDragRightToLeft();
+                        return true;
+                    }
+                }
+                break;
+
             case MotionEvent.ACTION_UP: {
                 upX = event.getX();
                 upY = event.getY();
+                this.currentlyDown = false;
 
                 float deltaX = downX - upX;
                 float deltaY = downY - upY;
@@ -135,7 +180,7 @@ public class SwipeDetector implements View.OnTouchListener{
 
     public enum SwipeTypeEnum
     {
-        RIGHT_TO_LEFT,LEFT_TO_RIGHT,TOP_TO_BOTTOM,BOTTOM_TO_TOP
+        RIGHT_TO_LEFT,LEFT_TO_RIGHT,TOP_TO_BOTTOM,BOTTOM_TO_TOP, DRAG_LEFT_TO_RIGHT, DRAG_RIGHT_TO_LEFT
     }
 
 }

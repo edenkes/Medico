@@ -69,8 +69,8 @@ public class PersonalProfileFragment extends Fragment {
     private ImageView ivTrophy;
 
     final int NUMBER_OF_DAYS = 7;
-    final int COLOR_MAX = Color.rgb(1, 179, 205);
-    final int COLOR_GAINED = Color.rgb(102, 55, 0);
+    final int COLOR_MAX = Color.argb(20, 1, 179, 205);
+    final int COLOR_GAINED = Color.rgb(1, 179, 205);
 
     private GregorianCalendar currentDate, endData;
     private GregorianCalendar today = new GregorianCalendar();
@@ -101,14 +101,14 @@ public class PersonalProfileFragment extends Fragment {
         swipeDetector.setOnSwipeListener(new SwipeDetector.onSwipeEvent() {
             @Override
             public void SwipeEventDetected(View v, SwipeDetector.SwipeTypeEnum SwipeType) {
-                if (SwipeType == SwipeDetector.SwipeTypeEnum.LEFT_TO_RIGHT) {
+                if (SwipeType == SwipeDetector.SwipeTypeEnum.DRAG_LEFT_TO_RIGHT) {
                     if (currentDate.compareTo(today) == -1) {
                         currentDate.add(Calendar.DATE, 1);
                         setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
                         setGraph();
                     }
                 }
-                else if (SwipeType == SwipeDetector.SwipeTypeEnum.RIGHT_TO_LEFT) {
+                else if (SwipeType == SwipeDetector.SwipeTypeEnum.DRAG_RIGHT_TO_LEFT) {
                     currentDate.add(Calendar.DATE, -1);
                     setDayPoints(pointsCalculator.CalculatePoints(currentDate, currentDate));
                     setGraph();
