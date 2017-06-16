@@ -72,8 +72,8 @@ public class PersonalProfileFragment extends Fragment {
     private ImageView ivTrophy;
 
     final int NUMBER_OF_DAYS = 7;
-    final int COLOR_LINE = Color.rgb(220, 39, 38);
-    final int COLOR_BAR = Color.rgb(1, 179, 205);
+    final int COLOR_MAX = Color.rgb(1, 179, 205);
+    final int COLOR_GAINED = Color.rgb(102, 55, 0);
 
     private GregorianCalendar currentDate;
     private GregorianCalendar today = new GregorianCalendar();
@@ -304,8 +304,8 @@ public class PersonalProfileFragment extends Fragment {
 
         // draw bars behind lines
         mChart.setDrawOrder(new CombinedChart.DrawOrder[]{
-                CombinedChart.DrawOrder.BAR, CombinedChart.DrawOrder.BUBBLE, CombinedChart.DrawOrder.CANDLE,
-                CombinedChart.DrawOrder.LINE, CombinedChart.DrawOrder.SCATTER
+                CombinedChart.DrawOrder.BAR/*, CombinedChart.DrawOrder.BAR, CombinedChart.DrawOrder.BUBBLE, CombinedChart.DrawOrder.CANDLE,
+                CombinedChart.DrawOrder.LINE, CombinedChart.DrawOrder.SCATTER*/
         });
 
         Legend legend = mChart.getLegend();
@@ -324,7 +324,7 @@ public class PersonalProfileFragment extends Fragment {
         leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
         XAxis xAxis = mChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+//        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
         xAxis.setAxisMinimum(0f);
         xAxis.setGranularity(1f);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
@@ -347,9 +347,7 @@ public class PersonalProfileFragment extends Fragment {
         });
 
         CombinedData data = new CombinedData();
-
-        data.setData(generateLineData());
-        data.setData(generateBarData());
+        data.setData(generateBarDataCombined());
 
         xAxis.setAxisMaximum(data.getXMax() + 0.5f);
         xAxis.setAxisMinimum(data.getXMin() - 0.50f);
@@ -358,6 +356,7 @@ public class PersonalProfileFragment extends Fragment {
         mChart.invalidate();
         mChart.setDoubleTapToZoomEnabled(false);
     }
+/*
 
     private BarData generateBarData() {
         ArrayList<BarEntry> groupGainedPoints = new ArrayList<>();
@@ -377,13 +376,42 @@ public class PersonalProfileFragment extends Fragment {
 
         BarDataSet set1 = new BarDataSet(groupGainedPoints, getResources().getString(R.string.pointsGained));
 
-        set1.setColor(COLOR_BAR);
+        set1.setColor(COLOR_MAX);
         set1.setValueTextColor(Color.rgb(12, 13, 73));
         set1.setValueTextSize(10f);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
 
         return new BarData(set1);
     }
+
+*/
+    private BarData generateBarDataCombined() {
+        ArrayList<BarEntry> groupPossiblePoints = new ArrayList<>();
+
+        for (int index = 0; index < NUMBER_OF_DAYS; index++) {
+            Calendar timeCalendar = new GregorianCalendar();
+            timeCalendar.setTime(currentDate.getTime());
+            int layoutDirection = getResources().getConfiguration().getLayoutDirection();
+            if (layoutDirection == LayoutDirection.LTR) {
+                timeCalendar.add(Calendar.DATE, index-NUMBER_OF_DAYS+1);
+            }
+            else    timeCalendar.add(Calendar.DATE, -index);
+            CalculatedPoints calculatedPoints = pointsCalculator.CalculatePoints(timeCalendar, timeCalendar);
+
+            groupPossiblePoints.add(new BarEntry(index, new float[]{calculatedPoints.gainedPoints,
+                    calculatedPoints.possiblePoints - calculatedPoints.gainedPoints}));
+        }
+
+        BarDataSet dataSet = new BarDataSet(groupPossiblePoints, "");
+        dataSet.setStackLabels(new String[]{getResources().getString(R.string.pointsGained), getResources().getString(R.string.possiblePoints)});
+        dataSet.setColors(COLOR_GAINED, COLOR_MAX);
+        dataSet.setValueTextColor(COLOR_MAX);
+        dataSet.setValueTextSize(10f);
+        dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        return new BarData(dataSet);
+    }
+/*
 
     private LineData generateLineData() {
         LineData d = new LineData();
@@ -417,6 +445,7 @@ public class PersonalProfileFragment extends Fragment {
 
         return d;
     }
+*/
 
     public void readContactInfo() {
         Cursor c = getActivity().getApplication().getContentResolver().query(ContactsContract.Profile.CONTENT_URI,
