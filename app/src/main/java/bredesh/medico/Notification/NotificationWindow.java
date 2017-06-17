@@ -19,6 +19,7 @@ import java.util.Calendar;
 import bredesh.medico.Localization;
 import bredesh.medico.MainActivity;
 import bredesh.medico.DAL.MedicoDB;
+import bredesh.medico.Menu.MainMenu;
 import bredesh.medico.R;
 
 public class NotificationWindow extends AppCompatActivity {
@@ -55,7 +56,7 @@ public class NotificationWindow extends AppCompatActivity {
         Button snooze = (Button) findViewById(R.id.snooze);
         ImageButton playButton = (ImageButton) findViewById(R.id.play_button);
 
-        toMain = new Intent(NotificationWindow.this, MainActivity.class);
+        toMain = new Intent(NotificationWindow.this, MainMenu.class);
         int id = getIntent().getIntExtra("db_id",-1);
         item = db.getItemByID(id);
         Resources resources = getResources();
@@ -86,8 +87,6 @@ public class NotificationWindow extends AppCompatActivity {
                         tvNotes.setText("* " +notes);
                         tvNotes.setMovementMethod(new ScrollingMovementMethod());
                     }
-                    playButton.setVisibility(View.GONE);
-
                     break;
 
             }
@@ -163,24 +162,33 @@ public class NotificationWindow extends AppCompatActivity {
 
         if (item == null || item.uri == null)
             playButton.setVisibility(View.INVISIBLE);
+
         playButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 if(item!=null)
                 {
                     Uri videoUri = item.uri;
-                    if(videoUri != null ) {
-                        try {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            getApplicationContext().startActivity(intent);
-                        }catch (RuntimeException e){
-                            Toast.makeText(getApplicationContext(),
-                                    getResources().getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+                    Intent intent = null;
+                    String errMsg = "";
+                    try {
+                        switch (item.kind)
+                        {
+                            case Exercise:
+                                intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                                errMsg =  getResources().getString(R.string.media_not_found);
+                                break;
+                            case Medicine:
+                                intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setDataAndType(videoUri,"image/*");
+                                errMsg =  getResources().getString(R.string.media_not_found_image);
+                                break;
                         }
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        getApplicationContext().startActivity(intent);
                     }
-                    else    Toast.makeText(getApplicationContext(),
-                            getResources().getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+                    catch (RuntimeException e){ Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT).show(); }
                 }
             }
         });
@@ -188,6 +196,11 @@ public class NotificationWindow extends AppCompatActivity {
 
 
     private void moveToMain() {
+        if (MainMenu.active)
             finish();
+        else {
+            startActivity(toMain);
+            finish();
+        }
     }
 }

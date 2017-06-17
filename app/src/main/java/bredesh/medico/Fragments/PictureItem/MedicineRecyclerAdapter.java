@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -58,11 +60,40 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
                 intent.putExtra("medicine_special", item.special);
                 intent.putExtra("medicine_notes", item.notes);
 
+                Uri uri = item.uri;
+                if (uri!=null)
+                    intent.putExtra("RecordedUri", item.uri.toString());
+
                 activity.startActivityForResult(intent, 0x1987);
             }
         });
 
+
+
         final Resources resources = context.getResources();
+
+        if (item.uri == null)
+            customViewHolder.play.setVisibility(View.INVISIBLE);
+
+        customViewHolder.play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri imageUri = item.uri;
+                if(imageUri != null ) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(imageUri,"image/*");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }catch (RuntimeException e){
+                        Toast.makeText(context.getApplicationContext(),
+                                resources.getString(R.string.media_not_found_image), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else    Toast.makeText(context.getApplicationContext(),
+                        resources.getString(R.string.media_not_found_image), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         DialogInterface.OnClickListener onDelete = new DialogInterface.OnClickListener() {
             @Override

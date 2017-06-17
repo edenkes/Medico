@@ -30,19 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomBarTab home;
 
-    public static boolean active = false;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        active = true;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        active = false;
-    }
 
     //    private Session session;
 

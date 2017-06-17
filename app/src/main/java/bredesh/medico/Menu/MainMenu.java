@@ -35,6 +35,20 @@ public class MainMenu extends AppCompatActivity
     private Menu optionsMenu = null;
     MedicoDB dbManager = null;
 
+    public static boolean active = false;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        active = true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        active = false;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.optionsMenu = menu;

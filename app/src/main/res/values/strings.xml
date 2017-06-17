@@ -57,7 +57,9 @@
     <string name="exercise_deleted">התרגיל נמחק</string>
     <string name="alert_text">Time to perform %1$s. <b>%2$d</b> repeats.</string>
     <string name="alert_page_text" formatted="false">הגיע הזמן לבצע חזרות!</string>
-    <string name="media_not_found">הסרט או התמונה לא נמצאו.</string>
+    <string name="media_not_found">הסרט לא נמצא.</string>
+    <string name="media_not_found_image">התמונה לא נמצאה.</string>
+
     <string name="good_job">כל הכבוד! קיבלת 10 נקודות</string>
     <string name="alert_cancelled">ההתראה בוטלה. ננסה בפעם הבאה.</string>
     <string name="alert_snoozed">נתראה עוד 5 דקות!</string>
@@ -123,7 +125,7 @@
     <string name="medicine_name_label">שם תרופה:</string>
     <string name="medicine_amount">כמות:</string>
     <string name="medicine_type">סוג</string>
-    <string name="medicine_special">הוראות מיוחדות</string>
+    <string name="medicine_special">הוראות מיוחדות:</string>
     <string name="medicine_notes">הערות</string>
 
     <string name="menu1_title">בחירת סוג</string>
