@@ -113,4 +113,26 @@
     <string name="name_too_short_medicine">Enter medicine name</string>
     <string name="alert_text_medicine">Time to take <b>%d</b> %s</string>
     <string name="amount_too_short_medicine">Enter the ammount.</string>
+    <string name="delete_medicine_confirm">למחוק את התרופה?</string>
+    <string name="desc_pic_play">play the video</string>
+    <string name="desc_pic_shoot">shoot the video</string>
+    <string name="media_not_found_image">התמונה לא נמצאה.</string>
+    <string name="medicine_amount">כמות:</string>
+    <string name="medicine_name_label">שם תרופה:</string>
+    <string name="medicine_notes">הערות</string>
+    <string name="medicine_special">הוראות מיוחדות:</string>
+    <string name="medicine_type">סוג</string>
+    <string name="menu1_item1">כדורים</string>
+    <string name="menu1_item2">קפסולות</string>
+    <string name="menu1_item3">מ\"ל (CC)</string>
+    <string name="menu1_item4">יחידות</string>
+    <string name="menu1_item5">מדבקות</string>
+    <string name="menu1_item6">פתילה (נר)</string>
+    <string name="menu1_title">בחירת סוג</string>
+    <string name="menu2_item1">ללא</string>
+    <string name="menu2_item2">לפני האוכל</string>
+    <string name="menu2_item3">אחרי האוכל</string>
+    <string name="menu2_item4">שעתיים לפני האוכל</string>
+    <string name="menu2_item5">שעתיים אחרי האוכל</string>
+    <string name="menu2_title">הוראות מיוחדות</string>
 </resources>
