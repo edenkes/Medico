@@ -14,7 +14,7 @@
         app:showAsAction="always" />
 -->
     <item android:id="@+id/action_change_language"
-        android:title="@string/set_language"
+        android:title="@string/lang_select"
         android:orderInCategory="200"
         app:showAsAction="always">
         <menu xmlns:android="http://schemas.android.com/apk/res/android"
