@@ -187,7 +187,7 @@
                         android:background="@drawable/button_round"
                         android:contentDescription="@string/desc_pic_shoot"
                         android:scaleType="center"
-                        android:src="@drawable/ic_videocam_black_48dp" />
+                        android:src="@drawable/ic_add_a_photo_black_36dp" />
 
                     <ImageButton
                         android:id="@+id/btPlay"

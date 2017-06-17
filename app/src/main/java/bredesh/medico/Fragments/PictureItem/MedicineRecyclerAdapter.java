@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,7 +69,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
             }
         });
 
-
+        customViewHolder.amount.setImageResource(R.drawable.ic_straighten_black_36dp);
 
         final Resources resources = context.getResources();
 
@@ -164,6 +165,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
         private TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
         private TextView[] days;
         private ImageButton play;
+        private ImageView amount;
         View v;
 
         private CustomViewHolder(View convertView) {
@@ -182,6 +184,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
             this.play = (ImageButton) convertView.findViewById(R.id.btPlay);
             this.play.setImageResource(R.drawable.ic_pill);
             this.days = new TextView[]{tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT};
+            this.amount = (ImageView) convertView.findViewById(R.id.imageRepeat);
         }
     }
 }
