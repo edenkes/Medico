@@ -7,7 +7,11 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorWindowBackground</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:dialogTheme">@style/Theme.Dialog</item> <!-- TimePicker dialog -->
+        <item name="alertDialogTheme">@style/Theme.Dialog</item> <!-- Alert dialog -->
     </style>
+
+
 
     <style name="CustomTitleTextAppearance">
         <item name="android:textSize">23sp</item>
@@ -23,10 +27,23 @@
 
     <style name="starter" parent="Theme.AppCompat.NoActionBar">
         <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">@color/titleColor</item>
-        <item name="colorPrimaryDark">@color/colorDarkBlue</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorWhite</item>
         <item name="android:windowBackground">@drawable/launch_screen</item>
 
     </style>
+
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="Theme.Dialog" parent="android:Theme.Material.Dialog">
+        <item name="android:colorAccent">@color/colorWhite</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
+
+
 </resources>

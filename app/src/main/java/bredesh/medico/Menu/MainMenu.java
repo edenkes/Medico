@@ -128,7 +128,7 @@ public class MainMenu extends AppCompatActivity
         setSupportActionBar(toolbar);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("");
-        actionBar.setLogo(R.mipmap.ic_medico_logo);
+        actionBar.setLogo(R.mipmap.ic_medigo_logo_clock);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
@@ -142,22 +142,22 @@ public class MainMenu extends AppCompatActivity
         menu_items.add(new Item_Menu(R.drawable.ic_rowing_black_48dp,
                 resources.getString(R.string.menu_item_1),
                 new Intent(MainMenu.this, MainActivity.class),
-                MODE.Exercise));
+                MODE.Exercise, R.drawable.card_menu1));
 
         menu_items.add(new Item_Menu(R.drawable.ic_pill,
                 resources.getString(R.string.menu_item_2),
                 new Intent(MainMenu.this, MainActivity.class),
-                MODE.Medicine));
+                MODE.Medicine, R.drawable.card_menu2));
 
         menu_items.add(new Item_Menu(R.drawable.ic_transfer_within_a_station_black_48dp,
                 resources.getString(R.string.menu_item_3),
                 null,
-                null));
+                null, R.drawable.card_menu3));
 
         menu_items.add(new Item_Menu(R.drawable.ic_toys_black_48dp,
                 resources.getString(R.string.menu_item_4),
                 null,
-                null));
+                null, R.drawable.card_menu4));
 
         MenuAdapterRecycler adapterRecycler = new MenuAdapterRecycler(getApplicationContext(),menu_items, this);
         menu.setAdapter(adapterRecycler);

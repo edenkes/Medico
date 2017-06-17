@@ -46,7 +46,7 @@ public class MenuAdapterRecycler extends RecyclerView.Adapter<MenuAdapterRecycle
 
         holder.itemImage.setImageResource(item.image_src);
         holder.itemText.setText(item.text);
-
+        holder.v.setBackgroundResource(item.backgroundId);
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

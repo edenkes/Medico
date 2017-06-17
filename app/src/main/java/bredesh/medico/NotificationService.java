@@ -75,7 +75,7 @@ public class NotificationService extends Service {
         }
 
 
-        builder.setSmallIcon(R.mipmap.ic_medico_logo)
+        builder.setSmallIcon(R.mipmap.ic_medigo_logo_clock)
                 .setAutoCancel(true)
                 .setPriority(Notification.PRIORITY_MAX)
                 .setContentIntent(pendingIntent)

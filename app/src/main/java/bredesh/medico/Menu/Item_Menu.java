@@ -12,12 +12,14 @@ public class Item_Menu {
     String text;
     Intent nextScreen;
     MainMenu.MODE mode;
+    int backgroundId;
 
-    public Item_Menu(int image_src, String text, Intent nextScreen, MainMenu.MODE mode) {
+    public Item_Menu(int image_src, String text, Intent nextScreen, MainMenu.MODE mode, int backgroundId) {
         this.image_src = image_src;
         this.text = text;
         this.nextScreen = nextScreen;
         this.mode = mode;
+        this.backgroundId = backgroundId;
     }
 
 

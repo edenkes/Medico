@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLiteGrey"
+    android:background="@color/colorWindowBackground"
     android:focusableInTouchMode="true"
     android:layoutDirection="locale"
     android:orientation="vertical">
@@ -29,21 +29,25 @@
             android:paddingStart="5sp"
             android:singleLine="true"
             android:text="@string/exercise_name_label"
-            android:textColor="@color/titleColor"
+            android:textColor="@color/labelColor"
             android:textSize="20sp" />
 
         <EditText
             android:id="@+id/etExerciseName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5sp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
             android:layout_toEndOf="@+id/lbExerciseName"
+            android:cursorVisible="true"
             android:maxLength="16"
             android:maxLines="1"
             android:paddingEnd="10sp"
             android:paddingStart="10sp"
             android:singleLine="true"
-            android:textColor="@color/titleColor"
+            android:textColor="@color/labelColor"
             android:textColorHint="@color/titleColor"
             android:textSize="24sp" />
 
@@ -61,8 +65,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:paddingStart="5sp"
             android:paddingEnd="5sp"
+            android:paddingStart="5sp"
             android:text="@string/no_of_repetitions"
             android:textColor="@color/titleColor"
             android:textSize="20sp" />
@@ -81,9 +85,9 @@
 
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:layout_marginTop="5sp"
-        android:layout_marginStart="10sp"
         android:layout_marginEnd="10sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="5sp"
         android:orientation="horizontal">
 
         <ImageButton
@@ -91,8 +95,8 @@
             android:layout_width="50sp"
             android:layout_height="50sp"
             android:layout_gravity="center"
-            android:scaleType="center"
             android:background="@drawable/button_round"
+            android:scaleType="center"
             android:src="@drawable/ic_videocam_black_48dp" />
 
         <ImageButton
@@ -100,10 +104,10 @@
             android:layout_width="50sp"
             android:layout_height="50sp"
             android:layout_gravity="center"
-            android:layout_marginStart="10sp"
             android:layout_marginEnd="10sp"
-            android:scaleType="center"
+            android:layout_marginStart="10sp"
             android:background="@drawable/button_round"
+            android:scaleType="center"
             android:src="@drawable/ic_play_arrow_black_48dp" />
 
     </LinearLayout>
@@ -125,8 +129,8 @@
             android:background="@color/colorGreyLite"
             android:elevation="10dp"
             android:gravity="center"
-            android:paddingStart="5sp"
             android:paddingEnd="5sp"
+            android:paddingStart="5sp"
             android:text="@string/select_days"
             android:textColor="@color/titleColor"
             android:textSize="20sp" />
@@ -135,10 +139,10 @@
             android:id="@+id/lblSelectedDays"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginEnd="10sp"
+            android:layout_marginStart="10sp"
             android:gravity="center_vertical"
             android:maxLines="2"
-            android:layout_marginStart="10sp"
-            android:layout_marginEnd="10sp"
             android:scrollbars="vertical"
             android:text="@string/all_days"
             android:textAlignment="center"
@@ -170,63 +174,63 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lbAddMultiAlert"
-            android:weightSum="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <Button
                 android:id="@+id/bt1time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:layout_marginStart="5sp"
                 android:layout_marginEnd="5sp"
-                android:textColor="@color/colorWhite"
+                android:layout_marginStart="5sp"
+                android:layout_weight="0.2"
                 android:background="@drawable/button_item_data"
-                android:text="1" />
+                android:text="1"
+                android:textColor="@color/colorWhite" />
 
             <Button
                 android:id="@+id/bt2times"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:layout_marginStart="5sp"
                 android:layout_marginEnd="5sp"
-                android:textColor="@color/colorWhite"
+                android:layout_marginStart="5sp"
+                android:layout_weight="0.2"
                 android:background="@drawable/button_item_data"
-                android:text="2" />
+                android:text="2"
+                android:textColor="@color/colorWhite" />
 
             <Button
                 android:id="@+id/bt3times"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:layout_marginStart="5sp"
                 android:layout_marginEnd="5sp"
-                android:textColor="@color/colorWhite"
+                android:layout_marginStart="5sp"
+                android:layout_weight="0.2"
                 android:background="@drawable/button_item_data"
-                android:text="3" />
+                android:text="3"
+                android:textColor="@color/colorWhite" />
 
             <Button
                 android:id="@+id/bt4times"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:layout_marginStart="5sp"
                 android:layout_marginEnd="5sp"
-                android:textColor="@color/colorWhite"
+                android:layout_marginStart="5sp"
+                android:layout_weight="0.2"
                 android:background="@drawable/button_item_data"
-                android:text="4" />
+                android:text="4"
+                android:textColor="@color/colorWhite" />
 
             <Button
                 android:id="@+id/bt5times"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:layout_marginStart="5sp"
                 android:layout_marginEnd="5sp"
-                android:textColor="@color/colorWhite"
+                android:layout_marginStart="5sp"
+                android:layout_weight="0.2"
                 android:background="@drawable/button_item_data"
-                android:text="5" />
+                android:text="5"
+                android:textColor="@color/colorWhite" />
 
             <Button
                 android:id="@+id/btAddAlert"

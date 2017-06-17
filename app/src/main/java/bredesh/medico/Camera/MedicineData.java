@@ -30,8 +30,6 @@ import java.util.Collections;
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
 
-import static android.view.MotionEvent.ACTION_DOWN;
-
 /**
  * Created by Omri on 12/06/2017.
  */
@@ -251,7 +249,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("");
-        actionBar.setLogo(R.mipmap.ic_medico_logo);
+        actionBar.setLogo(R.mipmap.ic_medigo_logo_clock);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 

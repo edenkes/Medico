@@ -6,7 +6,7 @@
     </item>
     <item>
         <bitmap
-            android:src="@drawable/ic_medico_logo"
+            android:src="@drawable/medigo_logo_clock"
             android:tileMode="disabled"
             android:gravity="center"/>
     </item>

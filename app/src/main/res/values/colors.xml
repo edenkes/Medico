@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#ffffff</color>
+    <color name="colorPrimary">#01B3CD</color>
+    <color name="colorPrimaryDark">#01B3CD</color>
+    <color name="colorAccent">#666666</color>
 
     <color name="colorWindowBackground">#ffffff</color>
     <color name="colorLetters">#00124c</color>
     <color name="textColor">#000000</color>
-    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorPrimary">#ffffff</color>
     <color name="textColorSecondary">#0dccb2</color>
-    <color name="colorAppBar">#f8002e5c</color>
+    <color name="colorAppBar">#FFFFFF</color>
     <color name="colorExercisesBar">#dd6aa1d6</color>
     <color name="colorNotificationBackground">#dd6aa1d6</color>
-    <color name="titleColor">#073460</color>
+    <color name="titleColor">#01B3CD</color>
+    <color name="labelColor">#333333</color>
     <color name="titleMiddle">#0b5093</color>
+
+
+    <color name="colorMedigoTransparent">#5001B3CD</color>
+    <color name="colorMedigo">#01B3CD</color>
+    <color name="colorMedigoGreen">#90BB23</color>
+    <color name="colorMedigoGreenTransparent">#5090BB23</color>
+    <color name="colorMedigoYellow">#FAB900</color>
+    <color name="colorMedigoYellowTransparent">#50FAB900</color>
+    <color name="colorMedigoOrange">#EE7008</color>
+    <color name="colorMedigoOrangeTransparent">#50EE7008</color>
+
+    <color name="FloatingActionbuttonBackground">#ffffff</color>
 
     <color name="transparent">#00000000</color>
     <color name="colorDarkBlue">#0e3b9c</color>

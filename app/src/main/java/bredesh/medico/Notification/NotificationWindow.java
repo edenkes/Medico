@@ -39,7 +39,7 @@ public class NotificationWindow extends AppCompatActivity {
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("");
-        actionBar.setLogo(R.mipmap.ic_medico_logo);
+        actionBar.setLogo(R.mipmap.ic_medigo_logo_clock);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 

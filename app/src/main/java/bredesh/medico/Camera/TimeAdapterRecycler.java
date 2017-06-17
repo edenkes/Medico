@@ -76,6 +76,7 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
                 int hour = Integer.parseInt(hourAndMinutes[0]);
                 int minute = Integer.parseInt(hourAndMinutes[1]);
                 TimePickerDialog mTimePicker;
+
                 mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
@@ -91,6 +92,7 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
                 }, hour, minute, DateFormat.is24HourFormat(context));//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
+
                 mTimePicker.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {

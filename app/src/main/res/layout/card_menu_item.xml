@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5sp"
     android:layout_marginBottom="5dp"
     android:layout_marginEnd="10sp"
     android:layout_marginStart="10sp"
+    android:layout_marginTop="5sp"
     cardview:cardCornerRadius="10dp"
     cardview:cardElevation="5dp"
     cardview:cardUseCompatPadding="true">
@@ -16,34 +15,34 @@
         android:id="@+id/whole_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="15sp"
-        android:paddingStart="15sp"
+        android:background="@drawable/card_menu1"
         android:clickable="true"
-        android:background="@drawable/card_menu"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingEnd="15sp"
+        android:paddingStart="15sp">
 
         <ImageButton
             android:id="@+id/itemImage"
             android:layout_width="100sp"
             android:layout_height="100sp"
             android:layout_gravity="center"
-            android:background="@drawable/card_menu_image"
             android:layout_marginTop="10sp"
+            android:background="@drawable/card_menu_image"
+            android:clickable="false"
             android:padding="20sp"
-            android:scaleType="fitCenter"
-            android:clickable="false" />
+            android:scaleType="fitCenter" />
 
         <TextView
             android:id="@+id/itemText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
-            android:padding="10sp"
-            android:textSize="18sp"
             android:lines="2"
+            android:padding="10sp"
             android:scrollbars="horizontal"
             android:text="@string/addMedia"
-            android:textColor="@color/titleColor"/>
+            android:textColor="@color/labelColor"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
