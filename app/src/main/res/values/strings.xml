@@ -22,7 +22,7 @@
     <string name="Thursday_Short">ה</string>
     <string name="Friday_Short">ו</string>
 
-    <string name="select_days">ימים</string>
+    <string name="select_days">Days:</string>
     <string name="Sunday">ראשון</string>
     <string name="Monday">שני</string>
     <string name="Tuesday">שלישי</string>
