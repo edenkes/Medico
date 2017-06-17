@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import bredesh.medico.Localization;
 import bredesh.medico.MainActivity;
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
@@ -32,6 +33,8 @@ public class NotificationWindow extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = new MedicoDB(getApplicationContext());
+        Localization.init(this, db);
         setContentView(R.layout.activity_receive_notifiction);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -54,7 +57,6 @@ public class NotificationWindow extends AppCompatActivity {
 
         toMain = new Intent(NotificationWindow.this, MainActivity.class);
         int id = getIntent().getIntExtra("db_id",-1);
-        db = new MedicoDB(getApplicationContext());
         item = db.getItemByID(id);
         Resources resources = getResources();
         if(item != null) {
@@ -186,12 +188,6 @@ public class NotificationWindow extends AppCompatActivity {
 
 
     private void moveToMain() {
-        if (MainActivity.active)
             finish();
-        else {
-            startActivity(toMain);
-            finish();
-        }
-
     }
 }
