@@ -148,7 +148,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
 
         }
         if (isActive)
-            viewHolder.tvMedicineTime.setTextColor(ContextCompat.getColor(context, R.color.titleColor));
+            viewHolder.tvMedicineTime.setTextColor(ContextCompat.getColor(context, R.color.labelColor));
         else
             viewHolder.tvMedicineTime.setTextColor(ContextCompat.getColor(context, R.color.colorGreyLite));
     }

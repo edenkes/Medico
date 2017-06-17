@@ -90,7 +90,7 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
                         chainTime.set(position, finalTime);
                     }
                 }, hour, minute, DateFormat.is24HourFormat(context));//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
+                mTimePicker.setTitle(context.getResources().getString(R.string.time_picker_select_time));
                 mTimePicker.show();
 
                 mTimePicker.setOnDismissListener(new DialogInterface.OnDismissListener() {

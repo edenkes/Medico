@@ -24,7 +24,7 @@
     <string name="Friday_Short">ו</string>
     <string name="Saturday_Short">ש</string>
 
-    <string name="select_days">ימים</string>
+    <string name="select_days">ימים:</string>
     <string name="Sunday">ראשון</string>
     <string name="Monday">שני</string>
     <string name="Tuesday">שלישי</string>
@@ -106,4 +106,10 @@
     <string name="points_msg_need_work">חסרות לך עוד %1$d נקודות ליעד היומי!</string>
     <string name="points_msg_need_work_prev"> </string>
     <string name="points_msg_noexercises_prev">לא היו תרגילים לבצע ביום זה.</string>
+    <string name="time_picker_select_time">בחירת שעה</string>
+    <string name="reshootPic">האם לצלם את התרופה מחדש?</string>
+    <string name="notification_alert_prefix_medicine">הגיע הזמן לקחת:</string>
+    <string name="name_too_short_medicine">הכנס שם תרופה</string>
+    <string name="alert_text_medicine">הגיע הזמן לקחת <b>%d</b> %s</string>
+    <string name="amount_too_short_medicine">מה הכמות?</string>
 </resources>

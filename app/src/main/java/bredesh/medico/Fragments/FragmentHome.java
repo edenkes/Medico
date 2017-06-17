@@ -48,7 +48,6 @@ public class FragmentHome extends Fragment {
         adapter = new ExerciseRecyclerAdapter(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
 
-
         Resources resources = getResources();
 
         final AlertDialog dialog = new AlertDialog.Builder(this.getActivity())
