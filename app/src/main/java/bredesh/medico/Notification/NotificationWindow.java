@@ -22,6 +22,8 @@ import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Menu.MainMenu;
 import bredesh.medico.R;
 
+import static android.view.View.GONE;
+
 public class NotificationWindow extends AppCompatActivity {
 
     private Intent toMain;
@@ -80,13 +82,21 @@ public class NotificationWindow extends AppCompatActivity {
                     alertRepeats.setText(""+amount +" "+type);
 
                     TextView tvSpecial = (TextView) findViewById(R.id.tv_special);
-                    tvSpecial.setText(resources.getString(R.string.menu2_title) + ": " +special);
+                    if(special.equals(resources.getString(R.string.menu2_item1)))
+                        tvSpecial.setVisibility(GONE);
+                    else
+                        tvSpecial.setText(resources.getString(R.string.menu2_title) + ": " +special);
+
                     if(!notes.equals(""))
                     {
                         TextView tvNotes = (TextView) findViewById(R.id.tv_notes);
                         tvNotes.setText("* " +notes);
                         tvNotes.setMovementMethod(new ScrollingMovementMethod());
                     }
+                  /*  if(item.uri != null) {
+                        playButton.setImageURI(item.uri);
+                        playButton.setBackgroundResource(R.drawable.button_round);
+                    }*/
                     break;
 
             }

@@ -131,10 +131,10 @@
     <string name="menu1_title">בחירת סוג</string>
     <string name="menu1_item1">כדורים</string>
     <string name="menu1_item2">קפסולות</string>
-    <string name="menu1_item3">מ"ל (CC)</string>
+    <string name="menu1_item3">מ\"ל (CC)</string>
     <string name="menu1_item4">יחידות</string>
     <string name="menu1_item5">מדבקות</string>
-    <string name="menu1_item6">פתיליה (נר)</string>
+    <string name="menu1_item6">פתילה (נר)</string>
 
     <string name="menu2_title">הוראות מיוחדות</string>
     <string name="menu2_item1">ללא</string>
@@ -146,7 +146,7 @@
 
     <string name="reshootPic">האם לצלם את התרופה מחדש?</string>
     <string name="name_too_short_medicine">Enter medicine name</string>
-    <string name="amount_too_short_medicine">Enter the ammount.</string>
+    <string name="amount_too_short_medicine">Enter the amount.</string>
     <string name="delete_medicine_confirm">למחוק את התרופה?</string>
     <string name="notification_alert_prefix_medicine">הגיע הזמן לקחת:</string>
     <string name="alert_text_medicine">Time to take <b>%d</b> %s</string>
