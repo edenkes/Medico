@@ -7,7 +7,7 @@
     <color name="colorWindowBackground">#ffffff</color>
     <color name="colorLetters">#00124c</color>
     <color name="textColor">#000000</color>
-    <color name="textColorPrimary">#ffffff</color>
+    <color name="textColorPrimary">#333333</color>
     <color name="textColorSecondary">#0dccb2</color>
     <color name="colorAppBar">#FFFFFF</color>
     <color name="colorExercisesBar">#dd6aa1d6</color>
@@ -27,6 +27,7 @@
     <color name="colorMedigoOrangeTransparent">#50EE7008</color>
 
     <color name="FloatingActionbuttonBackground">#ffffff</color>
+    <color name="DialogMultiChoiceColor">#202020</color>
 
     <color name="transparent">#00000000</color>
     <color name="colorDarkBlue">#0e3b9c</color>

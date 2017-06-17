@@ -31,7 +31,7 @@
     <string name="alert_snoozed">See you in 5 minutes!</string>
     <string name="alert_text" formatted="true">Time to perform %1$s! %2$d times.</string>
     <string name="all_alerts_deleted">All notifications have been removed</string>
-    <string name="all_days">All the days</string>
+    <string name="all_days">All days</string>
     <string name="btn_add_alert">Add alert</string>
     <string name="button_camera">Image</string>
     <string name="button_video">video</string>
@@ -102,4 +102,10 @@
     <string name="points_msg_need_work">You need %1$d more points to reach the daily goal!</string>
     <string name="points_msg_need_work_prev"> </string>
     <string name="points_msg_noexercises_prev">You had no exercises to perform that day.</string>
+    <string name="time_picker_select_time">Select time</string>
+    <string name="reshootPic">Re-shoot medicine photo?</string>
+    <string name="notification_alert_prefix_medicine">Time to take:</string>
+    <string name="name_too_short_medicine">Enter medicine name</string>
+    <string name="alert_text_medicine">Time to take <b>%d</b> %s</string>
+    <string name="amount_too_short_medicine">Enter the ammount.</string>
 </resources>

@@ -143,9 +143,10 @@
 
 
     <string name="reshootPic">האם לצלם את התרופה מחדש?</string>
-    <string name="name_too_short_medicine">הכנס שם תרופה</string>
-    <string name="amount_too_short_medicine">הכנס כמות</string>
+    <string name="name_too_short_medicine">Enter medicine name</string>
+    <string name="amount_too_short_medicine">Enter the ammount.</string>
     <string name="delete_medicine_confirm">למחוק את התרופה?</string>
     <string name="notification_alert_prefix_medicine">הגיע הזמן לקחת:</string>
-    <string name="alert_text_medicine">הגיע הזמן לקחת <b>%d</b> %s</string>
+    <string name="alert_text_medicine">Time to take <b>%d</b> %s</string>
+    <string name="time_picker_select_time">Select time</string>
 </resources>
