@@ -70,7 +70,7 @@
     <string name="remove_all_alerts">Remove all alerts?</string>
     <string name="repetitions">Repetition:</string>
     <string name="reshootVideo">Would you like to retake the exercise?</string>
-    <string name="select_days">Days</string>
+    <string name="select_days">Days:</string>
     <string name="several_times">%d times per day</string>
     <string name="snooze">Remind me in 5 minutes</string>
     <string name="times_nice_separator">" | "</string>

@@ -95,9 +95,18 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
 
 
         String times = item.getTime().replace(resources.getString(R.string.times_splitter), resources.getString(R.string.times_nice_separator));
-        customViewHolder.tvExerciseTime.setText(times);
-        if (!item.getDetailedTimes())
-            customViewHolder.tvExerciseTime.setTextDirection(View.TEXT_DIRECTION_RTL);
+        if (!item.getDetailedTimes()) {
+            customViewHolder.tvExerciseTimeMulti.setText(times);
+            customViewHolder.tvExerciseTimeMulti.setVisibility(View.VISIBLE);
+            customViewHolder.tvExerciseTime.setVisibility(View.GONE);
+        }
+        else
+        {
+            customViewHolder.tvExerciseTime.setText(times);
+            customViewHolder.tvExerciseTime.setVisibility(View.VISIBLE);
+            customViewHolder.tvExerciseTimeMulti.setVisibility(View.GONE);
+
+        }
 
         activateAlerts(customViewHolder, item);
 
@@ -136,7 +145,7 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
 
         }
         if(isActive)
-            viewHolder.tvExerciseTime.setTextColor(ContextCompat.getColor(context, R.color.titleColor));
+            viewHolder.tvExerciseTime.setTextColor(ContextCompat.getColor(context, R.color.labelColor));
         else
             viewHolder.tvExerciseTime.setTextColor(ContextCompat.getColor(context, R.color.colorGreyLite));
     }
@@ -150,7 +159,7 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
 
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvExercisesName, tvExerciseTime, lblExerciseNoOfRepeats;
+        private TextView tvExercisesName, tvExerciseTime, tvExerciseTimeMulti,  lblExerciseNoOfRepeats;
         private TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
         private ImageButton btPlay;
         private TextView[] days;
@@ -161,6 +170,7 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
             this.v = convertView;
             this.tvExercisesName = (TextView) convertView.findViewById(R.id.tvExercisesName);
             this.tvExerciseTime = (TextView) convertView.findViewById(R.id.tvExerciseTime);
+            this.tvExerciseTimeMulti = (TextView) convertView.findViewById(R.id.tvExerciseTimeMulti);
             this.tvSUN = (TextView) convertView.findViewById(R.id.tvSUN);
             this.tvMON = (TextView) convertView.findViewById(R.id.tvMON);
             this.tvTUE = (TextView) convertView.findViewById(R.id.tvTUE);

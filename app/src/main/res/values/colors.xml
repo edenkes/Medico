@@ -13,8 +13,10 @@
     <color name="colorExercisesBar">#dd6aa1d6</color>
     <color name="colorNotificationBackground">#dd6aa1d6</color>
     <color name="titleColor">#01B3CD</color>
+
     <color name="labelColor">#333333</color>
     <color name="titleMiddle">#0b5093</color>
+    <color name="labelLightColor">#606060</color>
 
 
     <color name="colorMedigoTransparent">#5001B3CD</color>

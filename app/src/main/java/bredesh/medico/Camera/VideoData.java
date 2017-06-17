@@ -186,7 +186,6 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         timeViews.setLayoutManager(new LinearLayoutManager(this));
 
         resources = getResources();
-        Button btChangeFrequency = (Button) findViewById(R.id.btChangeFrequency);
         btConfirm = (Button) findViewById(R.id.btConfirm);
         btDelete = (Button) findViewById(R.id.btDelete);
         Button addAlert = (Button) findViewById(R.id.btAddAlert);
@@ -253,7 +252,6 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         timeViews.setAdapter(timeAdapter);
         setDialog();
 
-        btChangeFrequency.setOnClickListener(clickHandler);
         lblSelectedDays.setOnClickListener(clickHandler);
 
         for (int i=0; i< 5; i++)

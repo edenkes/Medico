@@ -3,7 +3,7 @@
     <string name="app_name">Medigo</string>
     <string name="exercises">упражнения</string>
     <string name="exercise_name_hint">название упражнения</string>
-    <string name="select_days">Дни</string>
+    <string name="select_days">Дни:</string>
 
     <string name="button_camera">изображение</string>
     <string name="button_video">видео</string>
