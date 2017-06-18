@@ -46,7 +46,9 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Notification.NotificationWindow"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />

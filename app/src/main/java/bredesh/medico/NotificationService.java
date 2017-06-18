@@ -58,7 +58,7 @@ public class NotificationService extends Service {
         Intent getBack = new Intent(getApplicationContext(),NotificationWindow.class);
         getBack.putExtra("db_id",notiID);
         getBack.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,getBack, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), notiID,getBack, PendingIntent.FLAG_UPDATE_CURRENT);
 
         String notiString = "";
         switch (local.getKindByID(notiID))
