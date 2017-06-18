@@ -36,9 +36,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.concurrent.TimeUnit;
 
 import bredesh.medico.CalculatedPoints;
 import bredesh.medico.PointsCalculator;
@@ -408,10 +406,6 @@ public class PersonalProfileFragment extends Fragment {
                 Toast.makeText(getActivity(), "Until you grant the permission, we cannot display the names",
                         Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private long differenceTime(){
-        return (long) (currentDate.get(Calendar.DAY_OF_MONTH) - today.get(Calendar.DAY_OF_MONTH));
     }
 
     @Override
