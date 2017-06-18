@@ -69,7 +69,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
             }
         });
 
-        customViewHolder.amount.setImageResource(R.drawable.ic_straighten_black_36dp);
+        customViewHolder.amount.setImageResource(R.drawable.ic_pill);
 
         final Resources resources = context.getResources();
 
