@@ -333,16 +333,16 @@ public class PersonalProfileFragment extends Fragment {
             private SimpleDateFormat mFormat = new SimpleDateFormat("E");
 
             @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-//                Toast.makeText(getActivity(), "value="+value,Toast.LENGTH_LONG).show();
+            public String getFormattedValue(float index, AxisBase axis) {
+                Calendar timeCalendar = new GregorianCalendar();
+                timeCalendar.setTime(currentDate.getTime());
                 int layoutDirection = getResources().getConfiguration().getLayoutDirection();
                 if (layoutDirection == LayoutDirection.LTR) {
-                    value = value - NUMBER_OF_DAYS + 1 + differenceTime() + 1;
-                }else    value = NUMBER_OF_DAYS - value + differenceTime() + 1;
+                    timeCalendar.add(Calendar.DATE, (int) (index-NUMBER_OF_DAYS+1));
+                }
+                else    timeCalendar.add(Calendar.DATE, (int) -index);
 
-                long millis = TimeUnit.DAYS.toMillis((long) value);
-
-                return mFormat.format((new Date(millis)));
+                return mFormat.format(timeCalendar.getTimeInMillis());
             }
         });
 
@@ -358,35 +358,7 @@ public class PersonalProfileFragment extends Fragment {
         mChart.invalidate();
         mChart.setDoubleTapToZoomEnabled(false);
     }
-/*
 
-    private BarData generateBarData() {
-        ArrayList<BarEntry> groupGainedPoints = new ArrayList<>();
-
-        for (int i = 0; i < NUMBER_OF_DAYS; i++) {
-//            Calendar timeCalendar = new GregorianCalendar();
-            Calendar timeCalendar = new GregorianCalendar();
-            timeCalendar.setTime(currentDate.getTime());
-            int layoutDirection = getResources().getConfiguration().getLayoutDirection();
-            if (layoutDirection == LayoutDirection.LTR) {
-                timeCalendar.add(Calendar.DATE, i-NUMBER_OF_DAYS+1);
-            }
-            else    timeCalendar.add(Calendar.DATE, -i);
-            groupGainedPoints.add(new BarEntry(i,
-                    pointsCalculator.CalculatePoints(timeCalendar, timeCalendar).gainedPoints));  //adding the gained points
-        }
-
-        BarDataSet set1 = new BarDataSet(groupGainedPoints, getResources().getString(R.string.pointsGained));
-
-        set1.setColor(COLOR_MAX);
-        set1.setValueTextColor(Color.rgb(12, 13, 73));
-        set1.setValueTextSize(10f);
-        set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-        return new BarData(set1);
-    }
-
-*/
     private BarData generateBarDataCombined() {
         ArrayList<BarEntry> groupPossiblePoints = new ArrayList<>();
 
@@ -414,41 +386,6 @@ public class PersonalProfileFragment extends Fragment {
 
         return new BarData(dataSet);
     }
-/*
-
-    private LineData generateLineData() {
-        LineData d = new LineData();
-        ArrayList<Entry> groupPossiblePoints = new ArrayList<>();
-
-        for (int i = 0; i < NUMBER_OF_DAYS ; i++) {
-            Calendar timeCalendar = new GregorianCalendar();
-            timeCalendar.setTime(currentDate.getTime());
-            int layoutDirection = getResources().getConfiguration().getLayoutDirection();
-            if (layoutDirection == LayoutDirection.LTR) {
-                timeCalendar.add(Calendar.DATE, i-NUMBER_OF_DAYS+1);
-            }
-            else                    timeCalendar.add(Calendar.DATE, -i);
-            groupPossiblePoints.add(new BarEntry(i,
-                    pointsCalculator.CalculatePoints(timeCalendar, timeCalendar).possiblePoints)); //adding the max points for this day
-        }
-
-        LineDataSet set = new LineDataSet(groupPossiblePoints, getResources().getString(R.string.possiblePoints));
-        set.setColor(COLOR_LINE);
-        set.setLineWidth(3.0f);
-        set.setCircleColor(COLOR_LINE);
-        set.setCircleRadius(3f);
-        set.setFillColor(COLOR_LINE);
-        set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        set.setDrawValues(true);
-        set.setValueTextSize(10f);
-        set.setValueTextColor(COLOR_LINE);
-
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        d.addDataSet(set);
-
-        return d;
-    }
-*/
 
     public void readContactInfo() {
         Cursor c = getActivity().getApplication().getContentResolver().query(ContactsContract.Profile.CONTENT_URI,
