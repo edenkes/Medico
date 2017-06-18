@@ -11,6 +11,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,7 +86,7 @@ public class NotificationWindow extends AppCompatActivity {
                     if(special.equals(resources.getString(R.string.menu2_item1)))
                         tvSpecial.setVisibility(GONE);
                     else
-                        tvSpecial.setText(resources.getString(R.string.menu2_title) + ": " +special);
+                        tvSpecial.setText(special);
 
                     if(!notes.equals(""))
                     {
@@ -93,10 +94,11 @@ public class NotificationWindow extends AppCompatActivity {
                         tvNotes.setText("* " +notes);
                         tvNotes.setMovementMethod(new ScrollingMovementMethod());
                     }
-                  /*  if(item.uri != null) {
+                   if(item.uri != null && item.kind == MedicoDB.KIND.Medicine) {
                         playButton.setImageURI(item.uri);
-                        playButton.setBackgroundResource(R.drawable.button_round);
-                    }*/
+                        playButton.setBackground(null);
+                       playButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    }
                     break;
 
             }

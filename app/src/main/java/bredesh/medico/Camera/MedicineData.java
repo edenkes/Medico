@@ -354,6 +354,8 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
         if (videoUriString == null)
             btPlay.setVisibility(View.INVISIBLE);
+        else
+            btPlay.setImageURI(Uri.parse(videoUriString));
         btPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -542,7 +544,11 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if(resultCode == RESULT_OK) btPlay.setVisibility(View.VISIBLE);
+        if(resultCode == RESULT_OK)
+        {
+            btPlay.setVisibility(View.VISIBLE);
+            btPlay.setImageURI(Uri.parse(videoUriString));
+        }
         else Toast.makeText(MedicineData.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
     }
 

@@ -75,6 +75,11 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
 
         if (item.uri == null)
             customViewHolder.play.setVisibility(View.INVISIBLE);
+        else {
+            customViewHolder.play.setImageURI(item.uri);
+            customViewHolder.play.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            customViewHolder.play.setBackground(null);
+        }
 
         customViewHolder.play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +128,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
 
 
         customViewHolder.tvMedicineAmount.setText(String.valueOf(item.amount));
+        customViewHolder.txMedicinedosageType.setText(item.type);
         customViewHolder.tvMedicineName.setText(item.name);
 
         String times = item.time.replace(resources.getString(R.string.times_splitter), resources.getString(R.string.times_nice_separator));
@@ -161,7 +167,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
 
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvMedicineName, tvMedicineTime, tvMedicineAmount;
+        private TextView tvMedicineName, tvMedicineTime, tvMedicineAmount, txMedicinedosageType;
         private TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
         private TextView[] days;
         private ImageButton play;
@@ -173,6 +179,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
             this.v = convertView;
             this.tvMedicineName = (TextView) convertView.findViewById(R.id.tvExercisesName);
             this.tvMedicineTime = (TextView) convertView.findViewById(R.id.tvExerciseTime);
+            this.txMedicinedosageType = (TextView) convertView.findViewById(R.id.txMedicinedosageType);
             this.tvSUN = (TextView) convertView.findViewById(R.id.tvSUN);
             this.tvMON = (TextView) convertView.findViewById(R.id.tvMON);
             this.tvTUE = (TextView) convertView.findViewById(R.id.tvTUE);
@@ -182,6 +189,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
             this.tvSAT = (TextView) convertView.findViewById(R.id.tvSAT);
             this.tvMedicineAmount = (TextView) convertView.findViewById(R.id.lblExerciseNoOfRepeats);
             this.play = (ImageButton) convertView.findViewById(R.id.btPlay);
+
             this.play.setImageResource(R.drawable.ic_pill);
             this.days = new TextView[]{tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT};
             this.amount = (ImageView) convertView.findViewById(R.id.imageRepeat);

@@ -17,12 +17,13 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/subLayout">
+            android:layout_above="@+id/subLayout"
+            android:fillViewport="true">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:weightSum="1">
 
@@ -51,22 +52,25 @@
                         android:id="@+id/etExerciseName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginStart="5sp"
                         android:layout_toEndOf="@+id/lbMedicineName"
+                        android:gravity="center_vertical"
                         android:inputType="textCapWords"
                         android:maxLength="16"
                         android:maxLines="1"
                         android:paddingEnd="10sp"
                         android:paddingStart="10sp"
+                        android:singleLine="true"
                         android:textColor="@color/labelLightColor"
-                        android:textSize="24sp" />
+                        android:textSize="20sp" />
 
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginStart="5sp"
                     android:layout_height="0dp"
+                    android:layout_marginStart="5sp"
                     android:layout_weight="0.08"
                     android:layoutDirection="locale"
                     android:orientation="horizontal">
@@ -75,6 +79,7 @@
                         android:id="@+id/lblAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
                         android:gravity="center_vertical"
                         android:paddingEnd="5sp"
                         android:paddingStart="5sp"
@@ -86,30 +91,34 @@
                     <EditText
                         android:id="@+id/amount_number"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginEnd="10sp"
                         android:layout_marginStart="10sp"
                         android:ems="3"
                         android:inputType="number"
                         android:maxEms="3"
                         android:selectAllOnFocus="true"
+                        android:singleLine="true"
                         android:text="1"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/labelLightColor"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
 
                     <Spinner
                         android:id="@+id/spinner_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_marginEnd="5sp" />
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="5sp"
+                        android:gravity="center_vertical" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_margin="5sp"
                     android:layout_height="0dp"
+                    android:layout_margin="5sp"
                     android:layout_weight="0.08"
                     android:layoutDirection="locale"
                     android:orientation="horizontal">
@@ -139,8 +148,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_margin="5sp"
                     android:layout_height="0dp"
+                    android:layout_margin="5sp"
                     android:layout_weight="0.08"
                     android:layoutDirection="locale"
                     android:orientation="horizontal">
@@ -178,21 +187,20 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginEnd="10sp"
                     android:layout_marginStart="10sp"
                     android:layout_marginTop="5sp"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.08"
+                    android:layout_weight="0.1"
                     android:orientation="horizontal">
 
                     <ImageButton
                         android:id="@+id/btShootVideo"
-                        android:layout_width="50sp"
-                        android:layout_height="50sp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:background="@drawable/button_round"
                         android:contentDescription="@string/desc_pic_shoot"
-                        android:scaleType="center"
                         android:src="@drawable/ic_add_a_photo_black_36dp" />
 
                     <ImageButton
@@ -202,9 +210,10 @@
                         android:layout_gravity="center"
                         android:layout_marginEnd="10sp"
                         android:layout_marginStart="10sp"
-                        android:background="@drawable/button_round"
+                        android:layout_weight="0.4"
+                        android:background="@color/transparent"
                         android:contentDescription="@string/desc_pic_play"
-                        android:scaleType="center"
+                        android:scaleType="fitCenter"
                         android:src="@drawable/ic_play_arrow_black_48dp" />
 
                 </LinearLayout>
@@ -229,6 +238,7 @@
                         android:id="@+id/lblSelectedDays"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
                         android:layout_marginEnd="10sp"
                         android:layout_marginStart="10sp"
                         android:layout_toEndOf="@+id/textView2"
@@ -245,7 +255,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="10sp"
-                    android:layout_weight="0.4">
+                    android:layout_weight="0.48">
 
 
                     <TextView
@@ -342,8 +352,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/laAddMultiAlert"
-                        android:layout_marginTop="10sp"
-                        />
+                        android:layout_marginTop="10sp" />
 
                 </RelativeLayout>
 
