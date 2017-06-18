@@ -132,7 +132,7 @@
     <string name="menu2_item2">לפני האוכל</string>
     <string name="menu2_item3">אחרי האוכל</string>
     <string name="menu2_item4">שעתיים לפני האוכל</string>
-    <string name="menu2_item5">שעתיים אחרי האוכל</string>
+    <string name="menu2_item5">Two hours after eating</string>
     <string name="menu2_title">הוראות מיוחדות</string>
     <string name="exercise_repeats_mandatory">יש לרשום מספר חזרות</string>
 </resources>
