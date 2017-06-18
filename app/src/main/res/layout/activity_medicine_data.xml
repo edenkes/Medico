@@ -18,25 +18,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/subLayout"
-            android:fillViewport="true">
+            android:fillViewport="false">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:weightSum="1">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="5sp"
-                    android:layout_weight="0.08">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5sp">
 
                     <TextView
                         android:id="@+id/lbMedicineName"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:focusable="false"
                         android:gravity="center_vertical"
@@ -51,7 +50,7 @@
                     <EditText
                         android:id="@+id/etExerciseName"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5sp"
                         android:layout_toEndOf="@+id/lbMedicineName"
@@ -69,16 +68,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="5sp"
-                    android:layout_weight="0.08"
                     android:layoutDirection="locale"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/lblAmount"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:gravity="center_vertical"
                         android:paddingEnd="5sp"
@@ -91,7 +89,7 @@
                     <EditText
                         android:id="@+id/amount_number"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="10sp"
                         android:layout_marginStart="10sp"
@@ -117,9 +115,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="5sp"
-                    android:layout_weight="0.08"
                     android:layoutDirection="locale"
                     android:orientation="horizontal">
 
@@ -148,9 +145,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="5sp"
-                    android:layout_weight="0.08"
                     android:layoutDirection="locale"
                     android:orientation="horizontal">
 
@@ -187,11 +183,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="10sp"
                     android:layout_marginStart="10sp"
                     android:layout_marginTop="5sp"
-                    android:layout_weight="0.1"
                     android:orientation="horizontal">
 
                     <ImageButton
@@ -205,8 +200,8 @@
 
                     <ImageButton
                         android:id="@+id/btPlay"
-                        android:layout_width="50sp"
-                        android:layout_height="50sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="400px"
                         android:layout_gravity="center"
                         android:layout_marginEnd="10sp"
                         android:layout_marginStart="10sp"
@@ -220,9 +215,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="10sp"
-                    android:layout_weight="0.08">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp">
 
                     <TextView
                         android:id="@+id/textView2"
@@ -253,9 +247,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="10sp"
-                    android:layout_weight="0.48">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp">
 
 
                     <TextView

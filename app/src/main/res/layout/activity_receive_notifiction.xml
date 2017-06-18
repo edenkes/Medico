@@ -153,13 +153,12 @@
         android:id="@+id/play_button"
         android:layout_width="100sp"
         android:layout_height="100sp"
-        android:layout_above="@id/accept_decline_layout"
-        android:layout_marginBottom="20sp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_marginBottom="18dp"
         android:background="@drawable/button_round"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_play_arrow_black_48dp" />
+        android:src="@drawable/ic_play_arrow_black_48dp"
+        android:layout_above="@+id/accept_decline_layout"
+        android:layout_centerHorizontal="true" />
 
 
 

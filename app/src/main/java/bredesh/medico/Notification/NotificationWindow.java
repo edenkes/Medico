@@ -1,5 +1,6 @@
 package bredesh.medico.Notification;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -9,11 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
+import com.bumptech.glide.Glide;
 
 import java.util.Calendar;
 
@@ -95,9 +100,13 @@ public class NotificationWindow extends AppCompatActivity {
                         tvNotes.setMovementMethod(new ScrollingMovementMethod());
                     }
                    if(item.uri != null && item.kind == MedicoDB.KIND.Medicine) {
-                        playButton.setImageURI(item.uri);
-                        playButton.setBackground(null);
-                       playButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        ViewGroup.LayoutParams layoutParams = playButton.getLayoutParams();
+                        layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                        layoutParams.height= 400;
+                        playButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        playButton.setLayoutParams(layoutParams);
+                        Glide.with(this).load(item.uri).into(playButton);
+                        playButton.invalidate();
                     }
                     break;
 

@@ -21,6 +21,7 @@ android {
 
 repositories {
     maven { url "https://jitpack.io" }
+    mavenCentral() // jcenter() works as well because it pulls from Maven Central
 }
 
 dependencies {
@@ -39,5 +40,8 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     compile 'com.github.paroca72:sc-widgets:2.2.0'
+    compile 'com.github.bumptech.glide:glide:4.0.0-RC0'
+    compile 'com.android.support:support-v4:25.3.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC0'
 
 }

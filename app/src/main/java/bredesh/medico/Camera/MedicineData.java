@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +26,8 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.io.IOException;
@@ -354,8 +357,10 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
         if (videoUriString == null)
             btPlay.setVisibility(View.INVISIBLE);
-        else
-            btPlay.setImageURI(Uri.parse(videoUriString));
+        else {
+            Glide.with(this).load(videoUriString).into(btPlay);
+            btPlay.invalidate();
+        }
         btPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -547,7 +552,8 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         if(resultCode == RESULT_OK)
         {
             btPlay.setVisibility(View.VISIBLE);
-            btPlay.setImageURI(Uri.parse(videoUriString));
+            Glide.with(this).load(videoUriString).into(btPlay);
+            btPlay.invalidate();
         }
         else Toast.makeText(MedicineData.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
     }

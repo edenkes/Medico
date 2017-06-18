@@ -75,12 +75,16 @@
             android:textSize="20sp" />
 
 
-        <NumberPicker
-            android:id="@+id/numberPicker"
+        <EditText
+            android:id="@+id/etRepeats"
             android:layout_width="wrap_content"
-            android:layout_height="60sp"
-            android:layout_marginStart="10sp"
-            android:theme="@style/AppTheme.Picker" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="number"
+            android:maxLength="2"
+            android:selectAllOnFocus="true"
+            android:singleLine="true" />
 
     </LinearLayout>
 

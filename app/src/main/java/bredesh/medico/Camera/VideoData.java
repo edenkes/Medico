@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +38,7 @@ interface IRemoveLastAlert
 public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
     private EditText etExerciseName;
-    private NumberPicker numberPicker;
+    private EditText etRepeats;
     private ArrayList<String> arrayList;
     private TextView lblSelectedDays;
     private Button btDelete, btConfirm;
@@ -134,7 +133,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
             Collections.addAll(arrayList, timeAL);
         }
         int repeats = intent.getIntExtra("repeats",1);
-        numberPicker.setValue(repeats);
+        etRepeats.setText(Integer.toString(repeats));
         int[] days = intent.getIntArrayExtra("days");
         for (int i=0; i< 7; i++)
             selectedDays[i] = days[i] != 0;
@@ -189,7 +188,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         btDelete = (Button) findViewById(R.id.btDelete);
         Button addAlert = (Button) findViewById(R.id.btAddAlert);
         etExerciseName = (EditText) findViewById(R.id.etExerciseName);
-        numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
+        etRepeats = (EditText) findViewById(R.id.etRepeats);
         lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
@@ -227,11 +226,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         db = new MedicoDB(getApplicationContext());
         Intent intent = getIntent();
         videoUriString = intent.getStringExtra("RecordedUri");
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(50);
-
-        numberPicker.setWrapSelectorWheel(false);
-
+        etRepeats.setText(Integer.toString(1));
         this.exerciseId = intent.getIntExtra("exerciseId", NewExercise);
         if (this.exerciseId != NewExercise)
         {
@@ -284,26 +279,30 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                 if(etExerciseName.getText().toString().length() == 0)
                     Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short), Toast.LENGTH_SHORT).show();
                 else {
-                    if (etExerciseName.getText().toString().length() <= maxSize) {
-                        int[] days_to_alert = new int[selectedDays.length];
-                        for (int i = 0; i < days_to_alert.length; i++) {
-                            if (selectedDays[i])
-                                days_to_alert[i] = 1;
+                    if (etRepeats.getText().toString().length() == 0)
+                        Toast.makeText(getApplicationContext(), R.string.exercise_repeats_mandatory, Toast.LENGTH_LONG).show();
+                    else {
+                        if (etExerciseName.getText().toString().length() <= maxSize) {
+                            int[] days_to_alert = new int[selectedDays.length];
+                            for (int i = 0; i < days_to_alert.length; i++) {
+                                if (selectedDays[i])
+                                    days_to_alert[i] = 1;
+                                else
+                                    days_to_alert[i] = 0;
+                            }
+                            int repeats = Integer.parseInt(etRepeats.getText().toString());
+                            String times = "";
+                            Collections.sort(arrayList);
+                            for (int i = 0; i < arrayList.size(); i++)
+                                times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
+                            if (exerciseId != NewExercise)
+                                db.updateRow(exerciseId, etExerciseName.getText().toString(), times, repeats, videoUriString, days_to_alert);
                             else
-                                days_to_alert[i] = 0;
-                        }
-                        int repeats = numberPicker.getValue();
-                        String times = "";
-                        Collections.sort(arrayList);
-                        for (int i = 0; i < arrayList.size(); i++)
-                            times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
-                        if (exerciseId != NewExercise)
-                            db.updateRow(exerciseId, etExerciseName.getText().toString(), times, repeats, videoUriString, days_to_alert);
-                        else
-                            db.addAlert(etExerciseName.getText().toString(), MedicoDB.KIND.Exercise, times, repeats, videoUriString, days_to_alert);
-                        finish();
-                    } else
-                        Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_long), Toast.LENGTH_SHORT).show();
+                                db.addAlert(etExerciseName.getText().toString(), MedicoDB.KIND.Exercise, times, repeats, videoUriString, days_to_alert);
+                            finish();
+                        } else
+                            Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_long), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

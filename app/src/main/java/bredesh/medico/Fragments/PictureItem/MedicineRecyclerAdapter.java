@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import bredesh.medico.Camera.MedicineData;
@@ -76,9 +78,10 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
         if (item.uri == null)
             customViewHolder.play.setVisibility(View.INVISIBLE);
         else {
-            customViewHolder.play.setImageURI(item.uri);
             customViewHolder.play.setScaleType(ImageView.ScaleType.FIT_CENTER);
             customViewHolder.play.setBackground(null);
+            Glide.with(activity).load(item.uri).into(customViewHolder.play);
+            customViewHolder.play.invalidate();
         }
 
         customViewHolder.play.setOnClickListener(new View.OnClickListener() {
