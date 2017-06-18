@@ -152,5 +152,5 @@
     <string name="alert_text_medicine">Time to take <b>%d</b> %s</string>
     <string name="time_picker_select_time">Select time</string>
     <string name="lang_select" translatable="false">En | עב | عر | ру</string>
-    <string name="exercise_repeats_mandatory">Enter no. of repeititions.</string>
+    <string name="exercise_repeats_mandatory">Enter no. of repititions.</string>
 </resources>

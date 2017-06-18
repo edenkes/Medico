@@ -122,18 +122,18 @@
     <string name="medicine_notes">Комментарии</string>
     <string name="medicine_special">Специальные инструкции:</string>
     <string name="medicine_type">вид</string>
-    <string name="menu1_item1">таблетки</string>
-    <string name="menu1_item2">Капсулы</string>
-    <string name="menu1_item3">Мх (CC)</string>
-    <string name="menu1_item4">единицы</string>
-    <string name="menu1_item5">Наклейки</string>
-    <string name="menu1_item6">суппозиторий</string>
-    <string name="menu1_title">Выбор типа</string>
-    <string name="menu2_item1">без</string>
+    <string name="menu1_item1">כדורים</string>
+    <string name="menu1_item2">קפסולות</string>
+    <string name="menu1_item3">מ\"ל (CC)</string>
+    <string name="menu1_item4">יחידות</string>
+    <string name="menu1_item5">מדבקות</string>
+    <string name="menu1_item6">פתילה (נר)</string>
+    <string name="menu1_title">בחירת סוג</string>
+    <string name="menu2_item1">ללא</string>
     <string name="menu2_item2">Перед едой</string>
     <string name="menu2_item3">После еды</string>
     <string name="menu2_item4">За два часа до еды</string>
     <string name="menu2_item5">Через два часа после еды</string>
     <string name="menu2_title">הוראות מיוחדות</string>
-    <string name="exercise_repeats_mandatory">Enter no. of repeititions.</string>
+    <string name="exercise_repeats_mandatory">Enter no. of repititions.</string>
 </resources>
