@@ -73,9 +73,9 @@
     <string name="main_menu_title">القائمة الرئيسية</string>
     <string name="coming_soon">قريبا</string>
     <string name="menu_item_1">العلاج الطبيعي</string>
-    <string name="menu_item_2">المخدرات</string>
+    <string name="menu_item_2">أدوية</string>
     <string name="menu_item_3">فحوص دورية</string>
-    <string name="menu_item_4">تذكير الشخصية</string>
+    <string name="menu_item_4"> تذكير شخصي</string>
     <string name="exercise_name_label">اسم التمرين:</string>
     <string name="Add_multi_alert">إضافة</string>
     <string name="set_language">اللغة</string>
