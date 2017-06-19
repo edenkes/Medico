@@ -51,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
         bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
             @Override
             public void onTabReSelected(@IdRes int tabId) {
-                if(tabId == R.id.tab_home)
-                    onBackPressed();
+                if(tabId == R.id.tab_home)  onBackPressed();
             }
         });
     }
