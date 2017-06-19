@@ -135,4 +135,6 @@
     <string name="menu2_item5">שעתיים אחרי האוכל</string>
     <string name="menu2_title">הוראות מיוחדות</string>
     <string name="exercise_repeats_mandatory">יש לרשום מספר חזרות</string>
+    <string name="medicine_dosage_drops">טיפות</string>
+    <string name="medicine_dosage_other">אחר</string>
 </resources>

@@ -136,4 +136,6 @@
     <string name="menu2_item5">Через два часа после еды</string>
     <string name="menu2_title">הוראות מיוחדות</string>
     <string name="exercise_repeats_mandatory">Enter no. of repititions.</string>
+    <string name="medicine_dosage_drops">капли</string>
+    <string name="medicine_dosage_other">other</string>
 </resources>

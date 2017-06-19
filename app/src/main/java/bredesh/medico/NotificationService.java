@@ -68,9 +68,15 @@ public class NotificationService extends Service {
                 break;
             case Medicine:
                 Cursor c = local.getMedicineByID(notiID);
-                notiString = (getResources().getString(R.string.alert_text_medicine,
+                String dosageType = c.getString(c.getColumnIndex(MedicoDB.KEY_TYPE));
+
+                if (dosageType.compareTo(getResources().getString(R.string.medicine_dosage_other)) != 0)
+                    notiString = (getResources().getString(R.string.alert_text_medicine,
                         times,
-                        c.getString(c.getColumnIndex(MedicoDB.KEY_TYPE))));
+                        dosageType));
+                else
+                    notiString = (getResources().getString(R.string.notification_alert_prefix_medicine));
+
                 break;
         }
 

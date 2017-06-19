@@ -146,8 +146,10 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         else if(type.equals(resources.getString(R.string.menu1_item2))) index = 1;
         else if(type.equals(resources.getString(R.string.menu1_item3))) index = 2;
         else if(type.equals(resources.getString(R.string.menu1_item4))) index = 3;
-        else if(type.equals(resources.getString(R.string.menu1_item5))) index = 4;
-        else index = 5;
+        else if(type.equals(resources.getString(R.string.medicine_dosage_drops))) index = 4;
+        else if(type.equals(resources.getString(R.string.menu1_item5))) index = 5;
+        else if(type.equals(resources.getString(R.string.menu1_item6))) index = 6;
+        else index = 7;
         spType.setSelection(index);
 
         String special = intent.getStringExtra("medicine_special");
@@ -275,8 +277,11 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                         resources.getString(R.string.menu1_item2),
                         resources.getString(R.string.menu1_item3),
                         resources.getString(R.string.menu1_item4),
+                        resources.getString(R.string.medicine_dosage_drops),
                         resources.getString(R.string.menu1_item5),
-                        resources.getString(R.string.menu1_item6)});
+                        resources.getString(R.string.menu1_item6),
+                        resources.getString(R.string.medicine_dosage_other)
+                });
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spType.setAdapter(adapterType);

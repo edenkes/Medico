@@ -131,4 +131,6 @@
     <string name="menu2_item5">Two hours after meal</string>
     <string name="menu2_title">Usage notes</string>
     <string name="exercise_repeats_mandatory">Enter no. of repititions.</string>
+    <string name="medicine_dosage_drops">drops</string>
+    <string name="medicine_dosage_other">other</string>
 </resources>

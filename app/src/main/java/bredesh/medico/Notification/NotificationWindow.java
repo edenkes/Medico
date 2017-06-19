@@ -85,7 +85,10 @@ public class NotificationWindow extends AppCompatActivity {
                     notes = c.getString(c.getColumnIndex(MedicoDB.KEY_NOTES));
                     alertPrefixText.setText(resources.getString(R.string.notification_alert_prefix_medicine));
                     alertName.setText(item.name);
-                    alertRepeats.setText(""+amount +" "+type);
+                    if (type.compareTo(resources.getString(R.string.medicine_dosage_other)) == 0)
+                        alertRepeats.setText("");
+                    else
+                        alertRepeats.setText(""+amount +" "+type);
 
                     TextView tvSpecial = (TextView) findViewById(R.id.tv_special);
                     if(special.equals(resources.getString(R.string.menu2_item1)))

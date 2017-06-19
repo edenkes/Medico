@@ -130,8 +130,15 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
         });
 
 
-        customViewHolder.tvMedicineAmount.setText(String.valueOf(item.amount));
-        customViewHolder.txMedicinedosageType.setText(item.type);
+        if (item.type.compareTo(resources.getString(R.string.medicine_dosage_other)) != 0) {
+            customViewHolder.tvMedicineAmount.setText(String.valueOf(item.amount));
+            customViewHolder.txMedicinedosageType.setText(item.type);
+        }
+        else {
+            customViewHolder.tvMedicineAmount.setText("");
+            customViewHolder.txMedicinedosageType.setText("");
+        }
+
         customViewHolder.tvMedicineName.setText(item.name);
 
         String times = item.time.replace(resources.getString(R.string.times_splitter), resources.getString(R.string.times_nice_separator));

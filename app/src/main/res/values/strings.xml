@@ -153,4 +153,6 @@
     <string name="time_picker_select_time">Select time</string>
     <string name="lang_select" translatable="false">En | עב | عر | ру</string>
     <string name="exercise_repeats_mandatory">Enter no. of repititions.</string>
+    <string name="medicine_dosage_drops">drops</string>
+    <string name="medicine_dosage_other">other</string>
 </resources>
