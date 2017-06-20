@@ -3,13 +3,24 @@
     <tab
         id="@+id/tab_home"
         icon="@drawable/ic_home_black_36dp"
-        title="Home" />
+        title="@string/tab_home" />
+
+    <tab
+        id="@+id/tab_exercises"
+        icon="@drawable/ic_rowing_black_30dp"
+        title="@string/menu_item_1"
+        />
+    <tab
+        id="@+id/tab_drugs"
+        icon="@drawable/icons8_pill_25"
+        title="@string/menu_item_2"
+        />
+
 
     <tab
         id="@+id/tab_personal"
         icon="@drawable/ic_friends"
         title="@string/personal_profile"
-        visible="false"
         />
 
     <!--

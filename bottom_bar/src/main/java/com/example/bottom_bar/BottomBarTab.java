@@ -122,7 +122,7 @@ public class BottomBarTab extends LinearLayout {
 
     private void updateTitle() {
         if (titleView != null) {
-            titleView.setText(title);
+            titleView.setText(" " + title);
         }
     }
 

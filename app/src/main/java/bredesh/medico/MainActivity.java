@@ -54,6 +54,17 @@ public class MainActivity extends AppCompatActivity {
                 if(tabId == R.id.tab_home)  onBackPressed();
             }
         });
+
+        switch (MainMenu.CURRENT)
+        {
+            case Exercise:
+                bottomBar.selectTabWithId(R.id.tab_exercises);
+//                changeFragment(R.id.tab_exercises);
+                break;
+            case Medicine:
+                bottomBar.selectTabWithId(R.id.tab_drugs);
+                break;
+        }
     }
 
     public void changeFragment(@IdRes int menuItemId) {
@@ -64,14 +75,13 @@ public class MainActivity extends AppCompatActivity {
 
         switch (menuItemId) {
             case R.id.tab_home:
-                switch (MainMenu.CURRENT) {
-                    case Exercise:
-                        fragment = new FragmentHome();
-                        break;
-                    case Medicine:
-                        fragment = new FragmentMedicine();
-                        break;
-                }
+                onBackPressed();
+                break;
+            case R.id.tab_exercises:
+                fragment = new FragmentHome();
+                break;
+            case R.id.tab_drugs:
+                fragment = new FragmentMedicine();
                 break;
             case R.id.tab_personal:
                 fragment = new PersonalProfileFragment();

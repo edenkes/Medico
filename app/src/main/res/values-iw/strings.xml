@@ -137,4 +137,5 @@
     <string name="exercise_repeats_mandatory">יש לרשום מספר חזרות</string>
     <string name="medicine_dosage_drops">טיפות</string>
     <string name="medicine_dosage_other">אחר</string>
+    <string name="tab_home">בית</string>
 </resources>
