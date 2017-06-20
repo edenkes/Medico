@@ -31,7 +31,8 @@ public class MainMenu extends AppCompatActivity
 {
     public enum MODE {Exercise,Medicine}
     public static MODE CURRENT;
-    private String language = "default";
+    public static String language = "default";
+    public static boolean languageChanged = false;
     private Menu optionsMenu = null;
     MedicoDB dbManager = null;
 
@@ -126,10 +127,15 @@ public class MainMenu extends AppCompatActivity
         dbManager = new MedicoDB(getApplicationContext());
         final Intent SERVICE_INTENT = new Intent(getBaseContext(), NotificationService.class);
         startService(SERVICE_INTENT);
+        startView();
+    }
 
+    void startView()
+    {
         this.language = Localization.init(this, dbManager);
         setContentView(R.layout.activity_menu);
         PrepareMenu();
+
     }
 
     void PrepareMenu()
@@ -175,6 +181,16 @@ public class MainMenu extends AppCompatActivity
 
         MenuAdapterRecycler adapterRecycler = new MenuAdapterRecycler(getApplicationContext(),menu_items, this);
         menu.setAdapter(adapterRecycler);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (languageChanged) {
+            startView();
+            languageChanged = false;
+        }
 
     }
 }

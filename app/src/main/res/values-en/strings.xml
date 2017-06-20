@@ -48,7 +48,7 @@
     <string name="exercises">Exercises</string>
     <string name="extercise_name_hint">Name of exercise</string>
     <string name="giveup">Cancel</string>
-    <string name="good_job">Well done! You received 10 points</string>
+    <string name="good_job">Well done! You gained 10 points</string>
     <string name="invalid_name">Enter an exercise name</string>
     <string name="last_alert">There must be at least one alert</string>
     <string name="log_in">Login</string>

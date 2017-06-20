@@ -7,11 +7,17 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.example.bottom_bar.BottomBar;
 import com.example.bottom_bar.OnTabReselectListener;
 import com.example.bottom_bar.OnTabSelectListener;
 
+import java.util.Locale;
+
+import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Fragments.FragmentHome;
 import bredesh.medico.Fragments.FragmentMedicine;
 import bredesh.medico.Fragments.PersonalProfileFragment;
@@ -19,6 +25,90 @@ import bredesh.medico.Menu.MainMenu;
 
 
 public class MainActivity extends AppCompatActivity {
+
+
+    private String language = "default";
+    private Menu optionsMenu = null;
+    MedicoDB dbManager = null;
+    int prevTabId = 0;
+    BottomBar bottomBar = null;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.optionsMenu = menu;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        if (this.language == null)
+            this.language = "";
+        switch (this.language)
+        {
+            default:
+                menu.findItem(R.id.action_lang_default).setChecked(true);
+                break;
+            case "iw":
+                menu.findItem(R.id.action_lang_hebrew).setChecked(true);
+                break;
+            case "ar":
+                menu.findItem(R.id.action_lang_arabic).setChecked(true);
+                break;
+            case "en":
+                menu.findItem(R.id.action_lang_english).setChecked(true);
+                break;
+            case "ru":
+                menu.findItem(R.id.action_lang_russian).setChecked(true);
+                break;
+
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        String languageToLoad = null;
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.action_lang_english:
+                languageToLoad = Locale.ENGLISH.toString(); // your language
+                break;
+            case R.id.action_lang_hebrew:
+                languageToLoad = "iw"; // your language
+                break;
+            case R.id.action_lang_arabic:
+                languageToLoad = "ar"; // your language
+                break;
+            case R.id.action_lang_russian:
+                languageToLoad = "ru"; // your language
+                break;
+            case R.id.action_lang_default:
+                languageToLoad = "";
+            default:
+                break;
+
+        }
+
+        if (languageToLoad != null && languageToLoad.compareTo(language) != 0)
+        {
+            this.prevTabId = bottomBar.getCurrentTabId();
+            this.language = languageToLoad;
+            this.optionsMenu.findItem(itemId).setChecked(true);
+            this.invalidateOptionsMenu();
+            Localization.setLanguage(languageToLoad, this);
+            if (this.dbManager == null)
+                this.dbManager = new MedicoDB(getApplicationContext());
+            Localization.saveLanguageInPrefs(languageToLoad, this.dbManager);
+
+            this.setContentView(R.layout.activity_main);
+            prepareView();
+            MainMenu.languageChanged = true;
+        }
+
+        return true;
+    }
+
+
     @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +120,12 @@ public class MainActivity extends AppCompatActivity {
             logout();
         }
 */
+        this.language = MainMenu.language;
+        prepareView();
+    }
+
+    private void prepareView()
+    {
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
@@ -39,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        final BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
@@ -55,15 +151,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        switch (MainMenu.CURRENT)
+        if (this.prevTabId != 0) {
+            bottomBar.selectTabWithId(this.prevTabId);
+            this.prevTabId = 0;
+        }
+        else
         {
-            case Exercise:
-                bottomBar.selectTabWithId(R.id.tab_exercises);
-//                changeFragment(R.id.tab_exercises);
-                break;
-            case Medicine:
-                bottomBar.selectTabWithId(R.id.tab_drugs);
-                break;
+            switch (MainMenu.CURRENT) {
+                case Exercise:
+                    bottomBar.selectTabWithId(R.id.tab_exercises);
+                    break;
+                case Medicine:
+                    bottomBar.selectTabWithId(R.id.tab_drugs);
+                    break;
+            }
         }
     }
 
