@@ -7,8 +7,8 @@ android {
         applicationId "bredesh.medico"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 13
-        versionName "1.13"
+        versionCode 15
+        versionName "1.15"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
