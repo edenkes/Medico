@@ -49,7 +49,7 @@
     <string name="all_alerts_deleted">تتم إزالة كافة التنبيهات</string>
     <string name="all_days">كل يوم</string>
     <string name="error_must_select_one_day">الرجاء تحديد يوم واحد على الأقل</string>
-    <string name="several_times">٪d مرات في اليوم</string>
+    <string name="several_times">%d مرات في اليوم</string>
     <string name="times_splitter">", "</string>
     <string name="last_alert">يجب أن يكون هناك تنبيه واحد على الأقل</string>
     <string name="times_nice_separator">" | "</string>
