@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -40,6 +41,7 @@ import java.util.Date;
 
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
+import bredesh.medico.Utils.Utils;
 
 /**
  * Created by Omri on 12/06/2017.
@@ -135,29 +137,17 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         }
     };
 
-
     private void setExistingMedicine(Intent intent)
     {
         etMedicineName.setText(intent.getStringExtra("medicine_name"));
 
         String type = intent.getStringExtra("medicine_type");
         int index;
-        if(type.equals(resources.getString(R.string.menu1_item1))) index = 0;
-        else if(type.equals(resources.getString(R.string.menu1_item2))) index = 1;
-        else if(type.equals(resources.getString(R.string.menu1_item3))) index = 2;
-        else if(type.equals(resources.getString(R.string.menu1_item4))) index = 3;
-        else if(type.equals(resources.getString(R.string.medicine_dosage_drops))) index = 4;
-        else if(type.equals(resources.getString(R.string.menu1_item5))) index = 5;
-        else if(type.equals(resources.getString(R.string.menu1_item6))) index = 6;
-        else index = 7;
+        index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage, type);
         spType.setSelection(index);
 
         String special = intent.getStringExtra("medicine_special");
-        if(special.equals(resources.getString(R.string.menu2_item1))) index = 0;
-        else if(special.equals(resources.getString(R.string.menu2_item2))) index = 1;
-        else if(special.equals(resources.getString(R.string.menu2_item3))) index = 2;
-        else if(special.equals(resources.getString(R.string.menu2_item4))) index = 3;
-        else index = 4;
+        index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage_notes, special);
         spSpecial.setSelection(index);
 
         etNotes.setText(intent.getStringExtra("medicine_notes"));
@@ -271,29 +261,14 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         etAmount = (EditText) findViewById(R.id.amount_number);
 
         spType = (Spinner) findViewById(R.id.spinner_type);
-        ArrayAdapter<CharSequence> adapterType = new ArrayAdapter<>(this, R.layout.spinner_item,
-                new CharSequence[] {
-                        resources.getString(R.string.menu1_item1),
-                        resources.getString(R.string.menu1_item2),
-                        resources.getString(R.string.menu1_item3),
-                        resources.getString(R.string.menu1_item4),
-                        resources.getString(R.string.medicine_dosage_drops),
-                        resources.getString(R.string.menu1_item5),
-                        resources.getString(R.string.menu1_item6),
-                        resources.getString(R.string.medicine_dosage_other)
-                });
+
+        ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource (this, R.array.drugs_dosage, R.layout.spinner_item );
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spType.setAdapter(adapterType);
 
         spSpecial = (Spinner) findViewById(R.id.spinner_special);
-        ArrayAdapter<CharSequence> adapterSpecial = new ArrayAdapter<>(this, R.layout.spinner_item,
-                new CharSequence[] {
-                        resources.getString(R.string.menu2_item1),
-                        resources.getString(R.string.menu2_item2),
-                        resources.getString(R.string.menu2_item3),
-                        resources.getString(R.string.menu2_item4),
-                        resources.getString(R.string.menu2_item5)});
+        ArrayAdapter<CharSequence> adapterSpecial = ArrayAdapter.createFromResource(this, R.array.drugs_dosage_notes, R.layout.spinner_item);
         adapterSpecial.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spSpecial.setAdapter(adapterSpecial);
@@ -411,20 +386,24 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                         Collections.sort(arrayList);
                         for (int i = 0; i < arrayList.size(); i++)
                             times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
+
+                        String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, spType.getSelectedItem().toString());
+                        String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes, spSpecial.getSelectedItem().toString());
+
                         if (exerciseId != NewExercise)
                         {
                             db.updateRow(exerciseId, etMedicineName.getText().toString(), times,  Integer.parseInt(etAmount.getText().toString()), videoUriString, days_to_alert);
                             db.updateMedicine(exerciseId,
-                                                spType.getSelectedItem().toString(),
-                                                spSpecial.getSelectedItem().toString(),
+                                                typeToWrite,
+                                                specialNotesToWrite ,
                                                 etNotes.getText().toString(),
                                                 Integer.parseInt(etAmount.getText().toString()));
                         }
                         else
                         {
                             db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Medicine, times,  Integer.parseInt(etAmount.getText().toString()), videoUriString, days_to_alert);
-                            db.addMedicine(spType.getSelectedItem().toString(),
-                                            spSpecial.getSelectedItem().toString(),
+                            db.addMedicine(typeToWrite,
+                                            specialNotesToWrite,
                                             etNotes.getText().toString(),
                                             Integer.parseInt(etAmount.getText().toString()));
                         }

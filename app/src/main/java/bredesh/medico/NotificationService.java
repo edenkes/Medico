@@ -15,6 +15,7 @@ import java.util.Calendar;
 
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Notification.NotificationWindow;
+import bredesh.medico.Utils.Utils;
 
 public class NotificationService extends Service {
 
@@ -68,15 +69,17 @@ public class NotificationService extends Service {
                 break;
             case Medicine:
                 Cursor c = local.getMedicineByID(notiID);
-                String dosageType = c.getString(c.getColumnIndex(MedicoDB.KEY_TYPE));
+                String dosageType = Utils.stringOrFromResource(getResources(), c.getString(c.getColumnIndex(MedicoDB.KEY_TYPE)));
 
                 if (dosageType.compareTo(getResources().getString(R.string.medicine_dosage_other)) != 0)
                     notiString = (getResources().getString(R.string.alert_text_medicine,
                         times,
                         dosageType));
-                else
+                else {
                     notiString = (getResources().getString(R.string.notification_alert_prefix_medicine));
-
+                    if (notiString.endsWith(":"))
+                        notiString = notiString.substring(0, notiString.length()-1);
+                }
                 break;
         }
 

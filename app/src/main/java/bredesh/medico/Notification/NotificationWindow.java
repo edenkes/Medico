@@ -27,6 +27,7 @@ import bredesh.medico.MainActivity;
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Menu.MainMenu;
 import bredesh.medico.R;
+import bredesh.medico.Utils.Utils;
 
 import static android.view.View.GONE;
 
@@ -80,8 +81,8 @@ public class NotificationWindow extends AppCompatActivity {
                 case Medicine:
                     Cursor c = (new MedicoDB(getApplicationContext())).getMedicineByID(item.id);
                     amount = c.getInt(c.getColumnIndex(MedicoDB.KEY_AMOUNT));
-                    type = c.getString(c.getColumnIndex(MedicoDB.KEY_TYPE));
-                    special = c.getString(c.getColumnIndex(MedicoDB.KEY_SPECIAL));
+                    type = Utils.stringOrFromResource(resources, c.getString(c.getColumnIndex(MedicoDB.KEY_TYPE)));
+                    special = Utils.stringOrFromResource(resources, c.getString(c.getColumnIndex(MedicoDB.KEY_SPECIAL)));
                     notes = c.getString(c.getColumnIndex(MedicoDB.KEY_NOTES));
                     alertPrefixText.setText(resources.getString(R.string.notification_alert_prefix_medicine));
                     alertName.setText(item.name);
@@ -91,7 +92,7 @@ public class NotificationWindow extends AppCompatActivity {
                         alertRepeats.setText(""+amount +" "+type);
 
                     TextView tvSpecial = (TextView) findViewById(R.id.tv_special);
-                    if(special.equals(resources.getString(R.string.menu2_item1)))
+                    if(special.equals(resources.getString(R.string.medicine_usage_notes_none)))
                         tvSpecial.setVisibility(GONE);
                     else
                         tvSpecial.setText(special);

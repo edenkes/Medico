@@ -24,6 +24,7 @@ import java.util.List;
 import bredesh.medico.Camera.MedicineData;
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
+import bredesh.medico.Utils.Utils;
 
 /**
  * Created by Omri on 13/06/2017.
@@ -129,14 +130,15 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
             }
         });
 
+        String itemType = Utils.stringOrFromResource(resources, item.type);
 
-        if (item.type.compareTo(resources.getString(R.string.medicine_dosage_other)) != 0) {
-            customViewHolder.tvMedicineAmount.setText(String.valueOf(item.amount));
-            customViewHolder.txMedicinedosageType.setText(item.type);
-        }
-        else {
+        if (itemType.equals(resources.getString(R.string.medicine_dosage_other))) {
             customViewHolder.tvMedicineAmount.setText("");
             customViewHolder.txMedicinedosageType.setText("");
+        }
+        else {
+            customViewHolder.tvMedicineAmount.setText(String.valueOf(item.amount));
+            customViewHolder.txMedicinedosageType.setText(itemType);
         }
 
         customViewHolder.tvMedicineName.setText(item.name);
