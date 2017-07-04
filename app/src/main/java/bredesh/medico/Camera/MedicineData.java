@@ -1,12 +1,10 @@
 package bredesh.medico.Camera;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -50,9 +48,6 @@ import bredesh.medico.Utils.Utils;
 
 
 public class MedicineData extends AppCompatActivity implements IRemoveLastAlert {
-
-
-
     private EditText etMedicineName, etNotes;
     private ArrayList<String> arrayList;
     private TextView lblSelectedDays;
@@ -66,7 +61,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
     private final boolean[] selectedDays = new boolean[7];
     private final boolean[] newSelectedDays = new boolean[7];
     private MedicoDB db;
-    private final int maxSize = 16;
+    private final int Max_Size = 16;
     private Resources resources;
     private int exerciseId;
     private final int NewExercise = -6;
@@ -181,7 +176,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
@@ -365,52 +360,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
             @Override
             public void onClick(View v) {
-                if(etMedicineName.getText().toString().length() == 0) {
-                    Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short_medicine), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(etAmount.getText().toString().length() == 0)
-                {
-                    Toast.makeText(getApplicationContext(), resources.getString(R.string.amount_too_short_medicine), Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    if (etMedicineName.getText().toString().length() <= maxSize) {
-                        int[] days_to_alert = new int[selectedDays.length];
-                        for (int i = 0; i < days_to_alert.length; i++) {
-                            if (selectedDays[i])
-                                days_to_alert[i] = 1;
-                            else
-                                days_to_alert[i] = 0;
-                        }
-                        String times = "";
-                        Collections.sort(arrayList);
-                        for (int i = 0; i < arrayList.size(); i++)
-                            times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
-
-                        String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, spType.getSelectedItem().toString());
-                        String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes, spSpecial.getSelectedItem().toString());
-
-                        if (exerciseId != NewExercise)
-                        {
-                            db.updateRow(exerciseId, etMedicineName.getText().toString(), times,  Integer.parseInt(etAmount.getText().toString()), videoUriString, days_to_alert);
-                            db.updateMedicine(exerciseId,
-                                                typeToWrite,
-                                                specialNotesToWrite ,
-                                                etNotes.getText().toString(),
-                                                Integer.parseInt(etAmount.getText().toString()));
-                        }
-                        else
-                        {
-                            db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Medicine, times,  Integer.parseInt(etAmount.getText().toString()), videoUriString, days_to_alert);
-                            db.addMedicine(typeToWrite,
-                                            specialNotesToWrite,
-                                            etNotes.getText().toString(),
-                                            Integer.parseInt(etAmount.getText().toString()));
-                        }
-                        finish();
-                    } else
-                        Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_long), Toast.LENGTH_SHORT).show();
-                }
+                confirm();
             }
         });
 
@@ -439,6 +389,57 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                 timeAdapter.notifyItemInserted(arrayList.size() - 1);
             }
         });
+    }
+
+    private void confirm() {
+        {
+            if(etMedicineName.getText().toString().length() == 0) {
+                Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short_medicine), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(etAmount.getText().toString().length() == 0)
+            {
+                Toast.makeText(getApplicationContext(), resources.getString(R.string.amount_too_short_medicine), Toast.LENGTH_SHORT).show();
+            }
+            else {
+                if (etMedicineName.getText().toString().length() <= Max_Size) {
+                    int[] days_to_alert = new int[selectedDays.length];
+                    for (int i = 0; i < days_to_alert.length; i++) {
+                        if (selectedDays[i])
+                            days_to_alert[i] = 1;
+                        else
+                            days_to_alert[i] = 0;
+                    }
+                    String times = "";
+                    Collections.sort(arrayList);
+                    for (int i = 0; i < arrayList.size(); i++)
+                        times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
+
+                    String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, spType.getSelectedItem().toString());
+                    String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes, spSpecial.getSelectedItem().toString());
+
+                    if (exerciseId != NewExercise)
+                    {
+                        db.updateRow(exerciseId, etMedicineName.getText().toString(), times,  Integer.parseInt(etAmount.getText().toString()), videoUriString, days_to_alert);
+                        db.updateMedicine(exerciseId,
+                                typeToWrite,
+                                specialNotesToWrite ,
+                                etNotes.getText().toString(),
+                                Integer.parseInt(etAmount.getText().toString()));
+                    }
+                    else
+                    {
+                        db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Medicine, times,  Integer.parseInt(etAmount.getText().toString()), videoUriString, days_to_alert);
+                        db.addMedicine(typeToWrite,
+                                specialNotesToWrite,
+                                etNotes.getText().toString(),
+                                Integer.parseInt(etAmount.getText().toString()));
+                    }
+                    finish();
+                } else
+                    Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_long), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void updateSelectedDays()
@@ -564,4 +565,8 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         return  str_hour + " : " + str_minute;
     }
 
+    @Override
+    public void onBackPressed() {
+        confirm();
+    }
 }
