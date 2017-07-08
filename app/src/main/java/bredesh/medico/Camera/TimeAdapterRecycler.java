@@ -77,7 +77,7 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
                 int minute = Integer.parseInt(hourAndMinutes[1]);
                 TimePickerDialog mTimePicker;
 
-                mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                mTimePicker = new TimePickerDialog(context, R.style.Theme_Dialog, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         String strSelectedHour = getZeroTrailedTime(selectedHour);

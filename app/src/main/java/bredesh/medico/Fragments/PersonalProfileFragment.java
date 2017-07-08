@@ -127,6 +127,9 @@ public class PersonalProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
+
+
+
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
 
     private long daysBetween(GregorianCalendar first, GregorianCalendar second) {
@@ -228,6 +231,25 @@ public class PersonalProfileFragment extends Fragment {
         tvCurrentDayDate = (TextView) view.findViewById(R.id.tvCurrentDayDate);
         tvCurrentDayText = (TextView) view.findViewById(R.id.tvCurrentDayText);
         gauge = (ScArcGauge) view.findViewById(R.id.gauge);
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                int gHeight = (int) (gauge.getHeight() * 1.123);
+                int gWidth = gauge.getWidth();
+                ViewGroup.LayoutParams layoutParams = gauge.getLayoutParams();
+                int squareSize = 0;
+                if (gHeight > gWidth) {
+                    squareSize = gWidth;
+                }
+                else
+                    squareSize = gHeight;
+                layoutParams.height = (int)(squareSize/1.123);
+                layoutParams.width = squareSize;
+                gauge.setLayoutParams(layoutParams);
+                gauge.invalidate();
+            }
+        });
+
         txPointsGained = (TextView) view.findViewById(R.id.txPointsGained);
 
         // Set the features stroke cap style to rounded
