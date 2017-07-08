@@ -55,7 +55,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MedicineData.class);
-                intent.putExtra("exerciseId", item.id);
+                intent.putExtra("medicineId", item.id);
                 intent.putExtra("medicine_amount", item.amount);
                 intent.putExtra("time", item.allTimes);
                 intent.putExtra("medicine_name", item.name);

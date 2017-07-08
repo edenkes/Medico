@@ -118,22 +118,33 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         }
     };
 
+    private String oldExerciseName = "";
+    private String oldTimes = "";
+    private int oldRepeats = 1;
+    private int[] oldDays = new int[7];
+    private String oldVideoUriString = null;
 
     private void setExistingExercise(Intent intent)
     {
 
-        etExerciseName.setText(intent.getStringExtra("exercise_name"));
+        oldExerciseName = intent.getStringExtra("exercise_name");
+        etExerciseName.setText(oldExerciseName);
 
-        String times = intent.getStringExtra("time");
+        oldTimes = intent.getStringExtra("time");
+        String times = oldTimes;
         String[] timeAL = null;
         arrayList = new ArrayList<>();
         if (times != null && !times.contentEquals("")) {
             timeAL = times.split(resources.getString(R.string.times_splitter));
             Collections.addAll(arrayList, timeAL);
         }
-        int repeats = intent.getIntExtra("repeats",1);
+
+        oldRepeats = intent.getIntExtra("repeats",1);
+        int repeats = oldRepeats;
         etRepeats.setText(Integer.toString(repeats));
-        int[] days = intent.getIntArrayExtra("days");
+
+        oldDays = intent.getIntArrayExtra("days");
+        int[] days = oldDays;
         for (int i=0; i< 7; i++)
             selectedDays[i] = days[i] != 0;
         updateSelectedDays();
@@ -160,6 +171,24 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
             startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
         }
     }
+
+    private DialogInterface.OnClickListener onConfirm = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int id) {
+            confirm(false);
+        }
+    };
+
+    private DialogInterface.OnClickListener onCancel = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int id) {
+            finish();
+        }
+    };
+
+    private AlertDialog askBeforeSave = null;
+
+
 
     @SuppressLint("CutPasteId")
     @Override
@@ -201,6 +230,10 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         lbAddMultiAlert = (TextView) findViewById(R.id.lbAddMultiAlert);
 
 
+        askBeforeSave = new AlertDialog.Builder(this)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onConfirm)
+                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), onCancel)
+                .setMessage(resources.getString(R.string.save_changes)).create();
 
         ImageButton video;
 
@@ -224,7 +257,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
         db = new MedicoDB(getApplicationContext());
         Intent intent = getIntent();
-        videoUriString = intent.getStringExtra("RecordedUri");
+        oldVideoUriString = videoUriString = intent.getStringExtra("RecordedUri");
         etRepeats.setText(Integer.toString(1));
         this.exerciseId = intent.getIntExtra("exerciseId", NewExercise);
         if (this.exerciseId != NewExercise)
@@ -234,8 +267,10 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         else {
             arrayList = new ArrayList<>();
             // arrayList.add(makeTimeString());
-            for(int i=0; i<selectedDays.length; i++)
+            for(int i=0; i<selectedDays.length; i++) {
                 selectedDays[i] = true;
+                oldDays[i] = 1;
+            }
         }
 
         Button [] buttons = new Button[] {btConfirm, btDelete};
@@ -427,11 +462,22 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         return  str_hour + " : " + str_minute;
     }
 
-    private void confirm() {
-        if(etExerciseName.getText().toString().length() == 0)
+    private void askUserBeforeSave()
+    {
+        askBeforeSave.show();
+    }
+
+
+    private void confirm()
+    {
+        confirm(false);
+    }
+
+    private void confirm(boolean askBeforeSave) {
+        if(etExerciseName.getText().toString().length() == 0 && !askBeforeSave)
             Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short), Toast.LENGTH_SHORT).show();
         else {
-            if (etRepeats.getText().toString().length() == 0)
+            if (etRepeats.getText().toString().length() == 0 && !askBeforeSave)
                 Toast.makeText(getApplicationContext(), R.string.exercise_repeats_mandatory, Toast.LENGTH_LONG).show();
             else {
                 if (etExerciseName.getText().toString().length() <= Max_Size) {
@@ -447,10 +493,28 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                     Collections.sort(arrayList);
                     for (int i = 0; i < arrayList.size(); i++)
                         times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
+
+                    String exerciseName = etExerciseName.getText().toString();
+
+                    if (askBeforeSave)
+                    {
+                        boolean dataNotChanged =
+                                        oldExerciseName.equals(exerciseName) &&
+                                        oldRepeats == repeats &&
+                                        oldTimes.equals(times) &&
+                                        Arrays.equals(oldDays, days_to_alert) &&
+                                                (oldVideoUriString == null ? videoUriString == null : oldVideoUriString.equals(videoUriString));
+                        if (dataNotChanged)
+                            finish();
+                        else
+                            askUserBeforeSave();
+                        return;
+                    }
+
                     if (exerciseId != NewExercise)
-                        db.updateRow(exerciseId, etExerciseName.getText().toString(), times, repeats, videoUriString, days_to_alert);
+                        db.updateRow(exerciseId, exerciseName, times, repeats, videoUriString, days_to_alert);
                     else
-                        db.addAlert(etExerciseName.getText().toString(), MedicoDB.KIND.Exercise, times, repeats, videoUriString, days_to_alert);
+                        db.addAlert(exerciseName, MedicoDB.KIND.Exercise, times, repeats, videoUriString, days_to_alert);
                     finish();
                 } else
                     Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_long), Toast.LENGTH_SHORT).show();
@@ -461,7 +525,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
     @Override
     public void onBackPressed() {
-       confirm();
+       confirm(true);
     }
 
 }

@@ -176,4 +176,5 @@
         <item>@string/medicine_usage_notes_2_hours_before_meal</item>
         <item>@string/medicine_usage_notes_2_hours_after_meal</item>
     </string-array>
+    <string name="save_changes">Save changes?</string>
 </resources>

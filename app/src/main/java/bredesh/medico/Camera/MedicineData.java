@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.support.v4.util.ArraySet;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -63,14 +64,15 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
     private MedicoDB db;
     private final int Max_Size = 16;
     private Resources resources;
-    private int exerciseId;
-    private final int NewExercise = -6;
+    private int medicineId;
+    private final int NewMedicine = -6;
     private ImageButton btPlay;
     private String videoUriString;
     private final Button[] alertPlanButtons = new Button[5];
     private TimeAdapterRecycler timeAdapter = null;
     private Button btAddAlert;
     private TextView lbAddMultiAlert;
+    private boolean isChanged = false;
 
 
     private final String[][] AlertPlans =
@@ -87,8 +89,8 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         @Override
         public void onClick(DialogInterface dialog, int id) {
             MedicoDB db = new MedicoDB(getApplicationContext());
-            if (exerciseId != NewExercise)
-                db.deleteRow(exerciseId);
+            if (medicineId != NewMedicine)
+                db.deleteRow(medicineId);
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.exercise_deleted) , Toast.LENGTH_LONG).show();
             finish();
         }
@@ -100,6 +102,21 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
             ShootImage();
         }
     };
+
+    private DialogInterface.OnClickListener onConfirm = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int id) {
+            confirm(false);
+        }
+    };
+
+    private DialogInterface.OnClickListener onCancel = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int id) {
+            finish();
+        }
+    };
+
 
     public void OnRemoveLastAlert()
     {
@@ -132,23 +149,38 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         }
     };
 
+    private String oldMedicineName = "";
+    private String oldDosageType = "";
+    private String oldSpecialNotes = "";
+    private String oldNotes = "";
+    private String oldAmount = "1";
+    private String oldTimes = "";
+    private int[] oldDays = null;
+    private String oldViedoUriString = "";
+
     private void setExistingMedicine(Intent intent)
     {
-        etMedicineName.setText(intent.getStringExtra("medicine_name"));
+        oldMedicineName = intent.getStringExtra("medicine_name");
+        etMedicineName.setText(oldMedicineName);
 
         String type = intent.getStringExtra("medicine_type");
+        oldDosageType = type;
         int index;
         index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage, type);
         spType.setSelection(index);
 
         String special = intent.getStringExtra("medicine_special");
+        oldSpecialNotes = special;
         index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage_notes, special);
         spSpecial.setSelection(index);
 
-        etNotes.setText(intent.getStringExtra("medicine_notes"));
-        etAmount.setText(intent.getStringExtra("medicine_amount"));
+        oldNotes = intent.getStringExtra("medicine_notes");
+        etNotes.setText(oldNotes);
+        oldAmount = intent.getStringExtra("medicine_amount");
+        etAmount.setText(oldAmount);
 
         String times = intent.getStringExtra("time");
+        oldTimes = times;
         String[] timeAL = null;
         arrayList = new ArrayList<>();
         if (times != null && !times.contentEquals("")) {
@@ -156,6 +188,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
             Collections.addAll(arrayList, timeAL);
         }
         int[] days = intent.getIntArrayExtra("days");
+        oldDays = days;
         for (int i=0; i< 7; i++)
             selectedDays[i] = days[i] != 0;
         updateSelectedDays();
@@ -216,6 +249,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         }
     }
 
+    private AlertDialog askBeforeSave = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -290,6 +324,11 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                 .setMessage(resources.getString(R.string.reshootPic)).create();
 
 
+        askBeforeSave = new AlertDialog.Builder(this)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onConfirm)
+                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), onCancel)
+                .setMessage(resources.getString(R.string.save_changes)).create();
+
         ImageButton video = (ImageButton) findViewById(R.id.btShootVideo);
         video.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -305,9 +344,10 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         db = new MedicoDB(getApplicationContext());
         Intent intent = getIntent();
         videoUriString = intent.getStringExtra("RecordedUri");
+        oldViedoUriString = videoUriString;
 
-        this.exerciseId = intent.getIntExtra("exerciseId", NewExercise);
-        if (this.exerciseId != NewExercise)
+        this.medicineId = intent.getIntExtra("medicineId", NewMedicine);
+        if (this.medicineId != NewMedicine)
         {
             setExistingMedicine(intent);
         }
@@ -316,6 +356,11 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
             // arrayList.add(makeTimeString());
             for(int i=0; i<selectedDays.length; i++)
                 selectedDays[i] = true;
+            oldDosageType = Integer.toString (R.string.medicine_dosage_type_tab);
+            oldSpecialNotes = Integer.toString(R.string.medicine_usage_notes_none);
+            oldDays = new int[7];
+            for (int i=0 ;i < 7; i++)
+                oldDays[i] = 1;
         }
 
         Button [] buttons = new Button[] {btConfirm, btDelete};
@@ -391,15 +436,28 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         });
     }
 
-    private void confirm() {
+    private void askUserBeforeSave()
+    {
+        askBeforeSave.show();
+    }
+
+    private void confirm()
+    {
+        confirm(false);
+    }
+
+    private void confirm(boolean askBeforeSave) {
         {
-            if(etMedicineName.getText().toString().length() == 0) {
+            if(etMedicineName.getText().toString().length() == 0 && !askBeforeSave) {
                 Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short_medicine), Toast.LENGTH_SHORT).show();
                 return;
             }
-            if(etAmount.getText().toString().length() == 0)
+            if(etAmount.getText().toString().length() == 0 && !askBeforeSave)
             {
-                Toast.makeText(getApplicationContext(), resources.getString(R.string.amount_too_short_medicine), Toast.LENGTH_SHORT).show();
+                if (askBeforeSave)
+                    askUserBeforeSave();
+                else
+                    Toast.makeText(getApplicationContext(), resources.getString(R.string.amount_too_short_medicine), Toast.LENGTH_SHORT).show();
             }
             else {
                 if (etMedicineName.getText().toString().length() <= Max_Size) {
@@ -417,23 +475,54 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
                     String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, spType.getSelectedItem().toString());
                     String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes, spSpecial.getSelectedItem().toString());
+                    String medicineName = etMedicineName.getText().toString();
+                    String newNotes = etNotes.getText().toString();
+                    String amountText = etAmount.getText().toString();
+                    int amount = Integer.parseInt(amountText);
 
-                    if (exerciseId != NewExercise)
+                    if (askBeforeSave)
                     {
-                        db.updateRow(exerciseId, etMedicineName.getText().toString(), times,  Integer.parseInt(etAmount.getText().toString()), videoUriString, days_to_alert);
-                        db.updateMedicine(exerciseId,
+                        boolean dataNotChanged = (
+                                oldMedicineName.equals(medicineName) &&
+                                        oldTimes.equals(times) &&
+                                        oldSpecialNotes.equals(specialNotesToWrite) &&
+                                        oldNotes.equals(newNotes) &&
+                                        oldAmount.equals(amountText) &&
+                                        (oldViedoUriString == null ? videoUriString == null : oldViedoUriString.equals(videoUriString)) &&
+                                        Arrays.equals(oldDays, days_to_alert) &&
+                                        oldDosageType.equals(typeToWrite)
+                        );
+                        if (dataNotChanged)
+                            finish();
+                        else
+                            askUserBeforeSave();
+                        return;
+
+                    }
+
+
+                    if (medicineId != NewMedicine) {
+                        db.updateRow(medicineId, medicineName, times, amount, videoUriString, days_to_alert);
+                        db.updateMedicine(medicineId,
                                 typeToWrite,
-                                specialNotesToWrite ,
-                                etNotes.getText().toString(),
-                                Integer.parseInt(etAmount.getText().toString()));
+                                specialNotesToWrite,
+                                newNotes,
+                                amount);
                     }
                     else
                     {
-                        db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Medicine, times,  Integer.parseInt(etAmount.getText().toString()), videoUriString, days_to_alert);
-                        db.addMedicine(typeToWrite,
-                                specialNotesToWrite,
-                                etNotes.getText().toString(),
-                                Integer.parseInt(etAmount.getText().toString()));
+                        if (askBeforeSave) {
+                            askUserBeforeSave();
+                            return;
+                        }
+                        else
+                        {
+                            db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Medicine, times, Integer.parseInt(etAmount.getText().toString()), videoUriString, days_to_alert);
+                            db.addMedicine(typeToWrite,
+                                    specialNotesToWrite,
+                                    etNotes.getText().toString(),
+                                    Integer.parseInt(etAmount.getText().toString()));
+                        }
                     }
                     finish();
                 } else
@@ -567,6 +656,6 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
     @Override
     public void onBackPressed() {
-        confirm();
+        confirm(true);
     }
 }
