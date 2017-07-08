@@ -138,6 +138,5 @@
     <string name="medicine_dosage_drops">טיפות</string>
     <string name="medicine_dosage_other">אחר</string>
     <string name="tab_home">בית</string>
-    <string name="exit_query">האם אתה רוצה לצאת?</string>
     <string name="save_changes">לשמור את השינויים?</string>
 </resources>

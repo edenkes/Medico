@@ -134,6 +134,5 @@
     <string name="medicine_dosage_drops">drops</string>
     <string name="medicine_dosage_other">other</string>
     <string name="tab_home">Home</string>
-    <string name="exit_query">Do you want to leave?</string>
     <string name="save_changes">Save changes?</string>
 </resources>

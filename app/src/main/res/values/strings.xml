@@ -156,8 +156,6 @@
     <string name="medicine_dosage_drops">drops</string>
     <string name="medicine_dosage_other">other</string>
     <string name="tab_home">Home</string>
-    <string name="exit_query">האם אתה רוצה לצאת?</string> />
-
     <string-array name="drugs_dosage">
         <item>@string/medicine_dosage_type_tab</item>
         <item>@string/medicine_dosage_type_capsule</item>

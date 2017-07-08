@@ -200,20 +200,4 @@ public class MainMenu extends AppCompatActivity
 
     }
 
-    private DialogInterface.OnClickListener onExit = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int id) {
-            finish();
-        }
-    };
-
-    @Override
-    public void onBackPressed() {
-        final AlertDialog exitDialog = new AlertDialog.Builder(this)
-                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onExit)
-                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
-                .setMessage(resources.getString(R.string.exit_query)).create();
-
-        exitDialog.show();
-    }
 }
