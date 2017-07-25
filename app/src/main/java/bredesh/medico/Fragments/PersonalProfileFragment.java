@@ -8,9 +8,11 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.v7.content.res.AppCompatResources;
 import android.util.LayoutDirection;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -188,7 +190,10 @@ public class PersonalProfileFragment extends Fragment {
                 calculatedPoints.possiblePoints - calculatedPoints.gainedPoints));
         if (trophyIconId != 0)
         {
-            ivTrophy.setImageDrawable(resources.getDrawable(trophyIconId, null));
+            if (android.os.Build.VERSION.SDK_INT < 21)
+                ivTrophy.setImageDrawable(resources.getDrawable(trophyIconId));
+            else
+                ivTrophy.setImageDrawable(resources.getDrawable(trophyIconId, null));
             ivTrophy.setVisibility(View.VISIBLE);
         }
         else
@@ -212,7 +217,7 @@ public class PersonalProfileFragment extends Fragment {
         }
 */
 
-        Activity activity = getActivity();
+        final Activity activity = getActivity();
         final Resources resources = activity.getResources();
         pointsCalculator = new PointsCalculator(activity);
         today.set(Calendar.HOUR_OF_DAY,0);
@@ -272,14 +277,14 @@ public class PersonalProfileFragment extends Fragment {
                     graphView.setVisibility(View.VISIBLE);
                     mChart.animateY(5000);
 
-                    ((ImageButton) v).setImageDrawable(resources.getDrawable(R.drawable.icons8_trophy_blue_100, null));
+                    ((ImageButton) v).setImageDrawable(resources.getDrawable(R.drawable.icons8_trophy_blue_100));
                 }
                 else
                 {
                     dailyView.setVisibility(View.VISIBLE);
                     graphView.setVisibility(View.GONE);
                     mChart.animateY(5000);
-                    ((ImageButton) v).setImageDrawable(resources.getDrawable(R.drawable.ic_insert_chart_black_24dp, null));
+                    ((ImageButton) v).setImageDrawable(AppCompatResources.getDrawable(activity, R.drawable.ic_insert_chart_black_24dp));
                 }
             }
         });

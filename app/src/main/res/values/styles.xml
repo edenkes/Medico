@@ -39,9 +39,9 @@
         <item name="android:textSize">20dp</item>
     </style>
 
-    <style name="Theme.Dialog" parent="android:Theme.Material.Light.Dialog">
-        <item name="android:colorPrimary">@color/colorPrimary</item>
-        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+    <style name="Theme.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="textColorAlertDialogListItem">@color/DialogMultiChoiceColor</item>
     </style>

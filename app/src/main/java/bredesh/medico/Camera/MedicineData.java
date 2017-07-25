@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -235,14 +236,14 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                 photoFile = createImageFile();
             } catch (IOException ex) {
                 // Error occurred while creating the File
-
+                ex.printStackTrace();
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                videoUriString = Uri.fromFile(photoFile).toString();
+                Uri photoURI = Build.VERSION.SDK_INT <= Build.VERSION_CODES.M ?
+                        Uri.fromFile(photoFile) :
+                        FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);;
+                videoUriString = photoURI.toString();
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
@@ -625,9 +626,11 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if(resultCode == RESULT_OK)
         {
-            btPlay.setVisibility(View.VISIBLE);
-            Glide.with(this).load(videoUriString).into(btPlay);
-            btPlay.invalidate();
+            if (requestCode == REQUEST_TAKE_PHOTO) {
+                btPlay.setVisibility(View.VISIBLE);
+                Glide.with(this).load(videoUriString).into(btPlay);
+                btPlay.invalidate();
+            }
         }
         else Toast.makeText(MedicineData.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
     }

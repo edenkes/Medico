@@ -70,13 +70,6 @@ public class FragmentHome extends Fragment {
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
                 .create();
 
-        FloatingActionButton btDeleteForever = (FloatingActionButton) view.findViewById(R.id.deleteAll);
-        btDeleteForever.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.show();
-            }
-        });
 
         FloatingActionButton btAddAlert = (FloatingActionButton) view.findViewById(R.id.addAlert);
         btAddAlert.setOnClickListener(new View.OnClickListener() {

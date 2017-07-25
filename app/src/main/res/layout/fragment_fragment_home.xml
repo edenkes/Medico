@@ -17,17 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="70dp">
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/addAlert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="16dp"
-                android:src="@drawable/ic_add_black_48dp"
-                app:backgroundTint="@color/FloatingActionbuttonBackground"
-                app:fabSize="mini"
-                app:layout_anchorGravity="start" />
-
             <TextView
                 android:id="@+id/tvExercises"
                 android:layout_width="match_parent"
@@ -39,6 +28,19 @@
                 android:textColor="@color/titleColor"
                 android:textSize="32sp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/addAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_add_black_48dp"
+                app:backgroundTint="@color/FloatingActionbuttonBackground"
+                app:fabSize="mini"
+                app:layout_anchorGravity="start" />
+
+
         </RelativeLayout>
 
 
