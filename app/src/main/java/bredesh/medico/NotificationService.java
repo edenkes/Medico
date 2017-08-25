@@ -132,8 +132,9 @@ public class NotificationService extends Service {
                     if(CURRENT_DAY != calendar.get(Calendar.DAY_OF_WEEK))
                     {
                         cursor.moveToFirst();
-                        while (cursor.moveToNext())
+                        do {
                             local.allTodaysAlertReset(cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)));
+                        } while (cursor.moveToNext());
                         CURRENT_DAY = calendar.get(Calendar.DAY_OF_WEEK);
                         cursor = getAllTodayAlerts();
                     }
