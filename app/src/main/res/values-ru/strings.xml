@@ -37,7 +37,7 @@
     <string name="alert_dialog_set">подтверждение</string>
     <string name="alert_page_text">Пришло время, чтобы репетировать!</string>
     <string name="alert_snoozed">Увидимся через 5 минут</string>
-    <string name="alert_text">Пришло время, чтобы репетировать!</string>
+    <string name="alert_text">Пришло время выполнить %1$s. %2$s %3$s</string>
     <string name="all_alerts_deleted">Все предупреждения удаляются</string>
     <string name="all_days">Все дни</string>
     <string name="btn_add_alert">Добавить оповещение</string>
@@ -140,4 +140,7 @@
     <string name="medicine_dosage_other">other</string>
     <string name="tab_home">Home</string>
     <string name="save_changes">Save changes?</string>
+    <string name="repetition_type_repetitions">Repetitions</string>
+    <string name="repetition_type_minutes">Minutes</string>
+    <string name="repetition_type_seconds">Seconds</string>
 </resources>

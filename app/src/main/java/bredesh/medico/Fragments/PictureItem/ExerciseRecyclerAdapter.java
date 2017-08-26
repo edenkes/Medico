@@ -20,6 +20,7 @@ import java.util.List;
 import bredesh.medico.Camera.VideoData;
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
+import bredesh.medico.Utils.Utils;
 
 
 public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecyclerAdapter.CustomViewHolder> {
@@ -49,6 +50,7 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
                 Intent intent = new Intent(context, VideoData.class);
                 intent.putExtra("exerciseId", item.getId());
                 intent.putExtra("repeats", item.getNoOfRepetitions());
+                intent.putExtra("repetition_type", item.getRepetitionType());
                 intent.putExtra("time", item.getAllTimes());
                 intent.putExtra("exercise_name", item.getName());
                 intent.putExtra("days", item.getDays());
@@ -88,7 +90,7 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
 
 
 
-        customViewHolder.lblExerciseNoOfRepeats.setText(String.valueOf(item.getNoOfRepetitions()));
+        customViewHolder.lblExerciseNoOfRepeats.setText(Utils.floatToString(item.getNoOfRepetitions()));
         customViewHolder.tvExercisesName.setText(item.getName());
         if (item.getUri() == null)
             customViewHolder.btPlay.setVisibility(View.INVISIBLE);

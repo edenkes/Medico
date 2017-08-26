@@ -3,6 +3,8 @@ package bredesh.medico.Utils;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 /**
@@ -10,9 +12,21 @@ import java.util.Locale;
  */
 
 public class Utils {
+    private static DecimalFormat df = new DecimalFormat("0.#", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+
+    static void Utils()
+    {
+        df.setMaximumFractionDigits(340); //340 = DecimalFormat.DOUBLE_FRACTION_DIGITS
+    }
+
     public static String right(String s, int charsCount)
     {
         return s.substring(s.length() - charsCount);
+    }
+
+    public static String floatToString(float f)
+    {
+        return df.format(f);
     }
 
     public static String noToString(int input, int charsCount)

@@ -12,12 +12,13 @@ public class PartialVideoItem {
 
     public int id;
     public String name;
-    public int repeats;
+    public float repeats;
     public Uri uri;
     public MedicoDB.KIND kind;
+    public String repetition_type;
     public boolean temp = false;
 
-    public PartialVideoItem(int id, String name, Uri uri, int repeats, MedicoDB.KIND kind)
+    public PartialVideoItem(int id, String name, Uri uri, float repeats, String repetition_type, MedicoDB.KIND kind)
     {
         this.id = id;
         this.kind = kind;
@@ -28,5 +29,6 @@ public class PartialVideoItem {
         else this.name = name;
         this.uri = uri;
         this.repeats = repeats;
+        this.repetition_type = repetition_type;
     }
 }

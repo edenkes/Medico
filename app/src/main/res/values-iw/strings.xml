@@ -57,7 +57,7 @@
     <string name="delete_exercise_button">מחק</string>
     <string name="delete_exercise_confirm">למחוק את התרגיל?</string>
     <string name="exercise_deleted">התרגיל נמחק</string>
-    <string name="alert_text" formatted="false">הגיע הזמן לבצע %1$s. %2$d חזרות.</string>
+    <string name="alert_text" formatted="false">הגיע הזמן לבצע %1$s. %2$s  %3$s.</string>
     <string name="alert_page_text" formatted="false">הגיע הזמן לבצע חזרות!</string>
     <string name="media_not_found">הסרט או התמונה לא נמצאו.</string>
     <string name="good_job">כל הכבוד! קיבלת 10 נקודות</string>
@@ -139,4 +139,7 @@
     <string name="medicine_dosage_other">אחר</string>
     <string name="tab_home">בית</string>
     <string name="save_changes">לשמור את השינויים?</string>
+    <string name="repetition_type_repetitions">חזרות</string>
+    <string name="repetition_type_minutes">דקות</string>
+    <string name="repetition_type_seconds">שניות</string>
 </resources>

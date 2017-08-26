@@ -18,9 +18,11 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ import java.util.Objects;
 
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
+import bredesh.medico.Utils.Utils;
 
 interface IRemoveLastAlert
 {
@@ -42,6 +45,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
     private EditText etExerciseName;
     private EditText etRepeats;
+    private Spinner spRepetitionType;
     private ArrayList<String> arrayList;
     private TextView lblSelectedDays;
     private Button btDelete, btConfirm;
@@ -124,7 +128,9 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
     private String oldExerciseName = "";
     private String oldTimes = "";
-    private int oldRepeats = 1;
+    private float oldRepeats = 1;
+    private String oldRepetitionType = "";
+
     private int[] oldDays = new int[7];
     private String oldVideoUriString = null;
 
@@ -159,9 +165,18 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
             Collections.addAll(arrayList, timeAL);
         }
 
-        oldRepeats = intent.getIntExtra("repeats",1);
-        int repeats = oldRepeats;
-        etRepeats.setText(Integer.toString(repeats));
+        oldRepeats = intent.getFloatExtra("repeats",1);
+        float repeats = oldRepeats;
+        etRepeats.setText(Utils.floatToString(repeats));
+
+        String repetitionType = intent.getStringExtra("repetition_type");
+        if (repetitionType == null)
+            repetitionType = Integer.toString(R.string.repetition_type_repetitions);
+        oldRepetitionType = repetitionType;
+        int index;
+        index = Utils.findIndexInResourcesArray(resources, R.array.repetition_types, repetitionType);
+        spRepetitionType.setSelection(index);
+
 
         oldDays = intent.getIntArrayExtra("days");
         int[] days = oldDays;
@@ -254,6 +269,13 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
 
         etRepeats = (EditText) findViewById(R.id.etRepeats);
+        spRepetitionType = (Spinner) findViewById(R.id.spinner_repetition_type);
+        ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource (this, R.array.repetition_types, R.layout.spinner_item );
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spRepetitionType.setAdapter(adapterType);
+
+
         //this.setAutoCloseKeyboard(etRepeats);
         lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
@@ -527,13 +549,14 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                         else
                             days_to_alert[i] = 0;
                     }
-                    int repeats = Integer.parseInt(etRepeats.getText().toString());
+                    float repeats = Float.parseFloat(etRepeats.getText().toString());
                     String times = "";
                     Collections.sort(arrayList);
                     for (int i = 0; i < arrayList.size(); i++)
                         times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
 
                     String exerciseName = etExerciseName.getText().toString();
+                    String repetitionTypeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.repetition_types, spRepetitionType.getSelectedItem().toString());
 
                     if (askBeforeSave)
                     {
@@ -541,6 +564,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                                         oldExerciseName.equals(exerciseName) &&
                                         oldRepeats == repeats &&
                                         oldTimes.equals(times) &&
+                                        oldRepetitionType.equals(repetitionTypeToWrite) &&
                                         Arrays.equals(oldDays, days_to_alert) &&
                                                 (oldVideoUriString == null ? videoUriString == null : oldVideoUriString.equals(videoUriString));
                         if (dataNotChanged)
@@ -551,9 +575,9 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                     }
 
                     if (exerciseId != NewExercise)
-                        db.updateRow(exerciseId, exerciseName, times, repeats, videoUriString, days_to_alert);
+                        db.updateRow(exerciseId, exerciseName, times, repeats, repetitionTypeToWrite, videoUriString, days_to_alert);
                     else
-                        db.addAlert(exerciseName, MedicoDB.KIND.Exercise, times, repeats, videoUriString, days_to_alert);
+                        db.addAlert(exerciseName, MedicoDB.KIND.Exercise, times, repeats, repetitionTypeToWrite, videoUriString, days_to_alert);
                     finish();
                 } else
                     Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_long), Toast.LENGTH_SHORT).show();

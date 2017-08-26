@@ -45,7 +45,7 @@ public class NotificationService extends Service {
         return Service.START_STICKY;
     }
 
-    private void showNotification(String notificationName, int times, int notiID) {
+    private void showNotification(String notificationName, float times, int notiID) {
         int notification_id = (int) System.currentTimeMillis();
 
         if(notificationName.length() >=7 && notificationName.substring(0,7).equals("_TEMP__"))
@@ -65,7 +65,9 @@ public class NotificationService extends Service {
         switch (local.getKindByID(notiID))
         {
             case Exercise:
-                notiString = (getResources().getString(R.string.alert_text, notificationName ,times));
+                String repetitionType = Utils.stringOrFromResource(getResources(), cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE)));
+                String timesStr = Utils.floatToString(times);
+                notiString = (getResources().getString(R.string.alert_text, notificationName ,timesStr, repetitionType));
                 break;
             case Medicine:
                 Cursor c = local.getMedicineByID(notiID);
@@ -154,7 +156,7 @@ public class NotificationService extends Service {
                                 if (notificationHour == currentHour && notificationMinute == currentMinutes && todayAlert.compareTo(time) < 0) {
                                     //now we need to show notification!!
                                     String notificationName = cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_NAME));
-                                    int repeats = cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_REPEATS));
+                                    float repeats = cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_REPEATS));
                                     Localization.init(_this, local);
 
                                     showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)));

@@ -55,7 +55,7 @@
     <string name="delete_exercise_button">מחק</string>
     <string name="delete_exercise_confirm">למחוק את התרגיל?</string>
     <string name="exercise_deleted">התרגיל נמחק</string>
-    <string name="alert_text">Time to perform %1$s. <b>%2$d</b> repeats.</string>
+    <string name="alert_text">Time to perform %1$s. <b>%2$s</b> %3$s.</string>
     <string name="alert_page_text" formatted="false">הגיע הזמן לבצע חזרות!</string>
     <string name="media_not_found">הסרט לא נמצא.</string>
     <string name="media_not_found_image">התמונה לא נמצאה.</string>
@@ -174,5 +174,14 @@
         <item>@string/medicine_usage_notes_2_hours_before_meal</item>
         <item>@string/medicine_usage_notes_2_hours_after_meal</item>
     </string-array>
+
+    <string-array name="repetition_types">
+        <item>@string/repetition_type_repetitions</item>
+        <item>@string/repetition_type_minutes</item>
+        <item>@string/repetition_type_seconds</item>
+    </string-array>
     <string name="save_changes">Save changes?</string>
+    <string name="repetition_type_repetitions">Repetitions</string>
+    <string name="repetition_type_minutes">Minutes</string>
+    <string name="repetition_type_seconds">Seconds</string>
 </resources>

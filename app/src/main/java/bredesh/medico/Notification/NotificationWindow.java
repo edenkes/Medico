@@ -178,7 +178,7 @@ public class NotificationWindow extends AppCompatActivity {
                     String strHour = "0" + hour;
                     strHour = strHour.substring(strHour.length()-2);
                     timeSTR = strHour + " : " + str_minute;
-                    db.addAlert("_TEMP__"+item.name, item.kind, timeSTR, item.repeats, (item.uri !=null)? item.uri.toString(): null, new int[]{1, 1, 1, 1, 1, 1, 1});
+                    db.addAlert("_TEMP__"+item.name, item.kind, timeSTR, item.repeats, item.repetition_type, (item.uri !=null)? item.uri.toString(): null, new int[]{1, 1, 1, 1, 1, 1, 1});
                     if(item.kind == MedicoDB.KIND.Medicine) db.addMedicine(type, special,notes,amount);
                 }
                 moveToMain();
