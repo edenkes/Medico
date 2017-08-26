@@ -1,5 +1,6 @@
 package bredesh.medico.Camera;
 
+import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,6 +9,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -61,6 +63,10 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
         return result.substring(result.length()-2);
     }
 
+    private void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
 
     @Override
@@ -72,7 +78,7 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                hideKeyboard(v);
                 int hour = Integer.parseInt(hourAndMinutes[0]);
                 int minute = Integer.parseInt(hourAndMinutes[1]);
                 TimePickerDialog mTimePicker;
@@ -111,6 +117,7 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
         holder.remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard(v);
             if (chainTime.size() == 1)
                 caller.OnRemoveLastAlert();
             chainTime.remove(position);

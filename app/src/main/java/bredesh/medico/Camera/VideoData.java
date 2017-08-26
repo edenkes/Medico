@@ -1,6 +1,7 @@
 package bredesh.medico.Camera;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +15,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -109,6 +112,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
             {
                 if (alertPlanButtons[i].getId() == view.getId())
                 {
+                    hideKeyboard(view);
                     arrayList.addAll(Arrays.asList(AlertPlans[i]).subList(0, i + 1));
                     timeAdapter.notifyItemInserted(arrayList.size() - 1);
 
@@ -123,6 +127,22 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
     private int oldRepeats = 1;
     private int[] oldDays = new int[7];
     private String oldVideoUriString = null;
+
+    private void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private void setAutoCloseKeyboard(View v) {
+        v.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+    }
 
     private void setExistingExercise(Intent intent)
     {
@@ -187,7 +207,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
     private AlertDialog askBeforeSave = null;
 
-
+    private View mainView;
 
     @SuppressLint("CutPasteId")
     @Override
@@ -207,6 +227,16 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
             actionBar.setDisplayShowHomeEnabled(true);
         }
 
+        mainView = findViewById(R.id.vExerciseRoot);
+
+        mainView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(mainView);
+                return false;
+            }
+        });
+
         RecyclerView timeViews = (RecyclerView) findViewById(R.id.time_views);
         timeViews.setLayoutManager(new LinearLayoutManager(this));
 
@@ -214,8 +244,17 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         btConfirm = (Button) findViewById(R.id.btConfirm);
         btDelete = (Button) findViewById(R.id.btDelete);
         Button addAlert = (Button) findViewById(R.id.btAddAlert);
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(
+                Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
         etExerciseName = (EditText) findViewById(R.id.etExerciseName);
+        //this.setAutoCloseKeyboard(etExerciseName);
+
+
         etRepeats = (EditText) findViewById(R.id.etRepeats);
+        //this.setAutoCloseKeyboard(etRepeats);
         lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
@@ -333,7 +372,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         addAlert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                hideKeyboard(v);
                 arrayList.add(makeTimeString());
                 timeAdapter.notifyItemInserted(arrayList.size() - 1);
             }
@@ -342,6 +381,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
     private void updateSelectedDays()
     {
+        hideKeyboard(etExerciseName);
         String result = "";
         Resources rscs = getResources();
         final CharSequence[] items = {
