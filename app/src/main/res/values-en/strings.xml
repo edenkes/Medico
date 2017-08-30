@@ -138,4 +138,5 @@
     <string name="repetition_type_repetitions">Repetitions</string>
     <string name="repetition_type_minutes">Minutes</string>
     <string name="repetition_type_seconds">Seconds</string>
+    <string name="snooze_30">Remind me in 30 minutes</string>
 </resources>

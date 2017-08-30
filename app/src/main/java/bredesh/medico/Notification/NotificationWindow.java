@@ -106,7 +106,7 @@ public class NotificationWindow extends AppCompatActivity {
                    if(item.uri != null && item.kind == MedicoDB.KIND.Medicine) {
                         ViewGroup.LayoutParams layoutParams = playButton.getLayoutParams();
                         layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-                        layoutParams.height= 400;
+                        layoutParams.height= 200;
                         playButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
                         playButton.setLayoutParams(layoutParams);
                         Glide.with(this).load(item.uri).into(playButton);

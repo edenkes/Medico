@@ -114,24 +114,36 @@
         android:textSize="20sp" />
 
 
+    <Button
+        android:id="@+id/snooze30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/snooze"
+        android:layout_alignParentBottom="false"
+        android:background="@color/titleColor"
+        android:text="@string/snooze_30"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp" />
+
     <LinearLayout
         android:id="@+id/accept_decline_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/snooze30"
+        android:layout_marginBottom="2sp"
         android:layoutDirection="inherit"
         android:orientation="horizontal"
-        android:layout_above="@id/snooze"
-        android:layout_marginBottom="2sp"
+        android:paddingBottom="15sp"
         android:weightSum="1">
 
         <Button
             android:id="@+id/button_accept"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="1sp"
             android:layout_weight="0.5"
             android:background="@color/titleColor"
             android:text="@string/done"
-            android:layout_marginEnd="1sp"
             android:textColor="@color/colorWhite"
             android:textSize="25sp" />
 
@@ -139,12 +151,12 @@
             android:id="@+id/button_decline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/giveup"
             android:layout_marginStart="1sp"
-            android:textSize="25sp"
+            android:layout_weight="0.5"
             android:background="@color/titleColor"
-            android:textColor="@color/colorWhite"/>
+            android:text="@string/giveup"
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp" />
 
     </LinearLayout>
 
