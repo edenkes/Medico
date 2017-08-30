@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
@@ -110,6 +111,20 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
 
         }
 
+        String repetitionTypeInDB = item.getRepetitionType();
+        if (repetitionTypeInDB != null) {
+            int repetitionType = Integer.parseInt(item.getRepetitionType());
+            if (repetitionType == R.string.repetition_type_repetitions ) {
+                customViewHolder.imageRepeat.setVisibility(View.VISIBLE);
+            }
+            else {
+                customViewHolder.imageRepeat.setVisibility(View.GONE);
+                String repetitionTypeS = Utils.stringOrFromResource(resources,repetitionTypeInDB );
+                customViewHolder.tvRepetitionType.setText(repetitionTypeS);
+            }
+
+        }
+
         activateAlerts(customViewHolder, item);
 
         customViewHolder.btPlay.setOnClickListener(new View.OnClickListener() {
@@ -161,10 +176,11 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
 
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvExercisesName, tvExerciseTime, tvExerciseTimeMulti,  lblExerciseNoOfRepeats;
+        private TextView tvExercisesName, tvExerciseTime, tvExerciseTimeMulti,  lblExerciseNoOfRepeats, tvRepetitionType;
         private TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
         private ImageButton btPlay;
         private TextView[] days;
+        private ImageView imageRepeat;
         View v;
 
         private CustomViewHolder(View convertView) {
@@ -181,8 +197,10 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
             this.tvFRI = (TextView) convertView.findViewById(R.id.tvFRI);
             this.tvSAT = (TextView) convertView.findViewById(R.id.tvSAT);
             this.lblExerciseNoOfRepeats = (TextView) convertView.findViewById(R.id.lblExerciseNoOfRepeats);
+            this.tvRepetitionType = (TextView) convertView.findViewById(R.id.txMedicinedosageType);
             this.btPlay = (ImageButton) convertView.findViewById(R.id.btPlay);
             this.days = new TextView[]{tvSUN,tvMON,tvTUE,tvWED,tvTHU,tvFRI,tvSAT};
+            this.imageRepeat = (ImageView) convertView.findViewById(R.id.imageRepeat);
         }
     }
 }

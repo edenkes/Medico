@@ -80,7 +80,7 @@
     <string name="set_language">Language</string>
     <string name="lang_default">Device default</string>
     <string name="notification_alert_prefix">Time to perform:</string>
-    <string name="notification_alert_repeats">%1$d times.</string>
+    <string name="notification_alert_repeats">%1$d %2$s.</string>
     <string name="EditProfile">Edit your profile</string>
     <string name="ClearInfo">Clear personal information</string>
     <string name="personal_profile">Personal profile</string>

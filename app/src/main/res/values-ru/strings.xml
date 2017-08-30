@@ -84,7 +84,7 @@
     <string name="set_language">Язык</string>
     <string name="lang_default">Установки прибора</string>
     <string name="notification_alert_prefix">Пришло время, чтобы выполнить:</string>
-    <string name="notification_alert_repeats">%1$d times.</string>
+    <string name="notification_alert_repeats">%1$d %2$s.</string>
     <string name="EditProfile">Изменить профиль</string>
     <string name="ClearInfo">Очистить личные данные</string>
     <string name="personal_profile">Личные данные</string>

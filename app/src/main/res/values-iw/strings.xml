@@ -84,7 +84,7 @@
     <string name="set_language">שפה</string>
     <string name="lang_default">ברירת מחדל של המכשיר</string>
     <string name="notification_alert_prefix">הגיע הזמן לבצע:</string>
-    <string name="notification_alert_repeats">%1$d חזרות.</string>
+    <string name="notification_alert_repeats">%1$d %2$s.</string>
     <string name="EditProfile">ערוך את הפרופיל שלך</string>
     <string name="ClearInfo">נקה מידע אישי</string>
     <string name="personal_profile">פרופיל אישי</string>

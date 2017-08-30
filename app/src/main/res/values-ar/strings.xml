@@ -81,7 +81,7 @@
     <string name="set_language">اللغة</string>
     <string name="lang_default">الجهاز الافتراضي</string>
     <string name="notification_alert_prefix">وقت التنفيذ:</string>
-    <string name="notification_alert_repeats">%1$d times.</string>
+    <string name="notification_alert_repeats">%1$d %2$s.</string>
     <string name="EditProfile">تعديل ملفك الشخصي</string>
     <string name="ClearInfo">المعلومات الشخصية واضحة</string>
     <string name="personal_profile">ملف شخصي</string>

@@ -48,6 +48,14 @@ public class Utils {
         }
     }
 
+    public static String stringOrFromResource(Resources rscs, String idOrString, int defaultId)
+    {
+        if (idOrString == null)
+            return rscs.getString(defaultId);
+        return stringOrFromResource(rscs, idOrString);
+    }
+
+
     public static String findResourceIdInResourcesArray(Resources rscs, int arrayResId, String value)
     {
         TypedArray typedArray = rscs.obtainTypedArray(arrayResId);

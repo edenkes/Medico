@@ -65,7 +65,7 @@ public class NotificationService extends Service {
         switch (local.getKindByID(notiID))
         {
             case Exercise:
-                String repetitionType = Utils.stringOrFromResource(getResources(), cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE)));
+                String repetitionType = Utils.stringOrFromResource(getResources(), cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE)), R.string.repetition_type_repetitions);
                 String timesStr = Integer.toString(times);
                 notiString = (getResources().getString(R.string.alert_text, notificationName ,timesStr, repetitionType));
                 break;
