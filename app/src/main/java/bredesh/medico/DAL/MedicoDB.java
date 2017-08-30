@@ -213,7 +213,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addAlert(String alert_name,KIND kind, String alert_time, float repeats, String repetition_type, String alert_uri, int[] days_to_alert){
+    public void addAlert(String alert_name,KIND kind, String alert_time, int repeats, String repetition_type, String alert_uri, int[] days_to_alert){
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -357,7 +357,7 @@ public class MedicoDB extends SQLiteOpenHelper {
     }
 
     //same parameters as ADD NEW ALERT (WITHOUT VIDEO/IMAGE URI) BUT WITH ROWID. WE CAN GET IT FROM THE CURSOR OF THE CLICKED ITEM
-    public void updateRow(int rowID, String alert_name, String alert_time, float repeats, String repetition_type, String videoUri, int[] days_to_alert){
+    public void updateRow(int rowID, String alert_name, String alert_time, int repeats, String repetition_type, String videoUri, int[] days_to_alert){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, alert_name);
@@ -416,7 +416,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         v = new PartialVideoItem(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
                 cursor.getString(cursor.getColumnIndex(KEY_NAME)),
                 uri,
-                cursor.getFloat(cursor.getColumnIndex(KEY_REPEATS)),
+                cursor.getInt(cursor.getColumnIndex(KEY_REPEATS)),
                 cursor.getString(cursor.getColumnIndex(KEY_REPETITION_TYPE)),
                 (kind.equals(KIND.Exercise.toString())? KIND.Exercise : KIND.Medicine));
         db.close();

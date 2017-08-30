@@ -13,7 +13,7 @@ public class Exercise {
     public String name;
     public boolean[] daysToPerform;
     public String[] timesToPerform;
-    public float noOfRepetitions;
+    public int noOfRepetitions;
     public String repetitionType;
     public String videoUri;
     
@@ -29,7 +29,7 @@ public class Exercise {
         daysToPerform[4] = c.getInt(c.getColumnIndex(MedicoDB.THURSDAY)) != 0;
         daysToPerform[5] = c.getInt(c.getColumnIndex(MedicoDB.FRIDAY)) != 0;
         daysToPerform[6] = c.getInt(c.getColumnIndex(MedicoDB.SATURDAY)) != 0;
-        noOfRepetitions = c.getFloat(c.getColumnIndex(MedicoDB.KEY_REPEATS));
+        noOfRepetitions = c.getInt(c.getColumnIndex(MedicoDB.KEY_REPEATS));
         repetitionType = c.getString(c.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE));
         timesToPerform = c.getString(c.getColumnIndex(MedicoDB.KEY_TIME)).split(db.dbContext.getResources().getString(R.string.times_splitter));
     }

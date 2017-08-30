@@ -128,7 +128,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
     private String oldExerciseName = "";
     private String oldTimes = "";
-    private float oldRepeats = 1;
+    private int oldRepeats = 1;
     private String oldRepetitionType = "";
 
     private int[] oldDays = new int[7];
@@ -165,9 +165,9 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
             Collections.addAll(arrayList, timeAL);
         }
 
-        oldRepeats = intent.getFloatExtra("repeats",1);
-        float repeats = oldRepeats;
-        etRepeats.setText(Utils.floatToString(repeats));
+        oldRepeats = intent.getIntExtra("repeats",1);
+        int repeats = oldRepeats;
+        etRepeats.setText(Integer.toString(repeats));
 
         String repetitionType = intent.getStringExtra("repetition_type");
         if (repetitionType == null)
@@ -549,7 +549,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                         else
                             days_to_alert[i] = 0;
                     }
-                    float repeats = Float.parseFloat(etRepeats.getText().toString());
+                    int repeats = Integer.parseInt(etRepeats.getText().toString());
                     String times = "";
                     Collections.sort(arrayList);
                     for (int i = 0; i < arrayList.size(); i++)

@@ -7,10 +7,10 @@ import bredesh.medico.DAL.MedicoDB;
 public class VideoItem extends Item{
 
     private boolean isAlertsActive;
-    private float noOfRepetitions;
+    private int noOfRepetitions;
     private String repetitionType;
 
-    public VideoItem(int id, String time, String name, String uri, int[] days, float noOfRepetitions, String repetitionType,  boolean detailedTimes, String allTimes, MedicoDB.KIND kind){
+    public VideoItem(int id, String time, String name, String uri, int[] days, int noOfRepetitions, String repetitionType,  boolean detailedTimes, String allTimes, MedicoDB.KIND kind){
         super(id,time,name,uri,days,detailedTimes,allTimes,kind);
         isAlertsActive = true;
         this.noOfRepetitions = noOfRepetitions;
@@ -29,7 +29,7 @@ public class VideoItem extends Item{
         return days;
     }
 
-    public float getNoOfRepetitions() {return this.noOfRepetitions;}
+    public int getNoOfRepetitions() {return this.noOfRepetitions;}
 
     public String getRepetitionType() {return this.repetitionType;}
 

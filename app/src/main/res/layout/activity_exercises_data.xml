@@ -83,8 +83,8 @@
                     android:layout_marginEnd="10sp"
                     android:ems="6"
                     android:imeOptions="actionDone"
-                    android:inputType="numberDecimal"
-                    android:maxLength="6"
+                    android:inputType="number"
+                    android:maxLength="3"
                     android:selectAllOnFocus="true"
                     android:singleLine="true" />
 

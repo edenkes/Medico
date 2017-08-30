@@ -90,7 +90,7 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
 
 
 
-        customViewHolder.lblExerciseNoOfRepeats.setText(Utils.floatToString(item.getNoOfRepetitions()));
+        customViewHolder.lblExerciseNoOfRepeats.setText(String.valueOf(item.getNoOfRepetitions()));
         customViewHolder.tvExercisesName.setText(item.getName());
         if (item.getUri() == null)
             customViewHolder.btPlay.setVisibility(View.INVISIBLE);
