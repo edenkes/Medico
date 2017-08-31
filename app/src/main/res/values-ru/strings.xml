@@ -36,7 +36,7 @@
     <string name="alert_dialog_select_days">Выбор дней для оповещения</string>
     <string name="alert_dialog_set">подтверждение</string>
     <string name="alert_page_text">Пришло время, чтобы репетировать!</string>
-    <string name="alert_snoozed">Увидимся через 5 минут</string>
+    <string name="alert_snoozed">Увидимся через %1$s минут</string>
     <string name="alert_text">Пришло время выполнить %1$s. %2$s %3$s</string>
     <string name="all_alerts_deleted">Все предупреждения удаляются</string>
     <string name="all_days">Все дни</string>
@@ -68,7 +68,7 @@
     <string name="repetitions">Повторы</string>
     <string name="reshootVideo">Сфотографировать снова упражнение?</string>
     <string name="several_times">%d Раз в день</string>
-    <string name="snooze">Напомни мне через 5 минут</string>
+    <string name="snooze">Напомни мне через</string>
     <string name="times_nice_separator">" | "</string>
     <string name="times_splitter">", "</string>
 
@@ -143,5 +143,6 @@
     <string name="repetition_type_repetitions">Repetitions</string>
     <string name="repetition_type_minutes">Minutes</string>
     <string name="repetition_type_seconds">Seconds</string>
-    <string name="snooze_30">Напомни мне через 30 минут</string>
+    <string name="snooze_30">30 минут</string>
+    <string name="snooze_5">5 минут</string>
 </resources>

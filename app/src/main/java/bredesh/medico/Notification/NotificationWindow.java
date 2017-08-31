@@ -63,12 +63,13 @@ public class NotificationWindow extends AppCompatActivity {
         Button accept = (Button) findViewById(R.id.button_accept);
         Button decline = (Button) findViewById(R.id.button_decline);
         Button snooze = (Button) findViewById(R.id.snooze);
+        Button snooze30 = (Button)findViewById(R.id.snooze30);
         ImageButton playButton = (ImageButton) findViewById(R.id.play_button);
 
         toMain = new Intent(NotificationWindow.this, MainMenu.class);
         int id = getIntent().getIntExtra("db_id",-1);
         item = db.getItemByID(id);
-        Resources resources = getResources();
+        final Resources resources = getResources();
         if(item != null) {
 
             switch (item.kind)
@@ -143,12 +144,15 @@ public class NotificationWindow extends AppCompatActivity {
             }
         });
 
-        final String alertSnoozed = resources.getString(R.string.alert_snoozed);
-        snooze.setOnClickListener(new View.OnClickListener() {
+
+        View.OnClickListener snoozeListener =  new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getApplicationContext(), alertSnoozed , Toast.LENGTH_LONG).show();
+                String snoozeTimeStr = v.getTag().toString();
+                final String alertSnoozed = resources.getString(R.string.alert_snoozed, snoozeTimeStr);
+
+                Toast.makeText(getApplicationContext(), alertSnoozed, Toast.LENGTH_LONG).show();
 /*
                 Long alertTime = new Long(System.currentTimeMillis() + (5 * 1000));
 
@@ -159,31 +163,34 @@ public class NotificationWindow extends AppCompatActivity {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, alertTime,
                         PendingIntent.getBroadcast(NotificationWindow.this, 1, alertIntent,
                                 PendingIntent.FLAG_UPDATE_CURRENT));*/
-                if(item!=null) {
+                if (item != null) {
                     String timeSTR;
                     Calendar cal = Calendar.getInstance();
-                    int minute =  (cal.get(Calendar.MINUTE) + SNOOZE_TIME);
+                    int minute = (cal.get(Calendar.MINUTE) + Integer.parseInt(snoozeTimeStr));
                     int hour = cal.get(Calendar.HOUR_OF_DAY);
-                    if(minute >= 60)
-                    {
-                        minute =  minute%60;
+                    if (minute >= 60) {
+                        minute = minute % 60;
                         hour++;
                     }
-                    if(hour>=24) hour = hour % 24;
+                    if (hour >= 24) hour = hour % 24;
                     String str_minute;
-                    if(minute < 10)
+                    if (minute < 10)
                         str_minute = "0" + minute;
                     else
                         str_minute = "" + minute;
                     String strHour = "0" + hour;
-                    strHour = strHour.substring(strHour.length()-2);
+                    strHour = strHour.substring(strHour.length() - 2);
                     timeSTR = strHour + " : " + str_minute;
-                    db.addAlert("_TEMP__"+item.name, item.kind, timeSTR, item.repeats, item.repetition_type, (item.uri !=null)? item.uri.toString(): null, new int[]{1, 1, 1, 1, 1, 1, 1});
-                    if(item.kind == MedicoDB.KIND.Medicine) db.addMedicine(type, special,notes,amount);
+                    db.addAlert("_TEMP__" + item.name, item.kind, timeSTR, item.repeats, item.repetition_type, (item.uri != null) ? item.uri.toString() : null, new int[]{1, 1, 1, 1, 1, 1, 1});
+                    if (item.kind == MedicoDB.KIND.Medicine)
+                        db.addMedicine(type, special, notes, amount);
                 }
                 moveToMain();
             }
-        });
+        };
+
+        snooze.setOnClickListener(snoozeListener);
+        snooze30.setOnClickListener(snoozeListener);
 
         if (item == null || item.uri == null)
             playButton.setVisibility(View.INVISIBLE);

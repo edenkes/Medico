@@ -39,7 +39,7 @@
     <string name="name_too_long">שם ארוך מידי (עד 16 תוים)</string>
     <string name="name_too_short">הכנס שם תרגיל</string>
     <string name="part2_repeats">מספר חזרות: </string>
-    <string name="snooze">הזכר לי עוד 5 דקות</string>
+    <string name="snooze">Remind me in</string>
     <string name="done">ביצעתי</string>
     <string name="giveup">ביטול</string>
     <string name="invalid_name">הכנס שם תרגיל</string>
@@ -62,7 +62,7 @@
 
     <string name="good_job">כל הכבוד! קיבלת 10 נקודות</string>
     <string name="alert_cancelled">ההתראה בוטלה. ננסה בפעם הבאה.</string>
-    <string name="alert_snoozed">נתראה עוד 5 דקות!</string>
+    <string name="alert_snoozed">See you in %1$s minutes</string>
     <string name="personal_info">מידע אישי</string>
     <string name="LastName">שם משפחה</string>
     <string name="FirstName">שם פרטי</string>
@@ -184,5 +184,6 @@
     <string name="repetition_type_repetitions">Repetitions</string>
     <string name="repetition_type_minutes">Minutes</string>
     <string name="repetition_type_seconds">Seconds</string>
-    <string name="snooze_30">Remind me in 30 minutes</string>
+    <string name="snooze_30">30 minutes</string>
+    <string name="snooze_5">5 minutes</string>
 </resources>

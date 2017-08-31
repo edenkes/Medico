@@ -28,7 +28,7 @@
     <string name="btn_confirm">OK</string>
     <string name="alert_dialog_set">OK</string>
     <string name="alert_page_text">Time to rehearse!</string>
-    <string name="alert_snoozed">See you in 5 minutes!</string>
+    <string name="alert_snoozed">See you in %1$s minutes!</string>
     <string name="alert_text" formatted="true">Time to perform %1$s! %2$s %3$s.</string>
     <string name="all_alerts_deleted">All notifications have been removed</string>
     <string name="all_days">All days</string>
@@ -72,7 +72,7 @@
     <string name="reshootVideo">Would you like to retake the exercise?</string>
     <string name="select_days">Days:</string>
     <string name="several_times">%d times per day</string>
-    <string name="snooze">Remind me in 5 minutes</string>
+    <string name="snooze">Remind me in</string>
     <string name="times_nice_separator">" | "</string>
     <string name="times_splitter">", "</string>
     <string name="exercise_name_label">Exercise name:</string>
@@ -138,5 +138,6 @@
     <string name="repetition_type_repetitions">Repetitions</string>
     <string name="repetition_type_minutes">Minutes</string>
     <string name="repetition_type_seconds">Seconds</string>
-    <string name="snooze_30">Remind me in 30 minutes</string>
+    <string name="snooze_30">30 minutes</string>
+    <string name="snooze_5">5 minutes</string>
 </resources>

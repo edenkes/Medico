@@ -101,39 +101,64 @@
     </ScrollView>
 
 
-
-
-    <Button
-        android:id="@+id/snooze"
+    <LinearLayout
+        android:id="@+id/snooze_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/titleColor"
-        android:textColor="@color/colorWhite"
-        android:text="@string/snooze"
-        android:textSize="20sp" />
-
-
-    <Button
-        android:id="@+id/snooze30"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/snooze"
+        android:layout_above="@+id/accept_decline_layout"
         android:layout_alignParentBottom="false"
-        android:background="@color/titleColor"
-        android:text="@string/snooze_30"
-        android:textColor="@color/colorWhite"
-        android:textSize="20sp" />
+        android:layout_marginBottom="5sp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:gravity="center_vertical|start"
+            android:paddingStart="10sp"
+            android:text="@string/snooze"
+            android:textColor="@color/labelColor"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/snooze"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginStart="10sp"
+            android:layout_weight="0.25"
+            android:background="@color/titleColor"
+            android:tag="5"
+            android:text="@string/snooze_5"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/snooze30"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginStart="10sp"
+            android:layout_weight="0.28"
+            android:background="@color/titleColor"
+            android:tag="30"
+            android:text="@string/snooze_30"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/accept_decline_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/snooze30"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="2sp"
         android:layoutDirection="inherit"
         android:orientation="horizontal"
-        android:paddingBottom="15sp"
         android:weightSum="1">
 
         <Button
@@ -165,12 +190,12 @@
         android:id="@+id/play_button"
         android:layout_width="100sp"
         android:layout_height="100sp"
+        android:layout_above="@+id/snooze_layout"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="18dp"
         android:background="@drawable/button_round"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_play_arrow_black_48dp"
-        android:layout_above="@+id/accept_decline_layout"
-        android:layout_centerHorizontal="true" />
+        android:src="@drawable/ic_play_arrow_black_48dp" />
 
 
 

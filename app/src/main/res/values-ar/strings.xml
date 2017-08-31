@@ -41,7 +41,7 @@
     <string name="name_too_long">اسم طويل جدا (تصل إلى 16 حرفا)</string>
     <string name="name_too_short">أدخل اسما للتمرين</string>
     <string name="part2_repeats">عدة مرات التكرار:</string>
-    <string name="snooze">ذكرني في 5 دقائق</string>
+    <string name="snooze">"ذكرني في "</string>
     <string name="done">لقد</string>
     <string name="giveup">الغاء</string>
     <string name="invalid_name">أدخل اسما للتمرين</string>
@@ -62,7 +62,7 @@
     <string name="media_not_found">لم يتم العثور على فيلم أو صورة.</string>
     <string name="good_job">كل الاحترام! حصل على 10 نقطة</string>
     <string name="alert_cancelled">إلغاء حالة تأهب. حاول في المرة القادمة.</string>
-    <string name="alert_snoozed">نراكم في آخر 5 دقائق!</string>
+    <string name="alert_snoozed">نراكم في آخر %1$s دقائق!</string>
     <string name="personal_info">معلومات شخصية</string>
     <string name="LastName">اسم عائلة</string>
     <string name="FirstName">اسم شخصي</string>
@@ -140,5 +140,6 @@
     <string name="repetition_type_repetitions">חזרות</string>
     <string name="repetition_type_minutes">דקות</string>
     <string name="repetition_type_seconds">שניות</string>
-    <string name="snooze_30">ذكرني في 30 دقائق</string>
+    <string name="snooze_30">30 دقائق</string>
+    <string name="snooze_5">5 دقائق</string>
 </resources>
