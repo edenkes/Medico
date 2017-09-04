@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWindowBackground"
     android:focusableInTouchMode="true"
     android:layoutDirection="locale"
@@ -136,7 +137,7 @@
                     android:layout_marginStart="10sp"
                     android:background="@drawable/button_round"
                     android:scaleType="center"
-                    android:src="@drawable/ic_music_note_black_24dp" />
+                    app:srcCompat="@drawable/ic_music_note_black_24dp" />
 
             </LinearLayout>
 
