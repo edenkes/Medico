@@ -503,7 +503,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
 
                     if (medicineId != NewMedicine) {
-                        db.updateRow(medicineId, medicineName, times, amount, "" ,  videoUriString, days_to_alert);
+                        db.updateRow(medicineId, medicineName, times, amount, "" ,  videoUriString, days_to_alert, null);
                         db.updateMedicine(medicineId,
                                 typeToWrite,
                                 specialNotesToWrite,
@@ -518,7 +518,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                         }
                         else
                         {
-                            db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Medicine, times, Integer.parseInt(etAmount.getText().toString()), "", videoUriString, days_to_alert);
+                            db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Medicine, times, Integer.parseInt(etAmount.getText().toString()), "", videoUriString, days_to_alert, null);
                             db.addMedicine(typeToWrite,
                                     specialNotesToWrite,
                                     etNotes.getText().toString(),

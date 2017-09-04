@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,7 +23,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,7 +61,9 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
     private int exerciseId;
     private final int NewExercise = -6;
     private ImageButton btPlay;
+    private ImageButton btChooseSound;
     private String videoUriString;
+    private String alertSoundUriString;
     private final Button[] alertPlanButtons = new Button[5];
     private TimeAdapterRecycler timeAdapter = null;
     private Button btAddAlert;
@@ -134,6 +136,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
     private int[] oldDays = new int[7];
     private String oldVideoUriString = null;
+    private String oldAlertSoundUriString = null;
 
     private void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -198,6 +201,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
     };
 
     private static final int REQUEST_VIDEO_CAPTURE = 1;
+    private static final int CHOOSE_ALERT_SOUND = 5;
 
     private void ShootVideo()
     {
@@ -206,6 +210,17 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
             startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
         }
     }
+
+    private void ChooseSound()
+    {
+        Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALL);
+        Uri existingAlertSoundUri = alertSoundUriString == null ? null : Uri.parse(alertSoundUriString);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, existingAlertSoundUri);
+        this.startActivityForResult(intent, CHOOSE_ALERT_SOUND);
+    }
+
 
     private DialogInterface.OnClickListener onConfirm = new DialogInterface.OnClickListener() {
         @Override
@@ -282,6 +297,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
         btPlay = (ImageButton) findViewById(R.id.btPlay);
+        btChooseSound = (ImageButton) findViewById(R.id.btChooseSound);
         alertPlanButtons[0] = (Button) findViewById(R.id.bt1time);
         alertPlanButtons[1] = (Button) findViewById(R.id.bt2times);
         alertPlanButtons[2] = (Button) findViewById(R.id.bt3times);
@@ -319,6 +335,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         db = new MedicoDB(getApplicationContext());
         Intent intent = getIntent();
         oldVideoUriString = videoUriString = intent.getStringExtra("RecordedUri");
+        oldAlertSoundUriString = alertSoundUriString = intent.getStringExtra("AlertSoundUri");
         etRepeats.setText(Integer.toString(1));
         this.exerciseId = intent.getIntExtra("exerciseId", NewExercise);
         if (this.exerciseId != NewExercise)
@@ -366,6 +383,14 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                         resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
             }
         });
+
+        btChooseSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChooseSound();
+            }
+        });
+
 
         btConfirm.setOnClickListener(new View.OnClickListener() {
 
@@ -493,15 +518,26 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if(resultCode == RESULT_OK && intent != null ){
-            if(intent.getData() != null){
-                videoUriString = intent.getData().toString();
-                btPlay.setVisibility(View.VISIBLE);
-                Toast.makeText(VideoData.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
-                return;
+        if (requestCode == CHOOSE_ALERT_SOUND) {
+            if (resultCode == RESULT_OK && intent != null) {
+                Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+
+                if (uri != null) {
+                    this.alertSoundUriString = uri.toString();
+                }
             }
         }
-        Toast.makeText(VideoData.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
+        else {
+            if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK && intent != null) {
+                if (intent.getData() != null) {
+                    videoUriString = intent.getData().toString();
+                    btPlay.setVisibility(View.VISIBLE);
+                    Toast.makeText(VideoData.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+            Toast.makeText(VideoData.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
+        }
     }
     /*
         return string format of the current time.
@@ -567,7 +603,8 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                                         oldTimes.equals(times) &&
                                         oldRepetitionType.equals(repetitionTypeToWrite) &&
                                         Arrays.equals(oldDays, days_to_alert) &&
-                                                (oldVideoUriString == null ? videoUriString == null : oldVideoUriString.equals(videoUriString));
+                                                (oldVideoUriString == null ? videoUriString == null : oldVideoUriString.equals(videoUriString)) &&
+                                                (oldAlertSoundUriString == null ? alertSoundUriString == null : oldAlertSoundUriString.equals(alertSoundUriString));
                         if (dataNotChanged)
                             finish();
                         else
@@ -576,9 +613,9 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                     }
 
                     if (exerciseId != NewExercise)
-                        db.updateRow(exerciseId, exerciseName, times, repeats, repetitionTypeToWrite, videoUriString, days_to_alert);
+                        db.updateRow(exerciseId, exerciseName, times, repeats, repetitionTypeToWrite, videoUriString, days_to_alert, alertSoundUriString);
                     else
-                        db.addAlert(exerciseName, MedicoDB.KIND.Exercise, times, repeats, repetitionTypeToWrite, videoUriString, days_to_alert);
+                        db.addAlert(exerciseName, MedicoDB.KIND.Exercise, times, repeats, repetitionTypeToWrite, videoUriString, days_to_alert, alertSoundUriString);
                     finish();
                 } else
                     Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_long), Toast.LENGTH_SHORT).show();

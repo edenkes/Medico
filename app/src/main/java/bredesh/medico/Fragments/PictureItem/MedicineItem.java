@@ -12,7 +12,7 @@ public class MedicineItem extends Item {
 
     public MedicineItem(int id, String time, String name, String uri, int[] days, boolean detailedTimes, String allTimes,
                         MedicoDB.KIND kind, String type, String special, String notes, String amount) {
-        super(id, time, name, uri, days, detailedTimes, allTimes, kind);
+        super(id, time, name, uri, days, detailedTimes, allTimes, kind, null);
         this.type = type;
         this.special = special;
         this.notes = notes;

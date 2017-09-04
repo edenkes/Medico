@@ -7,6 +7,8 @@ import android.app.Service;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -45,7 +47,7 @@ public class NotificationService extends Service {
         return Service.START_STICKY;
     }
 
-    private void showNotification(String notificationName, int times, int notiID) {
+    private void showNotification(String notificationName, int times, int notiID, String soundUri) {
         int notification_id = (int) System.currentTimeMillis();
 
         if(notificationName.length() >=7 && notificationName.substring(0,7).equals("_TEMP__"))
@@ -93,8 +95,16 @@ public class NotificationService extends Service {
                 .setContentTitle(notificationName)
                 .setWhen(System.currentTimeMillis())
                 .setContentText(notiString)
-                .setDefaults(Notification.DEFAULT_ALL)
                 .setPriority(Notification.PRIORITY_HIGH);
+        Uri soundActualUri;
+        if (soundUri != null) {
+            soundActualUri = Uri.parse(soundUri);
+        }
+        else
+        {
+            soundActualUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        }
+        builder.setSound(soundActualUri);
 
         notificationManager.notify(notification_id,builder.build());
     }
@@ -159,7 +169,7 @@ public class NotificationService extends Service {
                                     int repeats = cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_REPEATS));
                                     Localization.init(_this, local);
 
-                                    showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)));
+                                    showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)), cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI)));
                                     local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)), time);
                                 }
                             }

@@ -58,6 +58,8 @@ public class ExerciseRecyclerAdapter extends RecyclerView.Adapter<ExerciseRecycl
                 Uri uri = item.getUri();
                 if (uri!=null)
                     intent.putExtra("RecordedUri", item.getUri().toString());
+                intent.putExtra("AlertSoundUri", item.getAlertSoundUri());
+
                 activity.startActivityForResult(intent, 0x1987);
             }
         });

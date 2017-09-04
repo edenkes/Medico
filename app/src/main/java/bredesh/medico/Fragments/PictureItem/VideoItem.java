@@ -1,5 +1,6 @@
 package bredesh.medico.Fragments.PictureItem;
 
+import android.media.RingtoneManager;
 import android.net.Uri;
 
 import bredesh.medico.DAL.MedicoDB;
@@ -10,11 +11,17 @@ public class VideoItem extends Item{
     private int noOfRepetitions;
     private String repetitionType;
 
-    public VideoItem(int id, String time, String name, String uri, int[] days, int noOfRepetitions, String repetitionType,  boolean detailedTimes, String allTimes, MedicoDB.KIND kind){
-        super(id,time,name,uri,days,detailedTimes,allTimes,kind);
+    public VideoItem(int id, String time, String name, String uri, int[] days, int noOfRepetitions, String repetitionType,  boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri){
+        super(id,time,name,uri,days,detailedTimes,allTimes,kind, alertSoundUri);
         isAlertsActive = true;
         this.noOfRepetitions = noOfRepetitions;
         this.repetitionType = repetitionType;
+    }
+
+    public String getAlertSoundUri() {
+        if (alertSoundUri == null)
+            alertSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION).toString();
+        return alertSoundUri;
     }
 
     public Uri getUri() { return  uri;}

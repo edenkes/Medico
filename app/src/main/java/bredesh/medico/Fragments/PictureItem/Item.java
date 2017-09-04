@@ -15,13 +15,14 @@ public class Item {
     public MedicoDB.KIND kind;
     public String time;
     public Uri uri;
+    public String alertSoundUri;
     public int[] days;
 
     protected final String[] daysNames = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
     protected boolean detailedTimes;
     protected String allTimes;
     
-    public Item(int id, String time, String name, String uri, int[] days, boolean detailedTimes, String allTimes, MedicoDB.KIND kind)
+    public Item(int id, String time, String name, String uri, int[] days, boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri)
     {
         this.id = id;
         this.time = time;
@@ -33,5 +34,6 @@ public class Item {
         this.detailedTimes = detailedTimes;
         this.allTimes = allTimes;
         this.kind = kind;
+        this.alertSoundUri = alertSoundUri;
     }
 }

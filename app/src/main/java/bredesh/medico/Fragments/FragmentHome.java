@@ -110,6 +110,7 @@ public class FragmentHome extends Fragment {
 
             String name = c.getString(c.getColumnIndex(db.KEY_NAME));
             String uri = c.getString(c.getColumnIndex(db.URIVIDEO));
+            String alertSoundUri = c.getString(c.getColumnIndex(db.KEY_ALERT_SOUND_URI));
             int[] days = new int[7];
             days[0] = c.getInt(c.getColumnIndex(db.SUNDAY));
             days[1] = c.getInt(c.getColumnIndex(db.MONDAY));
@@ -121,7 +122,7 @@ public class FragmentHome extends Fragment {
             int noOfRepetitions = c.getInt(c.getColumnIndex(db.KEY_REPEATS));
             String repetitionTpye = c.getString(c.getColumnIndex(db.KEY_REPETITION_TYPE));
 
-            arrayList.add(index, new VideoItem(id, time, name, uri, days, noOfRepetitions, repetitionTpye, detailedTimes, allTimes, MedicoDB.KIND.Exercise));
+            arrayList.add(index, new VideoItem(id, time, name, uri, days, noOfRepetitions, repetitionTpye, detailedTimes, allTimes, MedicoDB.KIND.Exercise, alertSoundUri));
         }
         c.close();
     }
