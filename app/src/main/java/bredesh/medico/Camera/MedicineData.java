@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,6 +75,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
     private Button btAddAlert;
     private TextView lbAddMultiAlert;
     private boolean isChanged = false;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
 
     private final String[][] AlertPlans =
@@ -255,7 +257,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.activity_medicine_data);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -501,7 +503,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
                     }
 
-
+                    Bundle bundle = new Bundle();
                     if (medicineId != NewMedicine) {
                         db.updateRow(medicineId, medicineName, times, amount, "" ,  videoUriString, days_to_alert, null);
                         db.updateMedicine(medicineId,
@@ -509,6 +511,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                                 specialNotesToWrite,
                                 newNotes,
                                 amount);
+                        mFirebaseAnalytics.logEvent("Medicine_updated", bundle);
                     }
                     else
                     {
@@ -523,6 +526,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                                     specialNotesToWrite,
                                     etNotes.getText().toString(),
                                     Integer.parseInt(etAmount.getText().toString()));
+                            mFirebaseAnalytics.logEvent("Medicine_added", bundle);
                         }
                     }
                     finish();

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.example.bottom_bar.BottomBar;
 import com.example.bottom_bar.OnTabReselectListener;
 import com.example.bottom_bar.OnTabSelectListener;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Locale;
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     MedicoDB dbManager = null;
     int prevTabId = 0;
     BottomBar bottomBar = null;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -113,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.activity_main);
 /*
         session = new Session(this);
@@ -186,6 +189,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.tab_personal:
                 fragment = new PersonalProfileFragment();
+                Bundle params = new Bundle();
+                mFirebaseAnalytics.logEvent("Show_personal_info", params);
                 break;
         }
 

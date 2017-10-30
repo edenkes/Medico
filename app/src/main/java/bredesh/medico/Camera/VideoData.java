@@ -27,6 +27,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -237,7 +239,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
     };
 
     private AlertDialog askBeforeSave = null;
-
+    private FirebaseAnalytics mFirebaseAnalytics;
     private View mainView;
 
     @SuppressLint("CutPasteId")
@@ -245,6 +247,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.activity_exercises_data);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -612,10 +615,15 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                         return;
                     }
 
-                    if (exerciseId != NewExercise)
+                    Bundle params = new Bundle();
+                    if (exerciseId != NewExercise) {
                         db.updateRow(exerciseId, exerciseName, times, repeats, repetitionTypeToWrite, videoUriString, days_to_alert, alertSoundUriString);
-                    else
+                        mFirebaseAnalytics.logEvent("Excercise_updated", params);
+                    }
+                    else {
                         db.addAlert(exerciseName, MedicoDB.KIND.Exercise, times, repeats, repetitionTypeToWrite, videoUriString, days_to_alert, alertSoundUriString);
+                        mFirebaseAnalytics.logEvent("Excercise_added", params);
+                    }
                     finish();
                 } else
                     Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_long), Toast.LENGTH_SHORT).show();

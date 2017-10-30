@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Calendar;
 
@@ -39,10 +40,13 @@ public class NotificationWindow extends AppCompatActivity {
     private final int SNOOZE_TIME = 5;
     String type, special, notes;
     int amount;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         db = new MedicoDB(getApplicationContext());
         Localization.init(this, db);
         setContentView(R.layout.activity_receive_notifiction);
@@ -130,6 +134,9 @@ public class NotificationWindow extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 db.addPoints(MedicoDB.PhysioTherapy, item.id, item.name, 10);
+                Bundle params = new Bundle();
+                params.putInt("points", 10);
+                mFirebaseAnalytics.logEvent("Notification_done", params);
                 Toast.makeText(getApplicationContext(), goodJob , Toast.LENGTH_LONG).show();
                 moveToMain();
             }
@@ -140,6 +147,8 @@ public class NotificationWindow extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), alertCancelled , Toast.LENGTH_LONG).show();
+                Bundle params = new Bundle();
+                mFirebaseAnalytics.logEvent("Notification_cancel", params);
                 moveToMain();
             }
         });
@@ -166,7 +175,8 @@ public class NotificationWindow extends AppCompatActivity {
                 if (item != null) {
                     String timeSTR;
                     Calendar cal = Calendar.getInstance();
-                    int minute = (cal.get(Calendar.MINUTE) + Integer.parseInt(snoozeTimeStr));
+                    int snoozeMinutes = Integer.parseInt(snoozeTimeStr);
+                    int minute = (cal.get(Calendar.MINUTE) + snoozeMinutes);
                     int hour = cal.get(Calendar.HOUR_OF_DAY);
                     if (minute >= 60) {
                         minute = minute % 60;
@@ -182,6 +192,9 @@ public class NotificationWindow extends AppCompatActivity {
                     strHour = strHour.substring(strHour.length() - 2);
                     timeSTR = strHour + " : " + str_minute;
                     db.addAlert("_TEMP__" + item.name, item.kind, timeSTR, item.repeats, item.repetition_type, (item.uri != null) ? item.uri.toString() : null, new int[]{1, 1, 1, 1, 1, 1, 1}, item.alertSoundUriString);
+                    Bundle params = new Bundle();
+                    params.putInt("minutes", snoozeMinutes);
+                    mFirebaseAnalytics.logEvent("Notification_snooze", params);
                     if (item.kind == MedicoDB.KIND.Medicine)
                         db.addMedicine(type, special, notes, amount);
                 }

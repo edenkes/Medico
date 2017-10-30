@@ -9,9 +9,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Calendar;
 
@@ -27,6 +30,7 @@ public class NotificationService extends Service {
     private Cursor cursor;
     private int CURRENT_DAY;
     private boolean shouldStop = false;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     public IBinder onBind(Intent intent) { return null; }
@@ -125,6 +129,7 @@ public class NotificationService extends Service {
 
     private void startThreading()
     {
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         final ContextWrapper _this = this;
         new Thread(new Runnable() {
             @Override
@@ -168,6 +173,9 @@ public class NotificationService extends Service {
                                     String notificationName = cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_NAME));
                                     int repeats = cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_REPEATS));
                                     Localization.init(_this, local);
+
+                                    Bundle bundle=new Bundle();
+                                    mFirebaseAnalytics.logEvent("Notification_show", bundle);
 
                                     showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)), cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI)));
                                     local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)), time);
