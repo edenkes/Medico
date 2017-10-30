@@ -5,10 +5,10 @@ android {
     buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "bredesh.medico"
-        minSdkVersion 19
+        minSdkVersion 20
         targetSdkVersion 25
-        versionCode 17
-        versionName "1.17"
+        versionCode 20
+        versionName "1.20"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
