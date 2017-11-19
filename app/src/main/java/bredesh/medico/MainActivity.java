@@ -24,10 +24,8 @@ import bredesh.medico.Fragments.FragmentMedicine;
 import bredesh.medico.Fragments.PersonalProfileFragment;
 import bredesh.medico.Menu.MainMenu;
 
-
+//new branch
 public class MainActivity extends AppCompatActivity {
-
-
     private String language = "default";
     private Menu optionsMenu = null;
     MedicoDB dbManager = null;
