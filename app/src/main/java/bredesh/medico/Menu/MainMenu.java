@@ -30,7 +30,7 @@ import bredesh.medico.R;
 
 public class MainMenu extends AppCompatActivity
 {
-    public enum MODE {Exercise,Medicine}
+    public enum MODE {Exercise,Medicine,Reminders}
     public static MODE CURRENT;
     public static String language = "default";
     public static boolean languageChanged = false;
@@ -180,10 +180,10 @@ public class MainMenu extends AppCompatActivity
                 null,
                 null, R.drawable.card_menu3));
 
-        menu_items.add(new Item_Menu(R.drawable.ic_toys_black_48dp,
+        menu_items.add(new Item_Menu(R.drawable.ic_lightbulb_on,
                 resources.getString(R.string.menu_item_4),
-                null,
-                null, R.drawable.card_menu4));
+                new Intent(MainMenu.this, MainActivity.class),
+                MODE.Reminders, R.drawable.card_menu4));
 
         MenuAdapterRecycler adapterRecycler = new MenuAdapterRecycler(getApplicationContext(),menu_items, this);
         menu.setAdapter(adapterRecycler);

@@ -22,9 +22,10 @@ import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Fragments.FragmentHome;
 import bredesh.medico.Fragments.FragmentMedicine;
 import bredesh.medico.Fragments.PersonalProfileFragment;
+import bredesh.medico.Fragments.PersonalRemindersFragment;
 import bredesh.medico.Menu.MainMenu;
 
-//new branch
+
 public class MainActivity extends AppCompatActivity {
     private String language = "default";
     private Menu optionsMenu = null;
@@ -165,6 +166,9 @@ public class MainActivity extends AppCompatActivity {
                 case Medicine:
                     bottomBar.selectTabWithId(R.id.tab_drugs);
                     break;
+                case Reminders:
+                    bottomBar.selectTabWithId(R.id.tab_reminders);
+                    break;
             }
         }
     }
@@ -184,6 +188,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.tab_drugs:
                 fragment = new FragmentMedicine();
+                break;
+            case R.id.tab_reminders:
+                fragment = new PersonalRemindersFragment();
                 break;
             case R.id.tab_personal:
                 fragment = new PersonalProfileFragment();

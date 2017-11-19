@@ -16,6 +16,10 @@
         title="@string/menu_item_2"
         />
 
+    <tab
+        id="@+id/tab_reminders"
+        icon="@drawable/ic_lightbulb_on"
+        title="@string/menu_item_4" />
 
     <tab
         id="@+id/tab_personal"
@@ -23,17 +27,10 @@
         title="@string/personal_profile"
         />
 
-    <!--
-       <tab
-           id="@+id/tab_camera"
-           icon="@drawable/ic_add_a_photo_black_24dp"
-           title="Camera" />
 
 
 
-   -->
-
-     <!--<tab-->
+    <!--<tab-->
         <!--id="@+id/tab_favorites"-->
         <!--icon="@drawable/ic_favorites"-->
         <!--title="Favorites" />-->

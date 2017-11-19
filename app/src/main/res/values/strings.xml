@@ -120,7 +120,6 @@
     <string name="desc_pic_shoot">shoot the video</string>
 
 
-
     //medicine - TODO: need to translate
     <string name="medicine_name_label">שם תרופה:</string>
     <string name="medicine_amount">כמות:</string>
@@ -186,4 +185,7 @@
     <string name="repetition_type_seconds">Seconds</string>
     <string name="snooze_30">30 minutes</string>
     <string name="snooze_5">5 minutes</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
