@@ -48,8 +48,10 @@ dependencies {
     compile 'com.github.paroca72:sc-widgets:2.2.0'
     compile 'com.github.bumptech.glide:glide:4.0.0-RC0'
     compile 'com.google.firebase:firebase-core:10.0.1'
+    compile 'com.android.support.constraint:constraint-layout:+'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC0'
 }
+
 
 
 

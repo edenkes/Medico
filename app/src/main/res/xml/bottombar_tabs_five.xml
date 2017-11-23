@@ -19,7 +19,7 @@
     <tab
         id="@+id/tab_reminders"
         icon="@drawable/ic_lightbulb_on"
-        title="@string/menu_item_4" />
+        title="@string/reminders" />
 
     <tab
         id="@+id/tab_personal"

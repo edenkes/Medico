@@ -23,16 +23,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import bredesh.medico.Camera.MedicineData;
+import bredesh.medico.Camera.RemindersData;
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Fragments.PictureItem.MedicineItem;
 import bredesh.medico.Fragments.PictureItem.MedicineRecyclerAdapter;
+import bredesh.medico.Fragments.PictureItem.RemindersItem;
+import bredesh.medico.Fragments.PictureItem.RemindersRecyclerAdapter;
 import bredesh.medico.R;
 
 public class PersonalRemindersFragment extends Fragment {
     private Context context;
-    List<MedicineItem> arrayList;   //TODO
+    List<MedicineItem> arrayList;
+//    List<RemindersItem> arrayList;
     RecyclerView lvHome;
+//    RemindersRecyclerAdapter adapter;
     MedicineRecyclerAdapter adapter;
 
     @Override
@@ -44,11 +48,12 @@ public class PersonalRemindersFragment extends Fragment {
         context = getActivity().getApplicationContext();
 
         TextView title = view.findViewById(R.id.tvExercises);
-        title.setText(getResources().getText(R.string.menu_item_4));
+        title.setText(getResources().getText(R.string.reminders));
 
         setArrayList();
 
         adapter = new MedicineRecyclerAdapter(context,arrayList,getActivity());
+//        adapter = new RemindersRecyclerAdapter(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
 
 
@@ -79,7 +84,7 @@ public class PersonalRemindersFragment extends Fragment {
         btAddAlert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MedicineData.class));
+                startActivity(new Intent(getActivity(), RemindersData.class));
             }
         });
 
@@ -94,6 +99,49 @@ public class PersonalRemindersFragment extends Fragment {
         ft.replace(R.id.fragment_place, fragment);
         ft.commit();
     }
+
+/*
+    private void setArrayList() {
+        MedicoDB db = new MedicoDB(getActivity().getApplicationContext());
+        Cursor c = db.getAllAlertsByKind(MedicoDB.KIND.Medicine);
+
+        arrayList = new ArrayList<>();
+        int index;
+
+        for (c.moveToFirst(), index = 0; !c.isAfterLast(); c.moveToNext(), index++) {
+            int id = c.getInt(c.getColumnIndex(MedicoDB.KEY_ID));
+            String time = c.getString(c.getColumnIndex(MedicoDB.KEY_TIME));
+            String[] times = time.split(Pattern.quote(getResources().getString(R.string.times_splitter)));
+            boolean detailedTimes = true;
+            String allTimes = time;
+            if (times.length > 3) {
+                time = String.format(getString(R.string.several_times), times.length);
+                detailedTimes = false;
+            }
+
+            String name = c.getString(c.getColumnIndex(MedicoDB.KEY_NAME));
+            String uri = c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
+            int[] days = new int[7];
+            days[0] = c.getInt(c.getColumnIndex(MedicoDB.SUNDAY));
+            days[1] = c.getInt(c.getColumnIndex(MedicoDB.MONDAY));
+            days[2] = c.getInt(c.getColumnIndex(MedicoDB.TUESDAY));
+            days[3] = c.getInt(c.getColumnIndex(MedicoDB.WEDNESDAY));
+            days[4] = c.getInt(c.getColumnIndex(MedicoDB.THURSDAY));
+            days[5] = c.getInt(c.getColumnIndex(MedicoDB.FRIDAY));
+            days[6] = c.getInt(c.getColumnIndex(MedicoDB.SATURDAY));
+
+            Cursor cReminders = db.getRemindersByID(id);
+            int amount =  cReminders.getInt(cReminders.getColumnIndex(MedicoDB.KEY_AMOUNT));
+            String type =    cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_TYPE));
+            String special = cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_SPECIAL));
+            String notes =   cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_NOTES));
+
+            arrayList.add(index, new RemindersItem(id, time, name, uri, days, detailedTimes, allTimes,
+                    MedicoDB.KIND.Reminders, type, special, notes, ""+ amount));
+        }
+        c.close();
+    }
+*/
 
     private void setArrayList() {
         MedicoDB db = new MedicoDB(getActivity().getApplicationContext());
@@ -124,8 +172,10 @@ public class PersonalRemindersFragment extends Fragment {
             days[5] = c.getInt(c.getColumnIndex(MedicoDB.FRIDAY));
             days[6] = c.getInt(c.getColumnIndex(MedicoDB.SATURDAY));
 
+
             Cursor cMedicine = db.getMedicineByID(id);
-            int amount =  cMedicine.getInt(cMedicine.getColumnIndex(MedicoDB.KEY_AMOUNT));
+            int amountTmp = cMedicine.getColumnIndex(MedicoDB.KEY_AMOUNT);
+            int amount =  cMedicine.getInt(amountTmp);
             String type =    cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_TYPE));
             String special = cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_SPECIAL));
             String notes =   cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_NOTES));
@@ -136,11 +186,13 @@ public class PersonalRemindersFragment extends Fragment {
         c.close();
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
         setArrayList();
         adapter = new MedicineRecyclerAdapter(context,arrayList,getActivity());
+//        adapter = new RemindersRecyclerAdapter(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
     }
 }

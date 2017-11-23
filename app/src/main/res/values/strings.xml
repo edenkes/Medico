@@ -81,6 +81,7 @@
     <string name="menu_item_2">תרופות</string>
     <string name="menu_item_3">בדיקות תקופתיות</string>
     <string name="menu_item_4">תזכורות אישיות</string>
+    <string name="reminders">תזכורות</string>
     <string name="exercise_name_label">Exercise name:</string>
     <string name="Add_multi_alert">כמה פעמים ביום?</string>
     <string name="set_language">Language</string>
@@ -188,4 +189,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_reminders_data">RemindersData</string>
 </resources>

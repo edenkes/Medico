@@ -144,4 +144,5 @@
     <string name="repetition_type_seconds">שניות</string>
     <string name="snooze_30">30 דקות</string>
     <string name="snooze_5">5 דקות</string>
+    <string name="reminders">תזכורות</string>
 </resources>

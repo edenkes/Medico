@@ -19,14 +19,15 @@ import bredesh.medico.Utils.Utils;
 
 public class MedicoDB extends SQLiteOpenHelper {
 
-    public enum KIND { Exercise, Medicine }
+    public enum KIND { Exercise, Medicine, Reminders}
     private static final String DATABASE_NAME = "Medico";
     private static final String EXERCISE_STR = KIND.Exercise.toString();
     private static final String ALERTS_TABLE_NAME = "ALERTS";
     private static final String PERSONAL_INFO_TABLE_NAME = "PersonalInfo";
     private static final String MEDICINE_TABLE_NAME = "Medicine";
+    private static final String REMINDERS_TABLE_NAME = "Reminders";
     private static final String LANG_TABLE_NAME = "Language";
-    private static final int VERSION = 22;
+    private static final int VERSION = 23;
 
     public static final int PhysioTherapy = 1;
     public static final int Drugs = 2;
@@ -89,8 +90,10 @@ public class MedicoDB extends SQLiteOpenHelper {
         createAlerts(db);
         createPersonalInfo(db);
         createMedicine(db);
+        createReminders(db);
         createPoints(db);
     }
+
 
     private void createMedicine(SQLiteDatabase db) {
         String CREATE_ALERTS_TABLE = "CREATE TABLE IF NOT EXISTS " + MEDICINE_TABLE_NAME +"( " +
@@ -101,7 +104,17 @@ public class MedicoDB extends SQLiteOpenHelper {
                 KEY_AMOUNT+ " INTEGER)";
         // create table
         db.execSQL(CREATE_ALERTS_TABLE);
+    }
 
+    private void createReminders(SQLiteDatabase db) {
+        String CREATE_REMINDERS_TABLE = "CREATE TABLE IF NOT EXISTS " + REMINDERS_TABLE_NAME +"( " +
+                KEY_ID + " INTEGER PRIMARY KEY, " +
+                KEY_TYPE + " TEXT, "+
+                KEY_SPECIAL + " TEXT, "+
+                KEY_NOTES + " TEXT, "+
+                KEY_AMOUNT+ " INTEGER)";
+        // create table
+        db.execSQL(CREATE_REMINDERS_TABLE);
     }
 
     private void addAlertRepetitionType(SQLiteDatabase db)
@@ -215,6 +228,8 @@ public class MedicoDB extends SQLiteOpenHelper {
             addAlertRepetitionType(db);
         if (oldVersion < 22)
             addAlertSoundUri(db);
+//        if (oldVersion < 23)
+//            createReminders(db);
 
     }
 
@@ -604,29 +619,29 @@ public class MedicoDB extends SQLiteOpenHelper {
   |_|_|_|\____)____|_|\____)_|_| |_|\____)  (___/ \____)____)\___)_|\___/|_| |_|
 
 */
-    public void addMedicine(String type, String special, String notes, int amount)
-    {
-        int id = getLastID();
-        if(id == -1) return;
+public void addMedicine(String type, String special, String notes, int amount)
+{
+    int id = getLastID();
+    if(id == -1) return;
 
-        // 1. get reference to writable DB
-        SQLiteDatabase db = this.getWritableDatabase();
+    // 1. get reference to writable DB
+    SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. create ContentValues to add key "column"/value
-        ContentValues values = new ContentValues();
-        values.put(KEY_ID, id);
-        values.put(KEY_TYPE, type);
-        values.put(KEY_SPECIAL, special);
-        values.put(KEY_NOTES, notes);
-        values.put(KEY_AMOUNT, amount);
-        // 3. insert
-        db.insert(MEDICINE_TABLE_NAME, // table
-                null, //nullColumnHack
-                values); // key/value -> keys = column names/ values = column values
+    // 2. create ContentValues to add key "column"/value
+    ContentValues values = new ContentValues();
+    values.put(KEY_ID, id);
+    values.put(KEY_TYPE, type);
+    values.put(KEY_SPECIAL, special);
+    values.put(KEY_NOTES, notes);
+    values.put(KEY_AMOUNT, amount);
+    // 3. insert
+    db.insert(MEDICINE_TABLE_NAME, // table
+            null, //nullColumnHack
+            values); // key/value -> keys = column names/ values = column values
 
-        // 4. close
-        db.close();
-    }
+    // 4. close
+    db.close();
+}
 
     public void updateMedicine(int rowID, String type, String special, String notes, int amount){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -647,6 +662,60 @@ public class MedicoDB extends SQLiteOpenHelper {
         return cursor;
     }
 
+    /*
+    * Reminders section
+    * */
+    public void addReminders(String type, String special, String notes, int amount)
+    {
+        int id = getLastID();
+        if(id == -1) return;
+
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. create ContentValues to add key "column"/value
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, id);
+        values.put(KEY_TYPE, type);
+        values.put(KEY_SPECIAL, special);
+        values.put(KEY_NOTES, notes);
+        values.put(KEY_AMOUNT, amount);
+        // 3. insert
+        db.insert(REMINDERS_TABLE_NAME, // table
+                null, //nullColumnHack
+                values); // key/value -> keys = column names/ values = column values
+
+        // 4. close
+        db.close();
+    }
+
+    public void updateReminders(int rowID, String type, String special, String notes, int amount){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_TYPE, type);
+        values.put(KEY_SPECIAL, special);
+        values.put(KEY_NOTES, notes);
+        values.put(KEY_AMOUNT, amount);
+        db.update(REMINDERS_TABLE_NAME, values, KEY_ID+"="+rowID, null);
+        db.close();
+    }
+
+    public Cursor getRemindersByID(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + REMINDERS_TABLE_NAME + " WHERE " + KEY_ID +" = "+id;
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        return cursor;
+    }
+
+    public void DeleteAllReminders() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " +REMINDERS_TABLE_NAME + "");
+//        createReminders(db);
+        db.close();
+    }
+
+
     public KIND getKindByID(int id)
     {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -658,6 +727,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         db.close();
         if(kind.equals(KIND.Exercise.toString())) return KIND.Exercise;
         else if(kind.equals(KIND.Medicine.toString())) return KIND.Medicine;
+        else if(kind.equals(KIND.Reminders.toString())) return KIND.Reminders;
         return null;
     }
 
