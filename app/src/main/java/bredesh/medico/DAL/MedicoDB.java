@@ -25,7 +25,7 @@ public class MedicoDB extends SQLiteOpenHelper {
     private static final String ALERTS_TABLE_NAME = "ALERTS";
     private static final String PERSONAL_INFO_TABLE_NAME = "PersonalInfo";
     private static final String MEDICINE_TABLE_NAME = "Medicine";
-    private static final String REMINDERS_TABLE_NAME = "Reminders";
+    private static final String REMINDERS_TABLE_NAME = KIND.Reminders.toString();
     private static final String LANG_TABLE_NAME = "Language";
     private static final int VERSION = 23;
 
@@ -228,8 +228,8 @@ public class MedicoDB extends SQLiteOpenHelper {
             addAlertRepetitionType(db);
         if (oldVersion < 22)
             addAlertSoundUri(db);
-//        if (oldVersion < 23)
-//            createReminders(db);
+        if (oldVersion < 23)
+            createReminders(db);
 
     }
 
@@ -441,13 +441,18 @@ public class MedicoDB extends SQLiteOpenHelper {
         String kind = cursor.getString(cursor.getColumnIndex(KEY_KIND));
         String videoUri = cursor.getString(cursor.getColumnIndex(URIVIDEO));
         Uri uri = videoUri != null? Uri.parse(videoUri) : null;
+        KIND kind_type;
+
+        if(kind.equals(KIND.Exercise.toString())){  kind_type = KIND.Exercise;
+        }else if(kind.equals(KIND.Exercise.toString())){    kind_type = KIND.Medicine;
+        }else{  kind_type = KIND.Reminders; }
 
         v = new PartialVideoItem(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
                 cursor.getString(cursor.getColumnIndex(KEY_NAME)),
                 uri,
                 cursor.getInt(cursor.getColumnIndex(KEY_REPEATS)),
                 cursor.getString(cursor.getColumnIndex(KEY_REPETITION_TYPE)),
-                (kind.equals(KIND.Exercise.toString())? KIND.Exercise : KIND.Medicine),
+                kind_type,
                 cursor.getString(cursor.getColumnIndex(KEY_ALERT_SOUND_URI)));
         db.close();
         return v;
@@ -610,38 +615,38 @@ public class MedicoDB extends SQLiteOpenHelper {
 
 
 
-/*
-                  _   _       _                                   _
-                 | | (_)     (_)                             _   (_)
-   ____   ____ _ | |_  ____ _ ____   ____     ___  ____ ____| |_  _  ___  ____
-  |    \ / _  ) || | |/ ___) |  _ \ / _  )   /___)/ _  ) ___)  _)| |/ _ \|  _ \
-  | | | ( (/ ( (_| | ( (___| | | | ( (/ /   |___ ( (/ ( (___| |__| | |_| | | | |
-  |_|_|_|\____)____|_|\____)_|_| |_|\____)  (___/ \____)____)\___)_|\___/|_| |_|
+    /*
+                      _   _       _                                   _
+                     | | (_)     (_)                             _   (_)
+       ____   ____ _ | |_  ____ _ ____   ____     ___  ____ ____| |_  _  ___  ____
+      |    \ / _  ) || | |/ ___) |  _ \ / _  )   /___)/ _  ) ___)  _)| |/ _ \|  _ \
+      | | | ( (/ ( (_| | ( (___| | | | ( (/ /   |___ ( (/ ( (___| |__| | |_| | | | |
+      |_|_|_|\____)____|_|\____)_|_| |_|\____)  (___/ \____)____)\___)_|\___/|_| |_|
 
-*/
-public void addMedicine(String type, String special, String notes, int amount)
-{
-    int id = getLastID();
-    if(id == -1) return;
+    */
+    public void addMedicine(String type, String special, String notes, int amount)
+    {
+        int id = getLastID();
+        if(id == -1) return;
 
-    // 1. get reference to writable DB
-    SQLiteDatabase db = this.getWritableDatabase();
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
 
-    // 2. create ContentValues to add key "column"/value
-    ContentValues values = new ContentValues();
-    values.put(KEY_ID, id);
-    values.put(KEY_TYPE, type);
-    values.put(KEY_SPECIAL, special);
-    values.put(KEY_NOTES, notes);
-    values.put(KEY_AMOUNT, amount);
-    // 3. insert
-    db.insert(MEDICINE_TABLE_NAME, // table
-            null, //nullColumnHack
-            values); // key/value -> keys = column names/ values = column values
+        // 2. create ContentValues to add key "column"/value
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, id);
+        values.put(KEY_TYPE, type);
+        values.put(KEY_SPECIAL, special);
+        values.put(KEY_NOTES, notes);
+        values.put(KEY_AMOUNT, amount);
+        // 3. insert
+        db.insert(MEDICINE_TABLE_NAME, // table
+                null, //nullColumnHack
+                values); // key/value -> keys = column names/ values = column values
 
-    // 4. close
-    db.close();
-}
+        // 4. close
+        db.close();
+    }
 
     public void updateMedicine(int rowID, String type, String special, String notes, int amount){
         SQLiteDatabase db = this.getWritableDatabase();

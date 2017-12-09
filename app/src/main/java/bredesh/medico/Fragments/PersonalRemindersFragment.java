@@ -33,11 +33,11 @@ import bredesh.medico.R;
 
 public class PersonalRemindersFragment extends Fragment {
     private Context context;
-    List<MedicineItem> arrayList;
-//    List<RemindersItem> arrayList;
+//    List<MedicineItem> arrayList;
+    List<RemindersItem> arrayList;
     RecyclerView lvHome;
-//    RemindersRecyclerAdapter adapter;
-    MedicineRecyclerAdapter adapter;
+    RemindersRecyclerAdapter adapter;
+//    MedicineRecyclerAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +52,7 @@ public class PersonalRemindersFragment extends Fragment {
 
         setArrayList();
 
-        adapter = new MedicineRecyclerAdapter(context,arrayList,getActivity());
+        adapter = new RemindersRecyclerAdapter(context,arrayList,getActivity());
 //        adapter = new RemindersRecyclerAdapter(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
 
@@ -100,10 +100,9 @@ public class PersonalRemindersFragment extends Fragment {
         ft.commit();
     }
 
-/*
     private void setArrayList() {
         MedicoDB db = new MedicoDB(getActivity().getApplicationContext());
-        Cursor c = db.getAllAlertsByKind(MedicoDB.KIND.Medicine);
+        Cursor c = db.getAllAlertsByKind(MedicoDB.KIND.Reminders);
 
         arrayList = new ArrayList<>();
         int index;
@@ -141,11 +140,11 @@ public class PersonalRemindersFragment extends Fragment {
         }
         c.close();
     }
-*/
+/*
 
     private void setArrayList() {
         MedicoDB db = new MedicoDB(getActivity().getApplicationContext());
-        Cursor c = db.getAllAlertsByKind(MedicoDB.KIND.Medicine);
+        Cursor c = db.getAllAlertsByKind(MedicoDB.KIND.Reminders);
 
         arrayList = new ArrayList<>();
         int index;
@@ -173,7 +172,7 @@ public class PersonalRemindersFragment extends Fragment {
             days[6] = c.getInt(c.getColumnIndex(MedicoDB.SATURDAY));
 
 
-            Cursor cMedicine = db.getMedicineByID(id);
+            Cursor cMedicine = db.getRemindersByID(id);
             int amountTmp = cMedicine.getColumnIndex(MedicoDB.KEY_AMOUNT);
             int amount =  cMedicine.getInt(amountTmp);
             String type =    cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_TYPE));
@@ -185,13 +184,14 @@ public class PersonalRemindersFragment extends Fragment {
         }
         c.close();
     }
+*/
 
 
     @Override
     public void onResume() {
         super.onResume();
         setArrayList();
-        adapter = new MedicineRecyclerAdapter(context,arrayList,getActivity());
+        adapter = new RemindersRecyclerAdapter(context,arrayList,getActivity());
 //        adapter = new RemindersRecyclerAdapter(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
     }

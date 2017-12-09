@@ -68,23 +68,36 @@ public class NotificationService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), notiID,getBack, PendingIntent.FLAG_UPDATE_CURRENT);
 
         String notiString = "";
-        switch (local.getKindByID(notiID))
-        {
+        switch (local.getKindByID(notiID)){
             case Exercise:
                 String repetitionType = Utils.stringOrFromResource(getResources(), cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE)), R.string.repetition_type_repetitions);
                 String timesStr = Integer.toString(times);
                 notiString = (getResources().getString(R.string.alert_text, notificationName ,timesStr, repetitionType));
                 break;
             case Medicine:
-                Cursor c = local.getMedicineByID(notiID);
-                String dosageType = Utils.stringOrFromResource(getResources(), c.getString(c.getColumnIndex(MedicoDB.KEY_TYPE)));
+                Cursor cMedicine = local.getMedicineByID(notiID);
+                String dosageTypeMedicine = Utils.stringOrFromResource(getResources(), cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_TYPE)));
 
-                if (dosageType.compareTo(getResources().getString(R.string.medicine_dosage_other)) != 0)
+                if (dosageTypeMedicine.compareTo(getResources().getString(R.string.medicine_dosage_other)) != 0)
                     notiString = (getResources().getString(R.string.alert_text_medicine,
-                        times,
-                        dosageType));
+                            times,
+                            dosageTypeMedicine));
                 else {
                     notiString = (getResources().getString(R.string.notification_alert_prefix_medicine));
+                    if (notiString.endsWith(":"))
+                        notiString = notiString.substring(0, notiString.length()-1);
+                }
+                break;
+            case Reminders:
+                Cursor cReminders = local.getRemindersByID(notiID);
+                String dosageTypeReminders = Utils.stringOrFromResource(getResources(), cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_TYPE)));
+
+                if (dosageTypeReminders.compareTo(getResources().getString(R.string.medicine_dosage_other)) != 0)
+                    notiString = (getResources().getString(R.string.alert_text_reminders,
+                            times,
+                            dosageTypeReminders));
+                else {
+                    notiString = (getResources().getString(R.string.notification_alert_prefix_reminders));
                     if (notiString.endsWith(":"))
                         notiString = notiString.substring(0, notiString.length()-1);
                 }
@@ -134,65 +147,65 @@ public class NotificationService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
-            Calendar calendar;
-            int currentHour;
-            int currentMinutes;
-            String time;
-            while (!shouldStop) {  try { synchronized (this) {
-                cursor = getAllTodayAlerts();
+                Calendar calendar;
+                int currentHour;
+                int currentMinutes;
+                String time;
+                while (!shouldStop) {  try { synchronized (this) {
+                    cursor = getAllTodayAlerts();
 
-                if(cursor.getCount() > 0) {
+                    if(cursor.getCount() > 0) {
 
-                    calendar = Calendar.getInstance();
-                    currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-                    currentMinutes = calendar.get(Calendar.MINUTE);
-                    if(CURRENT_DAY != calendar.get(Calendar.DAY_OF_WEEK))
-                    {
+                        calendar = Calendar.getInstance();
+                        currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+                        currentMinutes = calendar.get(Calendar.MINUTE);
+                        if(CURRENT_DAY != calendar.get(Calendar.DAY_OF_WEEK))
+                        {
+                            cursor.moveToFirst();
+                            do {
+                                local.allTodaysAlertReset(cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)));
+                            } while (cursor.moveToNext());
+                            CURRENT_DAY = calendar.get(Calendar.DAY_OF_WEEK);
+                            cursor = getAllTodayAlerts();
+                        }
                         cursor.moveToFirst();
                         do {
-                            local.allTodaysAlertReset(cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)));
-                        } while (cursor.moveToNext());
-                        CURRENT_DAY = calendar.get(Calendar.DAY_OF_WEEK);
-                        cursor = getAllTodayAlerts();
-                    }
-                    cursor.moveToFirst();
-                    do {
-                        try {
-                            String allTimes = cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_TIME));
-                            String[] times = allTimes.split(getResources().getString(R.string.times_splitter));
+                            try {
+                                String allTimes = cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_TIME));
+                                String[] times = allTimes.split(getResources().getString(R.string.times_splitter));
 
-                            for (int i = 0; i < times.length; i++) {
-                                time = times[i];
-                                int gap = 2;
-                                //if (currentHour < 10) gap = 1;
-                                int notificationHour = Integer.parseInt(time.substring(0, gap));
-                                int notificationMinute = Integer.parseInt(time.substring(gap + 3));
-                                String todayAlert = cursor.getString(cursor.getColumnIndex(MedicoDB.ALERT_TODAY));
-                                if (notificationHour == currentHour && notificationMinute == currentMinutes && todayAlert.compareTo(time) < 0) {
-                                    //now we need to show notification!!
-                                    String notificationName = cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_NAME));
-                                    int repeats = cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_REPEATS));
-                                    Localization.init(_this, local);
+                                for (int i = 0; i < times.length; i++) {
+                                    time = times[i];
+                                    int gap = 2;
+                                    //if (currentHour < 10) gap = 1;
+                                    int notificationHour = Integer.parseInt(time.substring(0, gap));
+                                    int notificationMinute = Integer.parseInt(time.substring(gap + 3));
+                                    String todayAlert = cursor.getString(cursor.getColumnIndex(MedicoDB.ALERT_TODAY));
+                                    if (notificationHour == currentHour && notificationMinute == currentMinutes && todayAlert.compareTo(time) < 0) {
+                                        //now we need to show notification!!
+                                        String notificationName = cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_NAME));
+                                        int repeats = cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_REPEATS));
+                                        Localization.init(_this, local);
 
-                                    Bundle bundle=new Bundle();
-                                    mFirebaseAnalytics.logEvent("Notification_show", bundle);
+                                        Bundle bundle=new Bundle();
+                                        mFirebaseAnalytics.logEvent("Notification_show", bundle);
 
-                                    showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)), cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI)));
-                                    local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)), time);
+                                        showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)), cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI)));
+                                        local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)), time);
+                                    }
                                 }
                             }
-                        }
-                        catch (Exception alertEx)
-                        {
-                            Log.i("Alert Exception", " Alert Exception: " + alertEx.getMessage());
-                        }
-                    } while (cursor.moveToNext());
-                }
-                Thread.sleep(10000);//60 sec
+                            catch (Exception alertEx)
+                            {
+                                Log.i("Alert Exception", " Alert Exception: " + alertEx.getMessage());
+                            }
+                        } while (cursor.moveToNext());
+                    }
+                    Thread.sleep(10000);//60 sec
                 } /*sync*/ }/* try*/ catch (Exception e) {
                     Log.i("Exception", "Exception: " + e.getMessage());
                 }
-            }
+                }
             }
         }).start();
     }

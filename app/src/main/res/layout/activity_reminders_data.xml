@@ -33,7 +33,7 @@
                     android:layout_marginStart="5sp">
 
                     <TextView
-                        android:id="@+id/lbMedicineName"
+                        android:id="@+id/lbRemindersName"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
@@ -48,12 +48,11 @@
                         android:textSize="20sp" />
 
                     <EditText
-                        android:id="@+id/etExerciseName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5sp"
-                        android:layout_toEndOf="@+id/lbMedicineName"
+                        android:layout_toEndOf="@+id/lbRemindersName"
                         android:gravity="center_vertical"
                         android:inputType="textCapWords"
                         android:maxLength="16"

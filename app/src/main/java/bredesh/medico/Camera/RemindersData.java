@@ -52,9 +52,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
     private ArrayList<String> arrayList;
     private TextView lblSelectedDays;
     private Button btDelete, btConfirm;
-    private Spinner spType, spSpecial;
-
-    private EditText etAmount;
+    private Spinner spSpecial;
 
     private AlertDialog dialogDays;
     // array to keep the selected days
@@ -167,7 +165,6 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         oldDosageType = type;
         int index;
         index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage, type);
-        spType.setSelection(index);
 
         String special = intent.getStringExtra("reminders_special");
         oldSpecialNotes = special;
@@ -177,7 +174,6 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         oldNotes = intent.getStringExtra("reminders_notes");
         etNotes.setText(oldNotes);
         oldAmount = intent.getStringExtra("reminders_amount");
-        etAmount.setText(oldAmount);
 
         String times = intent.getStringExtra("time");
         oldTimes = times;
@@ -273,7 +269,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         resources = getResources();
         btConfirm = (Button) findViewById(R.id.btConfirm);
         btDelete = (Button) findViewById(R.id.btDelete);
-        etRemindersName = (EditText) findViewById(R.id.etExerciseName);
+        etRemindersName = (EditText) findViewById(R.id.etRemindersName);
         lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
@@ -287,14 +283,13 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         btAddAlert = (Button) findViewById(R.id.btAddAlert);
         lbAddMultiAlert = (TextView) findViewById(R.id.lbAddMultiAlert);
 
-        etAmount = (EditText) findViewById(R.id.amount_number);
+//        etAmount = (EditText) findViewById(R.id.c);
 
-        spType = (Spinner) findViewById(R.id.spinner_type);
+//        spType = (Spinner) findViewById(R.id.spinner_type);
 
         ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource (this, R.array.drugs_dosage, R.layout.spinner_item );
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spType.setAdapter(adapterType);
 
         spSpecial = (Spinner) findViewById(R.id.spinner_special);
         ArrayAdapter<CharSequence> adapterSpecial = ArrayAdapter.createFromResource(this, R.array.drugs_dosage_notes, R.layout.spinner_item);
@@ -412,7 +407,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         final AlertDialog deleteDialog = new AlertDialog.Builder(this)
                 .setPositiveButton(resources.getString(R.string.alert_dialog_set), onDelete)
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
-                .setMessage(resources.getString(R.string.delete_medicine_confirm)).create();
+                .setMessage(resources.getString(R.string.delete_reminders_confirm)).create();
 
 
         btDelete.setOnClickListener(new View.OnClickListener() {
@@ -449,15 +444,8 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
     private void confirm(boolean askBeforeSave) {
         {
             if(etRemindersName.getText().toString().length() == 0 && !askBeforeSave) {
-                Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short_medicine), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short_reminders), Toast.LENGTH_SHORT).show();
                 return;
-            }
-            if(etAmount.getText().toString().length() == 0 && !askBeforeSave)
-            {
-                if (askBeforeSave)
-                    askUserBeforeSave();
-                else
-                    Toast.makeText(getApplicationContext(), resources.getString(R.string.amount_too_short_medicine), Toast.LENGTH_SHORT).show();
             }
             else {
                 if (etRemindersName.getText().toString().length() <= Max_Size) {
@@ -473,13 +461,12 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                     for (int i = 0; i < arrayList.size(); i++)
                         times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
 
-                    String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, spType.getSelectedItem().toString());
+                    String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, /*spType.getSelectedItem().toString()*/"");
                     String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes, spSpecial.getSelectedItem().toString());
                     String remindersName = etRemindersName.getText().toString();
                     String newNotes = etNotes.getText().toString();
-                    String amountText = etAmount.getText().toString();
+                    String amountText = "0";
                     int amount = Integer.parseInt(amountText);
-
 
                     if (askBeforeSave)
                     {
@@ -519,11 +506,11 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                         }
                         else
                         {
-                            db.addAlert(etRemindersName.getText().toString(), MedicoDB.KIND.Reminders, times, Integer.parseInt(etAmount.getText().toString()), "", videoUriString, days_to_alert, null);
+                            db.addAlert(etRemindersName.getText().toString(), MedicoDB.KIND.Reminders, times, 0, "", videoUriString, days_to_alert, null);
                             db.addReminders(typeToWrite,
                                     specialNotesToWrite,
                                     etNotes.getText().toString(),
-                                    Integer.parseInt(etAmount.getText().toString()));
+                                    0);
                             mFirebaseAnalytics.logEvent("Reminders_added", bundle);
                         }
                     }
