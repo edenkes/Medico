@@ -1,4 +1,4 @@
-package bredesh.medico.Camera;
+package bredesh.medico.Fragments.DataMediGo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,9 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
-import android.support.v4.util.ArraySet;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -40,26 +38,21 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
+import bredesh.medico.Camera.MedicineData;
+import bredesh.medico.Camera.TimeAdapterRecycler;
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
 import bredesh.medico.Utils.Utils;
 
 /**
- * Created by Omri on 12/06/2017.
+ * Created by edenk on 12/10/2017.
  */
 
-
-
-public class MedicineData extends AppCompatActivity implements IRemoveLastAlert {
+public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
     private EditText etMedicineName, etNotes;
     private ArrayList<String> arrayList;
     private TextView lblSelectedDays;
-
-    @Override
-    public void OnRemoveLastAlert() {
-
-    }
-/*    private Button btDelete, btConfirm;
+    private Button btDelete, btConfirm;
     private Spinner spType, spSpecial;
 
     private EditText etAmount;
@@ -76,7 +69,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
     private ImageButton btPlay;
     private String videoUriString;
     private final Button[] alertPlanButtons = new Button[5];
-    private TimeAdapterRecycler timeAdapter = null;
+    private TimeAdapterRecyclerMedGo timeAdapter = null;
     private Button btAddAlert;
     private TextView lbAddMultiAlert;
     private boolean isChanged = false;
@@ -221,9 +214,9 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  *//* prefix *//*
-                ".jpg",         *//* suffix *//*
-                storageDir      *//* directory *//*
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
         );
 
         // Save a file: path for use with ACTION_VIEW intents
@@ -374,7 +367,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         Button [] buttons = new Button[] {btConfirm, btDelete};
 
 
-        timeAdapter = new TimeAdapterRecycler(MedicineData.this,arrayList, buttons, this);
+        timeAdapter = new TimeAdapterRecyclerMedGo(MedicineDa.this,arrayList, buttons, this);
         timeViews.setAdapter(timeAdapter);
         setDialog();
 
@@ -397,7 +390,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                 if (imageUri != null) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(imageUri,"image*//*");
+                        intent.setDataAndType(imageUri,"image/*");
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     } catch (RuntimeException e) {
@@ -641,14 +634,14 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                 btPlay.invalidate();
             }
         }
-        else Toast.makeText(MedicineData.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
+        else Toast.makeText(MedicineDa.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
     }
 
 
-    *//*
+    /*
         return string format of the current time.
         DO NOT CHANGE THIS FORMAT [database and other checks relying on that!!]
-     *//*
+     */
 
     private String Right(String s)
     {
@@ -669,5 +662,5 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
     @Override
     public void onBackPressed() {
         confirm(true);
-    }*/
+    }
 }

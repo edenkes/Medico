@@ -23,10 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import bredesh.medico.Camera.MedicineData;
 import bredesh.medico.DAL.MedicoDB;
-import bredesh.medico.Fragments.PictureItem.MedicineItem;
-import bredesh.medico.Fragments.PictureItem.MedicineRecyclerAdapter;
+import bredesh.medico.Fragments.DataMediGo.MedicineDa;
+import bredesh.medico.Fragments.ItemMediGo.MedicineIt;
+import bredesh.medico.Fragments.RecyclerAdapterMediGo.MedicineRA;
 import bredesh.medico.R;
 
 /**
@@ -35,24 +35,24 @@ import bredesh.medico.R;
 
 public class FragmentMedicine extends Fragment {
     private Context context;
-    List<MedicineItem> arrayList;
+    List<MedicineIt> arrayList;
     RecyclerView lvHome;
-    MedicineRecyclerAdapter adapter;
+    MedicineRA adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)  {
         View view = inflater.inflate(R.layout.fragment_fragment_home, container, false);
-        lvHome = (RecyclerView) view.findViewById(R.id.recycler_view);
+        lvHome = view.findViewById(R.id.recycler_view);
         lvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
         context = getActivity().getApplicationContext();
 
-        TextView title = (TextView) view.findViewById(R.id.tvExercises);
+        TextView title = view.findViewById(R.id.tvExercises);
         title.setText(getResources().getText(R.string.menu_item_2));
 
         setArrayList();
 
-        adapter = new MedicineRecyclerAdapter(context,arrayList,getActivity());
+        adapter = new MedicineRA(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
 
 
@@ -79,11 +79,11 @@ public class FragmentMedicine extends Fragment {
                 .create();
 
 
-        FloatingActionButton btAddAlert = (FloatingActionButton) view.findViewById(R.id.addAlert);
+        FloatingActionButton btAddAlert = view.findViewById(R.id.addAlert);
         btAddAlert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MedicineData.class));
+                startActivity(new Intent(getActivity(), MedicineDa.class));
             }
         });
 
@@ -135,7 +135,7 @@ public class FragmentMedicine extends Fragment {
             String special = cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_SPECIAL));
             String notes =   cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_NOTES));
 
-            arrayList.add(index, new MedicineItem(id, time, name, uri, days, detailedTimes, allTimes,
+            arrayList.add(index, new MedicineIt(id, time, name, uri, days, detailedTimes, allTimes,
                     MedicoDB.KIND.Medicine, type, special, notes, ""+ amount));
         }
         c.close();
@@ -145,7 +145,7 @@ public class FragmentMedicine extends Fragment {
     public void onResume() {
         super.onResume();
         setArrayList();
-        adapter = new MedicineRecyclerAdapter(context,arrayList,getActivity());
+        adapter = new MedicineRA(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
     }
 }

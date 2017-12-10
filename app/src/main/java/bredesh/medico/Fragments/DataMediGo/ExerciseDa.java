@@ -1,4 +1,4 @@
-package bredesh.medico.Camera;
+package bredesh.medico.Fragments.DataMediGo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -39,18 +38,13 @@ import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
 import bredesh.medico.Utils.Utils;
 
-interface IRemoveLastAlert
-{
-    void OnRemoveLastAlert();
-}
+/**
+ * Created by edenk on 12/10/2017.
+ */
 
-public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
-    @Override
-    public void OnRemoveLastAlert() {
 
-    }
-
-   /* private EditText etExerciseName;
+public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
+    private EditText etExerciseName;
     private EditText etRepeats;
     private Spinner spRepetitionType;
     private ArrayList<String> arrayList;
@@ -71,7 +65,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
     private String videoUriString;
     private String alertSoundUriString;
     private final Button[] alertPlanButtons = new Button[5];
-    private TimeAdapterRecycler timeAdapter = null;
+    private TimeAdapterRecyclerMedGo timeAdapter = null;
     private Button btAddAlert;
     private TextView lbAddMultiAlert;
 
@@ -212,7 +206,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
     private void ShootVideo()
     {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        if (takeVideoIntent.resolveActivity(VideoData.this.getPackageManager()) != null) {
+        if (takeVideoIntent.resolveActivity(ExerciseDa.this.getPackageManager()) != null) {
             startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
         }
     }
@@ -361,7 +355,7 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
         Button [] buttons = new Button[] {btConfirm, btDelete};
 
 
-        timeAdapter = new TimeAdapterRecycler(VideoData.this,arrayList, buttons, this);
+        timeAdapter = new TimeAdapterRecyclerMedGo(ExerciseDa.this,arrayList, buttons, this);
         timeViews.setAdapter(timeAdapter);
         setDialog();
 
@@ -539,17 +533,17 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                 if (intent.getData() != null) {
                     videoUriString = intent.getData().toString();
                     btPlay.setVisibility(View.VISIBLE);
-                    Toast.makeText(VideoData.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
+                    Toast.makeText(ExerciseDa.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
                     return;
                 }
             }
-            Toast.makeText(VideoData.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
+            Toast.makeText(ExerciseDa.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
         }
     }
-    *//*
+    /*
         return string format of the current time.
         DO NOT CHANGE THIS FORMAT [database and other checks relying on that!!]
-     *//*
+     */
 
     private String Right(String s)
     {
@@ -605,13 +599,13 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                     if (askBeforeSave)
                     {
                         boolean dataNotChanged =
-                                        oldExerciseName.equals(exerciseName) &&
+                                oldExerciseName.equals(exerciseName) &&
                                         oldRepeats == repeats &&
                                         oldTimes.equals(times) &&
                                         oldRepetitionType.equals(repetitionTypeToWrite) &&
                                         Arrays.equals(oldDays, days_to_alert) &&
-                                                (oldVideoUriString == null ? videoUriString == null : oldVideoUriString.equals(videoUriString)) &&
-                                                (oldAlertSoundUriString == null ? alertSoundUriString == null : oldAlertSoundUriString.equals(alertSoundUriString));
+                                        (oldVideoUriString == null ? videoUriString == null : oldVideoUriString.equals(videoUriString)) &&
+                                        (oldAlertSoundUriString == null ? alertSoundUriString == null : oldAlertSoundUriString.equals(alertSoundUriString));
                         if (dataNotChanged)
                             finish();
                         else
@@ -638,7 +632,6 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
 
     @Override
     public void onBackPressed() {
-       confirm(true);
-    }*/
-
+        confirm(true);
+    }
 }

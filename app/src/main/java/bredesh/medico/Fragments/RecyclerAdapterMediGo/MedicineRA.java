@@ -1,4 +1,4 @@
-package bredesh.medico.Fragments.PictureItem;
+package bredesh.medico.Fragments.RecyclerAdapterMediGo;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,60 +21,41 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import bredesh.medico.Camera.MedicineData;
 import bredesh.medico.DAL.MedicoDB;
+import bredesh.medico.Fragments.DataMediGo.MedicineDa;
+import bredesh.medico.Fragments.ItemMediGo.MedicineIt;
 import bredesh.medico.R;
 import bredesh.medico.Utils.Utils;
 
 /**
- * Created by Omri on 13/06/2017.
+ * Created by edenk on 12/10/2017.
  */
 
-public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecyclerAdapter.CustomViewHolder> {
-    @Override
-    public MedicineRecyclerAdapter.CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(MedicineRecyclerAdapter.CustomViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return 0;
-    }
-
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
-        public CustomViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
-   /* private List<MedicineItem> medicineItems;
+public class MedicineRA extends RecyclerView.Adapter<MedicineRA.CustomViewHolder> {
+    private List<MedicineIt> medicineItems;
     private Context context;
     private Activity activity;
 
-    public MedicineRecyclerAdapter(Context context, List<MedicineItem> medicineItems, Activity activity) {
+    public MedicineRA(Context context, List<MedicineIt> medicineItems, Activity activity) {
         this.medicineItems = medicineItems;
         this.context = context;
         this.activity = activity;
     }
 
     @Override
-    public MedicineRecyclerAdapter.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public MedicineRA.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_exercise_item, viewGroup, false);
-        return new MedicineRecyclerAdapter.CustomViewHolder(view);
+        return new MedicineRA.CustomViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final CustomViewHolder customViewHolder, int i) {
-        final MedicineItem item = medicineItems.get(i);
+        final MedicineIt item = medicineItems.get(i);
         final int position = i;
         customViewHolder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, MedicineData.class);
+                Intent intent = new Intent(context, MedicineDa.class);
                 intent.putExtra("medicineId", item.id);
                 intent.putExtra("medicine_amount", item.amount);
                 intent.putExtra("time", item.allTimes);
@@ -112,7 +93,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
                 if(imageUri != null ) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(imageUri,"image*//*");
+                        intent.setDataAndType(imageUri,"image/*");
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     }catch (RuntimeException e){
@@ -154,11 +135,11 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
 
         if (itemType.equals(resources.getString(R.string.medicine_dosage_other))) {
             customViewHolder.tvMedicineAmount.setText("");
-            customViewHolder.txMedicinedosageType.setText("");
+            customViewHolder.txMedicineDosageType.setText("");
         }
         else {
             customViewHolder.tvMedicineAmount.setText(String.valueOf(item.amount));
-            customViewHolder.txMedicinedosageType.setText(itemType);
+            customViewHolder.txMedicineDosageType.setText(itemType);
         }
 
         customViewHolder.tvMedicineName.setText(item.name);
@@ -174,7 +155,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
     }
 
 
-    private void activateAlerts(MedicineRecyclerAdapter.CustomViewHolder viewHolder, MedicineItem item) {
+    private void activateAlerts(MedicineRA.CustomViewHolder viewHolder, MedicineIt item) {
         int[] days = item.days;
         boolean isActive = false;
         for (int i = 0; i < days.length; i++) {
@@ -199,7 +180,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
 
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvMedicineName, tvMedicineTime, tvMedicineAmount, txMedicinedosageType;
+        private TextView tvMedicineName, tvMedicineTime, tvMedicineAmount, txMedicineDosageType;
         private TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
         private TextView[] days;
         private ImageButton play;
@@ -209,22 +190,22 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
         private CustomViewHolder(View convertView) {
             super(convertView);
             this.v = convertView;
-            this.tvMedicineName = (TextView) convertView.findViewById(R.id.tvExercisesName);
-            this.tvMedicineTime = (TextView) convertView.findViewById(R.id.tvExerciseTime);
-            this.txMedicinedosageType = (TextView) convertView.findViewById(R.id.txMedicinedosageType);
-            this.tvSUN = (TextView) convertView.findViewById(R.id.tvSUN);
-            this.tvMON = (TextView) convertView.findViewById(R.id.tvMON);
-            this.tvTUE = (TextView) convertView.findViewById(R.id.tvTUE);
-            this.tvWED = (TextView) convertView.findViewById(R.id.tvWED);
-            this.tvTHU = (TextView) convertView.findViewById(R.id.tvTHU);
-            this.tvFRI = (TextView) convertView.findViewById(R.id.tvFRI);
-            this.tvSAT = (TextView) convertView.findViewById(R.id.tvSAT);
-            this.tvMedicineAmount = (TextView) convertView.findViewById(R.id.lblExerciseNoOfRepeats);
-            this.play = (ImageButton) convertView.findViewById(R.id.btPlay);
+            this.tvMedicineName = convertView.findViewById(R.id.tvExercisesName);
+            this.tvMedicineTime = convertView.findViewById(R.id.tvExerciseTime);
+            this.txMedicineDosageType = convertView.findViewById(R.id.txMedicinedosageType);
+            this.tvSUN = convertView.findViewById(R.id.tvSUN);
+            this.tvMON = convertView.findViewById(R.id.tvMON);
+            this.tvTUE = convertView.findViewById(R.id.tvTUE);
+            this.tvWED = convertView.findViewById(R.id.tvWED);
+            this.tvTHU = convertView.findViewById(R.id.tvTHU);
+            this.tvFRI = convertView.findViewById(R.id.tvFRI);
+            this.tvSAT = convertView.findViewById(R.id.tvSAT);
+            this.tvMedicineAmount = convertView.findViewById(R.id.lblExerciseNoOfRepeats);
+            this.play = convertView.findViewById(R.id.btPlay);
 
             this.play.setImageResource(R.drawable.ic_pill);
             this.days = new TextView[]{tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT};
-            this.amount = (ImageView) convertView.findViewById(R.id.imageRepeat);
+            this.amount = convertView.findViewById(R.id.imageRepeat);
         }
-    }*/
+    }
 }

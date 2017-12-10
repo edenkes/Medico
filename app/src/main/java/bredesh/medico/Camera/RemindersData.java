@@ -49,7 +49,11 @@ import bredesh.medico.Utils.Utils;
  */
 
 public class RemindersData  extends AppCompatActivity implements IRemoveLastAlert {
-    private static final int REQUEST_VIDEO_CAPTURE = 1;
+    @Override
+    public void OnRemoveLastAlert() {
+
+    }
+    /*private static final int REQUEST_VIDEO_CAPTURE = 1;
     private static final int CHOOSE_ALERT_SOUND = 5;
 
     private EditText etRemindersName, etNotes;
@@ -210,9 +214,9 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+                imageFileName,  *//* prefix *//*
+                ".jpg",         *//* suffix *//*
+                storageDir      *//* directory *//*
         );
 
         // Save a file: path for use with ACTION_VIEW intents
@@ -297,7 +301,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
 
         btPlayStill = findViewById(R.id.btPlayStill);
         btPlayVideo = findViewById(R.id.btPlayVideo);
-        if(/*!isVideo || */oldViedoUriString==null) btPlayVideo.setVisibility(View.INVISIBLE);
+        if(*//*!isVideo || *//*oldViedoUriString==null) btPlayVideo.setVisibility(View.INVISIBLE);
         btPlayVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -432,7 +436,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                 if (imageUri != null) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(imageUri,"image/*");
+                        intent.setDataAndType(imageUri,"image*//*");
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     } catch (RuntimeException e) {
@@ -515,8 +519,8 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                     for (int i = 0; i < arrayList.size(); i++)
                         times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
 
-//                    String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, /*spType.getSelectedItem().toString()*/"");
-//                    String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes,""/* spSpecial.getSelectedItem().toString()*/);
+//                    String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, *//*spType.getSelectedItem().toString()*//*"");
+//                    String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes,""*//* spSpecial.getSelectedItem().toString()*//*);
                     String remindersName = etRemindersName.getText().toString();
                     String newNotes = etNotes.getText().toString();
 //                    String amountText = "0";
@@ -687,10 +691,10 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
     }
 
 
-    /*
+    *//*
         return string format of the current time.
         DO NOT CHANGE THIS FORMAT [database and other checks relying on that!!]
-     */
+     *//*
 
     private String Right(String s)
     {
@@ -711,5 +715,5 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
     @Override
     public void onBackPressed() {
         confirm(true);
-    }
+    }*/
 }

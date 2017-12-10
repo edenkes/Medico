@@ -8,7 +8,7 @@ import bredesh.medico.DAL.MedicoDB;
 
 public class MedicineItem extends Item {
 
-    protected String type, special,  notes, amount;
+    /*protected String type, special,  notes, amount;
 
     public MedicineItem(int id, String time, String name, String uriStill, int[] days, boolean detailedTimes, String allTimes,
                         MedicoDB.KIND kind, String type, String special, String notes, String amount) {
@@ -17,5 +17,5 @@ public class MedicineItem extends Item {
         this.special = special;
         this.notes = notes;
         this.amount = amount;
-    }
+    }*/
 }

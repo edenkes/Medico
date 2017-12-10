@@ -1,4 +1,4 @@
-package bredesh.medico.Fragments.PictureItem;
+package bredesh.medico.Fragments.RecyclerAdapterMediGo;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,39 +16,43 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.List;
 
-import bredesh.medico.Camera.VideoData;
 import bredesh.medico.DAL.MedicoDB;
+import bredesh.medico.Fragments.ItemMediGo.ExerciseIt;
 import bredesh.medico.R;
 import bredesh.medico.Utils.Utils;
 
+/**
+ * Created by edenk on 12/10/2017.
+ */
 
-public class ExerciseRecyclerAdapter {/*extends RecyclerView.Adapter<ExerciseRecyclerAdapter.CustomViewHolder> {
-    private List<VideoItem> videoItems;
+public class ExerciseRA extends RecyclerView.Adapter<ExerciseRA.CustomViewHolder> {
+    private List<ExerciseIt> videoItems;
     private Context context;
     private Activity activity;
 
-    public ExerciseRecyclerAdapter(Context context, List<VideoItem> videoItems, Activity activity) {
+    public ExerciseRA(Context context, List<ExerciseIt> videoItems, Activity activity) {
         this.videoItems = videoItems;
         this.context = context;
         this.activity = activity;
     }
 
     @Override
-    public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ExerciseRA.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_exercise_item, viewGroup, false);
-        return new CustomViewHolder(view);
+        return new ExerciseRA.CustomViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final CustomViewHolder customViewHolder, int i) {
-        final VideoItem  item = videoItems.get(i);
+    public void onBindViewHolder(final ExerciseRA.CustomViewHolder customViewHolder, int i) {
+        final ExerciseIt  item = videoItems.get(i);
         final int position = i;
         customViewHolder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, VideoData.class);
+                Intent intent = new Intent(context, ExerciseIt.class);
                 intent.putExtra("exerciseId", item.getId());
                 intent.putExtra("repeats", item.getNoOfRepetitions());
                 intent.putExtra("repetition_type", item.getRepetitionType());
@@ -84,12 +88,12 @@ public class ExerciseRecyclerAdapter {/*extends RecyclerView.Adapter<ExerciseRec
 
 
         customViewHolder.v.setOnLongClickListener(new View.OnLongClickListener() {
-              @Override
-              public boolean onLongClick(View v) {
-                  deleteDialog.show();
-                  return true;
-              }
-          });
+            @Override
+            public boolean onLongClick(View v) {
+                deleteDialog.show();
+                return true;
+            }
+        });
 
 
 
@@ -140,7 +144,7 @@ public class ExerciseRecyclerAdapter {/*extends RecyclerView.Adapter<ExerciseRec
                         context.startActivity(intent);
                     }catch (RuntimeException e){
                         Toast.makeText(context.getApplicationContext(),
-                               resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+                                resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
                     }
                 }
                 else    Toast.makeText(context.getApplicationContext(),
@@ -151,7 +155,7 @@ public class ExerciseRecyclerAdapter {/*extends RecyclerView.Adapter<ExerciseRec
 
 
 
-    private void activateAlerts(ExerciseRecyclerAdapter.CustomViewHolder viewHolder, VideoItem item) {
+    private void activateAlerts(ExerciseRA.CustomViewHolder viewHolder, ExerciseIt item) {
         int[] days = item.getDays();
         boolean isActive = false;
         for(int i=0; i<days.length; i++)
@@ -204,5 +208,5 @@ public class ExerciseRecyclerAdapter {/*extends RecyclerView.Adapter<ExerciseRec
             this.days = new TextView[]{tvSUN,tvMON,tvTUE,tvWED,tvTHU,tvFRI,tvSAT};
             this.imageRepeat = (ImageView) convertView.findViewById(R.id.imageRepeat);
         }
-    }*/
+    }
 }

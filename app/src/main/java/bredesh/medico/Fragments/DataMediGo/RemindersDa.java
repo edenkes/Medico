@@ -1,19 +1,19 @@
-package bredesh.medico.Camera;
+package bredesh.medico.Fragments.DataMediGo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
-import android.support.v4.util.ArraySet;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,7 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,29 +39,22 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
+import bredesh.medico.Camera.RemindersData;
+import bredesh.medico.Camera.TimeAdapterRecycler;
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
-import bredesh.medico.Utils.Utils;
 
 /**
- * Created by Omri on 12/06/2017.
+ * Created by edenk on 12/10/2017.
  */
+public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
+    private static final int REQUEST_VIDEO_CAPTURE = 1;
+    private static final int CHOOSE_ALERT_SOUND = 5;
 
-
-
-public class MedicineData extends AppCompatActivity implements IRemoveLastAlert {
-    private EditText etMedicineName, etNotes;
+    private EditText etRemindersName, etNotes;
     private ArrayList<String> arrayList;
     private TextView lblSelectedDays;
-
-    @Override
-    public void OnRemoveLastAlert() {
-
-    }
-/*    private Button btDelete, btConfirm;
-    private Spinner spType, spSpecial;
-
-    private EditText etAmount;
+    private Button btDelete, btConfirm;
 
     private AlertDialog dialogDays;
     // array to keep the selected days
@@ -71,16 +63,20 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
     private MedicoDB db;
     private final int Max_Size = 16;
     private Resources resources;
-    private int medicineId;
-    private final int NewMedicine = -6;
-    private ImageButton btPlay;
-    private String videoUriString;
+    private int remindersId;
+    private final int NewReminders = -6;
+    private ImageButton btPlayStill;
+    private ImageButton btPlayVideo;
+    private ImageButton btChooseSound;
+
+    private String UriString;
+    private String alertSoundUriString;
     private final Button[] alertPlanButtons = new Button[5];
-    private TimeAdapterRecycler timeAdapter = null;
+    private TimeAdapterRecyclerMedGo timeAdapter = null;
     private Button btAddAlert;
     private TextView lbAddMultiAlert;
-    private boolean isChanged = false;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private Boolean isVideo = false;
 
 
     private final String[][] AlertPlans =
@@ -97,17 +93,24 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         @Override
         public void onClick(DialogInterface dialog, int id) {
             MedicoDB db = new MedicoDB(getApplicationContext());
-            if (medicineId != NewMedicine)
-                db.deleteRow(medicineId);
+            if (remindersId != NewReminders)
+                db.deleteRow(remindersId);
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.exercise_deleted) , Toast.LENGTH_LONG).show();
             finish();
         }
     };
 
-    private DialogInterface.OnClickListener onReshootConfirm = new DialogInterface.OnClickListener() {
+    private DialogInterface.OnClickListener onReshootConfirmStill = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int id) {
             ShootImage();
+        }
+    };
+
+    private DialogInterface.OnClickListener onReshootConfirmVideo = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int id) {
+            ShootVideo();
         }
     };
 
@@ -157,35 +160,20 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         }
     };
 
-    private String oldMedicineName = "";
-    private String oldDosageType = "";
-    private String oldSpecialNotes = "";
+    private String oldRemindersName = "";
     private String oldNotes = "";
-    private String oldAmount = "1";
     private String oldTimes = "";
     private int[] oldDays = null;
     private String oldViedoUriString = "";
+    private String oldAlertSoundUriString = null;
 
-    private void setExistingMedicine(Intent intent)
+    private void setExistingReminders(Intent intent)
     {
-        oldMedicineName = intent.getStringExtra("medicine_name");
-        etMedicineName.setText(oldMedicineName);
+        oldRemindersName = intent.getStringExtra("reminders_name");
+        etRemindersName.setText(oldRemindersName);
 
-        String type = intent.getStringExtra("medicine_type");
-        oldDosageType = type;
-        int index;
-        index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage, type);
-        spType.setSelection(index);
-
-        String special = intent.getStringExtra("medicine_special");
-        oldSpecialNotes = special;
-        index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage_notes, special);
-        spSpecial.setSelection(index);
-
-        oldNotes = intent.getStringExtra("medicine_notes");
+        oldNotes = intent.getStringExtra("reminders_notes");
         etNotes.setText(oldNotes);
-        oldAmount = intent.getStringExtra("medicine_amount");
-        etAmount.setText(oldAmount);
 
         String times = intent.getStringExtra("time");
         oldTimes = times;
@@ -221,13 +209,14 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  *//* prefix *//*
-                ".jpg",         *//* suffix *//*
-                storageDir      *//* directory *//*
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        videoUriString = Uri.fromFile(image).toString();
+        isVideo = false;
+        UriString = Uri.fromFile(image).toString();
         return image;
     }
 
@@ -249,12 +238,32 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
             if (photoFile != null) {
                 Uri photoURI = Build.VERSION.SDK_INT <= Build.VERSION_CODES.M ?
                         Uri.fromFile(photoFile) :
-                        FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);;
-                videoUriString = photoURI.toString();
+                        FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);
+                isVideo = false;
+                UriString = photoURI.toString();
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
+    }
+
+
+    private void ShootVideo()
+    {
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takeVideoIntent.resolveActivity(RemindersDa.this.getPackageManager()) != null) {
+            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
+        }
+    }
+
+    private void ChooseSound()
+    {
+        Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALL);
+        Uri existingAlertSoundUri = alertSoundUriString == null ? null : Uri.parse(alertSoundUriString);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, existingAlertSoundUri);
+        this.startActivityForResult(intent, CHOOSE_ALERT_SOUND);
     }
 
     private AlertDialog askBeforeSave = null;
@@ -263,55 +272,63 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        setContentView(R.layout.activity_medicine_data);
+        setContentView(R.layout.activity_reminders_data);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        Toolbar toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("");
         actionBar.setLogo(R.mipmap.ic_medigo_logo_clock);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        RecyclerView timeViews = (RecyclerView) findViewById(R.id.time_views);
+        RecyclerView timeViews = findViewById(R.id.time_views);
         timeViews.setLayoutManager(new LinearLayoutManager(this));
 
         resources = getResources();
-        btConfirm = (Button) findViewById(R.id.btConfirm);
-        btDelete = (Button) findViewById(R.id.btDelete);
-        etMedicineName = (EditText) findViewById(R.id.etExerciseName);
-        lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
+        btConfirm = findViewById(R.id.btConfirm);
+        btDelete = findViewById(R.id.btDelete);
+        etRemindersName = findViewById(R.id.etRemindersName);
+        lblSelectedDays = findViewById(R.id.lblSelectedDays);
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
-        btPlay = (ImageButton) findViewById(R.id.btPlay);
+        btPlayStill = findViewById(R.id.btPlayStill);
+        btPlayVideo = findViewById(R.id.btPlayVideo);
+        if(/*!isVideo || */oldViedoUriString==null) btPlayVideo.setVisibility(View.INVISIBLE);
+        btPlayVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = getApplicationContext();
+                Uri videoUri = Uri.parse(UriString);
+                if (videoUri != null) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    } catch (RuntimeException e) {
+                        Toast.makeText(context.getApplicationContext(),
+                                resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+                    }
+                } else Toast.makeText(context.getApplicationContext(),
+                        resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+            }
+        });
+        btChooseSound = findViewById(R.id.btChooseSound);
 
-        alertPlanButtons[0] = (Button) findViewById(R.id.bt1time);
-        alertPlanButtons[1] = (Button) findViewById(R.id.bt2times);
-        alertPlanButtons[2] = (Button) findViewById(R.id.bt3times);
-        alertPlanButtons[3] = (Button) findViewById(R.id.bt4times);
-        alertPlanButtons[4] = (Button) findViewById(R.id.bt5times);
-        btAddAlert = (Button) findViewById(R.id.btAddAlert);
-        lbAddMultiAlert = (TextView) findViewById(R.id.lbAddMultiAlert);
-
-        etAmount = (EditText) findViewById(R.id.amount_number);
-
-        spType = (Spinner) findViewById(R.id.spinner_type);
+        alertPlanButtons[0] = findViewById(R.id.bt1time);
+        alertPlanButtons[1] = findViewById(R.id.bt2times);
+        alertPlanButtons[2] = findViewById(R.id.bt3times);
+        alertPlanButtons[3] = findViewById(R.id.bt4times);
+        alertPlanButtons[4] = findViewById(R.id.bt5times);
+        btAddAlert = findViewById(R.id.btAddAlert);
+        lbAddMultiAlert = findViewById(R.id.lbAddMultiAlert);
 
         ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource (this, R.array.drugs_dosage, R.layout.spinner_item );
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spType.setAdapter(adapterType);
 
-        spSpecial = (Spinner) findViewById(R.id.spinner_special);
-        ArrayAdapter<CharSequence> adapterSpecial = ArrayAdapter.createFromResource(this, R.array.drugs_dosage_notes, R.layout.spinner_item);
-        adapterSpecial.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spSpecial.setAdapter(adapterSpecial);
-
-
-        etNotes = (EditText) findViewById(R.id.et_notes);
+        etNotes = findViewById(R.id.et_notes);
         etNotes.setMovementMethod(new ScrollingMovementMethod());
         etNotes.setOnTouchListener(new View.OnTouchListener() {
 
@@ -326,8 +343,13 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
 
 
-        final AlertDialog reShootConfirm = new AlertDialog.Builder(this)
-                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onReshootConfirm)
+        final AlertDialog reShootConfirmStill = new AlertDialog.Builder(this)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onReshootConfirmStill)
+                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
+                .setMessage(resources.getString(R.string.reshootPic)).create();
+
+        final AlertDialog reShootConfirmVideo = new AlertDialog.Builder(this)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onReshootConfirmVideo)
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
                 .setMessage(resources.getString(R.string.reshootPic)).create();
 
@@ -337,35 +359,47 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), onCancel)
                 .setMessage(resources.getString(R.string.save_changes)).create();
 
-        ImageButton video = (ImageButton) findViewById(R.id.btShootVideo);
+        ImageButton still = findViewById(R.id.btShootStill);
+        still.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UriString != null)
+                    reShootConfirmStill.show();
+                else
+                    ShootImage();
+            }
+        });
+
+        ImageButton video = findViewById(R.id.btShootVideo);
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (videoUriString != null)
-                    reShootConfirm.show();
+                if (UriString != null)
+                    reShootConfirmVideo.show();
                 else
-                    ShootImage();
+                    ShootVideo();
             }
         });
 
 
         db = new MedicoDB(getApplicationContext());
         Intent intent = getIntent();
-        videoUriString = intent.getStringExtra("RecordedUri");
-        oldViedoUriString = videoUriString;
+        UriString = intent.getStringExtra("RecordedUri");
+        oldViedoUriString = UriString;
+        oldAlertSoundUriString = alertSoundUriString = intent.getStringExtra("AlertSoundUri");
 
-        this.medicineId = intent.getIntExtra("medicineId", NewMedicine);
-        if (this.medicineId != NewMedicine)
+        this.remindersId = intent.getIntExtra("remindersId", NewReminders);
+        if (this.remindersId != NewReminders)
         {
-            setExistingMedicine(intent);
+            setExistingReminders(intent);
         }
         else {
             arrayList = new ArrayList<>();
             // arrayList.add(makeTimeString());
             for(int i=0; i<selectedDays.length; i++)
                 selectedDays[i] = true;
-            oldDosageType = Integer.toString (R.string.medicine_dosage_type_tab);
-            oldSpecialNotes = Integer.toString(R.string.medicine_usage_notes_none);
+//            oldDosageType = Integer.toString (R.string.medicine_dosage_type_tab);
+//            oldSpecialNotes = Integer.toString(R.string.medicine_usage_notes_none);
             oldDays = new int[7];
             for (int i=0 ;i < 7; i++)
                 oldDays[i] = 1;
@@ -374,7 +408,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         Button [] buttons = new Button[] {btConfirm, btDelete};
 
 
-        timeAdapter = new TimeAdapterRecycler(MedicineData.this,arrayList, buttons, this);
+        timeAdapter = new TimeAdapterRecyclerMedGo(RemindersDa.this,arrayList, buttons, this);
         timeViews.setAdapter(timeAdapter);
         setDialog();
 
@@ -383,21 +417,21 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         for (int i=0; i< 5; i++)
             alertPlanButtons[i].setOnClickListener(setAlertPlan);
 
-        if (videoUriString == null)
-            btPlay.setVisibility(View.INVISIBLE);
+        if (UriString == null)
+            btPlayStill.setVisibility(View.INVISIBLE);
         else {
-            Glide.with(this).load(videoUriString).into(btPlay);
-            btPlay.invalidate();
+            Glide.with(this).load(UriString).into(btPlayStill);
+            btPlayStill.invalidate();
         }
-        btPlay.setOnClickListener(new View.OnClickListener() {
+        btPlayStill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Context context = getApplicationContext();
-                Uri imageUri = Uri.parse(videoUriString);
+                Uri imageUri = Uri.parse(UriString);
                 if (imageUri != null) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(imageUri,"image*//*");
+                        intent.setDataAndType(imageUri,"image/*");
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     } catch (RuntimeException e) {
@@ -406,6 +440,13 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                     }
                 } else Toast.makeText(context.getApplicationContext(),
                         resources.getString(R.string.media_not_found_image), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btChooseSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChooseSound();
             }
         });
 
@@ -420,7 +461,7 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
         final AlertDialog deleteDialog = new AlertDialog.Builder(this)
                 .setPositiveButton(resources.getString(R.string.alert_dialog_set), onDelete)
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
-                .setMessage(resources.getString(R.string.delete_medicine_confirm)).create();
+                .setMessage(resources.getString(R.string.delete_reminders_confirm)).create();
 
 
         btDelete.setOnClickListener(new View.OnClickListener() {
@@ -456,19 +497,11 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
     private void confirm(boolean askBeforeSave) {
         {
-            if(etMedicineName.getText().toString().length() == 0 && !askBeforeSave) {
-                Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short_medicine), Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if(etAmount.getText().toString().length() == 0 && !askBeforeSave)
-            {
-                if (askBeforeSave)
-                    askUserBeforeSave();
-                else
-                    Toast.makeText(getApplicationContext(), resources.getString(R.string.amount_too_short_medicine), Toast.LENGTH_SHORT).show();
+            if(etRemindersName.getText().toString().length() == 0 && !askBeforeSave) {
+                Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short_reminders), Toast.LENGTH_SHORT).show();
             }
             else {
-                if (etMedicineName.getText().toString().length() <= Max_Size) {
+                if (etRemindersName.getText().toString().length() <= Max_Size) {
                     int[] days_to_alert = new int[selectedDays.length];
                     for (int i = 0; i < days_to_alert.length; i++) {
                         if (selectedDays[i])
@@ -481,24 +514,23 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                     for (int i = 0; i < arrayList.size(); i++)
                         times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
 
-                    String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, spType.getSelectedItem().toString());
-                    String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes, spSpecial.getSelectedItem().toString());
-                    String medicineName = etMedicineName.getText().toString();
+//                    String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, /*spType.getSelectedItem().toString()*/"");
+//                    String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes,""/* spSpecial.getSelectedItem().toString()*/);
+                    String remindersName = etRemindersName.getText().toString();
                     String newNotes = etNotes.getText().toString();
-                    String amountText = etAmount.getText().toString();
-                    int amount = Integer.parseInt(amountText);
+//                    String amountText = "0";
+//                    int amount = Integer.parseInt(amountText);
 
                     if (askBeforeSave)
                     {
                         boolean dataNotChanged = (
-                                oldMedicineName.equals(medicineName) &&
+                                oldRemindersName.equals(remindersName) &&
                                         oldTimes.equals(times) &&
-                                        oldSpecialNotes.equals(specialNotesToWrite) &&
+//                                        oldSpecialNotes.equals(specialNotesToWrite) &&
                                         oldNotes.equals(newNotes) &&
-                                        oldAmount.equals(amountText) &&
-                                        (oldViedoUriString == null ? videoUriString == null : oldViedoUriString.equals(videoUriString)) &&
-                                        Arrays.equals(oldDays, days_to_alert) &&
-                                        oldDosageType.equals(typeToWrite)
+                                        (oldViedoUriString == null ? UriString == null : oldViedoUriString.equals(UriString)) &&
+                                        (oldAlertSoundUriString == null ? alertSoundUriString == null : oldAlertSoundUriString.equals(alertSoundUriString)) &&
+                                        Arrays.equals(oldDays, days_to_alert)
                         );
                         if (dataNotChanged)
                             finish();
@@ -509,14 +541,10 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                     }
 
                     Bundle bundle = new Bundle();
-                    if (medicineId != NewMedicine) {
-                        db.updateRow(medicineId, medicineName, times, amount, "" ,  videoUriString, days_to_alert, null);
-                        db.updateMedicine(medicineId,
-                                typeToWrite,
-                                specialNotesToWrite,
-                                newNotes,
-                                amount);
-                        mFirebaseAnalytics.logEvent("Medicine_updated", bundle);
+                    if (remindersId != NewReminders) {
+                        db.updateRow(remindersId, remindersName, times, 0, "" ,  UriString, days_to_alert, alertSoundUriString);
+                        db.updateReminders(remindersId, newNotes);
+                        mFirebaseAnalytics.logEvent("Reminders_updated", bundle);
                     }
                     else
                     {
@@ -526,12 +554,9 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
                         }
                         else
                         {
-                            db.addAlert(etMedicineName.getText().toString(), MedicoDB.KIND.Medicine, times, Integer.parseInt(etAmount.getText().toString()), "", videoUriString, days_to_alert, null);
-                            db.addMedicine(typeToWrite,
-                                    specialNotesToWrite,
-                                    etNotes.getText().toString(),
-                                    Integer.parseInt(etAmount.getText().toString()));
-                            mFirebaseAnalytics.logEvent("Medicine_added", bundle);
+                            db.addAlert(etRemindersName.getText().toString(), MedicoDB.KIND.Reminders, times, 0, "", UriString, days_to_alert, alertSoundUriString);
+                            db.addReminders(etNotes.getText().toString());
+                            mFirebaseAnalytics.logEvent("Reminders_added", bundle);
                         }
                     }
                     finish();
@@ -633,22 +658,38 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if(resultCode == RESULT_OK)
-        {
-            if (requestCode == REQUEST_TAKE_PHOTO) {
-                btPlay.setVisibility(View.VISIBLE);
-                Glide.with(this).load(videoUriString).into(btPlay);
-                btPlay.invalidate();
+        if (requestCode == CHOOSE_ALERT_SOUND) {
+            if (resultCode == RESULT_OK && intent != null) {
+                Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+
+                if (uri != null) {
+                    this.alertSoundUriString = uri.toString();
+                }
             }
         }
-        else Toast.makeText(MedicineData.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
+        else if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK && intent != null) {
+            if (intent.getData() != null) {
+                UriString = intent.getData().toString();
+                btPlayVideo.setVisibility(View.VISIBLE);
+                Toast.makeText(RemindersDa.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
+            }
+        }
+        else if(resultCode == RESULT_OK)
+        {
+            if (requestCode == REQUEST_TAKE_PHOTO) {
+                btPlayStill.setVisibility(View.VISIBLE);
+                Glide.with(this).load(UriString).into(btPlayStill);
+                btPlayStill.invalidate();
+            }
+        }
+        else Toast.makeText(RemindersDa.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
     }
 
 
-    *//*
+    /*
         return string format of the current time.
         DO NOT CHANGE THIS FORMAT [database and other checks relying on that!!]
-     *//*
+     */
 
     private String Right(String s)
     {
@@ -669,5 +710,5 @@ public class MedicineData extends AppCompatActivity implements IRemoveLastAlert 
     @Override
     public void onBackPressed() {
         confirm(true);
-    }*/
+    }
 }

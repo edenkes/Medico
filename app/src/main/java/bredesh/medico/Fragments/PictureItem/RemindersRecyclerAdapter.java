@@ -29,7 +29,9 @@ import bredesh.medico.R;
  * Created by edenk on 11/20/2017.
  */
 
-public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecyclerAdapter.CustomViewHolder> {
+public class RemindersRecyclerAdapter {
+    /*extends
+} RecyclerView.Adapter<RemindersRecyclerAdapter.CustomViewHolder> {
     private List<RemindersItem> remindersItems;
     private Context context;
     private Activity activity;
@@ -92,7 +94,7 @@ public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecy
                 if(imageUri != null ) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(imageUri,"image/*");
+                        intent.setDataAndType(imageUri,"image*//*");
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     }catch (RuntimeException e){
@@ -193,5 +195,5 @@ public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecy
             this.days = new TextView[]{tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT};
             this.amount = convertView.findViewById(R.id.imageRepeat);
         }
-    }
+    }*/
 }

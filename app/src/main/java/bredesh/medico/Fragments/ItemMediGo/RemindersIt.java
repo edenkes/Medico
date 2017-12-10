@@ -1,18 +1,18 @@
-package bredesh.medico.Fragments.PictureItem;
+package bredesh.medico.Fragments.ItemMediGo;
 
 import android.media.RingtoneManager;
 
 import bredesh.medico.DAL.MedicoDB;
 
 /**
- * Created by edenk on 11/20/2017.
+ * Created by edenk on 12/10/2017.
  */
 
-public class RemindersItem extends Item{
-    /*protected String notes;
+public class RemindersIt extends ItemGeneral {
+    public String notes;
 
-    public RemindersItem(int id, String time, String name, String uri, int[] days, boolean detailedTimes, String allTimes,
-                        MedicoDB.KIND kind, String notes, String alertSoundUri) {
+    public RemindersIt(int id, String time, String name, String uri, int[] days, boolean detailedTimes, String allTimes,
+                         MedicoDB.KIND kind, String notes, String alertSoundUri) {
         super(id, time, name, uri, days, detailedTimes, allTimes, kind, alertSoundUri);
         this.notes = notes;
     }
@@ -22,5 +22,6 @@ public class RemindersItem extends Item{
             alertSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION).toString();
         return alertSoundUri;
     }
-*/
+
+
 }

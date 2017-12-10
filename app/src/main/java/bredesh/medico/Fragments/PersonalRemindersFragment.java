@@ -21,15 +21,17 @@ import java.util.regex.Pattern;
 
 import bredesh.medico.Camera.RemindersData;
 import bredesh.medico.DAL.MedicoDB;
+import bredesh.medico.Fragments.ItemMediGo.RemindersIt;
 import bredesh.medico.Fragments.PictureItem.RemindersItem;
 import bredesh.medico.Fragments.PictureItem.RemindersRecyclerAdapter;
+import bredesh.medico.Fragments.RecyclerAdapterMediGo.RemindersRA;
 import bredesh.medico.R;
 
 public class PersonalRemindersFragment extends Fragment {
     private Context context;
-    List<RemindersItem> arrayList;
+    List<RemindersIt> arrayList;
     RecyclerView lvHome;
-    RemindersRecyclerAdapter adapter;
+    RemindersRA adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +46,7 @@ public class PersonalRemindersFragment extends Fragment {
 
         setArrayList();
 
-        adapter = new RemindersRecyclerAdapter(context,arrayList,getActivity());
+        adapter = new RemindersRA(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
 
         FloatingActionButton btAddAlert = view.findViewById(R.id.addAlert);
@@ -101,7 +103,7 @@ public class PersonalRemindersFragment extends Fragment {
             Cursor cReminders = db.getRemindersByID(id);
             String notes =   cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_NOTES));
 
-            arrayList.add(index, new RemindersItem(id, time, name, uriVideo, days, detailedTimes, allTimes,
+            arrayList.add(index, new RemindersIt(id, time, name, uriVideo, days, detailedTimes, allTimes,
                     MedicoDB.KIND.Reminders, notes, alertSoundUri));
         }
         c.close();
@@ -111,7 +113,7 @@ public class PersonalRemindersFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setArrayList();
-        adapter = new RemindersRecyclerAdapter(context,arrayList,getActivity());
+        adapter = new RemindersRA(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
     }
 }

@@ -22,17 +22,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import bredesh.medico.Camera.VideoData;
-import bredesh.medico.Fragments.PictureItem.ExerciseRecyclerAdapter;
-import bredesh.medico.Fragments.PictureItem.VideoItem;
+import bredesh.medico.Fragments.DataMediGo.ExerciseDa;
+import bredesh.medico.Fragments.ItemMediGo.ExerciseIt;
 import bredesh.medico.DAL.MedicoDB;
+import bredesh.medico.Fragments.RecyclerAdapterMediGo.ExerciseRA;
 import bredesh.medico.R;
 
 public class FragmentHome extends Fragment {
     private Context context;
-    List<VideoItem> arrayList;
+    List<ExerciseIt> arrayList;
     RecyclerView lvHome;
-    ExerciseRecyclerAdapter adapter;
+    ExerciseRA adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +45,7 @@ public class FragmentHome extends Fragment {
         setArrayList();
 
        //final Adapter adapter = new Adapter(context, R.layout.exercises_item, arrayList);
-        adapter = new ExerciseRecyclerAdapter(context,arrayList,getActivity());
+        adapter = new ExerciseRA(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
 
         Resources resources = getResources();
@@ -75,7 +75,7 @@ public class FragmentHome extends Fragment {
         btAddAlert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), VideoData.class));
+                startActivity(new Intent(getActivity(), ExerciseDa.class));
             }
         });
 
@@ -122,7 +122,7 @@ public class FragmentHome extends Fragment {
             int noOfRepetitions = c.getInt(c.getColumnIndex(MedicoDB.KEY_REPEATS));
             String repetitionTpye = c.getString(c.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE));
 
-            arrayList.add(index, new VideoItem(id, time, name, uri, days, noOfRepetitions, repetitionTpye, detailedTimes, allTimes, MedicoDB.KIND.Exercise, alertSoundUri));
+            arrayList.add(index, new ExerciseIt(id, time, name, uri, days, noOfRepetitions, repetitionTpye, detailedTimes, allTimes, MedicoDB.KIND.Exercise, alertSoundUri));
         }
         c.close();
     }
@@ -131,7 +131,7 @@ public class FragmentHome extends Fragment {
     public void onResume() {
         super.onResume();
         setArrayList();
-        adapter = new ExerciseRecyclerAdapter(context,arrayList,getActivity());
+        adapter = new ExerciseRA(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
     }
 

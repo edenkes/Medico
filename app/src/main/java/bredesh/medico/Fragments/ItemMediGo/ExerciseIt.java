@@ -1,17 +1,20 @@
-package bredesh.medico.Fragments.PictureItem;
+package bredesh.medico.Fragments.ItemMediGo;
 
 import android.media.RingtoneManager;
 import android.net.Uri;
 
 import bredesh.medico.DAL.MedicoDB;
 
-public class VideoItem extends Item{
+/**
+ * Created by edenk on 12/10/2017.
+ */
 
-    /*private boolean isAlertsActive;
+public class ExerciseIt extends ItemGeneral{
+    private boolean isAlertsActive;
     private int noOfRepetitions;
     private String repetitionType;
 
-    public VideoItem(int id, String time, String name, String uriVideo, int[] days, int noOfRepetitions, String repetitionType,  boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri){
+    public ExerciseIt(int id, String time, String name, String uriVideo, int[] days, int noOfRepetitions, String repetitionType, boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri){
         super(id,time,name,uriVideo,days,detailedTimes,allTimes,kind, alertSoundUri);
         isAlertsActive = true;
         this.noOfRepetitions = noOfRepetitions;
@@ -69,5 +72,5 @@ public class VideoItem extends Item{
 
     public void setName(String name){
         this.name = name;
-    }*/
+    }
 }

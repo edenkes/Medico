@@ -1,4 +1,4 @@
-package bredesh.medico.Camera;
+package bredesh.medico.Fragments.DataMediGo;
 
 import android.app.Activity;
 import android.app.TimePickerDialog;
@@ -14,47 +14,24 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.util.List;
 
+import bredesh.medico.Camera.*;
 import bredesh.medico.R;
 
-import static android.R.id.list;
-
 /**
- * Created by Omri on 26/05/2017.
+ * Created by edenk on 12/10/2017.
  */
 
-public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycler.CustomViewHolder> {
-    @Override
-    public TimeAdapterRecycler.CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(TimeAdapterRecycler.CustomViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return 0;
-    }
-
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
-        public CustomViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
-/*
+public class TimeAdapterRecyclerMedGo  extends RecyclerView.Adapter<TimeAdapterRecyclerMedGo.CustomViewHolder> {
 
     private List<String> chainTime;
     private Context context;
     private Button[] buttons;
     private IRemoveLastAlert caller;
 
-    public TimeAdapterRecycler(Context context, List<String> chainTime, Button[] buttons, IRemoveLastAlert caller)
+    public TimeAdapterRecyclerMedGo(Context context, List<String> chainTime, Button[] buttons, IRemoveLastAlert caller)
     {
         this.context = context;
         this.chainTime = chainTime;
@@ -73,9 +50,9 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
 
 
     @Override
-    public TimeAdapterRecycler.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public TimeAdapterRecyclerMedGo.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_time_item, viewGroup, false);
-        return new TimeAdapterRecycler.CustomViewHolder(view);
+        return new TimeAdapterRecyclerMedGo.CustomViewHolder(view);
     }
 
     private String getZeroTrailedTime(int time)
@@ -91,7 +68,7 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
 
 
     @Override
-    public void onBindViewHolder(final TimeAdapterRecycler.CustomViewHolder holder, final int position) {
+    public void onBindViewHolder(final TimeAdapterRecyclerMedGo.CustomViewHolder holder, final int position) {
         final String timeItem = chainTime.get(position);
 
         final String[] hourAndMinutes = timeItem.split(" : ");
@@ -139,11 +116,11 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
             @Override
             public void onClick(View v) {
                 hideKeyboard(v);
-            if (chainTime.size() == 1)
-                caller.OnRemoveLastAlert();
-            chainTime.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, chainTime.size());
+                if (chainTime.size() == 1)
+                    caller.OnRemoveLastAlert();
+                chainTime.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, chainTime.size());
             }
         });
 
@@ -166,9 +143,4 @@ public class TimeAdapterRecycler extends RecyclerView.Adapter<TimeAdapterRecycle
             this.remove = (ImageButton) convertView.findViewById(R.id.remover);
         }
     }
-
-*/
-
 }
-
-
