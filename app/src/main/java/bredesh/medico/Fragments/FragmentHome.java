@@ -38,7 +38,7 @@ public class FragmentHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)  {
         View view = inflater.inflate(R.layout.fragment_fragment_home, container, false);
-        lvHome = (RecyclerView) view.findViewById(R.id.recycler_view);
+        lvHome = view.findViewById(R.id.recycler_view);
         lvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
         context = getActivity().getApplicationContext();
 
@@ -71,7 +71,7 @@ public class FragmentHome extends Fragment {
                 .create();
 
 
-        FloatingActionButton btAddAlert = (FloatingActionButton) view.findViewById(R.id.addAlert);
+        FloatingActionButton btAddAlert = view.findViewById(R.id.addAlert);
         btAddAlert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,8 +98,8 @@ public class FragmentHome extends Fragment {
         int index;
 
         for ( c.moveToFirst(),  index=0; !c.isAfterLast(); c.moveToNext(), index++){
-            int id = c.getInt(c.getColumnIndex(db.KEY_ID));
-            String time = c.getString(c.getColumnIndex(db.KEY_TIME));
+            int id = c.getInt(c.getColumnIndex(MedicoDB.KEY_ID));
+            String time = c.getString(c.getColumnIndex(MedicoDB.KEY_TIME));
             String [] times = time.split(Pattern.quote(getResources().getString(R.string.times_splitter)));
             boolean detailedTimes = true;
             String allTimes = time;
@@ -108,19 +108,19 @@ public class FragmentHome extends Fragment {
                 detailedTimes = false;
             }
 
-            String name = c.getString(c.getColumnIndex(db.KEY_NAME));
-            String uri = c.getString(c.getColumnIndex(db.URIVIDEO));
-            String alertSoundUri = c.getString(c.getColumnIndex(db.KEY_ALERT_SOUND_URI));
+            String name = c.getString(c.getColumnIndex(MedicoDB.KEY_NAME));
+            String uri = c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
+            String alertSoundUri = c.getString(c.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI));
             int[] days = new int[7];
-            days[0] = c.getInt(c.getColumnIndex(db.SUNDAY));
-            days[1] = c.getInt(c.getColumnIndex(db.MONDAY));
-            days[2] = c.getInt(c.getColumnIndex(db.TUESDAY));
-            days[3] = c.getInt(c.getColumnIndex(db.WEDNESDAY));
-            days[4] = c.getInt(c.getColumnIndex(db.THURSDAY));
-            days[5] = c.getInt(c.getColumnIndex(db.FRIDAY));
-            days[6] = c.getInt(c.getColumnIndex(db.SATURDAY));
-            int noOfRepetitions = c.getInt(c.getColumnIndex(db.KEY_REPEATS));
-            String repetitionTpye = c.getString(c.getColumnIndex(db.KEY_REPETITION_TYPE));
+            days[0] = c.getInt(c.getColumnIndex(MedicoDB.SUNDAY));
+            days[1] = c.getInt(c.getColumnIndex(MedicoDB.MONDAY));
+            days[2] = c.getInt(c.getColumnIndex(MedicoDB.TUESDAY));
+            days[3] = c.getInt(c.getColumnIndex(MedicoDB.WEDNESDAY));
+            days[4] = c.getInt(c.getColumnIndex(MedicoDB.THURSDAY));
+            days[5] = c.getInt(c.getColumnIndex(MedicoDB.FRIDAY));
+            days[6] = c.getInt(c.getColumnIndex(MedicoDB.SATURDAY));
+            int noOfRepetitions = c.getInt(c.getColumnIndex(MedicoDB.KEY_REPEATS));
+            String repetitionTpye = c.getString(c.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE));
 
             arrayList.add(index, new VideoItem(id, time, name, uri, days, noOfRepetitions, repetitionTpye, detailedTimes, allTimes, MedicoDB.KIND.Exercise, alertSoundUri));
         }

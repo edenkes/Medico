@@ -500,7 +500,6 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         {
             if(etRemindersName.getText().toString().length() == 0 && !askBeforeSave) {
                 Toast.makeText(getApplicationContext(), resources.getString(R.string.name_too_short_reminders), Toast.LENGTH_SHORT).show();
-                return;
             }
             else {
                 if (etRemindersName.getText().toString().length() <= Max_Size) {
@@ -674,7 +673,6 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                 UriString = intent.getData().toString();
                 btPlayVideo.setVisibility(View.VISIBLE);
                 Toast.makeText(RemindersData.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
-                return;
             }
         }
         else if(resultCode == RESULT_OK)

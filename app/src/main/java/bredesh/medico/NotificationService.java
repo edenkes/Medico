@@ -90,17 +90,10 @@ public class NotificationService extends Service {
                 break;
             case Reminders:
                 Cursor cReminders = local.getRemindersByID(notiID);
-                String dosageTypeReminders = Utils.stringOrFromResource(getResources(), cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_TYPE)));
-
-                if (dosageTypeReminders.compareTo(getResources().getString(R.string.medicine_dosage_other)) != 0)
-                    notiString = (getResources().getString(R.string.alert_text_reminders,
-                            times,
-                            dosageTypeReminders));
-                else {
-                    notiString = (getResources().getString(R.string.notification_alert_prefix_reminders));
-                    if (notiString.endsWith(":"))
-                        notiString = notiString.substring(0, notiString.length()-1);
-                }
+                String notesReminders = Utils.stringOrFromResource(getResources(), cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_NOTES)));
+                notiString = (getResources().getString(R.string.alert_text_reminders,
+                        notificationName,
+                        notesReminders));
                 break;
         }
 
