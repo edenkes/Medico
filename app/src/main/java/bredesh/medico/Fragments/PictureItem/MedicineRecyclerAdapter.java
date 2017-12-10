@@ -64,9 +64,9 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
                 intent.putExtra("medicine_special", item.special);
                 intent.putExtra("medicine_notes", item.notes);
 
-                Uri uri = item.uriStill;
+                Uri uri = item.uriVideo;
                 if (uri!=null)
-                    intent.putExtra("RecordedUri", item.uriStill.toString());
+                    intent.putExtra("RecordedUri", item.uriVideo.toString());
 
                 activity.startActivityForResult(intent, 0x1987);
             }
@@ -76,19 +76,19 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
 
         final Resources resources = context.getResources();
 
-        if (item.uriStill == null)
+        if (item.uriVideo == null)
             customViewHolder.play.setVisibility(View.INVISIBLE);
         else {
             customViewHolder.play.setScaleType(ImageView.ScaleType.FIT_CENTER);
             customViewHolder.play.setBackground(null);
-            Glide.with(activity).load(item.uriStill).into(customViewHolder.play);
+            Glide.with(activity).load(item.uriVideo).into(customViewHolder.play);
             customViewHolder.play.invalidate();
         }
 
         customViewHolder.play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri imageUri = item.uriStill;
+                Uri imageUri = item.uriVideo;
                 if(imageUri != null ) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);

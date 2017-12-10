@@ -15,7 +15,6 @@ public class Item {
     public MedicoDB.KIND kind;
     public String time;
     public Uri uriVideo;
-    public Uri uriStill;
     public String alertSoundUri;
     public int[] days;
 

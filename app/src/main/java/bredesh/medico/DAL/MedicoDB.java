@@ -109,10 +109,7 @@ public class MedicoDB extends SQLiteOpenHelper {
     private void createReminders(SQLiteDatabase db) {
         String CREATE_REMINDERS_TABLE = "CREATE TABLE IF NOT EXISTS " + REMINDERS_TABLE_NAME +"( " +
                 KEY_ID + " INTEGER PRIMARY KEY, " +
-                KEY_TYPE + " TEXT, "+
-                KEY_SPECIAL + " TEXT, "+
-                KEY_NOTES + " TEXT, "+
-                KEY_AMOUNT+ " INTEGER)";
+                KEY_NOTES + " TEXT)";
         // create table
         db.execSQL(CREATE_REMINDERS_TABLE);
     }
@@ -670,7 +667,7 @@ public class MedicoDB extends SQLiteOpenHelper {
     /*
     * Reminders section
     * */
-    public void addReminders(String type, String special, String notes, int amount)
+    public void addReminders(String notes)
     {
         int id = getLastID();
         if(id == -1) return;
@@ -681,10 +678,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
         values.put(KEY_ID, id);
-        values.put(KEY_TYPE, type);
-        values.put(KEY_SPECIAL, special);
         values.put(KEY_NOTES, notes);
-        values.put(KEY_AMOUNT, amount);
         // 3. insert
         db.insert(REMINDERS_TABLE_NAME, // table
                 null, //nullColumnHack
@@ -694,13 +688,10 @@ public class MedicoDB extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updateReminders(int rowID, String type, String special, String notes, int amount){
+    public void updateReminders(int rowID, String notes){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_TYPE, type);
-        values.put(KEY_SPECIAL, special);
         values.put(KEY_NOTES, notes);
-        values.put(KEY_AMOUNT, amount);
         db.update(REMINDERS_TABLE_NAME, values, KEY_ID+"="+rowID, null);
         db.close();
     }
@@ -712,14 +703,6 @@ public class MedicoDB extends SQLiteOpenHelper {
         cursor.moveToFirst();
         return cursor;
     }
-
-    public void DeleteAllReminders() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE IF EXISTS " +REMINDERS_TABLE_NAME + "");
-//        createReminders(db);
-        db.close();
-    }
-
 
     public KIND getKindByID(int id)
     {

@@ -7,7 +7,7 @@ import bredesh.medico.DAL.MedicoDB;
  */
 
 public class RemindersItem extends Item{
-    protected String type, special,  notes, amount;
+    protected String notes;
 
     /*public RemindersItem(int id, String time, String name, String uriStill, String uriVideo, int[] days, boolean detailedTimes, String allTimes,
                         MedicoDB.KIND kind, String type, String special, String notes, String amount) {

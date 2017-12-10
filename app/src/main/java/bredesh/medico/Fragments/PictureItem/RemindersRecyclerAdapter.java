@@ -55,17 +55,18 @@ public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecy
             public void onClick(View v) {
                 Intent intent = new Intent(context, RemindersData.class);
                 intent.putExtra("remindersId", item.id);
-                intent.putExtra("reminders_amount", item.amount);
+//                intent.putExtra("reminders_amount", item.amount);
                 intent.putExtra("time", item.allTimes);
                 intent.putExtra("reminders_name", item.name);
                 intent.putExtra("days", item.days);
-                intent.putExtra("reminders_type", item.type);
-                intent.putExtra("reminders_special", item.special);
+//                intent.putExtra("reminders_type", item.type);
+//                intent.putExtra("reminders_special", item.special);
                 intent.putExtra("reminders_notes", item.notes);
+                intent.putExtra("reminders_sound", item.alertSoundUri);
 
-                Uri uriStill = item.uriStill;
+                Uri uriStill = item.uriVideo;
                 if (uriStill!=null)
-                    intent.putExtra("RecordedUri", item.uriStill.toString());
+                    intent.putExtra("RecordedUri", item.uriVideo.toString());
 
                 activity.startActivityForResult(intent, 0x1987);
             }
@@ -76,19 +77,19 @@ public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecy
 
         final Resources resources = context.getResources();
 
-        if (item.uriStill == null)
+        if (item.uriVideo == null)
             customViewHolder.play.setVisibility(View.INVISIBLE);
         else {
             customViewHolder.play.setScaleType(ImageView.ScaleType.FIT_CENTER);
             customViewHolder.play.setBackground(null);
-            Glide.with(activity).load(item.uriStill).into(customViewHolder.play);
+            Glide.with(activity).load(item.uriVideo).into(customViewHolder.play);
             customViewHolder.play.invalidate();
         }
 
         customViewHolder.play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri imageUri = item.uriStill;
+                Uri imageUri = item.uriVideo;
                 if(imageUri != null ) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);

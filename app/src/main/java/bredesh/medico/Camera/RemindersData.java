@@ -63,6 +63,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
     private int remindersId;
     private final int NewReminders = -6;
     private ImageButton btPlayStill;
+    private ImageButton btPlayVideo;
     private String stillUriString;
     private final Button[] alertPlanButtons = new Button[5];
     private TimeAdapterRecycler timeAdapter = null;
@@ -259,6 +260,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
         btPlayStill = findViewById(R.id.btPlayStill);
+        btPlayVideo = findViewById(R.id.btPlayVideo);
 
         alertPlanButtons[0] = findViewById(R.id.bt1time);
         alertPlanButtons[1] = findViewById(R.id.bt2times);
@@ -434,19 +436,19 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                     for (int i = 0; i < arrayList.size(); i++)
                         times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
 
-                    String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, /*spType.getSelectedItem().toString()*/"");
-                    String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes,""/* spSpecial.getSelectedItem().toString()*/);
+//                    String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, /*spType.getSelectedItem().toString()*/"");
+//                    String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes,""/* spSpecial.getSelectedItem().toString()*/);
                     String remindersName = etRemindersName.getText().toString();
                     String newNotes = etNotes.getText().toString();
-                    String amountText = "0";
-                    int amount = Integer.parseInt(amountText);
+//                    String amountText = "0";
+//                    int amount = Integer.parseInt(amountText);
 
                     if (askBeforeSave)
                     {
                         boolean dataNotChanged = (
                                 oldRemindersName.equals(remindersName) &&
                                         oldTimes.equals(times) &&
-                                        oldSpecialNotes.equals(specialNotesToWrite) &&
+//                                        oldSpecialNotes.equals(specialNotesToWrite) &&
                                         oldNotes.equals(newNotes) &&
                                         (oldViedoUriString == null ? stillUriString == null : oldViedoUriString.equals(stillUriString)) &&
                                         Arrays.equals(oldDays, days_to_alert)
@@ -461,12 +463,8 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
 
                     Bundle bundle = new Bundle();
                     if (remindersId != NewReminders) {
-                        db.updateRow(remindersId, remindersName, times, amount, "" ,  stillUriString, days_to_alert, null);
-                        db.updateReminders(remindersId,
-                                typeToWrite,
-                                specialNotesToWrite,
-                                newNotes,
-                                amount);
+                        db.updateRow(remindersId, remindersName, times, 0, "" ,  stillUriString, days_to_alert, null);
+                        db.updateReminders(remindersId, newNotes);
                         mFirebaseAnalytics.logEvent("Reminders_updated", bundle);
                     }
                     else
@@ -478,10 +476,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                         else
                         {
                             db.addAlert(etRemindersName.getText().toString(), MedicoDB.KIND.Reminders, times, 0, "", stillUriString, days_to_alert, null);
-                            db.addReminders(typeToWrite,
-                                    specialNotesToWrite,
-                                    etNotes.getText().toString(),
-                                    0);
+                            db.addReminders(etNotes.getText().toString());
                             mFirebaseAnalytics.logEvent("Reminders_added", bundle);
                         }
                     }
