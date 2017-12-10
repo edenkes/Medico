@@ -123,10 +123,12 @@
 
     //medicine - TODO: need to translate
     <string name="medicine_name_label">שם תרופה:</string>
+    <string name="reminders_name_label">שם תזכורת:</string>
     <string name="medicine_amount">כמות:</string>
     <string name="medicine_type">סוג</string>
     <string name="medicine_special">הוראות מיוחדות:</string>
     <string name="medicine_notes">הערות</string>
+    <string name="reminders_notes">הערות</string>
 
     <string name="medicine_dosage_type_title">בחירת סוג</string>
     <string name="medicine_dosage_type_tab">כדורים</string>

@@ -24,7 +24,6 @@ import java.util.List;
 import bredesh.medico.Camera.RemindersData;
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
-import bredesh.medico.Utils.Utils;
 
 /**
  * Created by edenk on 11/20/2017.
@@ -72,7 +71,8 @@ public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecy
             }
         });
 
-        customViewHolder.amount.setImageResource(R.drawable.ic_pill);
+        customViewHolder.amount.setVisibility(View.INVISIBLE);
+//        customViewHolder.amount.setImageResource(R.drawable.ic_pill);
 
         final Resources resources = context.getResources();
 
@@ -121,7 +121,6 @@ public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecy
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
                 .setMessage(resources.getString(R.string.delete_medicine_confirm)).create();
 
-
         customViewHolder.v.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -129,17 +128,6 @@ public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecy
                 return true;
             }
         });
-
-        String itemType = Utils.stringOrFromResource(resources, item.type);
-
-        if (itemType.equals(resources.getString(R.string.medicine_dosage_other))) {
-            customViewHolder.tvRemindersAmount.setText("");
-            customViewHolder.txRemindersdosageType.setText("");
-        }
-        else {
-            customViewHolder.tvRemindersAmount.setText(String.valueOf(item.amount));
-            customViewHolder.txRemindersdosageType.setText(itemType);
-        }
 
         customViewHolder.tvRemindersName.setText(item.name);
 
@@ -179,7 +167,8 @@ public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecy
 
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvRemindersName, tvRemindersTime, tvRemindersAmount, txRemindersdosageType;
+        private TextView tvRemindersName;
+        private TextView tvRemindersTime;
         private TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
         private TextView[] days;
         private ImageButton play;
@@ -189,22 +178,20 @@ public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecy
         private CustomViewHolder(View convertView) {
             super(convertView);
             this.v = convertView;
-            this.tvRemindersName = (TextView) convertView.findViewById(R.id.tvExercisesName);
-            this.tvRemindersTime = (TextView) convertView.findViewById(R.id.tvExerciseTime);
-            this.txRemindersdosageType = (TextView) convertView.findViewById(R.id.txMedicinedosageType);
-            this.tvSUN = (TextView) convertView.findViewById(R.id.tvSUN);
-            this.tvMON = (TextView) convertView.findViewById(R.id.tvMON);
-            this.tvTUE = (TextView) convertView.findViewById(R.id.tvTUE);
-            this.tvWED = (TextView) convertView.findViewById(R.id.tvWED);
-            this.tvTHU = (TextView) convertView.findViewById(R.id.tvTHU);
-            this.tvFRI = (TextView) convertView.findViewById(R.id.tvFRI);
-            this.tvSAT = (TextView) convertView.findViewById(R.id.tvSAT);
-            this.tvRemindersAmount = (TextView) convertView.findViewById(R.id.lblExerciseNoOfRepeats);
-            this.play = (ImageButton) convertView.findViewById(R.id.btPlay);
+            this.tvRemindersName =  convertView.findViewById(R.id.tvExercisesName);
+            this.tvRemindersTime = convertView.findViewById(R.id.tvExerciseTime);
+            this.tvSUN = convertView.findViewById(R.id.tvSUN);
+            this.tvMON = convertView.findViewById(R.id.tvMON);
+            this.tvTUE = convertView.findViewById(R.id.tvTUE);
+            this.tvWED = convertView.findViewById(R.id.tvWED);
+            this.tvTHU = convertView.findViewById(R.id.tvTHU);
+            this.tvFRI = convertView.findViewById(R.id.tvFRI);
+            this.tvSAT = convertView.findViewById(R.id.tvSAT);
+            this.play = convertView.findViewById(R.id.btPlay);
 
-            this.play.setImageResource(R.drawable.ic_pill);
+            this.play.setImageResource(R.drawable.medigo_logo_clock);
             this.days = new TextView[]{tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT};
-            this.amount = (ImageView) convertView.findViewById(R.id.imageRepeat);
+            this.amount = convertView.findViewById(R.id.imageRepeat);
         }
     }
 }

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,7 +53,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
     private ArrayList<String> arrayList;
     private TextView lblSelectedDays;
     private Button btDelete, btConfirm;
-    private Spinner spSpecial;
+//    private Spinner spSpecial;
 
     private AlertDialog dialogDays;
     // array to keep the selected days
@@ -63,8 +64,8 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
     private Resources resources;
     private int remindersId;
     private final int NewReminders = -6;
-    private ImageButton btPlay;
-    private String videoUriString;
+    private ImageButton btPlayStill;
+    private String stillUriString;
     private final Button[] alertPlanButtons = new Button[5];
     private TimeAdapterRecycler timeAdapter = null;
     private Button btAddAlert;
@@ -169,7 +170,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         String special = intent.getStringExtra("reminders_special");
         oldSpecialNotes = special;
         index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage_notes, special);
-        spSpecial.setSelection(index);
+//        spSpecial.setSelection(index);
 
         oldNotes = intent.getStringExtra("reminders_notes");
         etNotes.setText(oldNotes);
@@ -215,7 +216,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        videoUriString = Uri.fromFile(image).toString();
+        stillUriString = Uri.fromFile(image).toString();
         return image;
     }
 
@@ -238,7 +239,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                 Uri photoURI = Build.VERSION.SDK_INT <= Build.VERSION_CODES.M ?
                         Uri.fromFile(photoFile) :
                         FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);;
-                videoUriString = photoURI.toString();
+                stillUriString = photoURI.toString();
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
@@ -256,7 +257,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle("");
         actionBar.setLogo(R.mipmap.ic_medigo_logo_clock);
@@ -273,7 +274,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
-        btPlay = (ImageButton) findViewById(R.id.btPlay);
+        btPlayStill = (ImageButton) findViewById(R.id.btPlayStill);
 
         alertPlanButtons[0] = (Button) findViewById(R.id.bt1time);
         alertPlanButtons[1] = (Button) findViewById(R.id.bt2times);
@@ -291,12 +292,12 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
 
-        spSpecial = (Spinner) findViewById(R.id.spinner_special);
+        /*spSpecial = (Spinner) findViewById(R.id.spinner_special);
         ArrayAdapter<CharSequence> adapterSpecial = ArrayAdapter.createFromResource(this, R.array.drugs_dosage_notes, R.layout.spinner_item);
         adapterSpecial.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spSpecial.setAdapter(adapterSpecial);
-
+*/
 
         etNotes = (EditText) findViewById(R.id.et_notes);
         etNotes.setMovementMethod(new ScrollingMovementMethod());
@@ -324,11 +325,11 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), onCancel)
                 .setMessage(resources.getString(R.string.save_changes)).create();
 
-        ImageButton video = (ImageButton) findViewById(R.id.btShootVideo);
-        video.setOnClickListener(new View.OnClickListener() {
+        ImageButton still = (ImageButton) findViewById(R.id.btShootStill);
+        still.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (videoUriString != null)
+                if (stillUriString != null)
                     reShootConfirm.show();
                 else
                     ShootImage();
@@ -338,8 +339,8 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
 
         db = new MedicoDB(getApplicationContext());
         Intent intent = getIntent();
-        videoUriString = intent.getStringExtra("RecordedUri");
-        oldViedoUriString = videoUriString;
+        stillUriString = intent.getStringExtra("RecordedUri");
+        oldViedoUriString = stillUriString;
 
         this.remindersId = intent.getIntExtra("remindersId", NewReminders);
         if (this.remindersId != NewReminders)
@@ -370,17 +371,17 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         for (int i=0; i< 5; i++)
             alertPlanButtons[i].setOnClickListener(setAlertPlan);
 
-        if (videoUriString == null)
-            btPlay.setVisibility(View.INVISIBLE);
+        if (stillUriString == null)
+            btPlayStill.setVisibility(View.INVISIBLE);
         else {
-            Glide.with(this).load(videoUriString).into(btPlay);
-            btPlay.invalidate();
+            Glide.with(this).load(stillUriString).into(btPlayStill);
+            btPlayStill.invalidate();
         }
-        btPlay.setOnClickListener(new View.OnClickListener() {
+        btPlayStill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Context context = getApplicationContext();
-                Uri imageUri = Uri.parse(videoUriString);
+                Uri imageUri = Uri.parse(stillUriString);
                 if (imageUri != null) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -462,7 +463,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                         times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
 
                     String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, /*spType.getSelectedItem().toString()*/"");
-                    String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes, spSpecial.getSelectedItem().toString());
+                    String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes,""/* spSpecial.getSelectedItem().toString()*/);
                     String remindersName = etRemindersName.getText().toString();
                     String newNotes = etNotes.getText().toString();
                     String amountText = "0";
@@ -476,7 +477,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                                         oldSpecialNotes.equals(specialNotesToWrite) &&
                                         oldNotes.equals(newNotes) &&
                                         oldAmount.equals(amountText) &&
-                                        (oldViedoUriString == null ? videoUriString == null : oldViedoUriString.equals(videoUriString)) &&
+                                        (oldViedoUriString == null ? stillUriString == null : oldViedoUriString.equals(stillUriString)) &&
                                         Arrays.equals(oldDays, days_to_alert) &&
                                         oldDosageType.equals(typeToWrite)
                         );
@@ -490,7 +491,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
 
                     Bundle bundle = new Bundle();
                     if (remindersId != NewReminders) {
-                        db.updateRow(remindersId, remindersName, times, amount, "" ,  videoUriString, days_to_alert, null);
+                        db.updateRow(remindersId, remindersName, times, amount, "" ,  stillUriString, days_to_alert, null);
                         db.updateReminders(remindersId,
                                 typeToWrite,
                                 specialNotesToWrite,
@@ -506,7 +507,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                         }
                         else
                         {
-                            db.addAlert(etRemindersName.getText().toString(), MedicoDB.KIND.Reminders, times, 0, "", videoUriString, days_to_alert, null);
+                            db.addAlert(etRemindersName.getText().toString(), MedicoDB.KIND.Reminders, times, 0, "", stillUriString, days_to_alert, null);
                             db.addReminders(typeToWrite,
                                     specialNotesToWrite,
                                     etNotes.getText().toString(),
@@ -616,9 +617,9 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         if(resultCode == RESULT_OK)
         {
             if (requestCode == REQUEST_TAKE_PHOTO) {
-                btPlay.setVisibility(View.VISIBLE);
-                Glide.with(this).load(videoUriString).into(btPlay);
-                btPlay.invalidate();
+                btPlayStill.setVisibility(View.VISIBLE);
+                Glide.with(this).load(stillUriString).into(btPlayStill);
+                btPlayStill.invalidate();
             }
         }
         else Toast.makeText(RemindersData.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();

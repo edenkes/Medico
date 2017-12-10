@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
     android:layoutDirection="locale"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <include
         android:id="@+id/app_bar"
@@ -43,11 +46,12 @@
                         android:maxLines="1"
                         android:paddingEnd="5sp"
                         android:paddingStart="5sp"
-                        android:text="@string/medicine_name_label"
+                        android:text="@string/reminders_name_label"
                         android:textColor="@color/labelColor"
                         android:textSize="20sp" />
 
                     <EditText
+                        android:id="@+id/etRemindersName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
@@ -59,88 +63,10 @@
                         android:maxLines="1"
                         android:paddingEnd="10sp"
                         android:paddingStart="10sp"
-                        android:singleLine="true"
                         android:textColor="@color/labelLightColor"
-                        android:textSize="20sp" />
-
+                        android:textSize="20sp"
+                        tools:ignore="LabelFor" />
                 </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5sp"
-                    android:layoutDirection="locale"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/lblAmount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
-                        android:paddingEnd="5sp"
-                        android:paddingStart="5sp"
-                        android:text="@string/medicine_amount"
-                        android:textColor="@color/labelColor"
-                        android:textSize="20sp" />
-
-
-                    <EditText
-                        android:id="@+id/amount_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="10sp"
-                        android:layout_marginStart="10sp"
-                        android:ems="3"
-                        android:inputType="number"
-                        android:maxEms="3"
-                        android:selectAllOnFocus="true"
-                        android:singleLine="true"
-                        android:text="1"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/labelLightColor"
-                        android:textSize="18sp" />
-
-                    <Spinner
-                        android:id="@+id/spinner_type"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="5sp"
-                        android:gravity="center_vertical" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5sp"
-                    android:layoutDirection="locale"
-                    android:orientation="horizontal">
-
-
-                    <TextView
-                        android:id="@+id/tv_special"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:paddingEnd="5sp"
-                        android:paddingStart="5sp"
-                        android:text="@string/medicine_special"
-                        android:textColor="@color/labelColor"
-                        android:textSize="20sp" />
-
-
-                    <Spinner
-                        android:id="@+id/spinner_special"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_marginEnd="5sp"
-                        android:layout_marginStart="15sp" />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -156,7 +82,7 @@
                         android:gravity="center_vertical"
                         android:paddingEnd="5sp"
                         android:paddingStart="5sp"
-                        android:text="@string/medicine_notes"
+                        android:text="@string/reminders_notes"
                         android:textColor="@color/labelColor"
                         android:textSize="20sp" />
 
@@ -176,7 +102,50 @@
                         android:scrollbars="vertical"
                         android:text=""
                         android:textColor="@color/labelLightColor"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        tools:ignore="LabelFor"
+                        tools:targetApi="lollipop" />
+
+                </LinearLayout>
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10sp"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="5sp"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btShootVideo"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/button_round"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_videocam_black_48dp" />
+
+                    <ImageButton
+                        android:id="@+id/btPlayVideo"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginStart="10sp"
+                        android:background="@drawable/button_round"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_play_arrow_black_48dp" />
+
+                    <ImageButton
+                        android:id="@+id/btChooseSound"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginStart="10sp"
+                        android:background="@drawable/button_round"
+                        android:scaleType="center"
+                        app:srcCompat="@drawable/ic_music_note_black_24dp" />
 
                 </LinearLayout>
 
@@ -189,7 +158,7 @@
                     android:orientation="horizontal">
 
                     <ImageButton
-                        android:id="@+id/btShootVideo"
+                        android:id="@+id/btShootStill"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
@@ -198,7 +167,7 @@
                         android:src="@drawable/ic_add_a_photo_black_36dp" />
 
                     <ImageButton
-                        android:id="@+id/btPlay"
+                        android:id="@+id/btPlayStill"
                         android:layout_width="wrap_content"
                         android:layout_height="400px"
                         android:layout_gravity="center"
@@ -336,7 +305,8 @@
                             android:textAlignment="center"
                             android:textColor="@color/colorWhite"
                             android:textSize="18sp"
-                            android:visibility="gone" />
+                            android:visibility="gone"
+                            tools:ignore="ButtonStyle" />
                     </LinearLayout>
 
                     <android.support.v7.widget.RecyclerView
