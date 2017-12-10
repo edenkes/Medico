@@ -28,6 +28,21 @@ public class RemindersRA extends RecyclerAdapterGeneral<RemindersIt> {
     }
 
     @Override
+    protected Intent sendIntetInformation(ItemGeneral item) {
+        Intent intent = new Intent(context, RemindersDa.class);
+        intent.putExtra("remindersId", item.id);
+        intent.putExtra("time", item.allTimes);
+        intent.putExtra("reminders_name", item.name);
+        intent.putExtra("days", item.days);
+        intent.putExtra("reminders_notes", ((RemindersIt) item).notes);
+        Uri uriStill = item.uriVideo;
+        if (uriStill!=null)
+            intent.putExtra("RecordedUri", item.uriVideo.toString());
+        intent.putExtra("AlertSoundUri", item.getAlertSoundUri());
+        return intent;
+    }
+
+    @Override
     protected void changeViewHolder(final CustomViewHolder customViewHolder, final ItemGeneral item, final Resources resources) {
         if (item.uriVideo == null)
             customViewHolder.btPlay.setVisibility(View.INVISIBLE);
@@ -59,20 +74,6 @@ public class RemindersRA extends RecyclerAdapterGeneral<RemindersIt> {
         });
     }
 
-    @Override
-    protected Intent sendIntetInformation(ItemGeneral item) {
-        Intent intent = new Intent(context, RemindersDa.class);
-        intent.putExtra("remindersId", item.id);
-        intent.putExtra("time", item.allTimes);
-        intent.putExtra("reminders_name", item.name);
-        intent.putExtra("days", item.days);
-        intent.putExtra("reminders_notes", ((RemindersIt) item).notes);
-        Uri uriStill = item.uriVideo;
-        if (uriStill!=null)
-            intent.putExtra("RecordedUri", item.uriVideo.toString());
-        intent.putExtra("AlertSoundUri", item.getAlertSoundUri());
-        return intent;
-    }
     /*private List<RemindersIt> remindersItems;
     private Context context;
     private Activity activity;

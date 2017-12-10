@@ -44,7 +44,7 @@ public class ExerciseRA extends RecyclerAdapterGeneral<ExerciseIt> {
     @Override
     protected void changeViewHolder(final CustomViewHolder customViewHolder, final ItemGeneral item, final Resources resources) {
         customViewHolder.lbItemNoOfRepeats.setText(String.valueOf(((ExerciseIt) item).getNoOfRepetitions()));
-        customViewHolder.tvItemName.setText(item.getName());
+
         if (item.getUri() == null)
             customViewHolder.btPlay.setVisibility(View.INVISIBLE);
 

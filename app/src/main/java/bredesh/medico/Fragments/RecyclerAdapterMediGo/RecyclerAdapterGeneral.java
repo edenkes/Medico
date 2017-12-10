@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -43,7 +42,6 @@ abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<RecyclerAd
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_exercise_item, viewGroup, false);
         return new RecyclerAdapterGeneral.CustomViewHolder(view);
     }
-//    public abstract void onBindViewHolder(final RecyclerAdapterGeneral.CustomViewHolder customViewHolder, int i);
 
     @Override
     public void onBindViewHolder(final RecyclerAdapterGeneral.CustomViewHolder customViewHolder, int i) {
@@ -83,6 +81,8 @@ abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<RecyclerAd
                 return true;
             }
         });
+
+        customViewHolder.tvItemName.setText(item.name);
 
         changeViewHolder(customViewHolder, item, resources);
 
