@@ -47,7 +47,7 @@ public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecy
     }
 
     @Override
-    public void onBindViewHolder(final RemindersRecyclerAdapter.CustomViewHolder customViewHolder, int i) {
+    public void onBindViewHolder(final CustomViewHolder customViewHolder, int i) {
         final RemindersItem item = remindersItems.get(i);
         final int position = i;
         customViewHolder.v.setOnClickListener(new View.OnClickListener() {
@@ -63,9 +63,9 @@ public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecy
                 intent.putExtra("reminders_special", item.special);
                 intent.putExtra("reminders_notes", item.notes);
 
-                Uri uri = item.uri;
-                if (uri!=null)
-                    intent.putExtra("RecordedUri", item.uri.toString());
+                Uri uriStill = item.uriStill;
+                if (uriStill!=null)
+                    intent.putExtra("RecordedUri", item.uriStill.toString());
 
                 activity.startActivityForResult(intent, 0x1987);
             }
@@ -76,19 +76,19 @@ public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecy
 
         final Resources resources = context.getResources();
 
-        if (item.uri == null)
+        if (item.uriStill == null)
             customViewHolder.play.setVisibility(View.INVISIBLE);
         else {
             customViewHolder.play.setScaleType(ImageView.ScaleType.FIT_CENTER);
             customViewHolder.play.setBackground(null);
-            Glide.with(activity).load(item.uri).into(customViewHolder.play);
+            Glide.with(activity).load(item.uriStill).into(customViewHolder.play);
             customViewHolder.play.invalidate();
         }
 
         customViewHolder.play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri imageUri = item.uri;
+                Uri imageUri = item.uriStill;
                 if(imageUri != null ) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);

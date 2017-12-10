@@ -43,6 +43,7 @@ public class MedicoDB extends SQLiteOpenHelper {
     public static final String KEY_REPEATS = "repeats";
     public static final String KEY_REPETITION_TYPE = "repetition_type";
     public static final String URIVIDEO = "urivideo";
+    public static final String URISTILL = "uristill";
     public static final String KEY_ALERT_SOUND_URI = "uri_alert_sound";
     public static final String SUNDAY = "SUNDAY";
     public static final String MONDAY = "MONDAY";

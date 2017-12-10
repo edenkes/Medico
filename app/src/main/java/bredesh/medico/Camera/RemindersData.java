@@ -24,7 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +52,6 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
     private ArrayList<String> arrayList;
     private TextView lblSelectedDays;
     private Button btDelete, btConfirm;
-//    private Spinner spSpecial;
 
     private AlertDialog dialogDays;
     // array to keep the selected days
@@ -70,7 +68,6 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
     private TimeAdapterRecycler timeAdapter = null;
     private Button btAddAlert;
     private TextView lbAddMultiAlert;
-    private boolean isChanged = false;
     private FirebaseAnalytics mFirebaseAnalytics;
 
 
@@ -149,10 +146,8 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
     };
 
     private String oldRemindersName = "";
-    private String oldDosageType = "";
     private String oldSpecialNotes = "";
     private String oldNotes = "";
-    private String oldAmount = "1";
     private String oldTimes = "";
     private int[] oldDays = null;
     private String oldViedoUriString = "";
@@ -162,19 +157,8 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         oldRemindersName = intent.getStringExtra("reminders_name");
         etRemindersName.setText(oldRemindersName);
 
-        String type = intent.getStringExtra("reminders_type");
-        oldDosageType = type;
-        int index;
-        index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage, type);
-
-        String special = intent.getStringExtra("reminders_special");
-        oldSpecialNotes = special;
-        index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage_notes, special);
-//        spSpecial.setSelection(index);
-
         oldNotes = intent.getStringExtra("reminders_notes");
         etNotes.setText(oldNotes);
-        oldAmount = intent.getStringExtra("reminders_amount");
 
         String times = intent.getStringExtra("time");
         oldTimes = times;
@@ -238,7 +222,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
             if (photoFile != null) {
                 Uri photoURI = Build.VERSION.SDK_INT <= Build.VERSION_CODES.M ?
                         Uri.fromFile(photoFile) :
-                        FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);;
+                        FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);
                 stillUriString = photoURI.toString();
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
@@ -254,7 +238,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.activity_reminders_data);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        Toolbar toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -264,42 +248,30 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        RecyclerView timeViews = (RecyclerView) findViewById(R.id.time_views);
+        RecyclerView timeViews = findViewById(R.id.time_views);
         timeViews.setLayoutManager(new LinearLayoutManager(this));
 
         resources = getResources();
-        btConfirm = (Button) findViewById(R.id.btConfirm);
-        btDelete = (Button) findViewById(R.id.btDelete);
-        etRemindersName = (EditText) findViewById(R.id.etRemindersName);
-        lblSelectedDays = (TextView) findViewById(R.id.lblSelectedDays);
+        btConfirm = findViewById(R.id.btConfirm);
+        btDelete = findViewById(R.id.btDelete);
+        etRemindersName = findViewById(R.id.etRemindersName);
+        lblSelectedDays = findViewById(R.id.lblSelectedDays);
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
-        btPlayStill = (ImageButton) findViewById(R.id.btPlayStill);
+        btPlayStill = findViewById(R.id.btPlayStill);
 
-        alertPlanButtons[0] = (Button) findViewById(R.id.bt1time);
-        alertPlanButtons[1] = (Button) findViewById(R.id.bt2times);
-        alertPlanButtons[2] = (Button) findViewById(R.id.bt3times);
-        alertPlanButtons[3] = (Button) findViewById(R.id.bt4times);
-        alertPlanButtons[4] = (Button) findViewById(R.id.bt5times);
-        btAddAlert = (Button) findViewById(R.id.btAddAlert);
-        lbAddMultiAlert = (TextView) findViewById(R.id.lbAddMultiAlert);
-
-//        etAmount = (EditText) findViewById(R.id.c);
-
-//        spType = (Spinner) findViewById(R.id.spinner_type);
+        alertPlanButtons[0] = findViewById(R.id.bt1time);
+        alertPlanButtons[1] = findViewById(R.id.bt2times);
+        alertPlanButtons[2] = findViewById(R.id.bt3times);
+        alertPlanButtons[3] = findViewById(R.id.bt4times);
+        alertPlanButtons[4] = findViewById(R.id.bt5times);
+        btAddAlert = findViewById(R.id.btAddAlert);
+        lbAddMultiAlert = findViewById(R.id.lbAddMultiAlert);
 
         ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource (this, R.array.drugs_dosage, R.layout.spinner_item );
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
 
-        /*spSpecial = (Spinner) findViewById(R.id.spinner_special);
-        ArrayAdapter<CharSequence> adapterSpecial = ArrayAdapter.createFromResource(this, R.array.drugs_dosage_notes, R.layout.spinner_item);
-        adapterSpecial.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spSpecial.setAdapter(adapterSpecial);
-*/
-
-        etNotes = (EditText) findViewById(R.id.et_notes);
+        etNotes = findViewById(R.id.et_notes);
         etNotes.setMovementMethod(new ScrollingMovementMethod());
         etNotes.setOnTouchListener(new View.OnTouchListener() {
 
@@ -325,7 +297,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), onCancel)
                 .setMessage(resources.getString(R.string.save_changes)).create();
 
-        ImageButton still = (ImageButton) findViewById(R.id.btShootStill);
+        ImageButton still = findViewById(R.id.btShootStill);
         still.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -352,7 +324,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
             // arrayList.add(makeTimeString());
             for(int i=0; i<selectedDays.length; i++)
                 selectedDays[i] = true;
-            oldDosageType = Integer.toString (R.string.medicine_dosage_type_tab);
+//            oldDosageType = Integer.toString (R.string.medicine_dosage_type_tab);
             oldSpecialNotes = Integer.toString(R.string.medicine_usage_notes_none);
             oldDays = new int[7];
             for (int i=0 ;i < 7; i++)
@@ -476,10 +448,8 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                                         oldTimes.equals(times) &&
                                         oldSpecialNotes.equals(specialNotesToWrite) &&
                                         oldNotes.equals(newNotes) &&
-                                        oldAmount.equals(amountText) &&
                                         (oldViedoUriString == null ? stillUriString == null : oldViedoUriString.equals(stillUriString)) &&
-                                        Arrays.equals(oldDays, days_to_alert) &&
-                                        oldDosageType.equals(typeToWrite)
+                                        Arrays.equals(oldDays, days_to_alert)
                         );
                         if (dataNotChanged)
                             finish();

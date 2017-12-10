@@ -14,7 +14,8 @@ public class Item {
     public String name;
     public MedicoDB.KIND kind;
     public String time;
-    public Uri uri;
+    public Uri uriVideo;
+    public Uri uriStill;
     public String alertSoundUri;
     public int[] days;
 
@@ -22,15 +23,18 @@ public class Item {
     protected boolean detailedTimes;
     protected String allTimes;
     
-    public Item(int id, String time, String name, String uri, int[] days, boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri)
+    public Item(int id, String time, String name, String uriStill, String uriVideo, int[] days, boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri)
     {
         this.id = id;
         this.time = time;
         this.name = name;
         this.days = days;
-        if (uri != null && !uri.equals("null")) {
-            this.uri = Uri.parse(uri);
-        }else this.uri = null;
+        if (uriStill != null && !uriStill.equals("null")) {
+            this.uriStill = Uri.parse(uriStill);
+        }else this.uriStill = null;
+        if (uriVideo != null && !uriVideo.equals("null")) {
+            this.uriVideo = Uri.parse(uriVideo);
+        }else this.uriVideo = null;
         this.detailedTimes = detailedTimes;
         this.allTimes = allTimes;
         this.kind = kind;

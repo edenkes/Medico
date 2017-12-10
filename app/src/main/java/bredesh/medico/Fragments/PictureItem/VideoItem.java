@@ -11,8 +11,8 @@ public class VideoItem extends Item{
     private int noOfRepetitions;
     private String repetitionType;
 
-    public VideoItem(int id, String time, String name, String uri, int[] days, int noOfRepetitions, String repetitionType,  boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri){
-        super(id,time,name,uri,days,detailedTimes,allTimes,kind, alertSoundUri);
+    public VideoItem(int id, String time, String name, String uriVideo, int[] days, int noOfRepetitions, String repetitionType,  boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri){
+        super(id,time,name,null,uriVideo,days,detailedTimes,allTimes,kind, alertSoundUri);
         isAlertsActive = true;
         this.noOfRepetitions = noOfRepetitions;
         this.repetitionType = repetitionType;
@@ -24,7 +24,7 @@ public class VideoItem extends Item{
         return alertSoundUri;
     }
 
-    public Uri getUri() { return  uri;}
+    public Uri getUri() { return  uriVideo;}
 
     public String getTime() { return time; }
 

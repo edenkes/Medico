@@ -86,7 +86,9 @@ public class PersonalRemindersFragment extends Fragment {
             }
 
             String name = c.getString(c.getColumnIndex(MedicoDB.KEY_NAME));
-            String uri = c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
+            String uriVideo = c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
+//            String uriStill = c.getString(c.getColumnIndex(MedicoDB.URISTILL));
+            String uriStill = c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
             int[] days = new int[7];
             days[0] = c.getInt(c.getColumnIndex(MedicoDB.SUNDAY));
             days[1] = c.getInt(c.getColumnIndex(MedicoDB.MONDAY));
@@ -97,13 +99,15 @@ public class PersonalRemindersFragment extends Fragment {
             days[6] = c.getInt(c.getColumnIndex(MedicoDB.SATURDAY));
 
             Cursor cReminders = db.getRemindersByID(id);
-            int amount =  cReminders.getInt(cReminders.getColumnIndex(MedicoDB.KEY_AMOUNT));
-            String type =    cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_TYPE));
-            String special = cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_SPECIAL));
+//            int amount =  cReminders.getInt(cReminders.getColumnIndex(MedicoDB.KEY_AMOUNT));
+//            String type =    cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_TYPE));
+//            String special = cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_SPECIAL));
             String notes =   cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_NOTES));
+            String alertSoundUri = null;
+//            String alertSoundUri = cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI));
 
-            arrayList.add(index, new RemindersItem(id, time, name, uri, days, detailedTimes, allTimes,
-                    MedicoDB.KIND.Reminders, type, special, notes, ""+ amount));
+            arrayList.add(index, new RemindersItem(id, time, name,uriStill, uriVideo, days, detailedTimes, allTimes,
+                    MedicoDB.KIND.Reminders, notes, alertSoundUri));
         }
         c.close();
     }
