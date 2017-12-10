@@ -2,27 +2,19 @@ package bredesh.medico.Fragments.RecyclerAdapterMediGo;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Fragments.DataMediGo.RemindersDa;
+import bredesh.medico.Fragments.ItemMediGo.ItemGeneral;
 import bredesh.medico.Fragments.ItemMediGo.RemindersIt;
 import bredesh.medico.R;
 
@@ -30,8 +22,58 @@ import bredesh.medico.R;
  * Created by edenk on 12/10/2017.
  */
 
-public class RemindersRA extends RecyclerView.Adapter<RemindersRA.CustomViewHolder> {
-    private List<RemindersIt> remindersItems;
+public class RemindersRA extends RecyclerAdapterGeneral<RemindersIt> {
+    public RemindersRA(Context context, List<RemindersIt> itemGeneral, Activity activity) {
+        super(context, itemGeneral, activity);
+    }
+
+    @Override
+    protected void changeViewHolder(final CustomViewHolder customViewHolder, final ItemGeneral item, final Resources resources) {
+        if (item.uriVideo == null)
+            customViewHolder.btPlay.setVisibility(View.INVISIBLE);
+        else {
+            customViewHolder.btPlay.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            customViewHolder.btPlay.setBackground(null);
+            Glide.with(activity).load(item.uriVideo).into(customViewHolder.btPlay);
+            customViewHolder.btPlay.invalidate();
+        }
+
+        customViewHolder.btPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri imageUri = item.uriVideo;
+                if(imageUri != null ) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(imageUri,"image*//*");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }catch (RuntimeException e){
+                        Toast.makeText(context.getApplicationContext(),
+                                resources.getString(R.string.media_not_found_image), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else    Toast.makeText(context.getApplicationContext(),
+                        resources.getString(R.string.media_not_found_image), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    protected Intent sendIntetInformation(ItemGeneral item) {
+        Intent intent = new Intent(context, RemindersDa.class);
+        intent.putExtra("remindersId", item.id);
+        intent.putExtra("time", item.allTimes);
+        intent.putExtra("reminders_name", item.name);
+        intent.putExtra("days", item.days);
+        intent.putExtra("reminders_notes", ((RemindersIt) item).notes);
+        Uri uriStill = item.uriVideo;
+        if (uriStill!=null)
+            intent.putExtra("RecordedUri", item.uriVideo.toString());
+        intent.putExtra("AlertSoundUri", item.getAlertSoundUri());
+        return intent;
+    }
+    /*private List<RemindersIt> remindersItems;
     private Context context;
     private Activity activity;
 
@@ -93,7 +135,7 @@ public class RemindersRA extends RecyclerView.Adapter<RemindersRA.CustomViewHold
                 if(imageUri != null ) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(imageUri,"image/*");
+                        intent.setDataAndType(imageUri,"image*//*");
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     }catch (RuntimeException e){
@@ -179,8 +221,8 @@ public class RemindersRA extends RecyclerView.Adapter<RemindersRA.CustomViewHold
         private CustomViewHolder(View convertView) {
             super(convertView);
             this.v = convertView;
-            this.tvRemindersName =  convertView.findViewById(R.id.tvExercisesName);
-            this.tvRemindersTime = convertView.findViewById(R.id.tvExerciseTime);
+            this.tvRemindersName =  convertView.findViewById(R.id.tvItemName);
+            this.tvRemindersTime = convertView.findViewById(R.id.tvItemTime);
             this.tvSUN = convertView.findViewById(R.id.tvSUN);
             this.tvMON = convertView.findViewById(R.id.tvMON);
             this.tvTUE = convertView.findViewById(R.id.tvTUE);
@@ -192,7 +234,7 @@ public class RemindersRA extends RecyclerView.Adapter<RemindersRA.CustomViewHold
 
             this.play.setImageResource(R.drawable.medigo_logo_clock);
             this.days = new TextView[]{tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT};
-            this.amount = convertView.findViewById(R.id.imageRepeat);
+            this.amount = convertView.findViewById(R.id.ivRepetition);
         }
-    }
+    }*/
 }

@@ -8,7 +8,7 @@ import bredesh.medico.DAL.MedicoDB;
  * Created by edenk on 12/10/2017.
  */
 
-public class RemindersIt extends ItemGeneral {
+public class RemindersIt extends ItemGeneral implements ItemInterface{
     public String notes;
 
     public RemindersIt(int id, String time, String name, String uri, int[] days, boolean detailedTimes, String allTimes,

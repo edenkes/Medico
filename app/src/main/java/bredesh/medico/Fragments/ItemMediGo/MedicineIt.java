@@ -6,7 +6,7 @@ import bredesh.medico.DAL.MedicoDB;
  * Created by edenk on 12/10/2017.
  */
 
-public class MedicineIt extends ItemGeneral{
+public class MedicineIt extends ItemGeneral implements ItemInterface{
     public String type;
     public String special;
     public String notes;

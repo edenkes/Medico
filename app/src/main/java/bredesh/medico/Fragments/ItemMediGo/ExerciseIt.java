@@ -9,7 +9,7 @@ import bredesh.medico.DAL.MedicoDB;
  * Created by edenk on 12/10/2017.
  */
 
-public class ExerciseIt extends ItemGeneral{
+public class ExerciseIt extends ItemGeneral implements ItemInterface{
     private int noOfRepetitions;
     private String repetitionType;
 
