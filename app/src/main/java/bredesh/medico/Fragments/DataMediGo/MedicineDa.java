@@ -38,8 +38,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
-import bredesh.medico.Camera.MedicineData;
-import bredesh.medico.Camera.TimeAdapterRecycler;
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
 import bredesh.medico.Utils.Utils;

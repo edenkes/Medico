@@ -51,7 +51,7 @@ public class MedicineRecyclerAdapter extends RecyclerView.Adapter<MedicineRecycl
             super(itemView);
         }
     }
-   /* private List<MedicineItem> medicineItems;
+   /* private List<edicineItem> medicineItems;
     private Context context;
     private Activity activity;
 

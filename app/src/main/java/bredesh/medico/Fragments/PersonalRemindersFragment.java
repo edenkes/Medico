@@ -19,11 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import bredesh.medico.Camera.RemindersData;
 import bredesh.medico.DAL.MedicoDB;
+import bredesh.medico.Fragments.DataMediGo.RemindersDa;
 import bredesh.medico.Fragments.ItemMediGo.RemindersIt;
-import bredesh.medico.Fragments.PictureItem.RemindersItem;
-import bredesh.medico.Fragments.PictureItem.RemindersRecyclerAdapter;
 import bredesh.medico.Fragments.RecyclerAdapterMediGo.RemindersRA;
 import bredesh.medico.R;
 
@@ -53,7 +51,7 @@ public class PersonalRemindersFragment extends Fragment {
         btAddAlert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), RemindersData.class));
+                startActivity(new Intent(getActivity(), RemindersDa.class));
             }
         });
 

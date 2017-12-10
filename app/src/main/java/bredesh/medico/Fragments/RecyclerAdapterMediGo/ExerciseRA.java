@@ -20,6 +20,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import bredesh.medico.DAL.MedicoDB;
+import bredesh.medico.Fragments.DataMediGo.ExerciseDa;
 import bredesh.medico.Fragments.ItemMediGo.ExerciseIt;
 import bredesh.medico.R;
 import bredesh.medico.Utils.Utils;
@@ -52,7 +53,7 @@ public class ExerciseRA extends RecyclerView.Adapter<ExerciseRA.CustomViewHolder
         customViewHolder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ExerciseIt.class);
+                Intent intent = new Intent(context, ExerciseDa.class);
                 intent.putExtra("exerciseId", item.getId());
                 intent.putExtra("repeats", item.getNoOfRepetitions());
                 intent.putExtra("repetition_type", item.getRepetitionType());
