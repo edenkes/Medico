@@ -62,11 +62,10 @@ public class RemindersRecyclerAdapter extends RecyclerView.Adapter<RemindersRecy
 //                intent.putExtra("reminders_type", item.type);
 //                intent.putExtra("reminders_special", item.special);
                 intent.putExtra("reminders_notes", item.notes);
-                intent.putExtra("reminders_sound", item.alertSoundUri);
-
                 Uri uriStill = item.uriVideo;
                 if (uriStill!=null)
                     intent.putExtra("RecordedUri", item.uriVideo.toString());
+                intent.putExtra("AlertSoundUri", item.getAlertSoundUri());
 
                 activity.startActivityForResult(intent, 0x1987);
             }

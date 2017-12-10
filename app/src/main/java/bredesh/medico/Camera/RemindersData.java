@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,6 +49,9 @@ import bredesh.medico.Utils.Utils;
  */
 
 public class RemindersData  extends AppCompatActivity implements IRemoveLastAlert {
+    private static final int REQUEST_VIDEO_CAPTURE = 1;
+    private static final int CHOOSE_ALERT_SOUND = 5;
+
     private EditText etRemindersName, etNotes;
     private ArrayList<String> arrayList;
     private TextView lblSelectedDays;
@@ -64,12 +68,16 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
     private final int NewReminders = -6;
     private ImageButton btPlayStill;
     private ImageButton btPlayVideo;
-    private String stillUriString;
+    private ImageButton btChooseSound;
+
+    private String UriString;
+    private String alertSoundUriString;
     private final Button[] alertPlanButtons = new Button[5];
     private TimeAdapterRecycler timeAdapter = null;
     private Button btAddAlert;
     private TextView lbAddMultiAlert;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private Boolean isVideo = false;
 
 
     private final String[][] AlertPlans =
@@ -93,10 +101,17 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         }
     };
 
-    private DialogInterface.OnClickListener onReshootConfirm = new DialogInterface.OnClickListener() {
+    private DialogInterface.OnClickListener onReshootConfirmStill = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int id) {
             ShootImage();
+        }
+    };
+
+    private DialogInterface.OnClickListener onReshootConfirmVideo = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int id) {
+            ShootVideo();
         }
     };
 
@@ -147,11 +162,11 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
     };
 
     private String oldRemindersName = "";
-    private String oldSpecialNotes = "";
     private String oldNotes = "";
     private String oldTimes = "";
     private int[] oldDays = null;
     private String oldViedoUriString = "";
+    private String oldAlertSoundUriString = null;
 
     private void setExistingReminders(Intent intent)
     {
@@ -201,7 +216,8 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        stillUriString = Uri.fromFile(image).toString();
+        isVideo = false;
+        UriString = Uri.fromFile(image).toString();
         return image;
     }
 
@@ -224,11 +240,31 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                 Uri photoURI = Build.VERSION.SDK_INT <= Build.VERSION_CODES.M ?
                         Uri.fromFile(photoFile) :
                         FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);
-                stillUriString = photoURI.toString();
+                isVideo = false;
+                UriString = photoURI.toString();
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
+    }
+
+
+    private void ShootVideo()
+    {
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takeVideoIntent.resolveActivity(RemindersData.this.getPackageManager()) != null) {
+            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
+        }
+    }
+
+    private void ChooseSound()
+    {
+        Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALL);
+        Uri existingAlertSoundUri = alertSoundUriString == null ? null : Uri.parse(alertSoundUriString);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, existingAlertSoundUri);
+        this.startActivityForResult(intent, CHOOSE_ALERT_SOUND);
     }
 
     private AlertDialog askBeforeSave = null;
@@ -261,6 +297,26 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
 
         btPlayStill = findViewById(R.id.btPlayStill);
         btPlayVideo = findViewById(R.id.btPlayVideo);
+        if(/*!isVideo || */oldViedoUriString==null) btPlayVideo.setVisibility(View.INVISIBLE);
+        btPlayVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = getApplicationContext();
+                Uri videoUri = Uri.parse(UriString);
+                if (videoUri != null) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    } catch (RuntimeException e) {
+                        Toast.makeText(context.getApplicationContext(),
+                                resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+                    }
+                } else Toast.makeText(context.getApplicationContext(),
+                        resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+            }
+        });
+        btChooseSound = findViewById(R.id.btChooseSound);
 
         alertPlanButtons[0] = findViewById(R.id.bt1time);
         alertPlanButtons[1] = findViewById(R.id.bt2times);
@@ -288,8 +344,13 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
 
 
 
-        final AlertDialog reShootConfirm = new AlertDialog.Builder(this)
-                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onReshootConfirm)
+        final AlertDialog reShootConfirmStill = new AlertDialog.Builder(this)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onReshootConfirmStill)
+                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
+                .setMessage(resources.getString(R.string.reshootPic)).create();
+
+        final AlertDialog reShootConfirmVideo = new AlertDialog.Builder(this)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onReshootConfirmVideo)
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
                 .setMessage(resources.getString(R.string.reshootPic)).create();
 
@@ -303,18 +364,30 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         still.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (stillUriString != null)
-                    reShootConfirm.show();
+                if (UriString != null)
+                    reShootConfirmStill.show();
                 else
                     ShootImage();
+            }
+        });
+
+        ImageButton video = findViewById(R.id.btShootVideo);
+        video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UriString != null)
+                    reShootConfirmVideo.show();
+                else
+                    ShootVideo();
             }
         });
 
 
         db = new MedicoDB(getApplicationContext());
         Intent intent = getIntent();
-        stillUriString = intent.getStringExtra("RecordedUri");
-        oldViedoUriString = stillUriString;
+        UriString = intent.getStringExtra("RecordedUri");
+        oldViedoUriString = UriString;
+        oldAlertSoundUriString = alertSoundUriString = intent.getStringExtra("AlertSoundUri");
 
         this.remindersId = intent.getIntExtra("remindersId", NewReminders);
         if (this.remindersId != NewReminders)
@@ -327,7 +400,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
             for(int i=0; i<selectedDays.length; i++)
                 selectedDays[i] = true;
 //            oldDosageType = Integer.toString (R.string.medicine_dosage_type_tab);
-            oldSpecialNotes = Integer.toString(R.string.medicine_usage_notes_none);
+//            oldSpecialNotes = Integer.toString(R.string.medicine_usage_notes_none);
             oldDays = new int[7];
             for (int i=0 ;i < 7; i++)
                 oldDays[i] = 1;
@@ -345,17 +418,17 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
         for (int i=0; i< 5; i++)
             alertPlanButtons[i].setOnClickListener(setAlertPlan);
 
-        if (stillUriString == null)
+        if (UriString == null)
             btPlayStill.setVisibility(View.INVISIBLE);
         else {
-            Glide.with(this).load(stillUriString).into(btPlayStill);
+            Glide.with(this).load(UriString).into(btPlayStill);
             btPlayStill.invalidate();
         }
         btPlayStill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Context context = getApplicationContext();
-                Uri imageUri = Uri.parse(stillUriString);
+                Uri imageUri = Uri.parse(UriString);
                 if (imageUri != null) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -368,6 +441,13 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                     }
                 } else Toast.makeText(context.getApplicationContext(),
                         resources.getString(R.string.media_not_found_image), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btChooseSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChooseSound();
             }
         });
 
@@ -450,7 +530,8 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                                         oldTimes.equals(times) &&
 //                                        oldSpecialNotes.equals(specialNotesToWrite) &&
                                         oldNotes.equals(newNotes) &&
-                                        (oldViedoUriString == null ? stillUriString == null : oldViedoUriString.equals(stillUriString)) &&
+                                        (oldViedoUriString == null ? UriString == null : oldViedoUriString.equals(UriString)) &&
+                                        (oldAlertSoundUriString == null ? alertSoundUriString == null : oldAlertSoundUriString.equals(alertSoundUriString)) &&
                                         Arrays.equals(oldDays, days_to_alert)
                         );
                         if (dataNotChanged)
@@ -463,7 +544,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
 
                     Bundle bundle = new Bundle();
                     if (remindersId != NewReminders) {
-                        db.updateRow(remindersId, remindersName, times, 0, "" ,  stillUriString, days_to_alert, null);
+                        db.updateRow(remindersId, remindersName, times, 0, "" ,  UriString, days_to_alert, alertSoundUriString);
                         db.updateReminders(remindersId, newNotes);
                         mFirebaseAnalytics.logEvent("Reminders_updated", bundle);
                     }
@@ -475,7 +556,7 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
                         }
                         else
                         {
-                            db.addAlert(etRemindersName.getText().toString(), MedicoDB.KIND.Reminders, times, 0, "", stillUriString, days_to_alert, null);
+                            db.addAlert(etRemindersName.getText().toString(), MedicoDB.KIND.Reminders, times, 0, "", UriString, days_to_alert, alertSoundUriString);
                             db.addReminders(etNotes.getText().toString());
                             mFirebaseAnalytics.logEvent("Reminders_added", bundle);
                         }
@@ -579,11 +660,28 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if(resultCode == RESULT_OK)
+        if (requestCode == CHOOSE_ALERT_SOUND) {
+            if (resultCode == RESULT_OK && intent != null) {
+                Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+
+                if (uri != null) {
+                    this.alertSoundUriString = uri.toString();
+                }
+            }
+        }
+        else if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK && intent != null) {
+            if (intent.getData() != null) {
+                UriString = intent.getData().toString();
+                btPlayVideo.setVisibility(View.VISIBLE);
+                Toast.makeText(RemindersData.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+        else if(resultCode == RESULT_OK)
         {
             if (requestCode == REQUEST_TAKE_PHOTO) {
                 btPlayStill.setVisibility(View.VISIBLE);
-                Glide.with(this).load(stillUriString).into(btPlayStill);
+                Glide.with(this).load(UriString).into(btPlayStill);
                 btPlayStill.invalidate();
             }
         }

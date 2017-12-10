@@ -87,6 +87,7 @@ public class PersonalRemindersFragment extends Fragment {
 
             String name = c.getString(c.getColumnIndex(MedicoDB.KEY_NAME));
             String uriVideo = c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
+            String alertSoundUri = c.getString(c.getColumnIndex(db.KEY_ALERT_SOUND_URI));
 
             int[] days = new int[7];
             days[0] = c.getInt(c.getColumnIndex(MedicoDB.SUNDAY));
@@ -99,8 +100,6 @@ public class PersonalRemindersFragment extends Fragment {
 
             Cursor cReminders = db.getRemindersByID(id);
             String notes =   cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_NOTES));
-            String alertSoundUri = null;
-//            String alertSoundUri = cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI));
 
             arrayList.add(index, new RemindersItem(id, time, name, uriVideo, days, detailedTimes, allTimes,
                     MedicoDB.KIND.Reminders, notes, alertSoundUri));
