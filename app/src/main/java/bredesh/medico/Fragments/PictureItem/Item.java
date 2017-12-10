@@ -23,15 +23,15 @@ public class Item {
     protected boolean detailedTimes;
     protected String allTimes;
     
-    public Item(int id, String time, String name, String uriStill, String uriVideo, int[] days, boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri)
+    public Item(int id, String time, String name/*, String uriStill*/, String uriVideo, int[] days, boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri)
     {
         this.id = id;
         this.time = time;
         this.name = name;
         this.days = days;
-        if (uriStill != null && !uriStill.equals("null")) {
+        /*if (uriStill != null && !uriStill.equals("null")) {
             this.uriStill = Uri.parse(uriStill);
-        }else this.uriStill = null;
+        }else this.uriStill = null;*/
         if (uriVideo != null && !uriVideo.equals("null")) {
             this.uriVideo = Uri.parse(uriVideo);
         }else this.uriVideo = null;

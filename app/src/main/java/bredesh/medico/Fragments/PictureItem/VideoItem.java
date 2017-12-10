@@ -12,7 +12,7 @@ public class VideoItem extends Item{
     private String repetitionType;
 
     public VideoItem(int id, String time, String name, String uriVideo, int[] days, int noOfRepetitions, String repetitionType,  boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri){
-        super(id,time,name,null,uriVideo,days,detailedTimes,allTimes,kind, alertSoundUri);
+        super(id,time,name,uriVideo,days,detailedTimes,allTimes,kind, alertSoundUri);
         isAlertsActive = true;
         this.noOfRepetitions = noOfRepetitions;
         this.repetitionType = repetitionType;

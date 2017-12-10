@@ -18,9 +18,9 @@ public class RemindersItem extends Item{
         this.amount = amount;
     }*/
 
-    public RemindersItem(int id, String time, String name, String uriStill, String uriVideo, int[] days, boolean detailedTimes, String allTimes,
+    public RemindersItem(int id, String time, String name, String uri, int[] days, boolean detailedTimes, String allTimes,
                         MedicoDB.KIND kind, String notes, String alertSoundUri) {
-        super(id, time, name, uriStill, uriVideo, days, detailedTimes, allTimes, kind, alertSoundUri);
+        super(id, time, name, uri, days, detailedTimes, allTimes, kind, alertSoundUri);
         this.notes = notes;
     }
 }

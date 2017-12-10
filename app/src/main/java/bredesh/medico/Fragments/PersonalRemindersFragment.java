@@ -87,8 +87,7 @@ public class PersonalRemindersFragment extends Fragment {
 
             String name = c.getString(c.getColumnIndex(MedicoDB.KEY_NAME));
             String uriVideo = c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
-//            String uriStill = c.getString(c.getColumnIndex(MedicoDB.URISTILL));
-            String uriStill = c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
+
             int[] days = new int[7];
             days[0] = c.getInt(c.getColumnIndex(MedicoDB.SUNDAY));
             days[1] = c.getInt(c.getColumnIndex(MedicoDB.MONDAY));
@@ -103,7 +102,7 @@ public class PersonalRemindersFragment extends Fragment {
             String alertSoundUri = null;
 //            String alertSoundUri = cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI));
 
-            arrayList.add(index, new RemindersItem(id, time, name,uriStill, uriVideo, days, detailedTimes, allTimes,
+            arrayList.add(index, new RemindersItem(id, time, name, uriVideo, days, detailedTimes, allTimes,
                     MedicoDB.KIND.Reminders, notes, alertSoundUri));
         }
         c.close();
