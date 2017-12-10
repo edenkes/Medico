@@ -17,11 +17,4 @@ public class RemindersIt extends ItemGeneral {
         this.notes = notes;
     }
 
-    public String getAlertSoundUri() {
-        if (alertSoundUri == null)
-            alertSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION).toString();
-        return alertSoundUri;
-    }
-
-
 }

@@ -1,5 +1,6 @@
 package bredesh.medico.Fragments.ItemMediGo;
 
+import android.media.RingtoneManager;
 import android.net.Uri;
 
 import bredesh.medico.DAL.MedicoDB;
@@ -9,19 +10,18 @@ import bredesh.medico.DAL.MedicoDB;
  */
 
 public abstract class ItemGeneral {
-    public int id;
-    public String name;
-    public MedicoDB.KIND kind;
-    public String time;
-    public Uri uriVideo;
-    public String alertSoundUri;
     public int[] days;
+    public int id;
+    public String name, time, alertSoundUri;
+    public MedicoDB.KIND kind;
+    public Uri uriVideo;
+    public Uri uriStill;
 
     protected final String[] daysNames = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
     public boolean detailedTimes;
     public String allTimes;
 
-    public ItemGeneral(int id, String time, String name/*, String uriStill*/, String uriVideo, int[] days, boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri)
+    ItemGeneral(int id, String time, String name/*, String uriStill*/, String uriVideo, int[] days, boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri)
     {
         this.id = id;
         this.time = time;
@@ -37,5 +37,33 @@ public abstract class ItemGeneral {
         this.allTimes = allTimes;
         this.kind = kind;
         this.alertSoundUri = alertSoundUri;
+    }
+
+    public String getAlertSoundUri() {
+        if (alertSoundUri == null)
+            alertSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION).toString();
+        return alertSoundUri;
+    }
+
+    public Uri getUri() { return  uriVideo;}
+
+    public String getTime() { return time; }
+
+    public String getName() {
+        return name;
+    }
+
+    public int[] getDays() {
+        return days;
+    }
+
+    public boolean getDetailedTimes() {return this.detailedTimes;}
+
+    public String getAllTimes() {return this.allTimes;}
+
+    public int getId() {return this.id;}
+
+    public void setName(String name){
+        this.name = name;
     }
 }
