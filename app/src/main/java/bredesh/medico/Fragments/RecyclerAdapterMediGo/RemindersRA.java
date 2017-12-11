@@ -45,10 +45,12 @@ public class RemindersRA extends RecyclerAdapterGeneral<RemindersIt> {
     @Override
     protected void changeViewHolder(final CustomViewHolder customViewHolder, final ItemGeneral item, final Resources resources) {
         customViewHolder.ivRepetition.setVisibility(View.INVISIBLE);
+        customViewHolder.btPlay.setVisibility(View.VISIBLE);
 
         if (item.uriVideo == null)
             customViewHolder.btPlay.setVisibility(View.INVISIBLE);
         else {
+            customViewHolder.btPlay.setVisibility(View.VISIBLE);
             customViewHolder.btPlay.setScaleType(ImageView.ScaleType.FIT_CENTER);
             customViewHolder.btPlay.setBackground(null);
             Glide.with(activity).load(item.uriVideo).into(customViewHolder.btPlay);

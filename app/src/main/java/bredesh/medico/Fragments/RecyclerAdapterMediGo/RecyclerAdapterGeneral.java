@@ -117,10 +117,11 @@ abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<RecyclerAd
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
-        TextView tvItemName, tvItemTime, tvItemTimeMulti,  lbItemNoOfRepeats, txItemDosageType;
-        TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
         protected ImageButton btPlay;
         protected TextView[] days;
+        TextView tvItemName, tvItemTime, tvItemTimeMulti,  lbItemNoOfRepeats, txItemDosageType;
+        TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
+
         ImageView ivRepetition;
         View v;
 
