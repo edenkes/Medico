@@ -113,7 +113,6 @@
     <string name="name_too_short_medicine">Введите название препарата</string>
     <string name="alert_text_medicine">Пришло время принять <b>%d</b> %s</string>
     <string name="amount_too_short_medicine">Enter the ammount.</string>
-    <string name="delete_medicine_confirm">למחוק את התרופה?</string>
     <string name="desc_pic_play">play the video</string>
     <string name="desc_pic_shoot">shoot the video</string>
     <string name="media_not_found_image">Фотография не найдена.</string>
@@ -146,4 +145,9 @@
     <string name="snooze_30">30 минут</string>
     <string name="snooze_5">5 минут</string>
     <string name="reminders">Напоминания</string>
+    <string name="alert_text_reminders">Пришло время принять <b>%d</b> %s</string>
+    <string name="delete_medicine_confirm">Удалить упражнение?</string>
+    <string name="delete_reminders_confirm">Удалить упражнение?</string>
+    <string name="name_too_short_reminders">Введите название препарата</string>
+    <string name="reminders_notes">замечания</string>
 </resources>

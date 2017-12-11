@@ -108,7 +108,7 @@
     <string name="name_too_short_medicine">Enter medicine name</string>
     <string name="alert_text_medicine">Time to take <b>%d</b> %s</string>
     <string name="amount_too_short_medicine">Enter the ammount.</string>
-    <string name="delete_medicine_confirm">למחוק את התרופה?</string>
+    <string name="delete_medicine_confirm">Delete the drug?</string>
     <string name="desc_pic_play">play the video</string>
     <string name="desc_pic_shoot">shoot the video</string>
     <string name="media_not_found_image">Image not found.</string>
@@ -141,4 +141,9 @@
     <string name="snooze_30">30 minutes</string>
     <string name="snooze_5">5 minutes</string>
     <string name="reminders">Reminders</string>
+    <string name="delete_reminders_confirm">Delete reminder?</string>
+    <string name="name_too_short_reminders">Enter reminders name</string>
+    <string name="reminders_name_label">Reminder Name:</string>
+    <string name="alert_text_reminders">Time to take <b>%d</b> %s</string>
+    <string name="reminders_notes">Notes</string>
 </resources>

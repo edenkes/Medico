@@ -110,7 +110,6 @@
     <string name="name_too_short_medicine">إدخال المخدرات اسم</string>
     <string name="alert_text_medicine">لقد حان الوقت لاتخاذ<b>%d</b> %s</string>
     <string name="amount_too_short_medicine">מה הכמות?</string>
-    <string name="delete_medicine_confirm">למחוק את התרופה?</string>
     <string name="desc_pic_play">play the video</string>
     <string name="desc_pic_shoot">shoot the video</string>
     <string name="media_not_found_image">الصورة غير موجود.</string>
@@ -143,4 +142,9 @@
     <string name="snooze_30">30 دقائق</string>
     <string name="snooze_5">5 دقائق</string>
     <string name="reminders">تذكير</string>
+    <string name="alert_text_reminders">لقد حان الوقت لاتخاذ<b>%d</b> %s</string>
+    <string name="delete_medicine_confirm">حذف ممارسة؟</string>
+    <string name="delete_reminders_confirm">حذف ممارسة؟</string>
+    <string name="name_too_short_reminders">إدخال المخدرات اسم</string>
+    <string name="reminders_notes">ملاحظات</string>
 </resources>
