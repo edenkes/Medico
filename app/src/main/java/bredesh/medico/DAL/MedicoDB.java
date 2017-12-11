@@ -43,6 +43,7 @@ public class MedicoDB extends SQLiteOpenHelper {
     public static final String KEY_REPEATS = "repeats";
     public static final String KEY_REPETITION_TYPE = "repetition_type";
     public static final String URIVIDEO = "urivideo";
+    public static final String URIIMAGE = "uriimage";
     public static final String KEY_ALERT_SOUND_URI = "uri_alert_sound";
     public static final String SUNDAY = "SUNDAY";
     public static final String MONDAY = "MONDAY";
@@ -151,7 +152,7 @@ public class MedicoDB extends SQLiteOpenHelper {
     }
 
 
-    private void createAlerts(SQLiteDatabase db) {
+    private void createAlerts(SQLiteDatabase db) {  //TODO
         String CREATE_ALERTS_TABLE = "CREATE TABLE " + ALERTS_TABLE_NAME +"( " +
                 KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 KEY_NAME + " TEXT, "+
@@ -160,6 +161,7 @@ public class MedicoDB extends SQLiteOpenHelper {
                 KEY_REPEATS+ " INTEGER, "+
                 KEY_REPETITION_TYPE+ " TEXT, "+
                 URIVIDEO + " TEXT, "+
+//                URIIMAGE + " TEXT, "+
                 KEY_ALERT_SOUND_URI + " TEXT, "+
                 SUNDAY + " INTEGER, "+
                 MONDAY + " INTEGER, "+
@@ -203,6 +205,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         db.insert(LANG_TABLE_NAME, null, values);
     }
 
+    //TODO
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
@@ -237,7 +240,8 @@ public class MedicoDB extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addAlert(String alert_name,KIND kind, String alert_time, int repeats, String repetition_type, String alert_uri, int[] days_to_alert, String alertSoundUriString){
+    //TODO
+    public void addAlert(String alert_name,KIND kind, String alert_time, int repeats, String repetition_type, String uri_video/*, String uri_image*/, int[] days_to_alert, String alertSoundUriString){
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -249,7 +253,8 @@ public class MedicoDB extends SQLiteOpenHelper {
         values.put(KEY_TIME, alert_time);
         values.put(KEY_REPEATS, repeats);
         values.put(KEY_REPETITION_TYPE, repetition_type);
-        values.put(URIVIDEO, alert_uri);
+        values.put(URIVIDEO, uri_video);
+//        values.put(URIIMAGE, uri_image);
         values.put(KEY_ALERT_SOUND_URI, alertSoundUriString);
         values.put(SUNDAY, days_to_alert[0]);
         values.put(MONDAY, days_to_alert[1]);
@@ -290,8 +295,6 @@ public class MedicoDB extends SQLiteOpenHelper {
         } catch (SQLiteException e) { return -1; }
         return cursor.getInt(0);
     }
-
-
 
     public Cursor getAllAlertsByKind(KIND kind) {
         Cursor cursor;
@@ -372,17 +375,19 @@ public class MedicoDB extends SQLiteOpenHelper {
         return cursor;
     }
 
+    //TODO
     public Cursor getAllAlertsByDay(String day) {
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT " + KEY_ID + ", " + KEY_NAME + ", " +  KEY_TIME +", " + KEY_REPEATS+", "+ KEY_REPETITION_TYPE + ", "+
-                URIVIDEO+", "+ ALERT_TODAY +", "+ KEY_ALERT_SOUND_URI + " FROM " + ALERTS_TABLE_NAME + " WHERE " + day +" = 1";
+                URIVIDEO/* +", "+URIIMAGE*/ +", "+ ALERT_TODAY +", "+ KEY_ALERT_SOUND_URI + " FROM " + ALERTS_TABLE_NAME + " WHERE " + day +" = 1";
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
         return cursor;
     }
 
-    //same parameters as ADD NEW ALERT (WITHOUT VIDEO/IMAGE URI) BUT WITH ROWID. WE CAN GET IT FROM THE CURSOR OF THE CLICKED ITEM
-    public void updateRow(int rowID, String alert_name, String alert_time, int repeats, String repetition_type, String videoUri, int[] days_to_alert, String alertSoundUriString){
+    //TODO
+    //same parameters as ADD NEW ALERT. WE CAN GET IT FROM THE CURSOR OF THE CLICKED ITEM
+    public void updateRow(int rowID, String alert_name, String alert_time, int repeats, String repetition_type, String uri_video, /*String uri_image, */int[] days_to_alert, String alertSoundUriString){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, alert_name);
@@ -397,8 +402,10 @@ public class MedicoDB extends SQLiteOpenHelper {
         values.put(FRIDAY, days_to_alert[5]);
         values.put(SATURDAY, days_to_alert[6]);
         values.put(ALERT_TODAY, "");
-        if (videoUri != null)
-            values.put(URIVIDEO, videoUri);
+        if (uri_video != null)
+            values.put(URIVIDEO, uri_video);
+        /*if (uri_image != null)
+            values.put(URIVIDEO, uri_image);*/
         values.put(KEY_ALERT_SOUND_URI, alertSoundUriString);
         db.update(ALERTS_TABLE_NAME, values, KEY_ID+"="+rowID, null);
     }
@@ -436,8 +443,8 @@ public class MedicoDB extends SQLiteOpenHelper {
         if(cursor.getCount() != 1) return null;
 
         String kind = cursor.getString(cursor.getColumnIndex(KEY_KIND));
-        String videoUri = cursor.getString(cursor.getColumnIndex(URIVIDEO));
-        Uri uri = videoUri != null? Uri.parse(videoUri) : null;
+        String uri_video = cursor.getString(cursor.getColumnIndex(URIVIDEO));
+        Uri uriVideo = uri_video != null? Uri.parse(uri_video) : null;
         KIND kind_type;
 
         if(kind.equals(KIND.Exercise.toString())){  kind_type = KIND.Exercise;
@@ -446,7 +453,7 @@ public class MedicoDB extends SQLiteOpenHelper {
 
         v = new PartialVideoItem(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
                 cursor.getString(cursor.getColumnIndex(KEY_NAME)),
-                uri,
+                uriVideo,
                 cursor.getInt(cursor.getColumnIndex(KEY_REPEATS)),
                 cursor.getString(cursor.getColumnIndex(KEY_REPETITION_TYPE)),
                 kind_type,

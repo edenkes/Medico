@@ -25,6 +25,7 @@ public class PersonalFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal, container, false);
 
+/*
         dbManager  = new MedicoDB(getActivity().getApplicationContext());
 
         setupInfoFromDB(view);
@@ -39,9 +40,11 @@ public class PersonalFragment extends Fragment {
             }
         });
 
+*/
         // Inflate the layout for this fragment
         return view;
     }
+/*
 
     private void setupInfoFromDB(View view) {
         etFirstName = (TextView) view.findViewById(R.id.etFirstName);
@@ -80,11 +83,12 @@ public class PersonalFragment extends Fragment {
 
         etPoints.setText(points + " " + getResources().getString(R.string.Points));
     }
+*/
 
-    @Override
+  /*  @Override
     public void onResume() {
         super.onResume();
         setTexts();
-    }
+    }*/
 
 }
