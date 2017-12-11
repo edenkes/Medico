@@ -150,7 +150,7 @@
             android:textSize="20sp" />
 
         <ImageButton
-            android:id="@+id/btPlay"
+            android:id="@+id/btPlayVideo"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_alignParentEnd="true"
@@ -159,6 +159,14 @@
             android:focusable="true"
             android:src="@drawable/ic_play_arrow_black_48dp" />
 
+        <ImageButton
+            android:id="@+id/btPlayImage"
+            android:layout_width="75dp"
+            android:layout_height="66dp"
+            android:background="@color/colorWhite"
+            android:layout_alignTop="@+id/btPlayVideo"
+            android:layout_toStartOf="@+id/btPlayVideo"
+            cardview:srcCompat="@mipmap/icon" />
 
 
     </RelativeLayout>

@@ -118,7 +118,7 @@
                     android:src="@drawable/ic_videocam_black_48dp" />
 
                 <ImageButton
-                    android:id="@+id/btPlay"
+                    android:id="@+id/btPlayVideo"
                     android:layout_width="50sp"
                     android:layout_height="50sp"
                     android:layout_gravity="center"

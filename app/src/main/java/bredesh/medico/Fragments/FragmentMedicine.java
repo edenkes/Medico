@@ -55,29 +55,7 @@ public class FragmentMedicine extends Fragment {
         adapter = new MedicineRA(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
 
-
         Resources resources = getResources();
-
-        final AlertDialog dialog = new AlertDialog.Builder(this.getActivity())
-                .setMessage(resources.getString(R.string.remove_all_alerts))
-                .setPositiveButton(resources.getString(R.string.alert_dialog_set), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        MedicoDB db = new MedicoDB(getActivity().getApplicationContext());
-                        db.DeleteAllAlerts();
-                        Toast.makeText(getActivity().getApplicationContext(), getResources().getString(R.string.all_alerts_deleted) , Toast.LENGTH_LONG).show();
-
-                        //Refresh the home page
-                        FragmentManager fm = getFragmentManager();
-                        FragmentTransaction ft = fm.beginTransaction();
-                        bredesh.medico.Fragments.FragmentHome fragment = new bredesh.medico.Fragments.FragmentHome();
-                        ft.replace(R.id.fragment_place, fragment);
-                        ft.commit();
-                    }
-                })
-                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
-                .create();
-
 
         FloatingActionButton btAddAlert = view.findViewById(R.id.addAlert);
         btAddAlert.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +96,8 @@ public class FragmentMedicine extends Fragment {
             }
 
             String name = c.getString(c.getColumnIndex(MedicoDB.KEY_NAME));
-            String uri = c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
+            String uriImage = c.getString(c.getColumnIndex(MedicoDB.URIIMAGE));
+            String uriVideo = c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
             int[] days = new int[7];
             days[0] = c.getInt(c.getColumnIndex(MedicoDB.SUNDAY));
             days[1] = c.getInt(c.getColumnIndex(MedicoDB.MONDAY));
@@ -135,7 +114,7 @@ public class FragmentMedicine extends Fragment {
             String special = cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_SPECIAL));
             String notes =   cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_NOTES));
 
-            arrayList.add(index, new MedicineIt(id, time, name, uri, days, detailedTimes, allTimes,
+            arrayList.add(index, new MedicineIt(id, time, name, uriImage, days, detailedTimes, allTimes,
                     MedicoDB.KIND.Medicine, type, special, notes, ""+ amount));
         }
         c.close();

@@ -12,9 +12,9 @@ public class MedicineIt extends ItemGeneral{
     public String notes;
     public String amount;
 
-    public MedicineIt(int id, String time, String name, String uriStill, int[] days, boolean detailedTimes, String allTimes,
+    public MedicineIt(int id, String time, String name, String uriImage, int[] days, boolean detailedTimes, String allTimes,
                         MedicoDB.KIND kind, String type, String special, String notes, String amount) {
-        super(id, time, name, uriStill, days, detailedTimes, allTimes, kind, null);
+        super(id, time, name, null, uriImage, days, detailedTimes, allTimes, kind, null);
         this.type = type;
         this.special = special;
         this.notes = notes;

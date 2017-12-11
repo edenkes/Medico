@@ -14,22 +14,21 @@ public abstract class ItemGeneral {
     public int id;
     public String name, time, alertSoundUri;
     public MedicoDB.KIND kind;
-    public Uri uriVideo;
-    public Uri uriStill;
+    public Uri uriVideo, uriImage;
 
     protected final String[] daysNames = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
     public boolean detailedTimes;
     public String allTimes;
 
-    ItemGeneral(int id, String time, String name/*, String uriStill*/, String uriVideo, int[] days, boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri)
+    ItemGeneral(int id, String time, String name, String uriVideo,String uriImage, int[] days, boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri)
     {
         this.id = id;
         this.time = time;
         this.name = name;
         this.days = days;
-        /*if (uriStill != null && !uriStill.equals("null")) {
-            this.uriStill = Uri.parse(uriStill);
-        }else this.uriStill = null;*/
+        if (uriImage != null && !uriImage.equals("null")) {
+            this.uriImage = Uri.parse(uriImage);
+        }else this.uriImage = null;
         if (uriVideo != null && !uriVideo.equals("null")) {
             this.uriVideo = Uri.parse(uriVideo);
         }else this.uriVideo = null;
@@ -45,7 +44,9 @@ public abstract class ItemGeneral {
         return alertSoundUri;
     }
 
-    public Uri getUri() { return  uriVideo;}
+    public Uri getUriVideo() { return  uriVideo;}
+
+    public Uri getUriImage() { return  uriImage;}
 
     public String getTime() { return time; }
 

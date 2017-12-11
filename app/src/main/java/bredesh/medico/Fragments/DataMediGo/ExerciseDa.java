@@ -88,7 +88,6 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
         etDataName = findViewById(R.id.etExerciseName);
         //this.setAutoCloseKeyboard(etExerciseName);
 
-
         etRepeats = findViewById(R.id.etRepeats);
         spRepetitionType = findViewById(R.id.spinner_repetition_type);
         ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource (this, R.array.repetition_types, R.layout.spinner_item );
@@ -101,7 +100,7 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
         lblSelectedDays = findViewById(R.id.lblSelectedDays);
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
-        btPlayVideo = findViewById(R.id.btPlay);
+        btPlayVideo = findViewById(R.id.btPlayVideo);
         btChooseSound = findViewById(R.id.btChooseSound);
         alertPlanButtons[0] = findViewById(R.id.bt1time);
         alertPlanButtons[1] = findViewById(R.id.bt2times);
@@ -129,7 +128,7 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (uriString != null)
+                if (uriStringVideo != null)
                     reShootConfirm.show();
                 else
                     ShootVideo();
@@ -139,13 +138,15 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
 
         db = new MedicoDB(getApplicationContext());
         Intent intent = getIntent();
-        oldVideoUriString = uriString = intent.getStringExtra("RecordedUri");
+        oldUriStringImage = uriStringImage = intent.getStringExtra("uriImage");
+        oldUriStringVideo = uriStringVideo = intent.getStringExtra("uriVideo");
         oldAlertSoundUriString = alertSoundUriString = intent.getStringExtra("AlertSoundUri");
+
         etRepeats.setText(Integer.toString(1));
         this.dataId = intent.getIntExtra("exerciseId", NewData);
         if (this.dataId != NewData)
         {
-            setExistingExercise(intent);
+            setExistingData(intent);
         }
         else {
             arrayList = new ArrayList<>();
@@ -168,13 +169,13 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
         for (int i=0; i< 5; i++)
             alertPlanButtons[i].setOnClickListener(setAlertPlan);
 
-        if (uriString == null)
+        if (uriStringVideo == null)
             btPlayVideo.setVisibility(View.INVISIBLE);
         btPlayVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Context context = getApplicationContext();
-                Uri videoUri = Uri.parse(uriString);
+                Uri videoUri = Uri.parse(uriStringVideo);
                 if (videoUri != null) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
@@ -258,13 +259,14 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
         index = Utils.findIndexInResourcesArray(resources, R.array.repetition_types, repetitionType);
         spRepetitionType.setSelection(index);
 
-
         oldDays = intent.getIntArrayExtra("days");
         int[] days = oldDays;
         for (int i=0; i< 7; i++)
             selectedDays[i] = days[i] != 0;
         updateSelectedDays();
         this.setAddAlertsButtons(timeAL == null || timeAL.length == 0);
+
+        oldUriStringVideo = intent.getStringExtra("uriVideo");
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -280,7 +282,7 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
         else {
             if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK && intent != null) {
                 if (intent.getData() != null) {
-                    uriString = intent.getData().toString();
+                    uriStringVideo = intent.getData().toString();
                     btPlayVideo.setVisibility(View.VISIBLE);
                     Toast.makeText(ExerciseDa.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
                     return;
@@ -323,7 +325,7 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
                                         oldTimes.equals(times) &&
                                         oldRepetitionType.equals(repetitionTypeToWrite) &&
                                         Arrays.equals(oldDays, days_to_alert) &&
-                                        (oldVideoUriString == null ? uriString == null : oldVideoUriString.equals(uriString)) &&
+                                        (oldUriStringVideo == null ? uriStringVideo == null : oldUriStringVideo.equals(uriStringVideo)) &&
                                         (oldAlertSoundUriString == null ? alertSoundUriString == null : oldAlertSoundUriString.equals(alertSoundUriString));
                         if (dataNotChanged)
                             finish();
@@ -334,11 +336,11 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
 
                     Bundle params = new Bundle();
                     if (dataId != NewData) {
-                        db.updateRow(dataId, exerciseName, times, repeats, repetitionTypeToWrite, uriString, days_to_alert, alertSoundUriString);
+                        db.updateRow(dataId, exerciseName, times, repeats, repetitionTypeToWrite, uriStringVideo,uriStringImage, days_to_alert, alertSoundUriString);
                         mFirebaseAnalytics.logEvent("Excercise_updated", params);
                     }
                     else {
-                        db.addAlert(exerciseName, MedicoDB.KIND.Exercise, times, repeats, repetitionTypeToWrite, uriString, days_to_alert, alertSoundUriString);
+                        db.addAlert(exerciseName, MedicoDB.KIND.Exercise, times, repeats, repetitionTypeToWrite, uriStringVideo, uriStringImage, days_to_alert, alertSoundUriString);
                         mFirebaseAnalytics.logEvent("Excercise_added", params);
                     }
                     finish();

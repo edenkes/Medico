@@ -68,14 +68,14 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
         lblSelectedDays = findViewById(R.id.lblSelectedDays);
         lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
-        btPlayStill = findViewById(R.id.btPlayStill);
+        btPlayImage = findViewById(R.id.btPlayImage);
         btPlayVideo = findViewById(R.id.btPlayVideo);
-        if(/*!isVideo || */oldVideoUriString==null) btPlayVideo.setVisibility(View.INVISIBLE);
+//        if(oldUriStringVideo==null) btPlayVideo.setVisibility(View.INVISIBLE);
         btPlayVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Context context = getApplicationContext();
-                Uri videoUri = Uri.parse(uriString);
+                Uri videoUri = Uri.parse(uriStringVideo);
                 if (videoUri != null) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
@@ -137,7 +137,7 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
         still.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (uriString != null)
+                if (uriStringImage != null)
                     reShootConfirmStill.show();
                 else
                     ShootImage();
@@ -148,7 +148,7 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (uriString != null)
+                if (uriStringVideo != null)
                     reShootConfirmVideo.show();
                 else
                     ShootVideo();
@@ -158,8 +158,8 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
 
         db = new MedicoDB(getApplicationContext());
         Intent intent = getIntent();
-        uriString = intent.getStringExtra("RecordedUri");
-        oldVideoUriString = uriString;
+        oldUriStringImage = uriStringImage = intent.getStringExtra("uriImage");
+        oldUriStringVideo = uriStringVideo = intent.getStringExtra("uriVideo");
         oldAlertSoundUriString = alertSoundUriString = intent.getStringExtra("AlertSoundUri");
 
         this.dataId = intent.getIntExtra("remindersId", NewData);
@@ -172,8 +172,6 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
             // arrayList.add(makeTimeString());
             for(int i=0; i<selectedDays.length; i++)
                 selectedDays[i] = true;
-//            oldDosageType = Integer.toString (R.string.medicine_dosage_type_tab);
-//            oldSpecialNotes = Integer.toString(R.string.medicine_usage_notes_none);
             oldDays = new int[7];
             for (int i=0 ;i < 7; i++)
                 oldDays[i] = 1;
@@ -185,17 +183,19 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
         for (int i=0; i< 5; i++)
             alertPlanButtons[i].setOnClickListener(setAlertPlan);
 
-        if (uriString == null)
-            btPlayStill.setVisibility(View.INVISIBLE);
+        if (uriStringImage == null)
+            btPlayImage.setVisibility(View.INVISIBLE);
         else {
-            Glide.with(this).load(uriString).into(btPlayStill);
-            btPlayStill.invalidate();
+            Glide.with(this).load(uriStringImage).into(btPlayImage);
+            btPlayImage.invalidate();
+            btPlayImage.setVisibility(View.VISIBLE);
+
         }
-        btPlayStill.setOnClickListener(new View.OnClickListener() {
+        btPlayImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Context context = getApplicationContext();
-                Uri imageUri = Uri.parse(uriString);
+                Uri imageUri = Uri.parse(uriStringImage);
                 if (imageUri != null) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -208,6 +208,27 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
                     }
                 } else Toast.makeText(context.getApplicationContext(),
                         resources.getString(R.string.media_not_found_image), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if (uriStringVideo == null)
+            btPlayVideo.setVisibility(View.INVISIBLE);
+        btPlayVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = getApplicationContext();
+                Uri videoUri = Uri.parse(uriStringVideo);
+                if (videoUri != null) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    } catch (RuntimeException e) {
+                        Toast.makeText(context.getApplicationContext(),
+                                resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+                    }
+                } else Toast.makeText(context.getApplicationContext(),
+                        resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -274,6 +295,8 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
             selectedDays[i] = days[i] != 0;
         updateSelectedDays();
         this.setAddAlertsButtons(timeAL == null || timeAL.length == 0);
+        oldUriStringVideo = intent.getStringExtra("uriVideo");
+        oldUriStringImage = intent.getStringExtra("uriImage");
     }
 
     @Override
@@ -289,15 +312,15 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
         }
         else if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK && intent != null) {
             if (intent.getData() != null) {
-                uriString = intent.getData().toString();
+                uriStringVideo = intent.getData().toString();
                 btPlayVideo.setVisibility(View.VISIBLE);
                 Toast.makeText(RemindersDa.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
             }
         }
         else if(resultCode == RESULT_OK && requestCode == REQUEST_TAKE_PHOTO) {
-            btPlayStill.setVisibility(View.VISIBLE);
-            Glide.with(this).load(uriString).into(btPlayStill);
-            btPlayStill.invalidate();
+            btPlayImage.setVisibility(View.VISIBLE);
+            Glide.with(this).load(uriStringImage).into(btPlayImage);
+            btPlayImage.invalidate();
         }
         else Toast.makeText(RemindersDa.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
     }
@@ -335,7 +358,8 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
                                         oldTimes.equals(times) &&
 //                                        oldSpecialNotes.equals(specialNotesToWrite) &&
                                         oldNotes.equals(newNotes) &&
-                                        (oldVideoUriString == null ? uriString == null : oldVideoUriString.equals(uriString)) &&
+                                        (oldUriStringVideo == null ? uriStringVideo == null : oldUriStringVideo.equals(uriStringVideo)) &&
+                                        (oldUriStringImage == null ? uriStringImage == null : oldUriStringImage.equals(uriStringImage)) &&
                                         (oldAlertSoundUriString == null ? alertSoundUriString == null : oldAlertSoundUriString.equals(alertSoundUriString)) &&
                                         Arrays.equals(oldDays, days_to_alert)
                         );
@@ -349,13 +373,13 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
 
                     Bundle bundle = new Bundle();
                     if (dataId != NewData) {
-                        db.updateRow(dataId, remindersName, times, 0, "" ,  uriString, days_to_alert, alertSoundUriString);
+                        db.updateRow(dataId, remindersName, times, 0, "" ,  uriStringVideo, uriStringImage, days_to_alert, alertSoundUriString);
                         db.updateReminders(dataId, newNotes);
                         mFirebaseAnalytics.logEvent("Reminders_updated", bundle);
                     }
                     else
                     {
-                        db.addAlert(etDataName.getText().toString(), MedicoDB.KIND.Reminders, times, 0, "", uriString, days_to_alert, alertSoundUriString);
+                        db.addAlert(etDataName.getText().toString(), MedicoDB.KIND.Reminders, times, 0, "", uriStringVideo, uriStringImage, days_to_alert, alertSoundUriString);
                         db.addReminders(etNotes.getText().toString());
                         mFirebaseAnalytics.logEvent("Reminders_added", bundle);
                     }

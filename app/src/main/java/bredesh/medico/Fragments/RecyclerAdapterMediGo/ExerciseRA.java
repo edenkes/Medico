@@ -34,9 +34,9 @@ public class ExerciseRA extends RecyclerAdapterGeneral<ExerciseIt> {
         intent.putExtra("time", item.getAllTimes());
         intent.putExtra("exercise_name", item.getName());
         intent.putExtra("days", item.getDays());
-        Uri uri = item.getUri();
-        if (uri!=null)
-            intent.putExtra("RecordedUri", item.getUri().toString());
+        Uri uriVideo = item.getUriVideo();
+        if (uriVideo!=null)
+            intent.putExtra("uriVideo", uriVideo.toString());
         intent.putExtra("AlertSoundUri", item.getAlertSoundUri());
         return intent;
     }
@@ -44,20 +44,6 @@ public class ExerciseRA extends RecyclerAdapterGeneral<ExerciseIt> {
     @Override
     protected void changeViewHolder(final CustomViewHolder customViewHolder, final ItemGeneral item, final Resources resources) {
         customViewHolder.lbItemNoOfRepeats.setText(String.valueOf(((ExerciseIt) item).getNoOfRepetitions()));
-
-        if (item.getUri() == null)
-            customViewHolder.btPlay.setVisibility(View.INVISIBLE);
-
-        String times = item.getTime().replace(resources.getString(R.string.times_splitter), resources.getString(R.string.times_nice_separator));
-        if (!item.getDetailedTimes()) {
-            customViewHolder.tvItemTimeMulti.setText(times);
-            customViewHolder.tvItemTimeMulti.setVisibility(View.VISIBLE);
-            customViewHolder.tvItemTime.setVisibility(View.GONE);
-        } else {
-            customViewHolder.tvItemTime.setText(times);
-            customViewHolder.tvItemTime.setVisibility(View.VISIBLE);
-            customViewHolder.tvItemTimeMulti.setVisibility(View.GONE);
-        }
 
         String repetitionTypeInDB = ((ExerciseIt) item).getRepetitionType();
         if (repetitionTypeInDB != null) {
@@ -71,25 +57,6 @@ public class ExerciseRA extends RecyclerAdapterGeneral<ExerciseIt> {
                 customViewHolder.txItemDosageType.setText(repetitionTypeS);
             }
         }
-
-        customViewHolder.btPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Uri videoUri = item.getUri();
-                if(videoUri != null ) {
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
-                    }catch (RuntimeException e){
-                        Toast.makeText(context.getApplicationContext(),
-                                resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else    Toast.makeText(context.getApplicationContext(),
-                        resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 }

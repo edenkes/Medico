@@ -51,7 +51,7 @@ public class NotificationWindow extends AppCompatActivity {
         Localization.init(this, db);
         setContentView(R.layout.activity_receive_notifiction);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        Toolbar toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -60,15 +60,15 @@ public class NotificationWindow extends AppCompatActivity {
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        TextView alertPrefixText = (TextView) findViewById(R.id.txAlertPrefixText);
-        TextView alertName = (TextView) findViewById(R.id.txAlertName);
-        TextView alertRepeats = (TextView) findViewById(R.id.txRepeats);
+        TextView alertPrefixText = findViewById(R.id.txAlertPrefixText);
+        TextView alertName = findViewById(R.id.txAlertName);
+        TextView alertRepeats = findViewById(R.id.txRepeats);
 
-        Button accept = (Button) findViewById(R.id.button_accept);
-        Button decline = (Button) findViewById(R.id.button_decline);
-        Button snooze = (Button) findViewById(R.id.snooze);
-        Button snooze30 = (Button)findViewById(R.id.snooze30);
-        ImageButton playButton = (ImageButton) findViewById(R.id.play_button);
+        Button accept = findViewById(R.id.button_accept);
+        Button decline = findViewById(R.id.button_decline);
+        Button snooze = findViewById(R.id.snooze);
+        Button snooze30 = findViewById(R.id.snooze30);
+        ImageButton playButton = findViewById(R.id.play_button);
 
         toMain = new Intent(NotificationWindow.this, MainMenu.class);
         int id = getIntent().getIntExtra("db_id",-1);
@@ -96,7 +96,7 @@ public class NotificationWindow extends AppCompatActivity {
                     else
                         alertRepeats.setText(""+amount +" "+type);
 
-                    TextView tvSpecial = (TextView) findViewById(R.id.tv_special);
+                    TextView tvSpecial = findViewById(R.id.tv_special);
                     if(special.equals(resources.getString(R.string.medicine_usage_notes_none)))
                         tvSpecial.setVisibility(GONE);
                     else
@@ -104,17 +104,17 @@ public class NotificationWindow extends AppCompatActivity {
 
                     if(!notes.equals(""))
                     {
-                        TextView tvNotes = (TextView) findViewById(R.id.tv_notes);
+                        TextView tvNotes = findViewById(R.id.tv_notes);
                         tvNotes.setText("* " +notes);
                         tvNotes.setMovementMethod(new ScrollingMovementMethod());
                     }
-                   if(item.uri != null && item.kind == MedicoDB.KIND.Medicine) {
+                   if(item.uriImage != null && item.kind == MedicoDB.KIND.Medicine) {
                         ViewGroup.LayoutParams layoutParams = playButton.getLayoutParams();
                         layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
                         layoutParams.height= 200;
                         playButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
                         playButton.setLayoutParams(layoutParams);
-                        Glide.with(this).load(item.uri).into(playButton);
+                        Glide.with(this).load(item.uriImage).into(playButton);
                         playButton.invalidate();
                     }
                     break;
@@ -191,7 +191,9 @@ public class NotificationWindow extends AppCompatActivity {
                     String strHour = "0" + hour;
                     strHour = strHour.substring(strHour.length() - 2);
                     timeSTR = strHour + " : " + str_minute;
-                    db.addAlert("_TEMP__" + item.name, item.kind, timeSTR, item.repeats, item.repetition_type, (item.uri != null) ? item.uri.toString() : null, new int[]{1, 1, 1, 1, 1, 1, 1}, item.alertSoundUriString);
+                    //TODO
+                    db.addAlert("_TEMP__" + item.name, item.kind, timeSTR, item.repeats, item.repetition_type, (item.uriVideo != null) ? item.uriVideo.toString() : null,
+                            (item.uriImage != null) ? item.uriImage.toString() : null, new int[]{1, 1, 1, 1, 1, 1, 1}, item.alertSoundUriString);
                     Bundle params = new Bundle();
                     params.putInt("minutes", snoozeMinutes);
                     mFirebaseAnalytics.logEvent("Notification_snooze", params);
@@ -205,7 +207,7 @@ public class NotificationWindow extends AppCompatActivity {
         snooze.setOnClickListener(snoozeListener);
         snooze30.setOnClickListener(snoozeListener);
 
-        if (item == null || item.uri == null)
+        if (item == null || item.uriImage == null)
             playButton.setVisibility(View.INVISIBLE);
 
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -214,7 +216,7 @@ public class NotificationWindow extends AppCompatActivity {
             public void onClick(View v) {
                 if(item!=null)
                 {
-                    Uri videoUri = item.uri;
+                    Uri videoUri = item.uriVideo;
                     Intent intent = null;
                     String errMsg = "";
                     try {

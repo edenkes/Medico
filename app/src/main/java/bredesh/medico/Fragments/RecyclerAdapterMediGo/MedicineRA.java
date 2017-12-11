@@ -26,95 +26,6 @@ public class MedicineRA extends RecyclerAdapterGeneral<MedicineIt> {
     public MedicineRA(Context context, List<MedicineIt> itemGeneral, Activity activity) {
         super(context,itemGeneral, activity);
     }
-/*
-    @Override
-    public void onBindViewHolder(final CustomViewHolder customViewHolder, int i) {
-        final MedicineIt item = medicineItems.get(i);
-        final int position = i;
-        customViewHolder.v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MedicineDa.class);
-                intent.putExtra("medicineId", item.id);
-                intent.putExtra("medicine_amount", item.amount);
-                intent.putExtra("time", item.allTimes);
-                intent.putExtra("medicine_name", item.name);
-                intent.putExtra("days", item.days);
-                intent.putExtra("medicine_type", item.type);
-                intent.putExtra("medicine_special", item.special);
-                intent.putExtra("medicine_notes", item.notes);
-
-                Uri uri = item.uriVideo;
-                if (uri!=null)
-                    intent.putExtra("RecordedUri", item.uriVideo.toString());
-
-                activity.startActivityForResult(intent, 0x1987);
-            }
-        });
-
-        customViewHolder.amount.setImageResource(R.drawable.ic_pill);
-
-        final Resources resources = context.getResources();
-
-        if (item.uriVideo == null)
-            customViewHolder.play.setVisibility(View.INVISIBLE);
-        else {
-            customViewHolder.play.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            customViewHolder.play.setBackground(null);
-            Glide.with(activity).load(item.uriVideo).into(customViewHolder.play);
-            customViewHolder.play.invalidate();
-        }
-
-        customViewHolder.play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Uri imageUri = item.uriVideo;
-                if(imageUri != null ) {
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(imageUri,"image*//*");
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
-                    }catch (RuntimeException e){
-                        Toast.makeText(context.getApplicationContext(),
-                                resources.getString(R.string.media_not_found_image), Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else    Toast.makeText(context.getApplicationContext(),
-                        resources.getString(R.string.media_not_found_image), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        DialogInterface.OnClickListener onDelete = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                MedicoDB db = new MedicoDB(context);
-                db.deleteRow(item.id);
-                medicineItems.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, medicineItems.size());
-            }
-        };
-
-        final AlertDialog deleteDialog = new AlertDialog.Builder(activity)
-                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onDelete)
-                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
-                .setMessage(resources.getString(R.string.delete_medicine_confirm)).create();
-
-
-        customViewHolder.v.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                deleteDialog.show();
-                return true;
-            }
-        });
-
-
-        activateAlerts(customViewHolder, item);
-
-
-    }*/
 
     @Override
     protected Intent sendIntetInformation(ItemGeneral item) {Intent intent = new Intent(context, MedicineDa.class);
@@ -127,25 +38,15 @@ public class MedicineRA extends RecyclerAdapterGeneral<MedicineIt> {
         intent.putExtra("medicine_special", ((MedicineIt) item).special);
         intent.putExtra("medicine_notes", ((MedicineIt) item).notes);
 
-        Uri uri = item.uriVideo;
-        if (uri!=null)
-            intent.putExtra("RecordedUri", item.uriVideo.toString());
+        Uri uriImage = item.uriImage;
+        if (uriImage!=null)
+            intent.putExtra("uriImage", item.uriImage.toString());
         return intent;
     }
     @Override
     protected void changeViewHolder(CustomViewHolder customViewHolder, ItemGeneral item, Resources resources) {
         String itemType = Utils.stringOrFromResource(resources, ((MedicineIt) item).type);
-        customViewHolder.btPlay.setImageResource(R.drawable.ic_pill);
         customViewHolder.ivRepetition.setImageResource(R.drawable.ic_pill);
-
-        if (item.uriVideo == null)
-            customViewHolder.btPlay.setVisibility(View.INVISIBLE);
-        else {
-            customViewHolder.btPlay.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            customViewHolder.btPlay.setBackground(null);
-            Glide.with(activity).load(item.uriVideo).into(customViewHolder.btPlay);
-            customViewHolder.btPlay.invalidate();
-        }
 
         if (itemType.equals(resources.getString(R.string.medicine_dosage_other))) {
             customViewHolder.lbItemNoOfRepeats.setText("");
@@ -155,8 +56,6 @@ public class MedicineRA extends RecyclerAdapterGeneral<MedicineIt> {
             customViewHolder.lbItemNoOfRepeats.setText(String.valueOf(((MedicineIt) item).amount));
             customViewHolder.txItemDosageType.setText(itemType);
         }
-
-        customViewHolder.tvItemName.setText(item.name);
 
         String times = item.time.replace(resources.getString(R.string.times_splitter), resources.getString(R.string.times_nice_separator));
         customViewHolder.tvItemTime.setText(times);

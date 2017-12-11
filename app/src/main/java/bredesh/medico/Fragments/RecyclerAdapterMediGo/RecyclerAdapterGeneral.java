@@ -15,12 +15,16 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Fragments.ItemMediGo.ItemGeneral;
 import bredesh.medico.R;
+import bredesh.medico.Utils.Utils;
 
 /**
  * Created by edenk on 12/10/2017.
@@ -84,6 +88,48 @@ abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<RecyclerAd
 
         customViewHolder.tvItemName.setText(item.name);
 
+        if (item.getUriVideo() == null) {
+            customViewHolder.btPlayVideo.setVisibility(View.INVISIBLE);
+        }
+
+        if (item.getUriImage() == null)
+            customViewHolder.btPlayImage.setVisibility(View.INVISIBLE);
+        else {
+            customViewHolder.btPlayImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            customViewHolder.btPlayImage.setBackground(null);
+            Glide.with(activity).load(item.uriImage).into(customViewHolder.btPlayImage);
+            customViewHolder.btPlayImage.invalidate();
+        }
+
+        String times = item.getTime().replace(resources.getString(R.string.times_splitter), resources.getString(R.string.times_nice_separator));
+        if (!item.getDetailedTimes()) {
+            customViewHolder.tvItemTimeMulti.setText(times);
+            customViewHolder.tvItemTimeMulti.setVisibility(View.VISIBLE);
+            customViewHolder.tvItemTime.setVisibility(View.GONE);
+        } else {
+            customViewHolder.tvItemTime.setText(times);
+            customViewHolder.tvItemTime.setVisibility(View.VISIBLE);
+            customViewHolder.tvItemTimeMulti.setVisibility(View.GONE);
+        }
+
+        customViewHolder.btPlayVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri videoUri = item.getUriVideo();
+                if(videoUri != null ) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }catch (RuntimeException e){
+                        Toast.makeText(context.getApplicationContext(),
+                                resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else    Toast.makeText(context.getApplicationContext(),
+                        resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+            }
+        });
         changeViewHolder(customViewHolder, item, resources);
 
         activateAlerts(customViewHolder, item);
@@ -117,7 +163,7 @@ abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<RecyclerAd
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
-        protected ImageButton btPlay;
+        protected ImageButton btPlayImage, btPlayVideo;
         protected TextView[] days;
         TextView tvItemName, tvItemTime, tvItemTimeMulti,  lbItemNoOfRepeats, txItemDosageType;
         TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
@@ -134,7 +180,8 @@ abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<RecyclerAd
 
             this.txItemDosageType = convertView.findViewById(R.id.txItemDosageType);
             this.lbItemNoOfRepeats = convertView.findViewById(R.id.lbItemNoOfRepeats);
-            this.btPlay = convertView.findViewById(R.id.btPlay);
+            this.btPlayImage = convertView.findViewById(R.id.btPlayImage);
+            this.btPlayVideo = convertView.findViewById(R.id.btPlayVideo);
             this.ivRepetition = convertView.findViewById(R.id.ivRepetition);
 
             this.tvSUN = convertView.findViewById(R.id.tvSUN);

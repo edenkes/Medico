@@ -1,7 +1,5 @@
 package bredesh.medico.Fragments.ItemMediGo;
 
-import android.media.RingtoneManager;
-
 import bredesh.medico.DAL.MedicoDB;
 
 /**
@@ -11,9 +9,9 @@ import bredesh.medico.DAL.MedicoDB;
 public class RemindersIt extends ItemGeneral{
     public String notes;
 
-    public RemindersIt(int id, String time, String name, String uri, int[] days, boolean detailedTimes, String allTimes,
+    public RemindersIt(int id, String time, String name, String uriVideo, String uriImage, int[] days, boolean detailedTimes, String allTimes,
                          MedicoDB.KIND kind, String notes, String alertSoundUri) {
-        super(id, time, name, uri, days, detailedTimes, allTimes, kind, alertSoundUri);
+        super(id, time, name, uriVideo, uriImage, days, detailedTimes, allTimes, kind, alertSoundUri);
         this.notes = notes;
     }
 

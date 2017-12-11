@@ -190,7 +190,7 @@
                     android:orientation="horizontal">
 
                     <ImageButton
-                        android:id="@+id/btShootVideo"
+                        android:id="@+id/btShootImage"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
@@ -199,7 +199,7 @@
                         android:src="@drawable/ic_add_a_photo_black_36dp" />
 
                     <ImageButton
-                        android:id="@+id/btPlay"
+                        android:id="@+id/btPlayImage"
                         android:layout_width="wrap_content"
                         android:layout_height="400px"
                         android:layout_gravity="center"

@@ -61,11 +61,11 @@ public abstract class DataGeneral extends AppCompatActivity {
     protected final int Max_Size = 16, NewData = -6;
     protected Resources resources;
     protected int dataId, oldRepeats = 1;
-    protected ImageButton btPlayStill, btPlayVideo, btChooseSound;
+    protected ImageButton btPlayImage, btPlayVideo, btChooseSound;
     protected EditText etAmount, etRepeats;
     protected Spinner spType, spSpecial, spRepetitionType;
 
-    protected String uriString, alertSoundUriString;
+    protected String uriStringVideo, uriStringImage, alertSoundUriString;
     protected TimeAdapterRecyclerMedGo timeAdapter = null;
     protected Button btAddAlert;
     protected TextView lbAddMultiAlert;
@@ -81,7 +81,8 @@ public abstract class DataGeneral extends AppCompatActivity {
     protected String oldAmount = "1";
     protected String oldRepetitionType = "";
     protected int[] oldDays = new int[7];
-    protected String oldVideoUriString = null;
+    protected String oldUriStringVideo = null;
+    protected String oldUriStringImage = null;
 
     private final String[][] AlertPlans = {
             {"07 : 00"},
@@ -189,7 +190,7 @@ public abstract class DataGeneral extends AppCompatActivity {
 
         // Save a file: path for use with ACTION_VIEW intents
         isVideo = false;
-        uriString = Uri.fromFile(image).toString();
+        uriStringImage = Uri.fromFile(image).toString();
         return image;
     }
 
@@ -212,8 +213,7 @@ public abstract class DataGeneral extends AppCompatActivity {
                 Uri photoURI = Build.VERSION.SDK_INT <= Build.VERSION_CODES.M ?
                         Uri.fromFile(photoFile) :
                         FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);
-                isVideo = false;
-                uriString = photoURI.toString();
+                uriStringImage = photoURI.toString();
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
@@ -240,8 +240,6 @@ public abstract class DataGeneral extends AppCompatActivity {
     }
 
     protected AlertDialog askBeforeSave = null;
-
-
 
     protected void askUserBeforeSave()
     {
@@ -367,42 +365,6 @@ public abstract class DataGeneral extends AppCompatActivity {
     protected void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    protected void setExistingExercise(Intent intent)
-    {
-
-        oldDataName = intent.getStringExtra("exercise_name");
-        etDataName.setText(oldDataName);
-
-        oldTimes = intent.getStringExtra("time");
-        String times = oldTimes;
-        String[] timeAL = null;
-        arrayList = new ArrayList<>();
-        if (times != null && !times.contentEquals("")) {
-            timeAL = times.split(resources.getString(R.string.times_splitter));
-            Collections.addAll(arrayList, timeAL);
-        }
-
-        oldRepeats = intent.getIntExtra("repeats",1);
-        int repeats = oldRepeats;
-        etRepeats.setText(Integer.toString(repeats));
-
-        String repetitionType = intent.getStringExtra("repetition_type");
-        if (repetitionType == null)
-            repetitionType = Integer.toString(R.string.repetition_type_repetitions);
-        oldRepetitionType = repetitionType;
-        int index;
-        index = Utils.findIndexInResourcesArray(resources, R.array.repetition_types, repetitionType);
-        spRepetitionType.setSelection(index);
-
-
-        oldDays = intent.getIntArrayExtra("days");
-        int[] days = oldDays;
-        for (int i=0; i< 7; i++)
-            selectedDays[i] = days[i] != 0;
-        updateSelectedDays();
-        this.setAddAlertsButtons(timeAL == null || timeAL.length == 0);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class ExerciseIt extends ItemGeneral{
     private String repetitionType;
 
     public ExerciseIt(int id, String time, String name, String uriVideo, int[] days, int noOfRepetitions, String repetitionType, boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri){
-        super(id,time,name,uriVideo,days,detailedTimes,allTimes,kind, alertSoundUri);
+        super(id,time,name,uriVideo, null, days,detailedTimes,allTimes,kind, alertSoundUri);
         this.noOfRepetitions = noOfRepetitions;
         this.repetitionType = repetitionType;
     }
