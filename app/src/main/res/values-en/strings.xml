@@ -143,7 +143,6 @@
     <string name="delete_reminders_confirm">Delete reminder?</string>
     <string name="name_too_short_reminders">Enter reminders name</string>
     <string name="reminders_name_label">Reminder Name:</string>
-    <string name="alert_text_reminders">Time to take <b>%d</b> %s</string>
     <string name="reminders_notes">Notes</string>
     <string name="AttachSuccessVideo">Succesfully attached</string>
     <string name="AttachSuccessImage">Succesfully attached</string>
