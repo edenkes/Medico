@@ -6,20 +6,15 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import bredesh.medico.Fragments.DataMediGo.RemindersDa;
 import bredesh.medico.Fragments.ItemMediGo.ItemGeneral;
 import bredesh.medico.Fragments.ItemMediGo.RemindersIt;
-import bredesh.medico.R;
 
 /**
- * Created by edenk on 12/10/2017.
+ * Created by edenK on 12/10/2017.
  */
 
 public class RemindersRA extends RecyclerAdapterGeneral<RemindersIt> {

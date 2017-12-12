@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class ExerciseRA extends RecyclerAdapterGeneral<ExerciseIt> {
 
     @Override
     protected void changeViewHolder(final CustomViewHolder customViewHolder, final ItemGeneral item, final Resources resources) {
-        customViewHolder.lbItemNoOfRepeats.setText(String.valueOf(((ExerciseIt) item).getNoOfRepetitions()));
+        customViewHolder.tvNumberOfRepeats.setText(String.valueOf(((ExerciseIt) item).getNoOfRepetitions()));
 
         String repetitionTypeInDB = ((ExerciseIt) item).getRepetitionType();
         if (repetitionTypeInDB != null) {
@@ -54,7 +53,7 @@ public class ExerciseRA extends RecyclerAdapterGeneral<ExerciseIt> {
             else {
                 customViewHolder.ivRepetition.setVisibility(View.GONE);
                 String repetitionTypeS = Utils.stringOrFromResource(resources,repetitionTypeInDB );
-                customViewHolder.txItemDosageType.setText(repetitionTypeS);
+                customViewHolder.tvDosageType.setText(repetitionTypeS);
             }
         }
     }

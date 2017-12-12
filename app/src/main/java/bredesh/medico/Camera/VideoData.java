@@ -539,7 +539,6 @@ public class VideoData extends AppCompatActivity implements IRemoveLastAlert {
                 if (intent.getData() != null) {
                     videoUriString = intent.getData().toString();
                     btPlay.setVisibility(View.VISIBLE);
-                    Toast.makeText(VideoData.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
                     return;
                 }
             }

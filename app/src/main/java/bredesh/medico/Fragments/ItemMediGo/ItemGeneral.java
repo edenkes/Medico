@@ -7,16 +7,17 @@ import bredesh.medico.DAL.MedicoDB;
 
 /**
  * Created by edenk on 12/10/2017.
- */
-
+ * The Item class contain the Alert data that common for all fragments in the app,
+ * And responsible to provide those characters
+ **/
 public abstract class ItemGeneral {
     public int[] days;
     public int id;
-    public String name, time, alertSoundUri;
+    public String name, time;
+    private String  alertSoundUri;
     public MedicoDB.KIND kind;
     public Uri uriVideo, uriImage;
 
-    protected final String[] daysNames = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
     public boolean detailedTimes;
     public String allTimes;
 
@@ -38,21 +39,12 @@ public abstract class ItemGeneral {
         this.alertSoundUri = alertSoundUri;
     }
 
-    public String getAlertSoundUri() {
-        if (alertSoundUri == null)
-            alertSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION).toString();
-        return alertSoundUri;
-    }
-
-    public Uri getUriVideo() { return  uriVideo;}
-
-    public Uri getUriImage() { return  uriImage;}
-
-    public String getTime() { return time; }
-
+    //Getters
     public String getName() {
         return name;
     }
+
+    public String getTime() { return time; }
 
     public int[] getDays() {
         return days;
@@ -64,6 +56,17 @@ public abstract class ItemGeneral {
 
     public int getId() {return this.id;}
 
+    public Uri getUriVideo() { return  uriVideo;}
+
+    public Uri getUriImage() { return  uriImage;}
+
+    public String getAlertSoundUri() {
+        if (alertSoundUri == null)
+            alertSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION).toString();
+        return alertSoundUri;
+    }
+
+    //Setters
     public void setName(String name){
         this.name = name;
     }

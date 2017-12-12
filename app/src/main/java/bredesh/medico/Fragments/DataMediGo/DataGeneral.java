@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
@@ -30,59 +31,54 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.R;
-import bredesh.medico.Utils.Utils;
 
 /**
  * Created by edenk on 12/10/2017.
+ * The Data Class contain Features that common for all fragments in the app,
+ * And responsible for the look of each Activity in add/edit alerts.
+ *
+ *      For extend this abstract class DataGeneral, needed to implements:
+ *
+ *     protected abstract void setExistingData(Intent intent);
+ *
+ *     protected abstract String getDeletedMessage();
+ *
+ *     protected abstract void confirm(boolean askBeforeSave);
+ *
  */
 interface IRemoveLastAlert {   void OnRemoveLastAlert();}
 
 public abstract class DataGeneral extends AppCompatActivity {
-    protected static final int REQUEST_VIDEO_CAPTURE = 1;
+    static final int REQUEST_TAKE_PHOTO = 1;
     protected static final int CHOOSE_ALERT_SOUND = 5;
 
-    protected EditText etDataName, etNotes;
-    protected ArrayList<String> arrayList;
-    protected TextView lblSelectedDays;
-    protected Button btDelete, btConfirm;
-
-    protected AlertDialog dialogDays;
-    // array to keep the selected days
-    protected final boolean[] selectedDays = new boolean[7];
-    protected final boolean[] newSelectedDays = new boolean[7];
-    protected final Button[] alertPlanButtons = new Button[5];
-    protected View mainView;
     protected MedicoDB db;
+    protected View mainView;
+    protected final boolean[] selectedDays = new boolean[7], newSelectedDays = new boolean[7];
+    protected final Button[] alertPlanButtons = new Button[5];
     protected final int Max_Size = 16, NewData = -6;
-    protected Resources resources;
-    protected int dataId, oldRepeats = 1;
+
+    protected EditText etDataName, etNotes, etAmount, etRepeats;
+    protected TextView lblSelectedDays, lbAddMultiAlert;
+    protected Button btDelete, btConfirm, btAddAlert;
     protected ImageButton btPlayImage, btPlayVideo, btChooseSound;
-    protected EditText etAmount, etRepeats;
     protected Spinner spType, spSpecial, spRepetitionType;
 
-    protected String uriStringVideo, uriStringImage, alertSoundUriString;
+    protected Resources resources;
     protected TimeAdapterRecyclerMedGo timeAdapter = null;
-    protected Button btAddAlert;
-    protected TextView lbAddMultiAlert;
     protected FirebaseAnalytics mFirebaseAnalytics;
-    protected Boolean isVideo = false;
+    protected AlertDialog dialogDays;
+    protected ArrayList<String> arrayList;
 
-    protected String oldDataName = "";
-    protected String oldNotes = "";
-    protected String oldTimes = "";
-    protected String oldAlertSoundUriString = null;
-    protected String oldDosageType = "";
-    protected String oldSpecialNotes = "";
-    protected String oldAmount = "1";
-    protected String oldRepetitionType = "";
+    protected String uriStringVideo, uriStringImage, alertSoundUriString;
+    protected String oldDataName = "", oldNotes = "", oldTimes = "", oldAlertSoundUriString = null, oldDosageType = "",
+            oldSpecialNotes = "", oldAmount = "1", oldRepetitionType = "", oldUriStringVideo = null, oldUriStringImage = null;
     protected int[] oldDays = new int[7];
-    protected String oldUriStringVideo = null;
-    protected String oldUriStringImage = null;
+    protected int dataId, oldRepeats = 1;
 
     private final String[][] AlertPlans = {
             {"07 : 00"},
@@ -92,18 +88,20 @@ public abstract class DataGeneral extends AppCompatActivity {
             {"07 : 00", "11 : 00", "15 : 00", "17 : 00", "21 : 00"}
     };
 
-    protected abstract void setExistingData(Intent intent);
-
     protected DialogInterface.OnClickListener onDelete = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int id) {
             MedicoDB db = new MedicoDB(getApplicationContext());
             if (dataId != NewData)
                 db.deleteRow(dataId);
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.exercise_deleted) , Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getDeletedMessage() , Toast.LENGTH_LONG).show();
             finish();
         }
     };
+
+    protected abstract void setExistingData(Intent intent);
+
+    protected abstract String getDeletedMessage();
 
     protected DialogInterface.OnClickListener onReshootConfirmStill = new DialogInterface.OnClickListener() {
         @Override
@@ -132,7 +130,6 @@ public abstract class DataGeneral extends AppCompatActivity {
             finish();
         }
     };
-
 
     public void OnRemoveLastAlert()
     {
@@ -176,7 +173,6 @@ public abstract class DataGeneral extends AppCompatActivity {
         }
     };
 
-
     private File createImageFile() throws IOException {
         // Create an image file name
         @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -189,12 +185,10 @@ public abstract class DataGeneral extends AppCompatActivity {
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        isVideo = false;
         uriStringImage = Uri.fromFile(image).toString();
         return image;
     }
 
-    static final int REQUEST_TAKE_PHOTO = 1;
 
     protected void ShootImage() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -220,12 +214,11 @@ public abstract class DataGeneral extends AppCompatActivity {
         }
     }
 
-
     protected void ShootVideo()
     {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         if (takeVideoIntent.resolveActivity(DataGeneral.this.getPackageManager()) != null) {
-            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
+            startActivityForResult(takeVideoIntent, REQUEST_TAKE_PHOTO);
         }
     }
 
@@ -252,7 +245,6 @@ public abstract class DataGeneral extends AppCompatActivity {
     }
 
     protected abstract void confirm(boolean askBeforeSave);
-
 
     protected void updateSelectedDays()
     {
@@ -365,6 +357,48 @@ public abstract class DataGeneral extends AppCompatActivity {
     protected void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        // Check which request we're responding to
+        if(requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+            // Make sure the request was successful
+            if (intent != null && intent.getData() != null) {
+                    String path = intent.getData().getPath();
+                    if(path != null) {
+                        if (path.contains("/video/")) {
+                            uriStringVideo = intent.getData().toString();
+                            btPlayVideo.setVisibility(View.VISIBLE);
+                            Toast.makeText(DataGeneral.this.getApplicationContext(), resources.getString(R.string.AttachSuccessVideo), Toast.LENGTH_LONG).show();
+                        }
+                        else if (path.contains("/images/")) {
+                            btPlayImage.setVisibility(View.VISIBLE);
+                            Glide.with(this).load(uriStringImage).into(btPlayImage);
+                            btPlayImage.invalidate();
+                            Toast.makeText(DataGeneral.this.getApplicationContext(), resources.getString(R.string.AttachSuccessImage), Toast.LENGTH_LONG).show();
+                        }
+                        else Toast.makeText(DataGeneral.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
+                    }
+                    else Toast.makeText(DataGeneral.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
+            }else{
+                btPlayImage.setVisibility(View.VISIBLE);
+                Glide.with(this).load(uriStringImage).into(btPlayImage);
+                btPlayImage.invalidate();
+                Toast.makeText(DataGeneral.this.getApplicationContext(), resources.getString(R.string.AttachSuccessImage), Toast.LENGTH_LONG).show();
+            }
+        }
+        // Check which request we're responding to
+        else if (requestCode == CHOOSE_ALERT_SOUND) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK && intent != null) {
+                Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                if (uri != null) {
+                    this.alertSoundUriString = uri.toString();
+                    Toast.makeText(DataGeneral.this.getApplicationContext(), resources.getString(R.string.AttachSuccessSound), Toast.LENGTH_LONG).show();
+                }
+            }
+        } else Toast.makeText(DataGeneral.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
     }
 
     @Override

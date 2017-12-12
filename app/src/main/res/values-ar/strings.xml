@@ -68,7 +68,6 @@
     <string name="FirstName">اسم شخصي</string>
     <string name="Points">نقاط</string>
     <string name="AttachFailed">لم نتمكن من الحصول على صورة أو فيلم</string>
-    <string name="AttachSuccess">وكان في استقبال الفيلم بنجاح</string>
     <string name="reshootVideo">وتصوير العملية مرة أخرى؟</string>
     <string name="main_menu_title">القائمة الرئيسية</string>
     <string name="coming_soon">قريبا</string>
@@ -147,4 +146,7 @@
     <string name="delete_reminders_confirm">حذف ممارسة؟</string>
     <string name="name_too_short_reminders">إدخال المخدرات اسم</string>
     <string name="reminders_notes">ملاحظات</string>
+    <string name="AttachSuccessVideo">وكان في استقبال الفيلم بنجاح</string>
+    <string name="AttachSuccessImage">وكان في استقبال الفيلم بنجاح</string>
+    <string name="AttachSuccessSound">وكان في استقبال الفيلم بنجاح</string>
 </resources>

@@ -24,11 +24,18 @@ import java.util.List;
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Fragments.ItemMediGo.ItemGeneral;
 import bredesh.medico.R;
-import bredesh.medico.Utils.Utils;
 
 /**
  * Created by edenk on 12/10/2017.
- */
+ * The Recycler Adapter Class contain Features that common for all fragments in the app,
+ * And responsible for the look of each CARD.
+ *
+ * for extend this abstract class RecyclerAdapterGeneral<T>, needed to implements:
+ *
+ *     protected abstract void changeViewHolder(final CustomViewHolder customViewHolder, ItemGeneral item,final Resources resources);
+ *
+ *     protected abstract Intent sendIntetInformation(ItemGeneral item);
+ **/
 
 abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<RecyclerAdapterGeneral.CustomViewHolder>{
     private List<T> itemGeneral;
@@ -51,7 +58,7 @@ abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<RecyclerAd
     public void onBindViewHolder(final RecyclerAdapterGeneral.CustomViewHolder customViewHolder, int i) {
         final ItemGeneral item = (ItemGeneral) itemGeneral.get(i);
         final int position = i;
-        customViewHolder.v.setOnClickListener(new View.OnClickListener() {
+        customViewHolder.convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = sendIntetInformation(item);
@@ -78,7 +85,7 @@ abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<RecyclerAd
                 .setMessage(resources.getString(R.string.delete_exercise_confirm)).create();
 
 
-        customViewHolder.v.setOnLongClickListener(new View.OnLongClickListener() {
+        customViewHolder.convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 deleteDialog.show();
@@ -163,23 +170,22 @@ abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<RecyclerAd
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
-        protected ImageButton btPlayImage, btPlayVideo;
         protected TextView[] days;
-        TextView tvItemName, tvItemTime, tvItemTimeMulti,  lbItemNoOfRepeats, txItemDosageType;
+        TextView tvItemName, tvItemTime, tvItemTimeMulti,  tvNumberOfRepeats, tvDosageType;
         TextView tvSUN, tvMON, tvTUE, tvWED, tvTHU, tvFRI, tvSAT;
-
+        ImageButton btPlayImage, btPlayVideo;
         ImageView ivRepetition;
-        View v;
+        View convertView;
 
         protected CustomViewHolder(View convertView) {
             super(convertView);
-            this.v = convertView;
+            this.convertView = convertView;
             this.tvItemName = convertView.findViewById(R.id.tvItemName);
             this.tvItemTime = convertView.findViewById(R.id.tvItemTime);
             this.tvItemTimeMulti = convertView.findViewById(R.id.tvItemTimeMulti);
 
-            this.txItemDosageType = convertView.findViewById(R.id.txItemDosageType);
-            this.lbItemNoOfRepeats = convertView.findViewById(R.id.lbItemNoOfRepeats);
+            this.tvDosageType = convertView.findViewById(R.id.tvDosageType);
+            this.tvNumberOfRepeats = convertView.findViewById(R.id.tvNumberOfRepeats);
             this.btPlayImage = convertView.findViewById(R.id.btPlayImage);
             this.btPlayVideo = convertView.findViewById(R.id.btPlayVideo);
             this.ivRepetition = convertView.findViewById(R.id.ivRepetition);
@@ -192,7 +198,6 @@ abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<RecyclerAd
             this.tvFRI = convertView.findViewById(R.id.tvFRI);
             this.tvSAT = convertView.findViewById(R.id.tvSAT);
             this.days = new TextView[]{tvSUN,tvMON,tvTUE,tvWED,tvTHU,tvFRI,tvSAT};
-
         }
     }
 }

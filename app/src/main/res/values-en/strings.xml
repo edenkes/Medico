@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">Medigo</string>
     <string name="AttachFailed">Attach of media failed</string>
-    <string name="AttachSuccess">Succesfully attached</string>
     <string name="EmailAddress">Email address</string>
     <string name="FirstName">First name</string>
     <string name="Friday">friday</string>
@@ -146,4 +145,7 @@
     <string name="reminders_name_label">Reminder Name:</string>
     <string name="alert_text_reminders">Time to take <b>%d</b> %s</string>
     <string name="reminders_notes">Notes</string>
+    <string name="AttachSuccessVideo">Succesfully attached</string>
+    <string name="AttachSuccessImage">Succesfully attached</string>
+    <string name="AttachSuccessSound">Succesfully attached</string>
 </resources>

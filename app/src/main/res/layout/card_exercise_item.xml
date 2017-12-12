@@ -95,14 +95,14 @@
                 android:src="@drawable/repeats" />
 
             <TextView
-                android:id="@+id/lbItemNoOfRepeats"
+                android:id="@+id/tvNumberOfRepeats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5sp"
                 android:textColor="@color/labelColor" />
 
             <TextView
-                android:id="@+id/txItemDosageType"
+                android:id="@+id/tvDosageType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5sp"

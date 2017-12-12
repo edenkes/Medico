@@ -200,7 +200,6 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
                 .setMessage(resources.getString(R.string.delete_medicine_confirm)).create();
 
-
         btDelete.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -208,8 +207,6 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
                 deleteDialog.show();
             }
         });
-
-
 
         // updating the list + adding another alert
         btAddAlert.setOnClickListener(new View.OnClickListener() {
@@ -262,13 +259,8 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if(resultCode == RESULT_OK && requestCode == REQUEST_TAKE_PHOTO) {
-            btPlayImage.setVisibility(View.VISIBLE);
-            Glide.with(this).load(uriStringImage).into(btPlayImage);
-            btPlayImage.invalidate();
-        }
-        else Toast.makeText(MedicineDa.this.getApplicationContext(), resources.getString(R.string.AttachFailed), Toast.LENGTH_LONG).show();
+    protected String getDeletedMessage() {
+        return  getResources().getString(R.string.medicine_deleted);
     }
 
     @Override

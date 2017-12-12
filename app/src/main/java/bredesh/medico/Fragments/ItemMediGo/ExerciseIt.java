@@ -1,14 +1,13 @@
 package bredesh.medico.Fragments.ItemMediGo;
 
-import android.media.RingtoneManager;
-import android.net.Uri;
-
 import bredesh.medico.DAL.MedicoDB;
 
 /**
  * Created by edenk on 12/10/2017.
  */
-
+/*
+* This class is sub-class of Item, And it's contain the Exercise fragment characters
+* */
 public class ExerciseIt extends ItemGeneral{
     private int noOfRepetitions;
     private String repetitionType;
@@ -19,6 +18,7 @@ public class ExerciseIt extends ItemGeneral{
         this.repetitionType = repetitionType;
     }
 
+    //Getters
     public int getNoOfRepetitions() {return this.noOfRepetitions;}
 
     public String getRepetitionType() {return this.repetitionType;}

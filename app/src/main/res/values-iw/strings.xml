@@ -69,7 +69,6 @@
     <string name="EmailAddress">כתובת מייל</string>
     <string name="Points">נקודות</string>
     <string name="AttachFailed">לא הצלחנו לקבל את התמונה או הסרט</string>
-    <string name="AttachSuccess">הסרט נקלט בהצלחה</string>
     <string name="reshootVideo">האם לצלם את התרגיל מחדש?</string>
 
 
@@ -150,4 +149,7 @@
     <string name="alert_text_reminders">הגיע הזמן לקחת <b>%d</b> %s</string>
     <string name="delete_medicine_confirm">למחוק את התרופה?</string>
     <string name="reminders_notes">הערות</string>
+    <string name="AttachSuccessVideo">הסרט נקלט בהצלחה</string>
+    <string name="AttachSuccessImage">התמונה נקלטה בהצלחה</string>
+    <string name="AttachSuccessSound">הצלצול נקלט בהצלחה</string>
 </resources>

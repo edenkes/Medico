@@ -8,7 +8,6 @@
     <string name="button_camera">изображение</string>
     <string name="button_video">видео</string>
     <string name="AttachFailed">Мы не смогли получить изображение или фильм</string>
-    <string name="AttachSuccess">Фильм успешно принят</string>
 
     <string name="EmailAddress">Адрес электронной почты</string>
     <string name="FirstName">Имя</string>
@@ -150,4 +149,7 @@
     <string name="delete_reminders_confirm">Удалить упражнение?</string>
     <string name="name_too_short_reminders">Введите название препарата</string>
     <string name="reminders_notes">замечания</string>
+    <string name="AttachSuccessVideo">Фильм успешно принят</string>
+    <string name="AttachSuccessImage">Фильм успешно принят</string>
+    <string name="AttachSuccessSound">Фильм успешно принят</string>
 </resources>

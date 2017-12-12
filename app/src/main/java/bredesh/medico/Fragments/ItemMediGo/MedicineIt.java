@@ -5,7 +5,9 @@ import bredesh.medico.DAL.MedicoDB;
 /**
  * Created by edenk on 12/10/2017.
  */
-
+/*
+* This class is sub-class of Item, And it's contain the Medicine fragment characters
+* */
 public class MedicineIt extends ItemGeneral{
     public String type;
     public String special;

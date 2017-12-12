@@ -55,6 +55,8 @@
     <string name="delete_exercise_button">מחק</string>
     <string name="delete_exercise_confirm">למחוק את התרגיל?</string>
     <string name="exercise_deleted">התרגיל נמחק</string>
+    <string name="medicine_deleted">התרופה נמחקה</string>
+    <string name="reminders_deleted">ההתראה נמחקה</string>
     <string name="alert_text">Time to perform %1$s. <b>%2$s</b> %3$s.</string>
     <string name="alert_page_text" formatted="false">הגיע הזמן לבצע חזרות!</string>
     <string name="media_not_found">הסרט לא נמצא.</string>
@@ -71,7 +73,9 @@
     <string name="EditProfile">ערוך את הפרופיל שלך</string>
 
     <string name="AttachFailed">לא הצלחנו לקבל את התמונה או הסרט</string>
-    <string name="AttachSuccess">הסרט נקלט בהצלחה</string>
+    <string name="AttachSuccessVideo">הסרט נקלט בהצלחה</string>
+    <string name="AttachSuccessImage">התמונה נקלטה בהצלחה</string>
+    <string name="AttachSuccessSound">הצלצול נקלט בהצלחה</string>
     <string name="reshootVideo">האם לצלם את התרגיל מחדש?</string>
 
 

@@ -17,21 +17,20 @@ import android.widget.TimePicker;
 
 import java.util.List;
 
-import bredesh.medico.Camera.*;
 import bredesh.medico.R;
 
 /**
  * Created by edenk on 12/10/2017.
  */
 
-public class TimeAdapterRecyclerMedGo  extends RecyclerView.Adapter<TimeAdapterRecyclerMedGo.CustomViewHolder> {
+class TimeAdapterRecyclerMedGo  extends RecyclerView.Adapter<TimeAdapterRecyclerMedGo.CustomViewHolder> {
 
     private List<String> chainTime;
     private Context context;
     private Button[] buttons;
     private IRemoveLastAlert caller;
 
-    public TimeAdapterRecyclerMedGo(Context context, List<String> chainTime, Button[] buttons, IRemoveLastAlert caller)
+    TimeAdapterRecyclerMedGo(Context context, List<String> chainTime, Button[] buttons, IRemoveLastAlert caller)
     {
         this.context = context;
         this.chainTime = chainTime;
@@ -42,15 +41,15 @@ public class TimeAdapterRecyclerMedGo  extends RecyclerView.Adapter<TimeAdapterR
     private void showButtons(boolean show)
     {
         int state = show ? View.VISIBLE : View.INVISIBLE;
-        for (int i=0; i< buttons.length; i++)
-        {
-            buttons[i].setVisibility(state);
+        for (Button button : buttons) {
+            button.setVisibility(state);
         }
     }
 
 
     @Override
-    public TimeAdapterRecyclerMedGo.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public TimeAdapterRecyclerMedGo.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i)
+    {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_time_item, viewGroup, false);
         return new TimeAdapterRecyclerMedGo.CustomViewHolder(view);
     }
@@ -61,14 +60,15 @@ public class TimeAdapterRecyclerMedGo  extends RecyclerView.Adapter<TimeAdapterR
         return result.substring(result.length()-2);
     }
 
-    private void hideKeyboard(View view) {
+    private void hideKeyboard(View view)
+    {
         InputMethodManager inputMethodManager =(InputMethodManager)context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-
     @Override
-    public void onBindViewHolder(final TimeAdapterRecyclerMedGo.CustomViewHolder holder, final int position) {
+    public void onBindViewHolder(final TimeAdapterRecyclerMedGo.CustomViewHolder holder, final int position)
+    {
         final String timeItem = chainTime.get(position);
 
         final String[] hourAndMinutes = timeItem.split(" : ");
@@ -131,16 +131,15 @@ public class TimeAdapterRecyclerMedGo  extends RecyclerView.Adapter<TimeAdapterR
         return (null != chainTime ? chainTime.size() : 0);
     }
 
-
     class CustomViewHolder extends RecyclerView.ViewHolder {
         private TextView tvTime;
         private ImageButton timePick, remove;
 
         private CustomViewHolder(View convertView) {
             super(convertView);
-            this.tvTime = (TextView) convertView.findViewById(R.id.tvTimer);
-            this.timePick = (ImageButton) convertView.findViewById(R.id.timePicker);
-            this.remove = (ImageButton) convertView.findViewById(R.id.remover);
+            this.tvTime = convertView.findViewById(R.id.tvTimer);
+            this.timePick = convertView.findViewById(R.id.timePicker);
+            this.remove = convertView.findViewById(R.id.remover);
         }
     }
 }

@@ -676,7 +676,6 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
             if (intent.getData() != null) {
                 UriString = intent.getData().toString();
                 btPlayVideo.setVisibility(View.VISIBLE);
-                Toast.makeText(RemindersData.this.getApplicationContext(), resources.getString(R.string.AttachSuccess), Toast.LENGTH_LONG).show();
             }
         }
         else if(resultCode == RESULT_OK)
@@ -694,26 +693,4 @@ public class RemindersData  extends AppCompatActivity implements IRemoveLastAler
     *//*
         return string format of the current time.
         DO NOT CHANGE THIS FORMAT [database and other checks relying on that!!]
-     *//*
-
-    private String Right(String s)
-    {
-        return s.substring(s.length() - 2);
-    }
-
-    private String makeTimeString()
-    {
-        Calendar cal = Calendar.getInstance();
-        int minute =  cal.get(Calendar.MINUTE);
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-
-        String str_hour = Right ("0" + hour);
-        String str_minute = Right("0" + minute);
-        return  str_hour + " : " + str_minute;
-    }
-
-    @Override
-    public void onBackPressed() {
-        confirm(true);
-    }*/
-}
+     */}
