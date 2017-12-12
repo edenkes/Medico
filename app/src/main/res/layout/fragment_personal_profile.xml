@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
 
     android:background="@color/colorWindowBackground"
-    tools:context="bredesh.medico.Fragments.PersonalFragment">
+    tools:context="bredesh.medico.Fragments.PersonalProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
