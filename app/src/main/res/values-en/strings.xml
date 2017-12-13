@@ -106,6 +106,7 @@
     <string name="notification_alert_prefix_medicine">Time to take:</string>
     <string name="name_too_short_medicine">Enter medicine name</string>
     <string name="alert_text_medicine">Time to take <b>%d</b> %s</string>
+    <string name="alert_text_reminders">Time to perform %1$s. %2$s</string>
     <string name="amount_too_short_medicine">Enter the ammount.</string>
     <string name="delete_medicine_confirm">Delete the drug?</string>
     <string name="desc_pic_play">play the video</string>

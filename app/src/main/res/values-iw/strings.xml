@@ -146,7 +146,7 @@
     <string name="delete_reminders_confirm">למחוק את התזכורת?</string>
     <string name="name_too_short_reminders">הזן שם תזכורות</string>
     <string name="reminders_name_label">שם תזכורת:</string>
-    <string name="alert_text_reminders">הגיע הזמן לקחת <b>%d</b> %s</string>
+    <string name="alert_text_reminders">"הגיע הזמן לבצע %1$s. %2$s  "</string>
     <string name="delete_medicine_confirm">למחוק את התרופה?</string>
     <string name="reminders_notes">הערות</string>
     <string name="AttachSuccessVideo">הסרט נקלט בהצלחה</string>

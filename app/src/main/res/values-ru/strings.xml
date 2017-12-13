@@ -144,7 +144,7 @@
     <string name="snooze_30">30 минут</string>
     <string name="snooze_5">5 минут</string>
     <string name="reminders">Напоминания</string>
-    <string name="alert_text_reminders">Пришло время принять <b>%d</b> %s</string>
+    <string name="alert_text_reminders">"Пришло время выполнить %1$s. %2$s "</string>
     <string name="delete_medicine_confirm">Удалить упражнение?</string>
     <string name="delete_reminders_confirm">Удалить упражнение?</string>
     <string name="name_too_short_reminders">Введите название препарата</string>

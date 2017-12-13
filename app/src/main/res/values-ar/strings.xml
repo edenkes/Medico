@@ -141,7 +141,7 @@
     <string name="snooze_30">30 دقائق</string>
     <string name="snooze_5">5 دقائق</string>
     <string name="reminders">تذكير</string>
-    <string name="alert_text_reminders">لقد حان الوقت لاتخاذ<b>%d</b> %s</string>
+    <string name="alert_text_reminders">"لقد حان الوقت لأداء %1$s. %2$s  "</string>
     <string name="delete_medicine_confirm">حذف ممارسة؟</string>
     <string name="delete_reminders_confirm">حذف ممارسة؟</string>
     <string name="name_too_short_reminders">إدخال المخدرات اسم</string>

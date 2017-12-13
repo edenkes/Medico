@@ -235,12 +235,12 @@ public class MedicoDB extends SQLiteOpenHelper {
         }
     }
 
-    public void DeleteAllAlerts() {
+   /* public void DeleteAllAlerts() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " +ALERTS_TABLE_NAME + "");
         createAlerts(db);
         db.close();
-    }
+    }*/
 
     public void addAlert(String alert_name,KIND kind, String alert_time, int repeats, String repetition_type, String uri_video, String uri_image, int[] days_to_alert, String alertSoundUriString){
 
@@ -449,7 +449,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         KIND kind_type;
 
         if(kind.equals(KIND.Exercise.toString())){  kind_type = KIND.Exercise;
-        }else if(kind.equals(KIND.Exercise.toString())){    kind_type = KIND.Medicine;
+        }else if(kind.equals(KIND.Medicine.toString())){    kind_type = KIND.Medicine;
         }else{  kind_type = KIND.Reminders; }
 
         v = new PartialVideoItem(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
@@ -464,7 +464,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         return v;
     }
 
-    public void setFirstName(String firstName){
+    /*private void setFirstName(String firstName){
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -479,23 +479,6 @@ public class MedicoDB extends SQLiteOpenHelper {
         // 4. close
         db.close();
     }
-
-    public void setLang(String language){
-        // 1. get reference to writable DB
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        // 2. create ContentValues to add key "column"/value
-        ContentValues values = new ContentValues();
-        values.put(LANG, language);
-
-        // 3. insert
-        db.update(LANG_TABLE_NAME, // table
-                values, null, null); // key/value -> keys = column names/ values = column values
-
-        // 4. close
-        db.close();
-    }
-
 
     public void setLastName(String lastName){
         // 1. get reference to writable DB
@@ -554,6 +537,22 @@ public class MedicoDB extends SQLiteOpenHelper {
         if(cursor.getCount() != 1) return null;
 
         return cursor.getString(cursor.getColumnIndex(KEY_FIRST_NAME));
+    }
+*/
+    public void setLang(String language){
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. create ContentValues to add key "column"/value
+        ContentValues values = new ContentValues();
+        values.put(LANG, language);
+
+        // 3. insert
+        db.update(LANG_TABLE_NAME, // table
+                values, null, null); // key/value -> keys = column names/ values = column values
+
+        // 4. close
+        db.close();
     }
 
     public  String getLang(){
@@ -726,11 +725,5 @@ public class MedicoDB extends SQLiteOpenHelper {
         else if(kind.equals(KIND.Medicine.toString())) return KIND.Medicine;
         else if(kind.equals(KIND.Reminders.toString())) return KIND.Reminders;
         return null;
-    }
-
-    public void clearInfo() {
-        setFirstName("");
-        setLastName("");
-        setLastName("");
     }
 }

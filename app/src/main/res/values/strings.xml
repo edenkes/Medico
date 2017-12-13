@@ -160,7 +160,7 @@
     <string name="delete_reminders_confirm">למחוק את התזכורת?</string>
     <string name="notification_alert_prefix_medicine">הגיע הזמן לקחת:</string>
     <string name="alert_text_medicine">Time to take <b>%d</b> %s</string>
-    <string name="alert_text_reminders" translatable="false"><b>%s</b> %s</string>
+    <string name="alert_text_reminders">Time to perform %1$s. %2$s</string>
     <string name="time_picker_select_time">Select time</string>
     <string name="lang_select" translatable="false">En | עב | عر | ру</string>
     <string name="exercise_repeats_mandatory">Enter no. of repititions.</string>

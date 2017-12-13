@@ -68,7 +68,8 @@ public class NotificationWindow extends AppCompatActivity {
         Button decline = findViewById(R.id.button_decline);
         Button snooze = findViewById(R.id.snooze);
         Button snooze30 = findViewById(R.id.snooze30);
-        ImageButton playButton = findViewById(R.id.play_button);
+        ImageButton ib_video = findViewById(R.id.ib_video);
+        ImageButton ib_image = findViewById(R.id.ib_image);
 
         toMain = new Intent(NotificationWindow.this, MainMenu.class);
         int id = getIntent().getIntExtra("db_id",-1);
@@ -108,16 +109,40 @@ public class NotificationWindow extends AppCompatActivity {
                         tvNotes.setText("* " +notes);
                         tvNotes.setMovementMethod(new ScrollingMovementMethod());
                     }
-                   if(item.uriImage != null && item.kind == MedicoDB.KIND.Medicine) {
-                        ViewGroup.LayoutParams layoutParams = playButton.getLayoutParams();
+                    if(item.uriImage != null && item.kind == MedicoDB.KIND.Medicine) {
+                        ViewGroup.LayoutParams layoutParams = ib_image.getLayoutParams();
                         layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
                         layoutParams.height= 200;
-                        playButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                        playButton.setLayoutParams(layoutParams);
-                        Glide.with(this).load(item.uriImage).into(playButton);
-                        playButton.invalidate();
+                        ib_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        ib_image.setLayoutParams(layoutParams);
+                        Glide.with(this).load(item.uriImage).into(ib_image);
+                        ib_image.invalidate();
                     }
                     break;
+                case Reminders:
+                    alertPrefixText.setText(resources.getString(R.string.notification_alert_prefix));
+                    alertName.setText(item.name);
+                    alertRepeats.setText("");
+                    Cursor cReminders = (new MedicoDB(getApplicationContext())).getRemindersByID(item.id);
+                    notes = cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_NOTES));
+
+                    if(!notes.equals("")){
+                        TextView tvNotes = findViewById(R.id.tv_notes);
+                        tvNotes.setText("* " +notes);
+                        tvNotes.setMovementMethod(new ScrollingMovementMethod());
+                    }
+                    if(item.uriImage != null && item.kind == MedicoDB.KIND.Medicine) {
+                        ViewGroup.LayoutParams layoutParams = ib_image.getLayoutParams();
+                        layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                        layoutParams.height= 200;
+                        ib_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        ib_image.setLayoutParams(layoutParams);
+                        Glide.with(this).load(item.uriImage).into(ib_image);
+                        ib_image.invalidate();
+                    }
+
+                    break;
+
 
             }
 
@@ -208,9 +233,12 @@ public class NotificationWindow extends AppCompatActivity {
         snooze30.setOnClickListener(snoozeListener);
 
         if (item == null || item.uriImage == null)
-            playButton.setVisibility(View.INVISIBLE);
+            ib_image.setVisibility(View.INVISIBLE);
 
-        playButton.setOnClickListener(new View.OnClickListener() {
+        if (item == null || item.uriVideo == null)
+            ib_video.setVisibility(View.INVISIBLE);
+
+        ib_video.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -230,6 +258,10 @@ public class NotificationWindow extends AppCompatActivity {
                                 intent = new Intent(Intent.ACTION_VIEW);
                                 intent.setDataAndType(videoUri,"image/*");
                                 errMsg =  getResources().getString(R.string.media_not_found_image);
+                                break;
+                            case Reminders:
+                                intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                                errMsg =  getResources().getString(R.string.media_not_found);
                                 break;
                         }
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

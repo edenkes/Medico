@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,11 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/app_bar"
-        android:layout_above="@+id/play_button"
+        android:layout_above="@+id/ib_video"
         android:layout_marginBottom="10sp"
         android:scrollbars="vertical"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:scrollbarSize="10sp">
+        android:scrollbarSize="10sp"
+        android:id="@+id/scrollView2">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -187,16 +189,26 @@
 
 
     <ImageButton
-        android:id="@+id/play_button"
+        android:id="@+id/ib_video"
         android:layout_width="100sp"
         android:layout_height="100sp"
-        android:layout_above="@+id/snooze_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="18dp"
+        android:layout_marginBottom="13dp"
         android:background="@drawable/button_round"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_play_arrow_black_48dp" />
+        android:src="@drawable/ic_play_arrow_black_48dp"
+        android:layout_above="@+id/snooze_layout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="89dp" />
 
+    <ImageButton
+        android:id="@+id/ib_image"
+        android:layout_width="120sp"
+        android:layout_height="100sp"
+        android:background="@drawable/button_round"
+        android:scaleType="fitXY"
+        android:src="@drawable/medigo_logo_clock"
+        android:layout_below="@+id/scrollView2"
+        android:layout_toStartOf="@+id/ib_video" />
 
 
 </RelativeLayout>
