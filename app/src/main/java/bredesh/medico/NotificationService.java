@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -100,13 +99,14 @@ public class NotificationService extends Service {
 
 
         builder.setSmallIcon(R.mipmap.ic_medigo_logo_clock)
+                .setSmallIcon(R.mipmap.ic_alarm_black_48dp)
                 .setAutoCancel(true)
-                .setPriority(Notification.PRIORITY_MAX)
                 .setContentIntent(pendingIntent)
                 .setContentTitle(notificationName)
                 .setWhen(System.currentTimeMillis())
                 .setContentText(notiString)
                 .setPriority(Notification.PRIORITY_HIGH);
+
         Uri soundActualUri;
         if (soundUri != null) {
             soundActualUri = Uri.parse(soundUri);
