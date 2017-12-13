@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.bottom_bar.BottomBar;
 import com.example.bottom_bar.OnTabReselectListener;
@@ -24,6 +25,8 @@ import bredesh.medico.Fragments.MedicineFragment;
 import bredesh.medico.Fragments.PersonalProfileFragment;
 import bredesh.medico.Fragments.RemindersFragment;
 import bredesh.medico.Menu.MainMenu;
+
+import static android.support.design.R.id.container;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -60,11 +63,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
         }
-
         return super.onCreateOptionsMenu(menu);
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -116,18 +116,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.activity_main);
+
 /*
         session = new Session(this);
         if(!session.loggedin()){
             logout();
         }
 */
-        this.language = MainMenu.language;
         prepareView();
     }
 
     private void prepareView()
     {
+        this.language = MainMenu.language;
+
         Toolbar toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
@@ -211,4 +213,5 @@ public class MainActivity extends AppCompatActivity {
         finish();
         startActivity(new Intent(MainActivity.this,MainLoginActivity.class));
     }*/
+
 }

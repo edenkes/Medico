@@ -76,20 +76,20 @@ public abstract class FragmentGeneral<T> extends Fragment{
         int index;
 
         for (c.moveToFirst(), index = 0; !c.isAfterLast(); c.moveToNext(), index++) {
-            int id = c.getInt(c.getColumnIndex(MedicoDB.KEY_ID));
-            String time = c.getString(c.getColumnIndex(MedicoDB.KEY_TIME));
+            int id =                c.getInt(c.getColumnIndex(MedicoDB.KEY_ID));
+            String time =           c.getString(c.getColumnIndex(MedicoDB.KEY_TIME));
+            String name =           c.getString(c.getColumnIndex(MedicoDB.KEY_NAME));
+            String uriVideo =       c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
+            String uriImage =       c.getString(c.getColumnIndex(MedicoDB.URIIMAGE));
+            String alertSoundUri =  c.getString(c.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI));
+
             String[] times = time.split(Pattern.quote(getResources().getString(R.string.times_splitter)));
             boolean detailedTimes = true;
             String allTimes = time;
-            if (times.length > 3) {
+            if (times.length > 4 || (times.length > 3 && uriVideo != null)  || (times.length > 2 && uriImage != null)) {
                 time = String.format(getString(R.string.several_times), times.length);
                 detailedTimes = false;
             }
-
-            String name = c.getString(c.getColumnIndex(MedicoDB.KEY_NAME));
-            String uriVideo = c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
-            String uriImage = c.getString(c.getColumnIndex(MedicoDB.URIIMAGE));
-            String alertSoundUri = c.getString(c.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI));
 
             int[] days = new int[7];
             days[0] = c.getInt(c.getColumnIndex(MedicoDB.SUNDAY));

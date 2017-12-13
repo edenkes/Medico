@@ -132,11 +132,11 @@
             android:layout_alignParentBottom="false"
             android:layout_marginStart="10sp"
             android:layout_weight="0.25"
-            android:background="@color/titleColor"
+            android:background="@drawable/button_item_data"
             android:tag="5"
             android:text="@string/snooze_5"
             android:textColor="@color/colorWhite"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/snooze30"
@@ -145,20 +145,54 @@
             android:layout_alignParentBottom="false"
             android:layout_marginStart="10sp"
             android:layout_weight="0.28"
-            android:background="@color/titleColor"
+            android:background="@drawable/button_item_data"
             android:tag="30"
             android:text="@string/snooze_30"
             android:textColor="@color/colorWhite"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
+
+    <!--<LinearLayout
+        android:id="@+id/snooze_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/accept_decline_layout"
+        android:layout_alignParentBottom="false"
+        android:layout_marginBottom="5sp"
+        android:gravity="center"
+
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+
+        <Button
+            android:id="@+id/snoozeOther"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginStart="10sp"
+            android:layout_weight="0.25"
+            android:background="@drawable/button_item_data"
+            android:tag="5"
+            android:text="@string/medicine_dosage_other"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25" />
+
+
+    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/accept_decline_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="2sp"
         android:layoutDirection="inherit"
         android:orientation="horizontal"
         android:weightSum="1">
@@ -172,7 +206,7 @@
             android:background="@color/titleColor"
             android:text="@string/done"
             android:textColor="@color/colorWhite"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/button_decline"
@@ -183,7 +217,7 @@
             android:background="@color/titleColor"
             android:text="@string/giveup"
             android:textColor="@color/colorWhite"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -202,7 +236,7 @@
 
     <ImageButton
         android:id="@+id/ib_image"
-        android:layout_width="120sp"
+        android:layout_width="wrap_content"
         android:layout_height="100sp"
         android:background="@drawable/button_round"
         android:scaleType="fitXY"

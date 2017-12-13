@@ -284,36 +284,38 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/subLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:clickable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="horizontal">
+        android:background="@color/colorWhite"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <Button
             android:id="@+id/btConfirm"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
+            android:layout_width="0sp"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginEnd="1sp"
             android:layout_weight="0.5"
-            android:background="@color/titleColor"
             android:text="@string/btn_confirm"
+            android:background="@color/titleColor"
             android:textColor="@color/colorWhite"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/btDelete"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
+            android:layout_width="0sp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="1sp"
             android:layout_weight="0.5"
-            android:background="@color/titleColor"
             android:text="@string/delete_exercise_button"
+            android:background="@color/titleColor"
             android:textColor="@color/colorWhite"
             android:textSize="20sp" />
 
     </LinearLayout>
-
-
 </RelativeLayout>

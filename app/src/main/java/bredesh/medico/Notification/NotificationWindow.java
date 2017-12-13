@@ -109,7 +109,7 @@ public class NotificationWindow extends AppCompatActivity {
                     if(item.uriImage != null && item.kind == MedicoDB.KIND.Medicine) {
                         ViewGroup.LayoutParams layoutParams = ib_image.getLayoutParams();
                         layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-                        layoutParams.height= 200;
+                        layoutParams.height= 300;
                         ib_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
                         ib_image.setLayoutParams(layoutParams);
                         Glide.with(this).load(item.uriImage).into(ib_image);
@@ -128,16 +128,15 @@ public class NotificationWindow extends AppCompatActivity {
                         tvNotes.setText("* " +notes);
                         tvNotes.setMovementMethod(new ScrollingMovementMethod());
                     }
-                    if(item.uriImage != null && item.kind == MedicoDB.KIND.Medicine) {
+                    if(item.uriImage != null && item.kind == MedicoDB.KIND.Reminders) {
                         ViewGroup.LayoutParams layoutParams = ib_image.getLayoutParams();
                         layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-                        layoutParams.height= 200;
+                        layoutParams.height= 300;
                         ib_image.setScaleType(ImageView.ScaleType.FIT_CENTER);
                         ib_image.setLayoutParams(layoutParams);
                         Glide.with(this).load(item.uriImage).into(ib_image);
                         ib_image.invalidate();
                     }
-
                     break;
 
 
@@ -213,7 +212,6 @@ public class NotificationWindow extends AppCompatActivity {
                     String strHour = "0" + hour;
                     strHour = strHour.substring(strHour.length() - 2);
                     timeSTR = strHour + " : " + str_minute;
-                    //TODO
                     db.addAlert("_TEMP__" + item.name, item.kind, timeSTR, item.repeats, item.repetition_type, (item.uriVideo != null) ? item.uriVideo.toString() : null,
                             (item.uriImage != null) ? item.uriImage.toString() : null, new int[]{1, 1, 1, 1, 1, 1, 1}, item.alertSoundUriString);
                     Bundle params = new Bundle();
