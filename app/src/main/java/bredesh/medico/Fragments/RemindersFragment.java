@@ -45,7 +45,7 @@ public class RemindersFragment extends FragmentGeneral<RemindersIt> {
     }
 
     @Override
-    protected RecyclerAdapterGeneral getNewRecyclerAdapter() {
+    protected RecyclerAdapterGeneral<RemindersIt> getNewRecyclerAdapter() {
         return new RemindersRA(context,arrayList,getActivity());
     }
 
