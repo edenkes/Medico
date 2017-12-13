@@ -7,7 +7,6 @@
     <string name="confirm_password">אישור סיסמה</string>
 
     <string name="button_video">וידאו</string>
-    <string name="exercises">תרגילים</string>
     <string name="addMedia">הוספת התראה</string>
     <string name="button_camera">תמונה</string>
     <string name="extercise_name_hint">שם התרגיל</string>
@@ -86,6 +85,9 @@
     <string name="menu_item_3">בדיקות תקופתיות</string>
     <string name="menu_item_4">תזכורות אישיות</string>
     <string name="reminders">תזכורות</string>
+    <string name="medicine">תרופות</string>
+    <string name="exercises">תרגילים</string>
+
     <string name="exercise_name_label">Exercise name:</string>
     <string name="Add_multi_alert">כמה פעמים ביום?</string>
     <string name="set_language">Language</string>

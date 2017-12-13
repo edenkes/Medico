@@ -19,10 +19,10 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import java.util.Locale;
 
 import bredesh.medico.DAL.MedicoDB;
-import bredesh.medico.Fragments.FragmentHome;
-import bredesh.medico.Fragments.FragmentMedicine;
+import bredesh.medico.Fragments.ExerciseFragment;
+import bredesh.medico.Fragments.MedicineFragment;
 import bredesh.medico.Fragments.PersonalProfileFragment;
-import bredesh.medico.Fragments.PersonalRemindersFragment;
+import bredesh.medico.Fragments.RemindersFragment;
 import bredesh.medico.Menu.MainMenu;
 
 
@@ -128,16 +128,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void prepareView()
     {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        Toolbar toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle("");
         actionBar.setLogo(R.mipmap.ic_medigo_logo_clock);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar = findViewById(R.id.bottomBar);
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
@@ -184,13 +185,13 @@ public class MainActivity extends AppCompatActivity {
                 onBackPressed();
                 break;
             case R.id.tab_exercises:
-                fragment = new FragmentHome();
+                fragment = new ExerciseFragment();
                 break;
             case R.id.tab_drugs:
-                fragment = new FragmentMedicine();
+                fragment = new MedicineFragment();
                 break;
             case R.id.tab_reminders:
-                fragment = new PersonalRemindersFragment();
+                fragment = new RemindersFragment();
                 break;
             case R.id.tab_personal:
                 fragment = new PersonalProfileFragment();

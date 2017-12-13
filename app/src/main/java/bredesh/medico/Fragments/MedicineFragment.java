@@ -1,39 +1,65 @@
 package bredesh.medico.Fragments;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
 
 import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Fragments.DataMediGo.MedicineDa;
 import bredesh.medico.Fragments.ItemMediGo.MedicineIt;
 import bredesh.medico.Fragments.RecyclerAdapterMediGo.MedicineRA;
+import bredesh.medico.Fragments.RecyclerAdapterMediGo.RecyclerAdapterGeneral;
 import bredesh.medico.R;
 
-/**
- * Created by Omri on 12/06/2017.
- */
+public class MedicineFragment extends FragmentGeneral<MedicineIt> {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)  {
+        View view = inflater.inflate(R.layout.fragment_fragment_home, container, false);
+        kindGeneral = MedicoDB.KIND.Medicine;
 
-public class FragmentMedicine {}/* extends Fragment {
+        setUpOnCreateView(view);
+        adapter = new MedicineRA(context,arrayList,getActivity());
+        lvHome.setAdapter(adapter);
+
+        return view;
+    }
+
+    @Override
+    protected CharSequence getFragmentTitle() {
+        return getResources().getText(R.string.medicine);
+    }
+
+    @Override
+    protected void addItemToList(int index, int id, String time, String name, String uriVideo, String uriImage,
+                                 int[] days, boolean detailedTimes, String allTimes, String alertSoundUri) {
+        Cursor cMedicine = db.getMedicineByID(id);
+        int amountTmp = cMedicine.getColumnIndex(MedicoDB.KEY_AMOUNT);
+        int amount = cMedicine.getInt(amountTmp);
+        String type = cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_TYPE));
+        String special = cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_SPECIAL));
+        String notes =   cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_NOTES));
+
+        arrayList.add(index, new MedicineIt(id, time, name, uriImage, days, detailedTimes, allTimes,
+                kindGeneral, type, special, notes, ""+ amount));
+    }
+
+    @Override
+    protected RecyclerAdapterGeneral<MedicineIt> getNewRecyclerAdapter() {
+        return new MedicineRA(context,arrayList,getActivity());
+    }
+
+    @Override
+    protected Intent getNewIntent() {
+        return new Intent(getActivity(), MedicineDa.class);
+    }
+}
+
+
+        /*extends Fragment {
     private Context context;
     List<MedicineIt> arrayList;
     RecyclerView lvHome;
@@ -47,7 +73,7 @@ public class FragmentMedicine {}/* extends Fragment {
         lvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
         context = getActivity().getApplicationContext();
 
-        TextView title = view.findViewById(R.id.tvExercises);
+        TextView title = view.findViewById(R.id.tvTitle);
         title.setText(getResources().getText(R.string.menu_item_2));
 
         setArrayList();
@@ -72,7 +98,7 @@ public class FragmentMedicine {}/* extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        bredesh.medico.Fragments.FragmentHome fragment = new bredesh.medico.Fragments.FragmentHome();
+        bredesh.medico.Fragments.ExerciseFragment fragment = new bredesh.medico.Fragments.ExerciseFragment();
         ft.replace(R.id.fragment_place, fragment);
         ft.commit();
     }

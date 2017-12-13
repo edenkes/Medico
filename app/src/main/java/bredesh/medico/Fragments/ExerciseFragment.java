@@ -1,34 +1,65 @@
 package bredesh.medico.Fragments;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-
+import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Fragments.DataMediGo.ExerciseDa;
 import bredesh.medico.Fragments.ItemMediGo.ExerciseIt;
-import bredesh.medico.DAL.MedicoDB;
 import bredesh.medico.Fragments.RecyclerAdapterMediGo.ExerciseRA;
+import bredesh.medico.Fragments.RecyclerAdapterMediGo.RecyclerAdapterGeneral;
 import bredesh.medico.R;
 
-public class FragmentHome {}/*extends Fragment {
+
+public class ExerciseFragment extends FragmentGeneral<ExerciseIt>{
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)  {
+        View view = inflater.inflate(R.layout.fragment_fragment_home, container, false);
+        kindGeneral = MedicoDB.KIND.Exercise;
+
+        setUpOnCreateView(view);
+        adapter = new ExerciseRA(context,arrayList,getActivity());
+        lvHome.setAdapter(adapter);
+
+        return view;
+    }
+
+    @Override
+    protected CharSequence getFragmentTitle() {
+        return getResources().getText(R.string.exercises);
+    }
+
+    @Override
+    protected void addItemToList(int index, int id, String time, String name, String uriVideo, String uriImage,
+                                 int[] days, boolean detailedTimes, String allTimes, String alertSoundUri) {
+        Cursor c = db.getAllAlertsByKind(kindGeneral);
+        int noOfRepetitions = c.getInt(c.getColumnIndex(MedicoDB.KEY_REPEATS));
+        String repetitionType = c.getString(c.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE));
+
+        arrayList.add(index, new ExerciseIt(id, time, name, uriVideo, days, noOfRepetitions,
+                repetitionType, detailedTimes, allTimes, kindGeneral, alertSoundUri));
+    }
+
+    @Override
+    protected RecyclerAdapterGeneral<ExerciseIt> getNewRecyclerAdapter() {
+        return new ExerciseRA(context,arrayList,getActivity());
+    }
+
+    @Override
+    protected Intent getNewIntent() {
+        return new Intent(getActivity(), ExerciseDa.class);
+    }
+}
+
+
+
+        /*Fragment {
     private Context context;
     List<ExerciseIt> arrayList;
     RecyclerView lvHome;
@@ -44,7 +75,7 @@ public class FragmentHome {}/*extends Fragment {
 
         setArrayList();
 
-       //final Adapter adapter = new Adapter(context, R.layout.exercises_item, arrayList);
+        //final Adapter adapter = new Adapter(context, R.layout.exercises_item, arrayList);
         adapter = new ExerciseRA(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
 
@@ -65,7 +96,7 @@ public class FragmentHome {}/*extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        FragmentHome fragment = new FragmentHome();
+        ExerciseFragment fragment = new ExerciseFragment();
         ft.replace(R.id.fragment_place, fragment);
         ft.commit();
     }

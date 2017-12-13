@@ -37,7 +37,7 @@ import bredesh.medico.R;
  *     protected abstract Intent sendIntetInformation(ItemGeneral item);
  **/
 
-abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<RecyclerAdapterGeneral.CustomViewHolder>{
+public abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<RecyclerAdapterGeneral.CustomViewHolder>{
     private List<T> itemGeneral;
     protected Context context;
     protected Activity activity;

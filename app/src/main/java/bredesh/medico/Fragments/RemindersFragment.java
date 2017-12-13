@@ -1,43 +1,64 @@
 package bredesh.medico.Fragments;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
 
 import bredesh.medico.DAL.MedicoDB;
-import bredesh.medico.Fragments.DataMediGo.MedicineDa;
-import bredesh.medico.Fragments.ItemMediGo.MedicineIt;
-import bredesh.medico.Fragments.RecyclerAdapterMediGo.MedicineRA;
+import bredesh.medico.Fragments.DataMediGo.RemindersDa;
+import bredesh.medico.Fragments.ItemMediGo.RemindersIt;
+import bredesh.medico.Fragments.RecyclerAdapterMediGo.RecyclerAdapterGeneral;
+import bredesh.medico.Fragments.RecyclerAdapterMediGo.RemindersRA;
 import bredesh.medico.R;
 
-/**
- * Created by Omri on 12/06/2017.
- */
+public class RemindersFragment extends FragmentGeneral<RemindersIt> {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)  {
+        View view = inflater.inflate(R.layout.fragment_fragment_home, container, false);
 
-public class FragmentMedicine {}/* extends Fragment {
-    private Context context;
-    List<MedicineIt> arrayList;
+        kindGeneral = MedicoDB.KIND.Reminders;
+
+        setUpOnCreateView(view);
+
+        adapter = new RemindersRA(context,arrayList,getActivity());
+        lvHome.setAdapter(adapter);
+
+        return view;
+    }
+
+    @Override
+    protected CharSequence getFragmentTitle() {
+        return getResources().getText(R.string.reminders);
+    }
+
+    @Override
+    protected void addItemToList(int index, int id, String time, String name, String uriVideo, String uriImage,
+                                 int[] days, boolean detailedTimes, String allTimes, String alertSoundUri) {
+        Cursor cReminders = db.getRemindersByID(id);
+        String notes = cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_NOTES));
+
+        arrayList.add(index, new RemindersIt(id, time, name, uriVideo, uriImage, days, detailedTimes, allTimes,
+                kindGeneral, notes, alertSoundUri));
+    }
+
+    @Override
+    protected RecyclerAdapterGeneral getNewRecyclerAdapter() {
+        return new RemindersRA(context,arrayList,getActivity());
+    }
+
+    @Override
+    protected Intent getNewIntent() {
+        return new Intent(getActivity(), RemindersDa.class);
+    }
+}
+
+   /* private Context context;
+    List<RemindersIt> arrayList;
     RecyclerView lvHome;
-    MedicineRA adapter;
+    RemindersRA adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,20 +69,18 @@ public class FragmentMedicine {}/* extends Fragment {
         context = getActivity().getApplicationContext();
 
         TextView title = view.findViewById(R.id.tvExercises);
-        title.setText(getResources().getText(R.string.menu_item_2));
+        title.setText(getResources().getText(R.string.reminders));
 
         setArrayList();
 
-        adapter = new MedicineRA(context,arrayList,getActivity());
+        adapter = new RemindersRA(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
-
-        Resources resources = getResources();
 
         FloatingActionButton btAddAlert = view.findViewById(R.id.addAlert);
         btAddAlert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MedicineDa.class));
+                startActivity(new Intent(getActivity(), RemindersDa.class));
             }
         });
 
@@ -72,14 +91,14 @@ public class FragmentMedicine {}/* extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        bredesh.medico.Fragments.FragmentHome fragment = new bredesh.medico.Fragments.FragmentHome();
+        bredesh.medico.Fragments.ExerciseFragment fragment = new bredesh.medico.Fragments.ExerciseFragment();
         ft.replace(R.id.fragment_place, fragment);
         ft.commit();
     }
 
     private void setArrayList() {
         MedicoDB db = new MedicoDB(getActivity().getApplicationContext());
-        Cursor c = db.getAllAlertsByKind(MedicoDB.KIND.Medicine);
+        Cursor c = db.getAllAlertsByKind(MedicoDB.KIND.Reminders);
 
         arrayList = new ArrayList<>();
         int index;
@@ -96,8 +115,10 @@ public class FragmentMedicine {}/* extends Fragment {
             }
 
             String name = c.getString(c.getColumnIndex(MedicoDB.KEY_NAME));
-            String uriImage = c.getString(c.getColumnIndex(MedicoDB.URIIMAGE));
             String uriVideo = c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
+            String uriImage = c.getString(c.getColumnIndex(MedicoDB.URIIMAGE));
+            String alertSoundUri = c.getString(c.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI));
+
             int[] days = new int[7];
             days[0] = c.getInt(c.getColumnIndex(MedicoDB.SUNDAY));
             days[1] = c.getInt(c.getColumnIndex(MedicoDB.MONDAY));
@@ -107,15 +128,11 @@ public class FragmentMedicine {}/* extends Fragment {
             days[5] = c.getInt(c.getColumnIndex(MedicoDB.FRIDAY));
             days[6] = c.getInt(c.getColumnIndex(MedicoDB.SATURDAY));
 
-            Cursor cMedicine = db.getMedicineByID(id);
-            int amountTmp = cMedicine.getColumnIndex(MedicoDB.KEY_AMOUNT);
-            int amount =  cMedicine.getInt(amountTmp);
-            String type =    cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_TYPE));
-            String special = cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_SPECIAL));
-            String notes =   cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_NOTES));
+            Cursor cReminders = db.getRemindersByID(id);
+            String notes =   cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_NOTES));
 
-            arrayList.add(index, new MedicineIt(id, time, name, uriImage, days, detailedTimes, allTimes,
-                    MedicoDB.KIND.Medicine, type, special, notes, ""+ amount));
+            arrayList.add(index, new RemindersIt(id, time, name, uriVideo, uriImage, days, detailedTimes, allTimes,
+                    MedicoDB.KIND.Reminders, notes, alertSoundUri));
         }
         c.close();
     }
@@ -124,8 +141,7 @@ public class FragmentMedicine {}/* extends Fragment {
     public void onResume() {
         super.onResume();
         setArrayList();
-        adapter = new MedicineRA(context,arrayList,getActivity());
+        adapter = new RemindersRA(context,arrayList,getActivity());
         lvHome.setAdapter(adapter);
     }
-}
-*/
+}*/

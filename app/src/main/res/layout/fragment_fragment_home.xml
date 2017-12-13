@@ -5,9 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     android:layoutDirection="locale"
-    tools:context="bredesh.medico.Fragments.FragmentHome">
+    tools:context="bredesh.medico.Fragments.ExerciseFragment">
 
-    <LinearLayout
+   <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,13 +18,13 @@
             android:layout_height="70dp">
 
             <TextView
-                android:id="@+id/tvExercises"
+                android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/colorAppBar"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="@string/exercises"
+                android:text=""
                 android:textColor="@color/titleColor"
                 android:textSize="32sp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
@@ -50,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
+<!--
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/deleteAll"
@@ -62,6 +63,7 @@
         app:layout_anchor="@id/recycler_view"
         app:layout_anchorGravity="bottom|left" />
 
+-->
 
 
 </FrameLayout>

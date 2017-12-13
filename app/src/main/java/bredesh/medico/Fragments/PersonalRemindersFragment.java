@@ -25,7 +25,7 @@ import bredesh.medico.Fragments.ItemMediGo.RemindersIt;
 import bredesh.medico.Fragments.RecyclerAdapterMediGo.RemindersRA;
 import bredesh.medico.R;
 
-public class PersonalRemindersFragment extends Fragment {
+public class PersonalRemindersFragment {} /* extends Fragment {
     private Context context;
     List<RemindersIt> arrayList;
     RecyclerView lvHome;
@@ -116,3 +116,4 @@ public class PersonalRemindersFragment extends Fragment {
         lvHome.setAdapter(adapter);
     }
 }
+*/
