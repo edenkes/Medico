@@ -1,6 +1,5 @@
 package bredesh.medico.Notification;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -17,15 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.bumptech.glide.Glide;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Calendar;
 
-import bredesh.medico.Localization;
-import bredesh.medico.MainActivity;
 import bredesh.medico.DAL.MedicoDB;
+import bredesh.medico.Localization;
 import bredesh.medico.Menu.MainMenu;
 import bredesh.medico.R;
 import bredesh.medico.Utils.Utils;
@@ -33,11 +30,10 @@ import bredesh.medico.Utils.Utils;
 import static android.view.View.GONE;
 
 public class NotificationWindow extends AppCompatActivity {
-
     private Intent toMain;
     private MedicoDB db;
     private PartialVideoItem item= null;
-    private final int SNOOZE_TIME = 5;
+//    private final int SNOOZE_TIME = 5;
     String type, special, notes;
     int amount;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -55,6 +51,7 @@ public class NotificationWindow extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle("");
         actionBar.setLogo(R.mipmap.ic_medigo_logo_clock);
         actionBar.setDisplayUseLogoEnabled(true);

@@ -4,12 +4,7 @@ import android.net.Uri;
 
 import bredesh.medico.DAL.MedicoDB;
 
-/**
- * Created by Omri on 22/05/2017.
- */
-
 public class PartialVideoItem {
-
     public int id;
     public String name;
     public int repeats;
