@@ -79,8 +79,8 @@ public abstract class FragmentGeneral<T> extends Fragment{
             int id =                c.getInt(c.getColumnIndex(MedicoDB.KEY_ID));
             String time =           c.getString(c.getColumnIndex(MedicoDB.KEY_TIME));
             String name =           c.getString(c.getColumnIndex(MedicoDB.KEY_NAME));
-            String uriVideo =       c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
-            String uriImage =       c.getString(c.getColumnIndex(MedicoDB.URIIMAGE));
+            String uriVideo =       c.getString(c.getColumnIndex(MedicoDB.KEY_URIVIDEO));
+            String uriImage =       c.getString(c.getColumnIndex(MedicoDB.KEY_URIIMAGE));
             String alertSoundUri =  c.getString(c.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI));
 
             String[] times = time.split(Pattern.quote(getResources().getString(R.string.times_splitter)));

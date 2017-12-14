@@ -20,7 +20,7 @@ public class Exercise {
     public Exercise(Cursor c, MedicoDB db)
     {
         name = c.getString(c.getColumnIndex(MedicoDB.KEY_NAME));
-        videoUri = c.getString(c.getColumnIndex(MedicoDB.URIVIDEO));
+        videoUri = c.getString(c.getColumnIndex(MedicoDB.KEY_URIVIDEO));
         daysToPerform = new boolean[7];
         daysToPerform[0] = c.getInt(c.getColumnIndex(MedicoDB.SUNDAY)) != 0;
         daysToPerform[1] = c.getInt(c.getColumnIndex(MedicoDB.MONDAY)) != 0;
