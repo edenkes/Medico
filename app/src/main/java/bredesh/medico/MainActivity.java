@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.bottom_bar.BottomBar;
 import com.example.bottom_bar.OnTabReselectListener;
@@ -25,9 +24,6 @@ import bredesh.medico.Fragments.MedicineFragment;
 import bredesh.medico.Fragments.PersonalProfileFragment;
 import bredesh.medico.Fragments.RemindersFragment;
 import bredesh.medico.Menu.MainMenu;
-
-import static android.support.design.R.id.container;
-
 
 public class MainActivity extends AppCompatActivity {
     private String language = "default";

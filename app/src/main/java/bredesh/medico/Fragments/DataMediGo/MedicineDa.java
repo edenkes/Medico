@@ -39,10 +39,35 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.activity_medicine_data);
 
-        setUpOnCrate();
+//        setUpOnCrate();
+        setFindView();
 
+        ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource (this, R.array.drugs_dosage, R.layout.spinner_item );
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spType.setAdapter(adapterType);
+
+        ArrayAdapter<CharSequence> adapterSpecial = ArrayAdapter.createFromResource(this, R.array.drugs_dosage_notes, R.layout.spinner_item);
+        adapterSpecial.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spSpecial.setAdapter(adapterSpecial);
+
+        etNotes.setMovementMethod(new ScrollingMovementMethod());
+        etNotes.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                etNotes.getParent().requestDisallowInterceptTouchEvent(true);
+
+                return false;
+            }
+        });
+
+        setOnCreate();
     }
 
+/*
     protected void setUpOnCrate(){
         Toolbar toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -60,9 +85,9 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
         resources = getResources();
         btConfirm = findViewById(R.id.btConfirm);
         btDelete = findViewById(R.id.btDelete);
-        etDataName = findViewById(R.id.etExerciseName);
-        lblSelectedDays = findViewById(R.id.lblSelectedDays);
-        lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
+        tvDataName = findViewById(R.id.etExerciseName);
+        tvSelectedDays = findViewById(R.id.lblSelectedDays);
+        tvSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
         btPlayImage = findViewById(R.id.btPlayImage);
 
@@ -72,7 +97,7 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
         alertPlanButtons[3] = findViewById(R.id.bt4times);
         alertPlanButtons[4] = findViewById(R.id.bt5times);
         btAddAlert = findViewById(R.id.btAddAlert);
-        lbAddMultiAlert = findViewById(R.id.lbAddMultiAlert);
+        tvAddMultiAlert = findViewById(R.id.lbAddMultiAlert);
 
         etAmount = findViewById(R.id.amount_number);
 
@@ -156,7 +181,7 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
         timeViews.setAdapter(timeAdapter);
         setDialog();
 
-        lblSelectedDays.setOnClickListener(clickHandler);
+        tvSelectedDays.setOnClickListener(clickHandler);
 
         for (int i=0; i< 5; i++)
             alertPlanButtons[i].setOnClickListener(setAlertPlan);
@@ -175,7 +200,9 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
                 if (imageUri != null) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(imageUri,"image*//*");
+                        intent.setDataAndType(imageUri,"image*//*
+*/
+/*");
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     } catch (RuntimeException e) {
@@ -218,49 +245,74 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
             }
         });
     }
+*/
 
     @Override
     protected void setExistingData(Intent intent) {
-        oldDataName = intent.getStringExtra("medicine_name");
-        etDataName.setText(oldDataName);
+        oldDataName = intent.getStringExtra("dataName");
+        oldTimes = intent.getStringExtra("dataTime");
+        oldDays = intent.getIntArrayExtra("dataDays");
+        oldUriStringVideo = intent.getStringExtra("dataUriVideo");
+        oldUriStringImage = intent.getStringExtra("dataUriImage");
 
         String type = intent.getStringExtra("medicine_type");
+        String special = intent.getStringExtra("medicine_special");
+        oldNotes = intent.getStringExtra("medicine_notes");
+        oldAmount = intent.getStringExtra("medicine_amount");
+
+        etDataName.setText(oldDataName);
         oldDosageType = type;
         int index;
         index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage, type);
         spType.setSelection(index);
 
-        String special = intent.getStringExtra("medicine_special");
         oldSpecialNotes = special;
         index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage_notes, special);
         spSpecial.setSelection(index);
 
-        oldNotes = intent.getStringExtra("medicine_notes");
         etNotes.setText(oldNotes);
-        oldAmount = intent.getStringExtra("medicine_amount");
         etAmount.setText(oldAmount);
 
-        String times = intent.getStringExtra("time");
-        oldTimes = times;
+//        oldTimes = times;
         String[] timeAL = null;
         arrayList = new ArrayList<>();
-        if (times != null && !times.contentEquals("")) {
-            timeAL = times.split(resources.getString(R.string.times_splitter));
+        if (oldTimes != null && !oldTimes.contentEquals("")) {
+            timeAL = oldTimes.split(resources.getString(R.string.times_splitter));
             Collections.addAll(arrayList, timeAL);
         }
-        int[] days = intent.getIntArrayExtra("days");
-        oldDays = days;
+//        oldDays = days;
         for (int i=0; i< 7; i++)
-            selectedDays[i] = days[i] != 0;
+            selectedDays[i] = oldDays[i] != 0;
         updateSelectedDays();
         this.setAddAlertsButtons(timeAL == null || timeAL.length == 0);
 
-        oldUriStringImage = intent.getStringExtra("uriImage");
     }
 
     @Override
     protected String getDeletedMessage() {
         return  getResources().getString(R.string.medicine_deleted);
+    }
+
+    @Override
+    protected void setNewData() {
+        arrayList = new ArrayList<>();
+        for(int i=0; i<selectedDays.length; i++)
+            selectedDays[i] = true;
+        oldDosageType = Integer.toString (R.string.medicine_dosage_type_tab);
+        oldSpecialNotes = Integer.toString(R.string.medicine_usage_notes_none);
+        oldDays = new int[7];
+        for (int i=0 ;i < 7; i++)
+            oldDays[i] = 1;
+    }
+
+    @Override
+    protected CharSequence getDeletedMessageConfirm() {
+        return resources.getString(R.string.delete_medicine_confirm);
+    }
+
+    @Override
+    protected TimeAdapterRecyclerMedGo getNewTimeAdapter(Button[] buttons) {
+        return new TimeAdapterRecyclerMedGo(MedicineDa.this,arrayList, buttons, this);
     }
 
     @Override

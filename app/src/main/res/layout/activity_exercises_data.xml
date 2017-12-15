@@ -22,7 +22,7 @@
         android:focusedByDefault="true">
 
         <LinearLayout
-            android:id="@+id/vExerciseRoot"
+            android:id="@+id/llData"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -33,14 +33,14 @@
                 android:layout_marginStart="5sp">
 
                 <TextView
-                    android:id="@+id/lbExerciseName"
+                    android:id="@+id/tvDataName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_weight="1"
                     android:focusable="false"
                     android:gravity="center_vertical"
-                    android:labelFor="@+id/etExerciseName"
+                    android:labelFor="@+id/tvDataName"
                     android:maxLines="1"
                     android:paddingStart="5sp"
                     android:singleLine="true"
@@ -49,14 +49,14 @@
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/etExerciseName"
+                    android:id="@+id/etDataName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5sp"
                     android:layout_marginRight="5sp"
-                    android:layout_toEndOf="@+id/lbExerciseName"
+                    android:layout_toEndOf="@+id/tvDataName"
                     android:cursorVisible="true"
                     android:maxLength="16"
                     android:maxLines="1"
@@ -90,7 +90,7 @@
                     android:singleLine="true" />
 
                 <Spinner
-                    android:id="@+id/spinner_repetition_type"
+                    android:id="@+id/spRepetitionType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -136,11 +136,8 @@
                     android:layout_marginEnd="10sp"
                     android:layout_marginStart="10sp"
                     android:background="@drawable/button_round"
-                    android:scaleType="center"
-                    app:srcCompat="@drawable/ic_music_note_black_24dp" />
-
+                    android:scaleType="center" app:srcCompat="@drawable/ic_music_note_black_24dp" />
             </LinearLayout>
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -148,7 +145,7 @@
                 android:layout_marginStart="10sp">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/tvDays"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -159,12 +156,12 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/lblSelectedDays"
+                    android:id="@+id/tvSelectedDays"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="10sp"
                     android:layout_marginStart="10sp"
-                    android:layout_toEndOf="@+id/textView"
+                    android:layout_toEndOf="@+id/tvDays"
                     android:gravity="center_vertical"
                     android:maxLines="2"
                     android:scrollbars="vertical"
@@ -172,18 +169,15 @@
                     android:textAlignment="viewStart"
                     android:textColor="@color/labelLightColor"
                     android:textSize="18sp" />
-
             </RelativeLayout>
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10sp">
 
-
                 <TextView
-                    android:id="@+id/lbAddMultiAlert"
+                    android:id="@+id/tvAddMultiAlert"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -194,10 +188,10 @@
                     android:textSize="20sp" />
 
                 <LinearLayout
-                    android:id="@+id/laAddMultiAlert"
+                    android:id="@+id/llAddMultiAlert"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/lbAddMultiAlert"
+                    android:layout_below="@+id/tvAddMultiAlert"
                     android:orientation="horizontal"
                     android:weightSum="1">
 
@@ -273,11 +267,10 @@
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/time_views"
+                    android:id="@+id/timeViews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/laAddMultiAlert" />
-
+                    android:layout_below="@+id/llAddMultiAlert" />
 
             </RelativeLayout>
         </LinearLayout>

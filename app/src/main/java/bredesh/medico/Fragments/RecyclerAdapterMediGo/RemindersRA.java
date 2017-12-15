@@ -25,18 +25,19 @@ public class RemindersRA extends RecyclerAdapterGeneral<RemindersIt> {
     @Override
     protected Intent sendIntetInformation(ItemGeneral item) {
         Intent intent = new Intent(context, RemindersDa.class);
-        intent.putExtra("remindersId", item.id);
-        intent.putExtra("time", item.allTimes);
-        intent.putExtra("reminders_name", item.name);
-        intent.putExtra("days", item.days);
-        intent.putExtra("reminders_notes", ((RemindersIt) item).notes);
-        Uri uriImage = item.uriImage;
-        if (uriImage!=null)
-            intent.putExtra("uriImage", uriImage.toString());
-        Uri uriVideo = item.uriVideo;
+        intent.putExtra("dataId", item.getId());
+        intent.putExtra("dataName", item.getName());
+        intent.putExtra("dataTime", item.getAllTimes());
+        intent.putExtra("dataDays", item.getDays());
+        Uri uriVideo = item.getUriVideo();
         if (uriVideo!=null)
-            intent.putExtra("uriVideo", uriVideo.toString());
-        intent.putExtra("AlertSoundUri", item.getAlertSoundUri());
+            intent.putExtra("dataUriVideo", uriVideo.toString());
+        Uri uriImage = item.getUriImage();
+        if (uriImage!=null)
+            intent.putExtra("dataUriImage", uriImage.toString());
+        intent.putExtra("dataAlertSoundUri", item.getAlertSoundUri());
+
+        intent.putExtra("reminders_notes", ((RemindersIt) item).notes);
         return intent;
     }
 

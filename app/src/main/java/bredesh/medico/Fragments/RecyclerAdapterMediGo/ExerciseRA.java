@@ -27,16 +27,20 @@ public class ExerciseRA extends RecyclerAdapterGeneral<ExerciseIt> {
     @Override
     protected Intent sendIntetInformation(ItemGeneral item) {
         Intent intent = new Intent(context, ExerciseDa.class);
-        intent.putExtra("exerciseId", item.getId());
-        intent.putExtra("repeats", ((ExerciseIt) item).getNoOfRepetitions());
-        intent.putExtra("repetition_type", ((ExerciseIt) item).getRepetitionType());
-        intent.putExtra("time", item.getAllTimes());
-        intent.putExtra("exercise_name", item.getName());
-        intent.putExtra("days", item.getDays());
+        intent.putExtra("dataId", item.getId());
+        intent.putExtra("dataName", item.getName());
+        intent.putExtra("dataTime", item.getAllTimes());
+        intent.putExtra("dataDays", item.getDays());
         Uri uriVideo = item.getUriVideo();
         if (uriVideo!=null)
-            intent.putExtra("uriVideo", uriVideo.toString());
-        intent.putExtra("AlertSoundUri", item.getAlertSoundUri());
+            intent.putExtra("dataUriVideo", uriVideo.toString());
+        Uri uriImage = item.getUriImage();
+        if (uriImage!=null)
+            intent.putExtra("dataUriImage", uriImage.toString());
+        intent.putExtra("dataAlertSoundUri", item.getAlertSoundUri());
+
+        intent.putExtra("dataRepeats", ((ExerciseIt) item).getNoOfRepetitions());
+        intent.putExtra("dataRepetitionType", ((ExerciseIt) item).getRepetitionType());
         return intent;
     }
 

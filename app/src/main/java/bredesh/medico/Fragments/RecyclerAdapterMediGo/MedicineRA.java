@@ -26,18 +26,22 @@ public class MedicineRA extends RecyclerAdapterGeneral<MedicineIt> {
 
     @Override
     protected Intent sendIntetInformation(ItemGeneral item) {Intent intent = new Intent(context, MedicineDa.class);
-        intent.putExtra("medicineId", item.id);
-        intent.putExtra("medicine_amount", ((MedicineIt) item).amount);
-        intent.putExtra("time", item.allTimes);
-        intent.putExtra("medicine_name", item.name);
-        intent.putExtra("days", item.days);
+        intent.putExtra("dataId", item.getId());
+        intent.putExtra("dataName", item.getName());
+        intent.putExtra("dataTime", item.getAllTimes());
+        intent.putExtra("dataDays", item.getDays());
+        Uri uriVideo = item.getUriVideo();
+        if (uriVideo!=null)
+            intent.putExtra("dataUriVideo", uriVideo.toString());
+        Uri uriImage = item.getUriImage();
+        if (uriImage!=null)
+            intent.putExtra("dataUriImage", uriImage.toString());
+
         intent.putExtra("medicine_type", ((MedicineIt) item).type);
         intent.putExtra("medicine_special", ((MedicineIt) item).special);
         intent.putExtra("medicine_notes", ((MedicineIt) item).notes);
+        intent.putExtra("medicine_amount", ((MedicineIt) item).amount);
 
-        Uri uriImage = item.uriImage;
-        if (uriImage!=null)
-            intent.putExtra("uriImage", item.uriImage.toString());
         return intent;
     }
 

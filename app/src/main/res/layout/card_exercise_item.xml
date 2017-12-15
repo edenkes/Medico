@@ -111,7 +111,7 @@
 
 
         <TextView
-            android:id="@+id/tvItemName"
+            android:id="@+id/tvDataName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -124,7 +124,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvItemTime"
+            android:id="@+id/tvDataTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -137,7 +137,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/tvItemTimeMulti"
+            android:id="@+id/tvDataTimeMulti"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"

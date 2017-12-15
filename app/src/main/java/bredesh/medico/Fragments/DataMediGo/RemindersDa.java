@@ -1,23 +1,13 @@
 package bredesh.medico.Fragments.DataMediGo;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
@@ -37,7 +27,23 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.activity_reminders_data);
 
-        setUpOnCrate();
+        setFindView();
+
+        etNotes.setMovementMethod(new ScrollingMovementMethod());
+        etNotes.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                etNotes.getParent().requestDisallowInterceptTouchEvent(true);
+
+                return false;
+            }
+        });
+
+        setOnCreate();
+
+/*        setUpOnCrate();
 
         RecyclerView timeViews = findViewById(R.id.time_views);
         timeViews.setLayoutManager(new LinearLayoutManager(this));
@@ -46,9 +52,10 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
 
         timeAdapter = new TimeAdapterRecyclerMedGo(RemindersDa.this,arrayList, buttons, this);
         timeViews.setAdapter(timeAdapter);
-        setDialog();
+        setDialog();*/
     }
 
+/*
     protected void setUpOnCrate(){
         Toolbar toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -64,8 +71,8 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
         btConfirm = findViewById(R.id.btConfirm);
         btDelete = findViewById(R.id.btDelete);
         etDataName = findViewById(R.id.etDataName);
-        lblSelectedDays = findViewById(R.id.lblSelectedDays);
-        lblSelectedDays.setMovementMethod(new ScrollingMovementMethod());
+        tvSelectedDays = findViewById(R.id.lblSelectedDays);
+        tvSelectedDays.setMovementMethod(new ScrollingMovementMethod());
 
         btPlayImage = findViewById(R.id.btPlayImage);
         btPlayVideo = findViewById(R.id.btPlayVideo);
@@ -78,7 +85,7 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
         alertPlanButtons[3] = findViewById(R.id.bt4times);
         alertPlanButtons[4] = findViewById(R.id.bt5times);
         btAddAlert = findViewById(R.id.btAddAlert);
-        lbAddMultiAlert = findViewById(R.id.lbAddMultiAlert);
+        tvAddMultiAlert = findViewById(R.id.lbAddMultiAlert);
 
         ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource (this, R.array.drugs_dosage, R.layout.spinner_item );
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -154,7 +161,7 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
                 oldDays[i] = 1;
         }
 
-        lblSelectedDays.setOnClickListener(clickHandler);
+        tvSelectedDays.setOnClickListener(clickHandler);
 
         for (int i=0; i< 5; i++)
             alertPlanButtons[i].setOnClickListener(setAlertPlan);
@@ -173,7 +180,9 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
                 if (imageUri != null) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(imageUri,"image*//*");
+                        intent.setDataAndType(imageUri,"image*//*
+*/
+/*");
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     } catch (RuntimeException e) {
@@ -264,35 +273,55 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
             }
         });
     }
+*/
 
     protected void setExistingData(Intent intent){
-        oldDataName = intent.getStringExtra("reminders_name");
-        etDataName.setText(oldDataName);
-
+        oldDataName = intent.getStringExtra("dataName");
+        oldTimes = intent.getStringExtra("dataTime");
+        oldDays = intent.getIntArrayExtra("dataDays");
+        oldUriStringVideo = intent.getStringExtra("dataUriVideo");
+        oldUriStringImage = intent.getStringExtra("dataUriImage");
         oldNotes = intent.getStringExtra("reminders_notes");
-        etNotes.setText(oldNotes);
 
-        String times = intent.getStringExtra("time");
-        oldTimes = times;
+        etDataName.setText(oldDataName);
+        String times = oldTimes;
         String[] timeAL = null;
         arrayList = new ArrayList<>();
         if (times != null && !times.contentEquals("")) {
             timeAL = times.split(resources.getString(R.string.times_splitter));
             Collections.addAll(arrayList, timeAL);
         }
-        int[] days = intent.getIntArrayExtra("days");
-        oldDays = days;
         for (int i=0; i< 7; i++)
-            selectedDays[i] = days[i] != 0;
+            selectedDays[i] = oldDays[i] != 0;
         updateSelectedDays();
+        etNotes.setText(oldNotes);
         this.setAddAlertsButtons(timeAL == null || timeAL.length == 0);
-        oldUriStringVideo = intent.getStringExtra("uriVideo");
-        oldUriStringImage = intent.getStringExtra("uriImage");
+
     }
 
     @Override
     protected String getDeletedMessage() {
         return  getResources().getString(R.string.reminders_deleted);
+    }
+
+    @Override
+    protected void setNewData() {
+        arrayList = new ArrayList<>();
+        for(int i=0; i<selectedDays.length; i++)
+            selectedDays[i] = true;
+        oldDays = new int[7];
+        for (int i=0 ;i < 7; i++)
+            oldDays[i] = 1;
+    }
+
+    @Override
+    protected CharSequence getDeletedMessageConfirm() {
+        return resources.getString(R.string.delete_reminders_confirm);
+    }
+
+    @Override
+    protected TimeAdapterRecyclerMedGo getNewTimeAdapter(Button[] buttons) {
+        return new TimeAdapterRecyclerMedGo(RemindersDa.this,arrayList, buttons, this);
     }
 
     protected void confirm(boolean askBeforeSave) {

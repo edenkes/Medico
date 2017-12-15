@@ -2,6 +2,7 @@ package bredesh.medico.Fragments.DataMediGo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -11,8 +12,14 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -58,14 +65,16 @@ public abstract class DataGeneral extends AppCompatActivity {
 
     protected MedicoDB db;
     protected View mainView;
+    protected Toolbar app_bar;
+    protected RecyclerView timeViews;
     protected final boolean[] selectedDays = new boolean[7], newSelectedDays = new boolean[7];
     protected final Button[] alertPlanButtons = new Button[5];
     protected final int Max_Size = 16, NewData = -6;
 
     protected EditText etDataName, etNotes, etAmount, etRepeats;
-    protected TextView lblSelectedDays, lbAddMultiAlert;
+    protected TextView tvSelectedDays, tvAddMultiAlert;
     protected Button btDelete, btConfirm, btAddAlert;
-    protected ImageButton btPlayImage, btPlayVideo, btChooseSound;
+    protected ImageButton btPlayImage, btPlayVideo, btChooseSound, btShootVideo, btShootImage;
     protected Spinner spType, spSpecial, spRepetitionType;
 
     protected Resources resources;
@@ -102,6 +111,219 @@ public abstract class DataGeneral extends AppCompatActivity {
     protected abstract void setExistingData(Intent intent);
 
     protected abstract String getDeletedMessage();
+
+    protected void setFindView() {
+        app_bar             = findViewById(R.id.app_bar);
+        mainView            = findViewById(R.id.llData);
+        timeViews           = findViewById(R.id.timeViews);
+
+        etDataName          = findViewById(R.id.etDataName);
+        tvSelectedDays      = findViewById(R.id.tvSelectedDays);
+        tvAddMultiAlert     = findViewById(R.id.tvAddMultiAlert);
+
+        btShootVideo        = findViewById(R.id.btShootVideo);
+        btShootImage        = findViewById(R.id.btShootImage);
+        btPlayVideo         = findViewById(R.id.btPlayVideo);
+        btPlayImage         = findViewById(R.id.btPlayImage);
+        btChooseSound       = findViewById(R.id.btChooseSound);
+        btAddAlert          = findViewById(R.id.btAddAlert);
+        btConfirm           = findViewById(R.id.btConfirm);
+        btDelete            = findViewById(R.id.btDelete);
+
+        etRepeats           = findViewById(R.id.etRepeats);
+        etAmount            = findViewById(R.id.amount_number);
+        etNotes             = findViewById(R.id.et_notes);
+        spSpecial           = findViewById(R.id.spinner_special);
+        spRepetitionType    = findViewById(R.id.spRepetitionType);
+        spType              = findViewById(R.id.spinner_type);
+
+        alertPlanButtons[0] = findViewById(R.id.bt1time);
+        alertPlanButtons[1] = findViewById(R.id.bt2times);
+        alertPlanButtons[2] = findViewById(R.id.bt3times);
+        alertPlanButtons[3] = findViewById(R.id.bt4times);
+        alertPlanButtons[4] = findViewById(R.id.bt5times);
+    }
+
+    protected void setOnCreate() {
+        setSupportActionBar(app_bar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("");
+            actionBar.setLogo(R.mipmap.ic_medigo_logo_clock);
+            actionBar.setDisplayUseLogoEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+        }
+
+        db = new MedicoDB(getApplicationContext());
+        Intent intent = getIntent();
+        resources = getResources();
+        this.dataId = intent.getIntExtra("dataId", NewData);
+        oldUriStringVideo       = uriStringVideo        = intent.getStringExtra("dataUriVideo");
+        oldUriStringImage       = uriStringImage        = intent.getStringExtra("dataUriImage");
+        oldAlertSoundUriString  = alertSoundUriString   = intent.getStringExtra("dataAlertSoundUri");
+
+        mainView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(mainView);
+                return false;
+            }
+        });
+        timeViews.setLayoutManager(new LinearLayoutManager(this));
+        InputMethodManager imm = (InputMethodManager) getSystemService(
+                Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
+        //this.setAutoCloseKeyboard(etRepeats);
+        tvSelectedDays.setMovementMethod(new ScrollingMovementMethod());
+
+        askBeforeSave = new AlertDialog.Builder(this)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onConfirm)
+                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), onCancel)
+                .setMessage(resources.getString(R.string.save_changes)).create();
+
+        final AlertDialog reShootConfirm = new AlertDialog.Builder(this)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onReshootConfirmVideo)
+                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
+                .setMessage(resources.getString(R.string.reshootVideo)).create();
+
+        if (this.dataId != NewData) {setExistingData(intent);}
+        else setNewData();
+
+        Button [] buttons = new Button[] {btConfirm, btDelete};
+
+        timeAdapter = getNewTimeAdapter(buttons);
+//        timeAdapter = new TimeAdapterRecyclerMedGo(ExerciseDa.this,arrayList, buttons, this);
+        timeViews.setAdapter(timeAdapter);
+        setDialog();
+
+        tvSelectedDays.setOnClickListener(clickHandler);
+
+        for (int i=0; i< 5; i++)
+            alertPlanButtons[i].setOnClickListener(setAlertPlan);
+
+        if(btShootVideo != null) {
+            btShootVideo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (uriStringVideo != null)
+                        reShootConfirm.show();
+                    else
+                        ShootVideo();
+                }
+            });
+        }
+
+        if (uriStringVideo == null && btPlayVideo != null)
+            btPlayVideo.setVisibility(View.INVISIBLE);
+        if (btPlayVideo != null) {
+            btPlayVideo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = getApplicationContext();
+                    Uri videoUri = Uri.parse(uriStringVideo);
+                    if (videoUri != null) {
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, videoUri);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                        } catch (RuntimeException e) {
+                            Toast.makeText(context.getApplicationContext(),
+                                    resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+                        }
+                    } else Toast.makeText(context.getApplicationContext(),
+                            resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        if (btShootImage != null) {
+            btShootImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (uriStringImage != null)
+                        reShootConfirm.show();
+                    else
+                        ShootImage();
+                }
+            });
+        }
+
+        if (uriStringImage == null && btPlayImage != null)
+            btPlayImage.setVisibility(View.INVISIBLE);
+        else if(btPlayImage != null){
+            Glide.with(this).load(uriStringImage).into(btPlayImage);
+            btPlayImage.invalidate();
+        }
+
+        if(btPlayImage != null) {
+            btPlayImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = getApplicationContext();
+                    Uri imageUri = Uri.parse(uriStringImage);
+                    if (imageUri != null) {
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setDataAndType(imageUri, "image//");
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                        } catch (RuntimeException e) {
+                            Toast.makeText(context.getApplicationContext(),
+                                    resources.getString(R.string.media_not_found_image), Toast.LENGTH_SHORT).show();
+                        }
+                    } else Toast.makeText(context.getApplicationContext(),
+                            resources.getString(R.string.media_not_found_image), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        if (btChooseSound != null)
+            btChooseSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChooseSound();
+            }
+        });
+
+        btConfirm.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                confirm();
+            }
+        });
+
+        final AlertDialog deleteDialog = new AlertDialog.Builder(this)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onDelete)
+                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
+                .setMessage(getDeletedMessageConfirm()).create();
+//                .setMessage(resources.getString(R.string.delete_exercise_confirm)).create();
+
+        btDelete.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                deleteDialog.show();
+            }
+        });
+
+        // updating the list + adding another alert
+        btAddAlert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(v);
+                arrayList.add(makeTimeString());
+                timeAdapter.notifyItemInserted(arrayList.size() - 1);
+            }
+        });
+
+    }
+
+    protected abstract void setNewData();
+
+    protected abstract CharSequence getDeletedMessageConfirm();
+
+    protected abstract TimeAdapterRecyclerMedGo getNewTimeAdapter(Button[] buttons);
 
     protected DialogInterface.OnClickListener onReshootConfirmStill = new DialogInterface.OnClickListener() {
         @Override
@@ -141,7 +363,7 @@ public abstract class DataGeneral extends AppCompatActivity {
         int visibleAlertPlan = alertPlan? View.VISIBLE : View.GONE;
         int invisibleAlertPlan = alertPlan? View.GONE : View.VISIBLE;
         btAddAlert.setVisibility(invisibleAlertPlan);
-        lbAddMultiAlert.setVisibility(visibleAlertPlan);
+        tvAddMultiAlert.setVisibility(visibleAlertPlan);
         for (int i=0; i< 5; i++)
             alertPlanButtons[i].setVisibility(visibleAlertPlan);
     }
@@ -268,7 +490,7 @@ public abstract class DataGeneral extends AppCompatActivity {
         }
         if (!anyDayAbsent)
             result = rscs.getString(R.string.all_days);
-        lblSelectedDays.setText(result);
+        tvSelectedDays.setText(result);
     }
 
     private void showButtons(boolean show)

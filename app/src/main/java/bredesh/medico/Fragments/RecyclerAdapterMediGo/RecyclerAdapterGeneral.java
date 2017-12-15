@@ -180,9 +180,9 @@ public abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<Rec
         protected CustomViewHolder(View convertView) {
             super(convertView);
             this.convertView = convertView;
-            this.tvItemName = convertView.findViewById(R.id.tvItemName);
-            this.tvItemTime = convertView.findViewById(R.id.tvItemTime);
-            this.tvItemTimeMulti = convertView.findViewById(R.id.tvItemTimeMulti);
+            this.tvItemName = convertView.findViewById(R.id.tvDataName);
+            this.tvItemTime = convertView.findViewById(R.id.tvDataTime);
+            this.tvItemTimeMulti = convertView.findViewById(R.id.tvDataTimeMulti);
 
             this.tvDosageType = convertView.findViewById(R.id.tvDosageType);
             this.tvNumberOfRepeats = convertView.findViewById(R.id.tvNumberOfRepeats);
