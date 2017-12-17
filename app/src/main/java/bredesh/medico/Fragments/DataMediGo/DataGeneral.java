@@ -182,8 +182,13 @@ public abstract class DataGeneral extends AppCompatActivity {
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), onCancel)
                 .setMessage(resources.getString(R.string.save_changes)).create();
 
-        final AlertDialog reShootConfirm = new AlertDialog.Builder(this)
+        final AlertDialog reShootConfirmVideo = new AlertDialog.Builder(this)
                 .setPositiveButton(resources.getString(R.string.alert_dialog_set), onReshootConfirmVideo)
+                .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
+                .setMessage(resources.getString(R.string.reshootVideo)).create();
+
+        final AlertDialog reShootConfirmImage = new AlertDialog.Builder(this)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_set), onReshootConfirmImage)
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
                 .setMessage(resources.getString(R.string.reshootVideo)).create();
 
@@ -207,7 +212,7 @@ public abstract class DataGeneral extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (uriStringVideo != null)
-                        reShootConfirm.show();
+                        reShootConfirmVideo.show();
                     else
                         ShootVideo();
                 }
@@ -242,7 +247,7 @@ public abstract class DataGeneral extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (uriStringImage != null)
-                        reShootConfirm.show();
+                        reShootConfirmImage.show();
                     else
                         ShootImage();
                 }
@@ -316,7 +321,6 @@ public abstract class DataGeneral extends AppCompatActivity {
                 timeAdapter.notifyItemInserted(arrayList.size() - 1);
             }
         });
-
     }
 
     protected abstract void setNewData();
@@ -325,7 +329,7 @@ public abstract class DataGeneral extends AppCompatActivity {
 
     protected abstract TimeAdapterRecyclerMedGo getNewTimeAdapter(Button[] buttons);
 
-    protected DialogInterface.OnClickListener onReshootConfirmStill = new DialogInterface.OnClickListener() {
+    protected DialogInterface.OnClickListener onReshootConfirmImage = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int id) {
             ShootImage();
@@ -377,7 +381,6 @@ public abstract class DataGeneral extends AppCompatActivity {
                 {
                     arrayList.addAll(Arrays.asList(AlertPlans[i]).subList(0, i + 1));
                     timeAdapter.notifyItemInserted(arrayList.size() - 1);
-
                 }
             }
             setAddAlertsButtons(false);
@@ -391,7 +394,6 @@ public abstract class DataGeneral extends AppCompatActivity {
             System.arraycopy(selectedDays, 0, newSelectedDays, 0, 7);
             dialogDays.show();
             showButtons(false);
-
         }
     };
 
@@ -410,7 +412,6 @@ public abstract class DataGeneral extends AppCompatActivity {
         uriStringImage = Uri.fromFile(image).toString();
         return image;
     }
-
 
     protected void ShootImage() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -553,7 +554,6 @@ public abstract class DataGeneral extends AppCompatActivity {
                         showButtons(true);
                     }
                 }).create();
-
     }
 
     /*
