@@ -152,4 +152,7 @@
     <string name="AttachSuccessVideo">הסרט נקלט בהצלחה</string>
     <string name="AttachSuccessImage">התמונה נקלטה בהצלחה</string>
     <string name="AttachSuccessSound">הצלצול נקלט בהצלחה</string>
+    <string name="medicine">תרופות</string>
+    <string name="medicine_deleted">התרופה נמחקה</string>
+    <string name="reminders_deleted">התזכורת נמחקה</string>
 </resources>

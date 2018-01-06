@@ -55,7 +55,7 @@
     <string name="delete_exercise_confirm">למחוק את התרגיל?</string>
     <string name="exercise_deleted">התרגיל נמחק</string>
     <string name="medicine_deleted">התרופה נמחקה</string>
-    <string name="reminders_deleted">ההתראה נמחקה</string>
+    <string name="reminders_deleted">Reminder deleted</string>
     <string name="alert_text">Time to perform %1$s. <b>%2$s</b> %3$s.</string>
     <string name="alert_page_text" formatted="false">הגיע הזמן לבצע חזרות!</string>
     <string name="media_not_found">הסרט לא נמצא.</string>
@@ -85,7 +85,7 @@
     <string name="menu_item_3">בדיקות תקופתיות</string>
     <string name="menu_item_4">תזכורות אישיות</string>
     <string name="reminders">תזכורות</string>
-    <string name="medicine">תרופות</string>
+    <string name="medicine">Drugs</string>
     <string name="exercises">תרגילים</string>
 
     <string name="exercise_name_label">Exercise name:</string>
@@ -129,7 +129,7 @@
 
     //medicine - TODO: need to translate
     <string name="medicine_name_label">שם תרופה:</string>
-    <string name="reminders_name_label">שם תזכורת:</string>
+    <string name="reminders_name_label">Reminder Name:</string>
     <string name="medicine_amount">כמות:</string>
     <string name="medicine_type">סוג</string>
     <string name="medicine_special">הוראות מיוחדות:</string>

@@ -149,4 +149,8 @@
     <string name="AttachSuccessVideo">وكان في استقبال الفيلم بنجاح</string>
     <string name="AttachSuccessImage">وكان في استقبال الفيلم بنجاح</string>
     <string name="AttachSuccessSound">وكان في استقبال الفيلم بنجاح</string>
+    <string name="medicine">أدوية</string>
+    <string name="medicine_deleted">התרופה נמחקה</string>
+    <string name="reminders_deleted">התזכורת נמחקה</string>
+    <string name="reminders_name_label">שם תזכורת:</string>
 </resources>

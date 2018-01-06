@@ -152,4 +152,8 @@
     <string name="AttachSuccessVideo">Фильм успешно принят</string>
     <string name="AttachSuccessImage">Фильм успешно принят</string>
     <string name="AttachSuccessSound">Фильм успешно принят</string>
+    <string name="medicine">Лекарства</string>
+    <string name="medicine_deleted">Drug deleted</string>
+    <string name="reminders_deleted">Reminder deleted</string>
+    <string name="reminders_name_label">Reminder Name:</string>
 </resources>

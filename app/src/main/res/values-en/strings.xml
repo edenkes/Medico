@@ -148,4 +148,7 @@
     <string name="AttachSuccessVideo">Succesfully attached</string>
     <string name="AttachSuccessImage">Succesfully attached</string>
     <string name="AttachSuccessSound">Succesfully attached</string>
+    <string name="medicine">Drugs</string>
+    <string name="medicine_deleted">Drug deleted</string>
+    <string name="reminders_deleted">Reminder deleted</string>
 </resources>
