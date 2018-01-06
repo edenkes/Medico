@@ -85,8 +85,9 @@ public abstract class DataGeneral extends AppCompatActivity {
 
     protected String uriStringVideo, uriStringImage, alertSoundUriString;
     protected String oldDataName = "", oldNotes = "", oldTimes = "", oldAlertSoundUriString = null, oldDosageType = "",
-            oldSpecialNotes = "", oldAmount = "1", oldRepetitionType = "", oldUriStringVideo = null, oldUriStringImage = null;
+            oldSpecialNotes = "", oldAmount = "1", oldUriStringVideo = null, oldUriStringImage = null;
     protected int[] oldDays = new int[7];
+    protected int oldRepetitionType = 0;
     protected int dataId, oldRepeats = 1;
 
     private final String[][] AlertPlans = {

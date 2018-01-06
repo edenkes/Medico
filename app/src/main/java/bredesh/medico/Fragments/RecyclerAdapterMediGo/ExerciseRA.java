@@ -9,6 +9,7 @@ import android.view.View;
 
 import java.util.List;
 
+import bredesh.medico.DAL.ValueConstants;
 import bredesh.medico.Fragments.DataMediGo.ExerciseDa;
 import bredesh.medico.Fragments.ItemMediGo.ExerciseIt;
 import bredesh.medico.Fragments.ItemMediGo.ItemGeneral;
@@ -51,12 +52,12 @@ public class ExerciseRA extends RecyclerAdapterGeneral<ExerciseIt> {
         String repetitionTypeInDB = ((ExerciseIt) item).getRepetitionType();
         if (repetitionTypeInDB != null) {
             int repetitionType = Integer.parseInt(((ExerciseIt) item).getRepetitionType());
-            if (repetitionType == R.string.repetition_type_repetitions ) {
+            if (repetitionType == ValueConstants.ExerciseRepetitionType.defaultValue ) {
                 customViewHolder.ivRepetition.setVisibility(View.VISIBLE);
             }
             else {
                 customViewHolder.ivRepetition.setVisibility(View.GONE);
-                String repetitionTypeS = Utils.stringOrFromResource(resources,repetitionTypeInDB );
+                String repetitionTypeS = Utils.stringOrFromResource(resources, ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(repetitionType));
                 customViewHolder.tvDosageType.setText(repetitionTypeS);
             }
         }

@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import bredesh.medico.DAL.MedicoDB;
+import bredesh.medico.DAL.ValueConstants;
 import bredesh.medico.R;
 import bredesh.medico.Utils.Utils;
 
@@ -45,7 +46,8 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
         oldDays = intent.getIntArrayExtra("dataDays");
         oldUriStringVideo = intent.getStringExtra("dataUriVideo");
         oldRepeats = intent.getIntExtra("dataRepeats",1);
-        String repetitionType = intent.getStringExtra("dataRepetitionType");
+        String repetitionTypeStr = intent.getStringExtra("dataRepetitionType");
+        int repetitionType = ValueConstants.ExerciseRepetitionType.defaultValue;
 
         etDataName.setText(oldDataName);
 
@@ -61,10 +63,10 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
         etRepeats.setText(Integer.toString(oldRepeats));
 //        etRepeats.setText(Integer.toString(repeats));
 
-        if (repetitionType == null)
-            repetitionType = Integer.toString(R.string.repetition_type_repetitions);
+        if (repetitionTypeStr != null)
+            repetitionType = Integer.parseInt(repetitionTypeStr);
         oldRepetitionType = repetitionType;
-        int index = Utils.findIndexInResourcesArray(resources, R.array.repetition_types, repetitionType);
+        int index = Utils.findIndexInResourcesArray(resources, R.array.repetition_types, ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(repetitionType));
         spRepetitionType.setSelection(index);
 
 //        int[] days = oldDays;
@@ -122,7 +124,9 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
                         times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
 
                     String exerciseName = etDataName.getText().toString();
-                    String repetitionTypeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.repetition_types, spRepetitionType.getSelectedItem().toString());
+                    int repetitionTypeToWrite = ValueConstants.ExerciseRepetitionType.getDBCodeFromStringCode(
+                            Utils.findResourceIdInResourcesArray(resources, R.array.repetition_types, spRepetitionType.getSelectedItem().toString())
+                    );
 
                     if (askBeforeSave)
                     {
@@ -130,7 +134,7 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
                                 oldDataName.equals(exerciseName) &&
                                         oldRepeats == repeats &&
                                         oldTimes.equals(times) &&
-                                        oldRepetitionType.equals(repetitionTypeToWrite) &&
+                                        oldRepetitionType == repetitionTypeToWrite &&
                                         Arrays.equals(oldDays, days_to_alert) &&
                                         (oldUriStringVideo == null ? uriStringVideo == null : oldUriStringVideo.equals(uriStringVideo)) &&
                                         (oldAlertSoundUriString == null ? alertSoundUriString == null : oldAlertSoundUriString.equals(alertSoundUriString));

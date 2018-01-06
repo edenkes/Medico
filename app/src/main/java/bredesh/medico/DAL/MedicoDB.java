@@ -243,7 +243,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         db.close();
     }*/
 
-    public long addAlert(String alert_name,KIND kind, String alert_time, int repeats, String repetition_type, String uri_video, String uri_image, int[] days_to_alert, String alertSoundUriString){
+    public long addAlert(String alert_name,KIND kind, String alert_time, int repeats, int repetition_type, String uri_video, String uri_image, int[] days_to_alert, String alertSoundUriString){
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -254,7 +254,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         values.put(KEY_KIND, kind.toString());
         values.put(KEY_TIME, alert_time);
         values.put(KEY_REPEATS, repeats);
-        values.put(KEY_REPETITION_TYPE, repetition_type);
+        values.put(KEY_REPETITION_TYPE, Integer.toString(repetition_type));
         values.put(KEY_URIVIDEO, uri_video);
         values.put(KEY_URIIMAGE, uri_image);
         values.put(KEY_ALERT_SOUND_URI, alertSoundUriString);
@@ -387,13 +387,13 @@ public class MedicoDB extends SQLiteOpenHelper {
     }
 
     //same parameters as ADD NEW ALERT. WE CAN GET IT FROM THE CURSOR OF THE CLICKED ITEM
-    public void updateRow(int rowID, String alert_name, String alert_time, int repeats, String repetition_type, String uri_video, String uri_image, int[] days_to_alert, String alertSoundUriString){
+    public void updateRow(int rowID, String alert_name, String alert_time, int repeats, int repetition_type, String uri_video, String uri_image, int[] days_to_alert, String alertSoundUriString){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, alert_name);
         values.put(KEY_TIME, alert_time);
         values.put(KEY_REPEATS, repeats);
-        values.put(KEY_REPETITION_TYPE, repetition_type);
+        values.put(KEY_REPETITION_TYPE, Integer.toString(repetition_type));
         values.put(SUNDAY, days_to_alert[0]);
         values.put(MONDAY, days_to_alert[1]);
         values.put(TUESDAY, days_to_alert[2]);
