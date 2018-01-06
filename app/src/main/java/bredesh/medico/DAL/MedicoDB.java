@@ -128,8 +128,8 @@ public class MedicoDB extends SQLiteOpenHelper {
     private void addAlertImageUri(SQLiteDatabase db) {
         String addAlertImageUri = "ALTER TABLE " + ALERTS_TABLE_NAME + " ADD COLUMN " + KEY_URIIMAGE + " TEXT";
         db.execSQL(addAlertImageUri);
-        String moveImagesToImageUri = "UPDATE " + ALERTS_TABLE_NAME + "SET " + KEY_URIIMAGE + " = " + KEY_URIVIDEO + ", " + KEY_URIVIDEO + " = NULL" +
-                " WHERE " + KEY_TYPE + " = '" + KIND.Medicine.toString() + "'";
+        String moveImagesToImageUri = "UPDATE " + ALERTS_TABLE_NAME + " SET " + KEY_URIIMAGE + " = " + KEY_URIVIDEO + ", " + KEY_URIVIDEO + " = NULL" +
+                " WHERE " + KEY_KIND + " = '" + KIND.Medicine.toString() + "'";
         db.execSQL(moveImagesToImageUri);
     }
 
