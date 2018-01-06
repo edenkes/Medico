@@ -378,8 +378,8 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
                 }
                 else
                 {
-                    db.addAlert(etDataName.getText().toString(), MedicoDB.KIND.Medicine, times, Integer.parseInt(etAmount.getText().toString()), "",null, uriStringImage, days_to_alert, null);
-                    db.addMedicine(typeToWrite,
+                    long alertId = db.addAlert(etDataName.getText().toString(), MedicoDB.KIND.Medicine, times, Integer.parseInt(etAmount.getText().toString()), "",null, uriStringImage, days_to_alert, null);
+                    db.addMedicine(alertId, typeToWrite,
                             specialNotesToWrite,
                             etNotes.getText().toString(),
                             Integer.parseInt(etAmount.getText().toString()));

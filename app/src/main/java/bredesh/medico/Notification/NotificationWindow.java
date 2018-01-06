@@ -212,13 +212,15 @@ public class NotificationWindow extends AppCompatActivity {
                     String strHour = "0" + hour;
                     strHour = strHour.substring(strHour.length() - 2);
                     timeSTR = strHour + " : " + str_minute;
-                    db.addAlert("_TEMP__" + item.name, item.kind, timeSTR, item.repeats, item.repetition_type, (item.uriVideo != null) ? item.uriVideo.toString() : null,
+                    long alertId = db.addAlert("_TEMP__" + item.name, item.kind, timeSTR, item.repeats, item.repetition_type, (item.uriVideo != null) ? item.uriVideo.toString() : null,
                             (item.uriImage != null) ? item.uriImage.toString() : null, new int[]{1, 1, 1, 1, 1, 1, 1}, item.alertSoundUriString);
                     Bundle params = new Bundle();
                     params.putInt("minutes", snoozeMinutes);
                     mFirebaseAnalytics.logEvent("Notification_snooze", params);
                     if (item.kind == MedicoDB.KIND.Medicine)
-                        db.addMedicine(type, special, notes, amount);
+                        db.addMedicine(alertId, type, special, notes, amount);
+                    else if (item.kind == MedicoDB.KIND.Reminders)
+                        db.addReminders(alertId, notes);
                 }
                 moveToMain();
             }

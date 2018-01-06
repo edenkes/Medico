@@ -372,8 +372,8 @@ public class RemindersDa extends DataGeneral implements IRemoveLastAlert{
                     }
                     else
                     {
-                        db.addAlert(etDataName.getText().toString(), MedicoDB.KIND.Reminders, times, 0, "", uriStringVideo, uriStringImage, days_to_alert, alertSoundUriString);
-                        db.addReminders(etNotes.getText().toString());
+                        long alertId = db.addAlert(etDataName.getText().toString(), MedicoDB.KIND.Reminders, times, 0, "", uriStringVideo, uriStringImage, days_to_alert, alertSoundUriString);
+                        db.addReminders(alertId, etNotes.getText().toString());
                         mFirebaseAnalytics.logEvent("Reminders_added", bundle);
                     }
                     finish();

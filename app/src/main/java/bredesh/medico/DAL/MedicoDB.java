@@ -128,6 +128,9 @@ public class MedicoDB extends SQLiteOpenHelper {
     private void addAlertImageUri(SQLiteDatabase db) {
         String addAlertImageUri = "ALTER TABLE " + ALERTS_TABLE_NAME + " ADD COLUMN " + KEY_URIIMAGE + " TEXT";
         db.execSQL(addAlertImageUri);
+        String moveImagesToImageUri = "UPDATE " + ALERTS_TABLE_NAME + "SET " + KEY_URIIMAGE + " = " + KEY_URIVIDEO + ", " + KEY_URIVIDEO + " = NULL" +
+                " WHERE " + KEY_TYPE + " = '" + KIND.Medicine.toString() + "'";
+        db.execSQL(moveImagesToImageUri);
     }
 
     private void addAlertKind(SQLiteDatabase db)
@@ -240,7 +243,7 @@ public class MedicoDB extends SQLiteOpenHelper {
         db.close();
     }*/
 
-    public void addAlert(String alert_name,KIND kind, String alert_time, int repeats, String repetition_type, String uri_video, String uri_image, int[] days_to_alert, String alertSoundUriString){
+    public long addAlert(String alert_name,KIND kind, String alert_time, int repeats, String repetition_type, String uri_video, String uri_image, int[] days_to_alert, String alertSoundUriString){
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -265,12 +268,13 @@ public class MedicoDB extends SQLiteOpenHelper {
         values.put(ALERT_TODAY, "");
 
         // 3. insert
-        db.insert(ALERTS_TABLE_NAME, // table
+        long result = db.insert(ALERTS_TABLE_NAME, // table
                 null, //nullColumnHack
                 values); // key/value -> keys = column names/ values = column values
 
         // 4. close
         db.close();
+        return result;
     }
 
     public Cursor getAllAlerts() {
@@ -411,7 +415,7 @@ public class MedicoDB extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
         return (db.delete(ALERTS_TABLE_NAME, KEY_ID+"="+rowID, null) >0) &&
-                (db.delete(MEDICINE_TABLE_NAME, KEY_ID+"="+rowID, null) >0);
+                (db.delete(MEDICINE_TABLE_NAME, KEY_ID+"="+rowID, null) >0 || db.delete(REMINDERS_TABLE_NAME, KEY_ID+"="+rowID, null) >0);
     }
 
     public void updateAlertToday(int rowID, String time) {
@@ -623,11 +627,8 @@ public class MedicoDB extends SQLiteOpenHelper {
       |_|_|_|\____)____|_|\____)_|_| |_|\____)  (___/ \____)____)\___)_|\___/|_| |_|
 
     */
-    public void addMedicine(String type, String special, String notes, int amount)
+    public void addMedicine(long id, String type, String special, String notes, int amount)
     {
-        int id = getLastID();
-        if(id == -1) return;
-
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -669,11 +670,8 @@ public class MedicoDB extends SQLiteOpenHelper {
     /*
     * Reminders section
     * */
-    public void addReminders(String notes)
+    public void addReminders(long id, String notes)
     {
-        int id = getLastID();
-        if(id == -1) return;
-
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
