@@ -84,10 +84,10 @@ public abstract class DataGeneral extends AppCompatActivity {
     protected ArrayList<String> arrayList;
 
     protected String uriStringVideo, uriStringImage, alertSoundUriString;
-    protected String oldDataName = "", oldNotes = "", oldTimes = "", oldAlertSoundUriString = null, oldDosageType = "",
-            oldSpecialNotes = "", oldAmount = "1", oldUriStringVideo = null, oldUriStringImage = null;
+    protected String oldDataName = "", oldNotes = "", oldTimes = "", oldAlertSoundUriString = null,
+            oldAmount = "1", oldUriStringVideo = null, oldUriStringImage = null;
     protected int[] oldDays = new int[7];
-    protected int oldRepetitionType = 0;
+    protected int oldRepetitionType = 0, oldSpecialNotes = 0, oldDosageType = 0;
     protected int dataId, oldRepeats = 1;
 
     private final String[][] AlertPlans = {

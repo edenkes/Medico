@@ -14,7 +14,7 @@ public class Exercise {
     public boolean[] daysToPerform;
     public String[] timesToPerform;
     public int noOfRepetitions;
-    public String repetitionType;
+    public int repetitionType;
     public String videoUri;
     
     public Exercise(Cursor c, MedicoDB db)
@@ -30,7 +30,7 @@ public class Exercise {
         daysToPerform[5] = c.getInt(c.getColumnIndex(MedicoDB.FRIDAY)) != 0;
         daysToPerform[6] = c.getInt(c.getColumnIndex(MedicoDB.SATURDAY)) != 0;
         noOfRepetitions = c.getInt(c.getColumnIndex(MedicoDB.KEY_REPEATS));
-        repetitionType = c.getString(c.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE));
+        repetitionType = c.getInt(c.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE));
         timesToPerform = c.getString(c.getColumnIndex(MedicoDB.KEY_TIME)).split(db.dbContext.getResources().getString(R.string.times_splitter));
     }
 }

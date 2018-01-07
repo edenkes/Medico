@@ -22,6 +22,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import java.util.Calendar;
 
 import bredesh.medico.DAL.MedicoDB;
+import bredesh.medico.DAL.ValueConstant;
+import bredesh.medico.DAL.ValueConstants;
 import bredesh.medico.Localization;
 import bredesh.medico.Menu.MainMenu;
 import bredesh.medico.R;
@@ -34,7 +36,8 @@ public class NotificationWindow extends AppCompatActivity {
     private MedicoDB db;
     private PartialVideoItem item= null;
 //    private final int SNOOZE_TIME = 5;
-    String type, special, notes;
+    String notes;
+    int type, special;
     int amount;
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -79,26 +82,27 @@ public class NotificationWindow extends AppCompatActivity {
                 case Exercise:
                     alertPrefixText.setText(resources.getString(R.string.notification_alert_prefix));
                     alertName.setText(item.name);
-                    alertRepeats.setText(resources.getString(R.string.notification_alert_repeats, item.repeats, Utils.stringOrFromResource(resources, Integer.toString(item.repetition_type), R.string.repetition_type_repetitions)));
+                    alertRepeats.setText(resources.getString(R.string.notification_alert_repeats, item.repeats,
+                            resources.getString (ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(item.repetition_type))));
                     break;
                 case Medicine:
                     Cursor c = (new MedicoDB(getApplicationContext())).getMedicineByID(item.id);
                     amount = c.getInt(c.getColumnIndex(MedicoDB.KEY_AMOUNT));
-                    type = Utils.stringOrFromResource(resources, c.getString(c.getColumnIndex(MedicoDB.KEY_TYPE)));
-                    special = Utils.stringOrFromResource(resources, c.getString(c.getColumnIndex(MedicoDB.KEY_SPECIAL)));
+                    type = c.getInt(c.getColumnIndex(MedicoDB.KEY_TYPE));
+                    special = c.getInt(c.getColumnIndex(MedicoDB.KEY_SPECIAL));
                     notes = c.getString(c.getColumnIndex(MedicoDB.KEY_NOTES));
                     alertPrefixText.setText(resources.getString(R.string.notification_alert_prefix_medicine));
                     alertName.setText(item.name);
-                    if (type.compareTo(resources.getString(R.string.medicine_dosage_other)) == 0)
+                    if (type == ValueConstants.MedicineDosageOther)
                         alertRepeats.setText("");
                     else
-                        alertRepeats.setText(""+amount +" "+type);
+                        alertRepeats.setText(""+amount +" "+ resources.getString (ValueConstants.DrugDosage.getStringCodeFromDBCode(type)));
 
                     TextView tvSpecial = findViewById(R.id.tv_special);
-                    if(special.equals(resources.getString(R.string.medicine_usage_notes_none)))
+                    if(special == ValueConstants.DrugDosageNotes.defaultValue)
                         tvSpecial.setVisibility(GONE);
                     else
-                        tvSpecial.setText(special);
+                        tvSpecial.setText(resources.getString(ValueConstants.DrugDosageNotes.getStringCodeFromDBCode(special)));
 
                     if(!notes.equals(""))
                     {

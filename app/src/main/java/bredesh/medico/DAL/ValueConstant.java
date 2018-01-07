@@ -7,10 +7,10 @@ package bredesh.medico.DAL;
 
 public final class ValueConstant {
     public int dbCode;
-    public String stringCode;
+    public int stringCode;
 
     public ValueConstant(int dbCode, int stringCode) {
         this.dbCode = dbCode;
-        this.stringCode = Integer.toString(stringCode);
+        this.stringCode = stringCode;
     }
 }

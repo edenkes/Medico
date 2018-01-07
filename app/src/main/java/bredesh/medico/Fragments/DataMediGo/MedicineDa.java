@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import bredesh.medico.DAL.MedicoDB;
+import bredesh.medico.DAL.ValueConstants;
 import bredesh.medico.R;
 import bredesh.medico.Utils.Utils;
 
@@ -255,19 +256,22 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
         oldUriStringVideo = intent.getStringExtra("dataUriVideo");
         oldUriStringImage = intent.getStringExtra("dataUriImage");
 
-        String type = intent.getStringExtra("medicine_type");
-        String special = intent.getStringExtra("medicine_special");
+        int type = intent.getIntExtra("medicine_type", ValueConstants.DrugDosage.defaultValue);
+        int special = intent.getIntExtra("medicine_special", ValueConstants.DrugDosageNotes.defaultValue);
         oldNotes = intent.getStringExtra("medicine_notes");
         oldAmount = intent.getStringExtra("medicine_amount");
 
         etDataName.setText(oldDataName);
         oldDosageType = type;
         int index;
-        index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage, type);
+
+        String dosageTypeString = resources.getString(ValueConstants.DrugDosage.getStringCodeFromDBCode(type));
+        index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage, dosageTypeString);
         spType.setSelection(index);
 
         oldSpecialNotes = special;
-        index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage_notes, special);
+        String specialNotesString = resources.getString(ValueConstants.DrugDosageNotes.getStringCodeFromDBCode(special));
+        index = Utils.findIndexInResourcesArray(resources, R.array.drugs_dosage_notes, specialNotesString);
         spSpecial.setSelection(index);
 
         etNotes.setText(oldNotes);
@@ -298,8 +302,8 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
         arrayList = new ArrayList<>();
         for(int i=0; i<selectedDays.length; i++)
             selectedDays[i] = true;
-        oldDosageType = Integer.toString (R.string.medicine_dosage_type_tab);
-        oldSpecialNotes = Integer.toString(R.string.medicine_usage_notes_none);
+        oldDosageType = ValueConstants.DrugDosage.defaultValue;
+        oldSpecialNotes = ValueConstants.DrugDosageNotes.defaultValue;
         oldDays = new int[7];
         for (int i=0 ;i < 7; i++)
             oldDays[i] = 1;
@@ -339,8 +343,11 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
                 for (int i = 0; i < arrayList.size(); i++)
                     times = times + (i > 0 ? getResources().getString(R.string.times_splitter) : "") + arrayList.get(i);
 
-                String typeToWrite = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, spType.getSelectedItem().toString());
-                String specialNotesToWrite =Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes, spSpecial.getSelectedItem().toString());
+                int typeStringCode = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage, spType.getSelectedItem().toString());
+                int typeToWrite = ValueConstants.DrugDosage.getDBCodeFromStringCode(typeStringCode);
+                int specialNotesStringCode = Utils.findResourceIdInResourcesArray(resources, R.array.drugs_dosage_notes, spSpecial.getSelectedItem().toString());
+                int specialNotesToWrite = ValueConstants.DrugDosageNotes.getDBCodeFromStringCode(specialNotesStringCode);
+
                 String medicineName = etDataName.getText().toString();
                 String newNotes = etNotes.getText().toString();
                 String amountText = etAmount.getText().toString();
@@ -351,12 +358,12 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
                     boolean dataNotChanged = (
                             oldDataName.equals(medicineName) &&
                                     oldTimes.equals(times) &&
-                                    oldSpecialNotes.equals(specialNotesToWrite) &&
+                                    oldSpecialNotes == specialNotesToWrite &&
                                     oldNotes.equals(newNotes) &&
                                     oldAmount.equals(amountText) &&
                                     (oldUriStringImage == null ? uriStringImage == null : oldUriStringImage.equals(uriStringImage)) &&
                                     Arrays.equals(oldDays, days_to_alert) &&
-                                    oldDosageType.equals(typeToWrite)
+                                    oldDosageType == typeToWrite
                     );
                     if (dataNotChanged)
                         finish();

@@ -14,20 +14,20 @@ public class ValueTable {
         this.defaultValue = defaultValue;
     }
 
-    public String getStringCodeFromDBCode(int dbCode) {
+    public int getStringCodeFromDBCode(int dbCode) {
         for (ValueConstant val : this.values) {
             if (val.dbCode == dbCode)
                 return val.stringCode;
         }
-        return "";
+        return -1;
     }
 
-    public int getDBCodeFromStringCode(String stringCode) {
+    public int getDBCodeFromStringCode(int stringCode) {
         for (ValueConstant val : this.values) {
-            if (val.stringCode.equals(stringCode))
+            if (val.stringCode == stringCode)
                 return val.dbCode;
         }
-        return 0;
+        return -1;
     }
 
 }

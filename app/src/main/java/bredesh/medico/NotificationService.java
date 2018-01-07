@@ -19,6 +19,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import java.util.Calendar;
 
 import bredesh.medico.DAL.MedicoDB;
+import bredesh.medico.DAL.ValueConstants;
 import bredesh.medico.Notification.NotificationWindow;
 import bredesh.medico.Utils.Utils;
 
@@ -70,18 +71,20 @@ public class NotificationService extends Service {
         String notiString = "";
         switch (local.getKindByID(notiID)){
             case Exercise:
-                String repetitionType = Utils.stringOrFromResource(getResources(), cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE)), R.string.repetition_type_repetitions);
+                String repetitionType = getResources().getString(ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE))));
                 String timesStr = Integer.toString(times);
                 notiString = (getResources().getString(R.string.alert_text, notificationName ,timesStr, repetitionType));
                 break;
             case Medicine:
                 Cursor cMedicine = local.getMedicineByID(notiID);
-                String dosageTypeMedicine = Utils.stringOrFromResource(getResources(), cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_TYPE)));
+                int dosageType = cMedicine.getInt(cMedicine.getColumnIndex(MedicoDB.KEY_TYPE));
 
-                if (dosageTypeMedicine.compareTo(getResources().getString(R.string.medicine_dosage_other)) != 0)
+                if (dosageType != ValueConstants.MedicineDosageOther) {
+                    String dosageTypeMedicine = getResources().getString(ValueConstants.DrugDosage.getStringCodeFromDBCode(dosageType));
                     notiString = (getResources().getString(R.string.alert_text_medicine,
                             times,
                             dosageTypeMedicine));
+                }
                 else {
                     notiString = (getResources().getString(R.string.notification_alert_prefix_medicine));
                     if (notiString.endsWith(":"))

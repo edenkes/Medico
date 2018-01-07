@@ -9,6 +9,7 @@ import android.view.View;
 
 import java.util.List;
 
+import bredesh.medico.DAL.ValueConstants;
 import bredesh.medico.Fragments.DataMediGo.MedicineDa;
 import bredesh.medico.Fragments.ItemMediGo.ItemGeneral;
 import bredesh.medico.Fragments.ItemMediGo.MedicineIt;
@@ -47,16 +48,17 @@ public class MedicineRA extends RecyclerAdapterGeneral<MedicineIt> {
 
     @Override
     protected void changeViewHolder(CustomViewHolder customViewHolder, ItemGeneral item, Resources resources) {
-        String itemType = Utils.stringOrFromResource(resources, ((MedicineIt) item).type);
+        int itemType = ((MedicineIt) item).type;
         customViewHolder.ivRepetition.setImageResource(R.drawable.ic_pill);
 
-        if (itemType.equals(resources.getString(R.string.medicine_dosage_other))) {
+        if (itemType == ValueConstants.MedicineDosageOther) {
             customViewHolder.tvNumberOfRepeats.setText("");
             customViewHolder.tvDosageType.setText("");
         }
         else {
             customViewHolder.tvNumberOfRepeats.setText(String.valueOf(((MedicineIt) item).amount));
-            customViewHolder.tvDosageType.setText(itemType);
+            String itemTypeText = resources.getString(ValueConstants.DrugDosage.getStringCodeFromDBCode(itemType));
+            customViewHolder.tvDosageType.setText(itemTypeText);
         }
 
         String times = item.time.replace(resources.getString(R.string.times_splitter), resources.getString(R.string.times_nice_separator));

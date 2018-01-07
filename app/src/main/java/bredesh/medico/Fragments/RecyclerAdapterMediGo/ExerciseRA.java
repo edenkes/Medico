@@ -49,17 +49,14 @@ public class ExerciseRA extends RecyclerAdapterGeneral<ExerciseIt> {
     protected void changeViewHolder(final CustomViewHolder customViewHolder, final ItemGeneral item, final Resources resources) {
         customViewHolder.tvNumberOfRepeats.setText(String.valueOf(((ExerciseIt) item).getNoOfRepetitions()));
 
-        String repetitionTypeInDB = ((ExerciseIt) item).getRepetitionType();
-        if (repetitionTypeInDB != null) {
-            int repetitionType = Integer.parseInt(((ExerciseIt) item).getRepetitionType());
-            if (repetitionType == ValueConstants.ExerciseRepetitionType.defaultValue ) {
-                customViewHolder.ivRepetition.setVisibility(View.VISIBLE);
-            }
-            else {
-                customViewHolder.ivRepetition.setVisibility(View.GONE);
-                String repetitionTypeS = Utils.stringOrFromResource(resources, ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(repetitionType));
-                customViewHolder.tvDosageType.setText(repetitionTypeS);
-            }
+        int repetitionType = ((ExerciseIt) item).getRepetitionType();
+        if (repetitionType == ValueConstants.ExerciseRepetitionType.defaultValue ) {
+            customViewHolder.ivRepetition.setVisibility(View.VISIBLE);
+        }
+        else {
+            customViewHolder.ivRepetition.setVisibility(View.GONE);
+            String repetitionTypeS = resources.getString(ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(repetitionType));
+            customViewHolder.tvDosageType.setText(repetitionTypeS);
         }
     }
 

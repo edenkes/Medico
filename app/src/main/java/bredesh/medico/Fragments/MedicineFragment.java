@@ -39,8 +39,8 @@ public class MedicineFragment extends FragmentGeneral<MedicineIt> {
         Cursor cMedicine = db.getMedicineByID(id);
         int amountTmp = cMedicine.getColumnIndex(MedicoDB.KEY_AMOUNT);
         int amount = cMedicine.getInt(amountTmp);
-        String type = cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_TYPE));
-        String special = cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_SPECIAL));
+        int type = cMedicine.getInt(cMedicine.getColumnIndex(MedicoDB.KEY_TYPE));
+        int special = cMedicine.getInt(cMedicine.getColumnIndex(MedicoDB.KEY_SPECIAL));
         String notes =   cMedicine.getString(cMedicine.getColumnIndex(MedicoDB.KEY_NOTES));
 
         arrayList.add(index, new MedicineIt(id, time, name, uriImage, days, detailedTimes, allTimes,

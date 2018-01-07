@@ -32,4 +32,5 @@ public class ValueConstants {
             new ValueConstant(3, R.string.repetition_type_seconds),
     }, 1);
 
+    public static int MedicineDosageOther = 8;
 }

@@ -66,7 +66,8 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
         if (repetitionTypeStr != null)
             repetitionType = Integer.parseInt(repetitionTypeStr);
         oldRepetitionType = repetitionType;
-        int index = Utils.findIndexInResourcesArray(resources, R.array.repetition_types, ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(repetitionType));
+        String repetitionTypeText = resources.getString(ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(repetitionType));
+        int index = Utils.findIndexInResourcesArray(resources, R.array.repetition_types, repetitionTypeText);
         spRepetitionType.setSelection(index);
 
 //        int[] days = oldDays;
