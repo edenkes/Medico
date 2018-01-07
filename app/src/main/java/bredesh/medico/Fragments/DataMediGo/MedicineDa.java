@@ -368,7 +368,7 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
 
                 Bundle bundle = new Bundle();
                 if (dataId != NewData) {
-                    db.updateRow(dataId, medicineName, times, amount, "" , null, uriStringImage, days_to_alert, null);
+                    db.updateRow(dataId, medicineName, times, amount, 0 , null, uriStringImage, days_to_alert, null);
                     db.updateMedicine(dataId,
                             typeToWrite,
                             specialNotesToWrite,
@@ -378,7 +378,7 @@ public class MedicineDa extends DataGeneral implements IRemoveLastAlert{
                 }
                 else
                 {
-                    long alertId = db.addAlert(etDataName.getText().toString(), MedicoDB.KIND.Medicine, times, Integer.parseInt(etAmount.getText().toString()), "",null, uriStringImage, days_to_alert, null);
+                    long alertId = db.addAlert(etDataName.getText().toString(), MedicoDB.KIND.Medicine, times, Integer.parseInt(etAmount.getText().toString()), 0,null, uriStringImage, days_to_alert, null);
                     db.addMedicine(alertId, typeToWrite,
                             specialNotesToWrite,
                             etNotes.getText().toString(),

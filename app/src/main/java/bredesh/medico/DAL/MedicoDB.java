@@ -458,7 +458,7 @@ public class MedicoDB extends SQLiteOpenHelper {
                 uriVideo,
                 uriImage,
                 cursor.getInt(cursor.getColumnIndex(KEY_REPEATS)),
-                cursor.getString(cursor.getColumnIndex(KEY_REPETITION_TYPE)),
+                Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_REPETITION_TYPE))),
                 kind_type,
                 cursor.getString(cursor.getColumnIndex(KEY_ALERT_SOUND_URI)));
         db.close();

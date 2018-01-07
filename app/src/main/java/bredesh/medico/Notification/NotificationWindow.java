@@ -79,7 +79,7 @@ public class NotificationWindow extends AppCompatActivity {
                 case Exercise:
                     alertPrefixText.setText(resources.getString(R.string.notification_alert_prefix));
                     alertName.setText(item.name);
-                    alertRepeats.setText(resources.getString(R.string.notification_alert_repeats, item.repeats, Utils.stringOrFromResource(resources, item.repetition_type, R.string.repetition_type_repetitions)));
+                    alertRepeats.setText(resources.getString(R.string.notification_alert_repeats, item.repeats, Utils.stringOrFromResource(resources, Integer.toString(item.repetition_type), R.string.repetition_type_repetitions)));
                     break;
                 case Medicine:
                     Cursor c = (new MedicoDB(getApplicationContext())).getMedicineByID(item.id);

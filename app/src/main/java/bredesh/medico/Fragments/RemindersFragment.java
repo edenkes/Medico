@@ -36,7 +36,7 @@ public class RemindersFragment extends FragmentGeneral<RemindersIt> {
 
     @Override
     protected void addItemToList(int index, int id, String time, String name, String uriVideo, String uriImage,
-                                 int[] days, boolean detailedTimes, String allTimes, String alertSoundUri) {
+                                 int[] days, boolean detailedTimes, String allTimes, String alertSoundUri, Cursor cursor) {
         Cursor cReminders = db.getRemindersByID(id);
         String notes = cReminders.getString(cReminders.getColumnIndex(MedicoDB.KEY_NOTES));
 

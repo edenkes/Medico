@@ -35,7 +35,7 @@ public class MedicineFragment extends FragmentGeneral<MedicineIt> {
 
     @Override
     protected void addItemToList(int index, int id, String time, String name, String uriVideo, String uriImage,
-                                 int[] days, boolean detailedTimes, String allTimes, String alertSoundUri) {
+                                 int[] days, boolean detailedTimes, String allTimes, String alertSoundUri, Cursor cursor) {
         Cursor cMedicine = db.getMedicineByID(id);
         int amountTmp = cMedicine.getColumnIndex(MedicoDB.KEY_AMOUNT);
         int amount = cMedicine.getInt(amountTmp);

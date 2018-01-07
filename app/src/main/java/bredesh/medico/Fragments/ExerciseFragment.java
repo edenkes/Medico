@@ -36,10 +36,9 @@ public class ExerciseFragment extends FragmentGeneral<ExerciseIt>{
 
     @Override
     protected void addItemToList(int index, int id, String time, String name, String uriVideo, String uriImage,
-                                 int[] days, boolean detailedTimes, String allTimes, String alertSoundUri) {
-        Cursor c = db.getAllAlertsByKind(kindGeneral);
-        int noOfRepetitions = c.getInt(c.getColumnIndex(MedicoDB.KEY_REPEATS));
-        String repetitionType = c.getString(c.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE));
+                                 int[] days, boolean detailedTimes, String allTimes, String alertSoundUri, Cursor cursor) {
+        int noOfRepetitions = cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_REPEATS));
+        String repetitionType = cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE));
 
         arrayList.add(index, new ExerciseIt(id, time, name, uriVideo, days, noOfRepetitions,
                 repetitionType, detailedTimes, allTimes, kindGeneral, alertSoundUri));

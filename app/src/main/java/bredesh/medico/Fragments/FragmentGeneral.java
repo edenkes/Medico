@@ -100,7 +100,7 @@ public abstract class FragmentGeneral<T> extends Fragment{
             days[5] = c.getInt(c.getColumnIndex(MedicoDB.FRIDAY));
             days[6] = c.getInt(c.getColumnIndex(MedicoDB.SATURDAY));
 
-            addItemToList(index,id, time, name, uriVideo, uriImage, days, detailedTimes, allTimes, alertSoundUri);
+            addItemToList(index,id, time, name, uriVideo, uriImage, days, detailedTimes, allTimes, alertSoundUri,c);
         }
         c.close();
     }
@@ -116,7 +116,7 @@ public abstract class FragmentGeneral<T> extends Fragment{
     protected abstract CharSequence getFragmentTitle();
 
     protected abstract void addItemToList(int index, int id, String time, String name, String uriVideo, String uriImage,
-                                          int[] days, boolean detailedTimes, String allTimes, String alertSoundUri);
+                                          int[] days, boolean detailedTimes, String allTimes, String alertSoundUri, Cursor cursor);
 
     protected abstract RecyclerAdapterGeneral<T> getNewRecyclerAdapter();
 
