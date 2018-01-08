@@ -46,8 +46,7 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
         oldDays = intent.getIntArrayExtra("dataDays");
         oldUriStringVideo = intent.getStringExtra("dataUriVideo");
         oldRepeats = intent.getIntExtra("dataRepeats",1);
-        String repetitionTypeStr = intent.getStringExtra("dataRepetitionType");
-        int repetitionType = ValueConstants.ExerciseRepetitionType.defaultValue;
+        int repetitionType = intent.getIntExtra("dataRepetitionType", ValueConstants.ExerciseRepetitionType.defaultValue);
 
         etDataName.setText(oldDataName);
 
@@ -63,8 +62,6 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
         etRepeats.setText(Integer.toString(oldRepeats));
 //        etRepeats.setText(Integer.toString(repeats));
 
-        if (repetitionTypeStr != null)
-            repetitionType = Integer.parseInt(repetitionTypeStr);
         oldRepetitionType = repetitionType;
         String repetitionTypeText = resources.getString(ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(repetitionType));
         int index = Utils.findIndexInResourcesArray(resources, R.array.repetition_types, repetitionTypeText);
