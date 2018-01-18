@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Hashtable;
 
 import bredesh.medico.Notification.PartialVideoItem;
 import bredesh.medico.Utils.Utils;
@@ -212,6 +214,84 @@ public class MedicoDB extends SQLiteOpenHelper {
         db.insert(LANG_TABLE_NAME, null, values);
     }
 
+    // One time Convertion functions
+    private void convertRepetitionType(SQLiteDatabase db) {
+        ConvertionTable [] repetitionTypeConvertion = new ConvertionTable []{
+                new ConvertionTable(1, new String[]{"Repetitions", "חזרות", "Repetitions", "חזרות", "Repetitions"}),
+                new ConvertionTable(2, new String[]{"Minutes", "דקות", "Minutes", "דקות", "Minutes"}),
+                new ConvertionTable(3, new String[]{"Seconds", "שניות", "Seconds", "שניות", "Seconds"}),
+        };
+        String alertSelect = "select * from alert";
+        Cursor c = db.rawQuery(alertSelect, null);
+        int len = c.getCount();
+        if (len > 0) {
+            c.moveToFirst();
+            ArrayList<Object[]> oldValues = new ArrayList<Object[]>();
+            for (int i = 0; i < len; i++) {
+                int row_id = c.getInt(c.getColumnIndex(KEY_ID));
+                String oldRepetitionType = c.getString(c.getColumnIndex(OLD_KEY_REPETITION_TYPE));
+                oldValues.add(new Object[]{row_id, oldRepetitionType});
+                c.moveToNext();
+            }
+            c.close();
+            for (Object[] oldValue : oldValues) {
+                ContentValues values = new ContentValues();
+                values.put(KEY_REPETITION_TYPE, ConvertionTable.getValue(repetitionTypeConvertion, (String) oldValue[1], ValueConstants.ExerciseRepetitionType.defaultValue));
+                db.update(ALERTS_TABLE_NAME, values, "where " + KEY_ID + " = " + oldValue[0].toString(), null);
+            }
+        }
+    }
+
+    private void convertMedicineValueTable(SQLiteDatabase db) {
+        ConvertionTable [] dosageTypeConvertion = new ConvertionTable []{
+                new ConvertionTable(1, new String[]{"כדורים", "حبة دواء", "Tab", "таблетки"}),
+                new ConvertionTable(2, new String[] {"קפסולות","كبسولة","Capsules","капсулы"}),
+                new ConvertionTable(3, new String[] {"מל (CC)", "مل (CC)", "Ml (CC)", "מל (CC)", "Мл (сс)"}),
+                new ConvertionTable(4, new String[] {"יחידות", "وحدات", "units", "יחידות", "единицы"}),
+                new ConvertionTable(5, new String[] {"drops", "טיפות", "drops", "טיפות", "капли"}),
+                new ConvertionTable(6, new String[] {"מדבקות", "لاصقه", "Patch", "מדבקות", "наклейка"}),
+                new ConvertionTable(7, new String[] {"פתילה (נר)", "شمعة", "Supp", "פתילה (נר)", "свеча"}),
+                new ConvertionTable(8, new String[] {"other", "אחר", "other", "אחר", "other"})
+        };
+
+        ConvertionTable [] specialIndicationsConvertion = new ConvertionTable[] {
+                new ConvertionTable(1, new String[]{"ללא", "بدون", "none", "ללא", "без"}),
+                new ConvertionTable(2, new String[]{"לפני האוכל", "قبل الأكل", "Before meal", "לפני האוכל", "Перед едой"}),
+                new ConvertionTable(3, new String[]{"אחרי האוכל", "بعد تناول الطعام", "After meal", "אחרי האוכל", "После еды"}),
+                new ConvertionTable(4, new String[]{"שעתיים לפני האוכל", "قبل ساعتين من الأكل", "Two hours before meal", "שעתיים לפני האוכל", "За два часа до еды"}),
+                new ConvertionTable(5, new String[]{"שעתיים אחרי האוכל", "بعد ساعتين من تناول الطعام", "Two hours after meal", "שעתיים אחרי האוכל", "Через два часа после еды"}),
+        };
+
+        String medicinSelect = "select * from medicine";
+        Cursor c = db.rawQuery(medicinSelect, null);
+        int len = c.getCount();
+        if (len > 0) {
+            c.moveToFirst();
+            ArrayList<Object[]> oldValues = new ArrayList<Object[]>();
+            for (int i = 0; i < len; i++) {
+                int row_id = c.getInt(c.getColumnIndex(KEY_ID));
+                String oldDosageType = c.getString(c.getColumnIndex(OLD_KEY_TYPE));
+                String oldSpecial = c.getString(c.getColumnIndex(OLD_KEY_SPECIAL));
+                oldValues.add(new Object[] {row_id, oldDosageType, oldSpecial});
+                c.moveToNext();
+            }
+            c.close();
+            for (Object[] oldValue : oldValues) {
+                ContentValues values = new ContentValues();
+                values.put(KEY_TYPE, ConvertionTable.getValue(dosageTypeConvertion, (String) oldValue[1], ValueConstants.DrugDosage.defaultValue));
+                values.put(KEY_SPECIAL, ConvertionTable.getValue(specialIndicationsConvertion, (String) oldValue[2], ValueConstants.DrugDosageNotes.defaultValue));
+                db.update(MEDICINE_TABLE_NAME, values, "where " + KEY_ID + " = " + oldValue[0].toString(), null);
+            }
+        }
+    }
+
+    private void convertValueTables(SQLiteDatabase db, int oldVersion) {
+        this.convertMedicineValueTable(db);
+        if (oldVersion >= 21) {
+            convertRepetitionType(db);
+        }
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
@@ -236,8 +316,10 @@ public class MedicoDB extends SQLiteOpenHelper {
             addAlertSoundUri(db);
         if (oldVersion < 23)
             createReminders(db);
-        if (oldVersion < 24)
+        if (oldVersion < 24) {
             addAlertImageUri(db);
+            convertValueTables(db, oldVersion);
+        }
     }
 
    /* public void DeleteAllAlerts() {
