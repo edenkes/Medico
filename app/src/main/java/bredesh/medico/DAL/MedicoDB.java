@@ -214,6 +214,15 @@ public class MedicoDB extends SQLiteOpenHelper {
         db.insert(LANG_TABLE_NAME, null, values);
     }
 
+    private void addNewCodeColumns(SQLiteDatabase db, int oldVersion) {
+        if (oldVersion >=21)
+            addAlertRepetitionType(db);
+        String addMedicineColSql = "ALTER TABLE " + MEDICINE_TABLE_NAME + " ADD COLUMN " + KEY_TYPE + " INTEGER";
+        db.execSQL(addMedicineColSql);
+        addMedicineColSql = "ALTER TABLE " + MEDICINE_TABLE_NAME + " ADD COLUMN " + KEY_SPECIAL + " INTEGER";
+        db.execSQL(addMedicineColSql);
+    }
+
     // One time Convertion functions
     private void convertRepetitionType(SQLiteDatabase db) {
         ConvertionTable [] repetitionTypeConvertion = new ConvertionTable []{
@@ -221,7 +230,7 @@ public class MedicoDB extends SQLiteOpenHelper {
                 new ConvertionTable(2, new String[]{"Minutes", "דקות", "Minutes", "דקות", "Minutes", Integer.toString(0x7f08008c)}),
                 new ConvertionTable(3, new String[]{"Seconds", "שניות", "Seconds", "שניות", "Seconds", Integer.toString(0x7f08008e)}),
         };
-        String alertSelect = "select * from alert";
+        String alertSelect = "select * from " + ALERTS_TABLE_NAME;
         Cursor c = db.rawQuery(alertSelect, null);
         int len = c.getCount();
         if (len > 0) {
@@ -237,7 +246,7 @@ public class MedicoDB extends SQLiteOpenHelper {
             for (Object[] oldValue : oldValues) {
                 ContentValues values = new ContentValues();
                 values.put(KEY_REPETITION_TYPE, ConvertionTable.getValue(repetitionTypeConvertion, (String) oldValue[1], ValueConstants.ExerciseRepetitionType.defaultValue));
-                db.update(ALERTS_TABLE_NAME, values, "where " + KEY_ID + " = " + oldValue[0].toString(), null);
+                db.update(ALERTS_TABLE_NAME, values, KEY_ID + " = " + oldValue[0].toString(), null);
             }
         }
     }
@@ -280,7 +289,7 @@ public class MedicoDB extends SQLiteOpenHelper {
                 ContentValues values = new ContentValues();
                 values.put(KEY_TYPE, ConvertionTable.getValue(dosageTypeConvertion, (String) oldValue[1], ValueConstants.DrugDosage.defaultValue));
                 values.put(KEY_SPECIAL, ConvertionTable.getValue(specialIndicationsConvertion, (String) oldValue[2], ValueConstants.DrugDosageNotes.defaultValue));
-                db.update(MEDICINE_TABLE_NAME, values, "where " + KEY_ID + " = " + oldValue[0].toString(), null);
+                db.update(MEDICINE_TABLE_NAME, values, KEY_ID + " = " + oldValue[0].toString(), null);
             }
         }
     }
@@ -318,6 +327,7 @@ public class MedicoDB extends SQLiteOpenHelper {
             createReminders(db);
         if (oldVersion < 24) {
             addAlertImageUri(db);
+            addNewCodeColumns(db, oldVersion);
             convertValueTables(db, oldVersion);
         }
     }
