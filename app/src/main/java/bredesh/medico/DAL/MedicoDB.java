@@ -217,9 +217,9 @@ public class MedicoDB extends SQLiteOpenHelper {
     // One time Convertion functions
     private void convertRepetitionType(SQLiteDatabase db) {
         ConvertionTable [] repetitionTypeConvertion = new ConvertionTable []{
-                new ConvertionTable(1, new String[]{"Repetitions", "חזרות", "Repetitions", "חזרות", "Repetitions"}),
-                new ConvertionTable(2, new String[]{"Minutes", "דקות", "Minutes", "דקות", "Minutes"}),
-                new ConvertionTable(3, new String[]{"Seconds", "שניות", "Seconds", "שניות", "Seconds"}),
+                new ConvertionTable(1, new String[]{"Repetitions", "חזרות", "Repetitions", "חזרות", "Repetitions", Integer.toString(0x7f08008d)}),
+                new ConvertionTable(2, new String[]{"Minutes", "דקות", "Minutes", "דקות", "Minutes", Integer.toString(0x7f08008c)}),
+                new ConvertionTable(3, new String[]{"Seconds", "שניות", "Seconds", "שניות", "Seconds", Integer.toString(0x7f08008e)}),
         };
         String alertSelect = "select * from alert";
         Cursor c = db.rawQuery(alertSelect, null);
@@ -244,22 +244,22 @@ public class MedicoDB extends SQLiteOpenHelper {
 
     private void convertMedicineValueTable(SQLiteDatabase db) {
         ConvertionTable [] dosageTypeConvertion = new ConvertionTable []{
-                new ConvertionTable(1, new String[]{"כדורים", "حبة دواء", "Tab", "таблетки"}),
-                new ConvertionTable(2, new String[] {"קפסולות","كبسولة","Capsules","капсулы"}),
-                new ConvertionTable(3, new String[] {"מל (CC)", "مل (CC)", "Ml (CC)", "מל (CC)", "Мл (сс)"}),
-                new ConvertionTable(4, new String[] {"יחידות", "وحدات", "units", "יחידות", "единицы"}),
-                new ConvertionTable(5, new String[] {"drops", "טיפות", "drops", "טיפות", "капли"}),
-                new ConvertionTable(6, new String[] {"מדבקות", "لاصقه", "Patch", "מדבקות", "наклейка"}),
-                new ConvertionTable(7, new String[] {"פתילה (נר)", "شمعة", "Supp", "פתילה (נר)", "свеча"}),
-                new ConvertionTable(8, new String[] {"other", "אחר", "other", "אחר", "other"})
+                new ConvertionTable(1, new String[]{"כדורים", "حبة دواء", "Tab", "таблетки", Integer.toString(0x7f080061)}),
+                new ConvertionTable(2, new String[] {"קפסולות","كبسولة","Capsules","капсулы", Integer.toString(0x7f08005d)}),
+                new ConvertionTable(3, new String[] {"מל (CC)", "مل (CC)", "Ml (CC)", "מל (CC)", "Мл (сс)", Integer.toString(0x7f08005e)}),
+                new ConvertionTable(4, new String[] {"יחידות", "وحدات", "units", "יחידות", "единицы", Integer.toString(0x7f080063)}),
+                new ConvertionTable(5, new String[] {"drops", "טיפות", "drops", "טיפות", "капли", Integer.toString(0x7f08005b)}),
+                new ConvertionTable(6, new String[] {"מדבקות", "لاصقه", "Patch", "מדבקות", "наклейка", Integer.toString(0x7f08005f)}),
+                new ConvertionTable(7, new String[] {"פתילה (נר)", "شمعة", "Supp", "פתילה (נר)", "свеча", Integer.toString(0x7f080060)}),
+                new ConvertionTable(8, new String[] {"other", "אחר", "other", "אחר", "other", Integer.toString(0x7f08005c)})
         };
 
         ConvertionTable [] specialIndicationsConvertion = new ConvertionTable[] {
-                new ConvertionTable(1, new String[]{"ללא", "بدون", "none", "ללא", "без"}),
-                new ConvertionTable(2, new String[]{"לפני האוכל", "قبل الأكل", "Before meal", "לפני האוכל", "Перед едой"}),
-                new ConvertionTable(3, new String[]{"אחרי האוכל", "بعد تناول الطعام", "After meal", "אחרי האוכל", "После еды"}),
-                new ConvertionTable(4, new String[]{"שעתיים לפני האוכל", "قبل ساعتين من الأكل", "Two hours before meal", "שעתיים לפני האוכל", "За два часа до еды"}),
-                new ConvertionTable(5, new String[]{"שעתיים אחרי האוכל", "بعد ساعتين من تناول الطعام", "Two hours after meal", "שעתיים אחרי האוכל", "Через два часа после еды"}),
+                new ConvertionTable(1, new String[]{"ללא", "بدون", "none", "ללא", "без", Integer.toString(0x7f08006c)}),
+                new ConvertionTable(2, new String[]{"לפני האוכל", "قبل الأكل", "Before meal", "לפני האוכל", "Перед едой", Integer.toString(0x7f08006b)}),
+                new ConvertionTable(3, new String[]{"אחרי האוכל", "بعد تناول الطعام", "After meal", "אחרי האוכל", "После еды", Integer.toString(0x7f08006a)}),
+                new ConvertionTable(4, new String[]{"שעתיים לפני האוכל", "قبل ساعتين من الأكل", "Two hours before meal", "שעתיים לפני האוכל", "За два часа до еды", Integer.toString(0x7f080069)}),
+                new ConvertionTable(5, new String[]{"שעתיים אחרי האוכל", "بعد ساعتين من تناول الطعام", "Two hours after meal", "שעתיים אחרי האוכל", "Через два часа после еды", Integer.toString(0x7f080068)}),
         };
 
         String medicinSelect = "select * from medicine";
