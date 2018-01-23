@@ -271,7 +271,7 @@ public abstract class DataGeneral extends AppCompatActivity {
                     if (imageUri != null) {
                         try {
                             Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setDataAndType(imageUri, "image//");
+                            intent.setDataAndType(imageUri, "image/*");
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
                         } catch (RuntimeException e) {

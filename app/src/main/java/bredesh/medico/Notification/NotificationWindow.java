@@ -11,6 +11,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -69,7 +70,9 @@ public class NotificationWindow extends AppCompatActivity {
         Button snooze = findViewById(R.id.snooze);
         Button snooze30 = findViewById(R.id.snooze30);
         ImageButton ib_video = findViewById(R.id.ib_video);
+        FrameLayout frame_play_video = findViewById(R.id.frame_play_video);
         ImageButton ib_image = findViewById(R.id.ib_image);
+        FrameLayout frame_photo = findViewById(R.id.frame_photo);
 
         toMain = new Intent(NotificationWindow.this, MainMenu.class);
         int id = getIntent().getIntExtra("db_id",-1);
@@ -234,10 +237,10 @@ public class NotificationWindow extends AppCompatActivity {
         snooze30.setOnClickListener(snoozeListener);
 
         if (item == null || item.uriImage == null)
-            ib_image.setVisibility(View.INVISIBLE);
+            frame_photo.setVisibility(View.GONE);
 
         if (item == null || item.uriVideo == null)
-            ib_video.setVisibility(View.INVISIBLE);
+            frame_play_video.setVisibility(View.GONE);
 
         ib_video.setOnClickListener(new View.OnClickListener() {
 
