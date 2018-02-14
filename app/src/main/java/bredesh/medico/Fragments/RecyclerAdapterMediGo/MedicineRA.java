@@ -66,4 +66,14 @@ public class MedicineRA extends RecyclerAdapterGeneral<MedicineIt> {
         if (!item.detailedTimes)
             customViewHolder.tvItemTime.setTextDirection(View.TEXT_DIRECTION_RTL);
     }
+
+    @Override
+    protected String getDeletedMessage() {
+        return resources.getString(R.string.medicine_deleted);
+    }
+
+    @Override
+    protected CharSequence getDeletedMessageConfirm() {
+        return resources.getString(R.string.delete_medicine_confirm);
+    }
 }

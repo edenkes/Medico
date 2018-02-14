@@ -41,11 +41,17 @@ public abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<Rec
     private List<T> itemGeneral;
     protected Context context;
     protected Activity activity;
+    protected Resources resources;
+
+    protected abstract String getDeletedMessage();
+
+    protected abstract CharSequence getDeletedMessageConfirm();
 
     RecyclerAdapterGeneral(Context context, List<T> itemGeneral, Activity activity) {
         this.itemGeneral = itemGeneral;
         this.context = context;
         this.activity = activity;
+        resources = context.getResources();
     }
 
     @Override
@@ -74,15 +80,16 @@ public abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<Rec
                 itemGeneral.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, itemGeneral.size());
+                Toast.makeText(context, getDeletedMessage() , Toast.LENGTH_SHORT).show();
             }
         };
 
-        final Resources resources = context.getResources();
+//        final Resources resources = context.getResources();
 
         final AlertDialog deleteDialog = new AlertDialog.Builder(activity)
                 .setPositiveButton(resources.getString(R.string.alert_dialog_set), onDelete)
                 .setNegativeButton(resources.getString(R.string.alert_dialog_cancel), null)
-                .setMessage(resources.getString(R.string.delete_exercise_confirm)).create();
+                .setMessage(getDeletedMessageConfirm()).create();
 
 
         customViewHolder.convertView.setOnLongClickListener(new View.OnLongClickListener() {

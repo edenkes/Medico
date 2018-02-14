@@ -12,6 +12,7 @@ import java.util.List;
 import bredesh.medico.Fragments.DataMediGo.RemindersDa;
 import bredesh.medico.Fragments.ItemMediGo.ItemGeneral;
 import bredesh.medico.Fragments.ItemMediGo.RemindersIt;
+import bredesh.medico.R;
 
 /**
  * Created by edenK on 12/10/2017.
@@ -47,4 +48,13 @@ public class RemindersRA extends RecyclerAdapterGeneral<RemindersIt> {
 
     }
 
+    @Override
+    protected String getDeletedMessage() {
+        return resources.getString(R.string.reminders_deleted);
+    }
+
+    @Override
+    protected CharSequence getDeletedMessageConfirm() {
+        return resources.getString(R.string.delete_reminders_confirm);
+    }
 }

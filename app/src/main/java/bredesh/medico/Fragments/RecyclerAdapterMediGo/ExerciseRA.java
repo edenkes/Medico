@@ -60,4 +60,13 @@ public class ExerciseRA extends RecyclerAdapterGeneral<ExerciseIt> {
         }
     }
 
+    @Override
+    protected String getDeletedMessage() {
+        return resources.getString(R.string.exercise_deleted);
+    }
+
+    @Override
+    protected CharSequence getDeletedMessageConfirm() {
+        return resources.getString(R.string.delete_exercise_confirm);
+    }
 }
