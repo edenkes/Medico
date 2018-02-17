@@ -273,6 +273,7 @@ public abstract class DataGeneral extends AppCompatActivity {
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             intent.setDataAndType(imageUri, "image/*");
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                             context.startActivity(intent);
                         } catch (RuntimeException e) {
                             Toast.makeText(context.getApplicationContext(),
