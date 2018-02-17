@@ -35,6 +35,7 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
         spRepetitionType.setAdapter(adapterType);
 
         etRepeats.setText(Integer.toString(1));
+        etNumberOfSets.setText(Integer.toString(1));
 
         setOnCreate();
     }
@@ -46,6 +47,7 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
         oldDays = intent.getIntArrayExtra("dataDays");
         oldUriStringVideo = intent.getStringExtra("dataUriVideo");
         oldRepeats = intent.getIntExtra("dataRepeats",1);
+        oldNumberOfSets = intent.getIntExtra("dataNumberOfSets",1);
         int repetitionType = intent.getIntExtra("dataRepetitionType", ValueConstants.ExerciseRepetitionType.defaultValue);
 
         etDataName.setText(oldDataName);
@@ -61,6 +63,7 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
 //        int repeats = oldRepeats;
         etRepeats.setText(Integer.toString(oldRepeats));
 //        etRepeats.setText(Integer.toString(repeats));
+        etNumberOfSets.setText(Integer.toString(oldNumberOfSets));
 
         oldRepetitionType = repetitionType;
         String repetitionTypeText = resources.getString(ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(repetitionType));
@@ -116,6 +119,7 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
                             days_to_alert[i] = 0;
                     }
                     int repeats = Integer.parseInt(etRepeats.getText().toString());
+                    int numberOfSets = Integer.parseInt(etNumberOfSets.getText().toString());
                     String times = "";
                     Collections.sort(arrayList);
                     for (int i = 0; i < arrayList.size(); i++)
@@ -131,6 +135,7 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
                         boolean dataNotChanged =
                                 oldDataName.equals(exerciseName) &&
                                         oldRepeats == repeats &&
+                                        oldNumberOfSets == numberOfSets &&
                                         oldTimes.equals(times) &&
                                         oldRepetitionType == repetitionTypeToWrite &&
                                         Arrays.equals(oldDays, days_to_alert) &&
@@ -145,11 +150,11 @@ public class ExerciseDa extends DataGeneral implements IRemoveLastAlert{
 
                     Bundle params = new Bundle();
                     if (dataId != NewData) {
-                        db.updateRow(dataId, exerciseName, times, repeats, repetitionTypeToWrite, uriStringVideo,uriStringImage, days_to_alert, alertSoundUriString);
+                        db.updateRow(dataId, exerciseName, times, repeats, repetitionTypeToWrite, uriStringVideo,uriStringImage, days_to_alert, alertSoundUriString, numberOfSets);
                         mFirebaseAnalytics.logEvent("Excercise_updated", params);
                     }
                     else {
-                        db.addAlert(exerciseName, MedicoDB.KIND.Exercise, times, repeats, repetitionTypeToWrite, uriStringVideo, uriStringImage, days_to_alert, alertSoundUriString);
+                        db.addAlert(exerciseName, MedicoDB.KIND.Exercise, times, repeats, repetitionTypeToWrite, uriStringVideo, uriStringImage, days_to_alert, alertSoundUriString, numberOfSets);
                         mFirebaseAnalytics.logEvent("Excercise_added", params);
                     }
                     finish();

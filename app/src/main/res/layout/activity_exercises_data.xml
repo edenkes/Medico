@@ -60,6 +60,7 @@
                     android:cursorVisible="true"
                     android:maxLength="16"
                     android:maxLines="1"
+                    android:nextFocusDown="@id/etRepeats"
                     android:paddingEnd="10sp"
                     android:paddingStart="10sp"
                     android:singleLine="true"
@@ -83,19 +84,42 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10sp"
                     android:ems="3"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:nextFocusDown="@id/etNumberOfSets"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true" />
+
+                <Spinner
+                    android:id="@+id/spRepetitionType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="5sp"
+                    android:gravity="center_vertical" />
+
+                <EditText
+                    android:id="@+id/etNumberOfSets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10sp"
+                    android:ems="3"
                     android:imeOptions="actionDone"
                     android:inputType="number"
                     android:maxLength="3"
                     android:selectAllOnFocus="true"
                     android:singleLine="true" />
 
-                <Spinner
-                    android:id="@+id/spRepetitionType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="5sp"
-                    android:gravity="center_vertical" />
+                <TextView
+                    android:id="@+id/tvSets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingStart="5sp"
+                    android:text="@string/exercise_sets_label"
+                    android:textColor="@color/labelColor"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 

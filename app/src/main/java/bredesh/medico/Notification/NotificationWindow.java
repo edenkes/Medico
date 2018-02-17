@@ -111,6 +111,7 @@ public class NotificationWindow extends AppCompatActivity {
         item = db.getItemByID(id);
         final Resources resources = getResources();
         if(item != null) {
+        TextView tvSpecial = findViewById(R.id.tv_special);
 
             switch (item.kind)
             {
@@ -119,6 +120,8 @@ public class NotificationWindow extends AppCompatActivity {
                     alertName.setText(item.name);
                     alertRepeats.setText(resources.getString(R.string.notification_alert_repeats, item.repeats,
                             resources.getString (ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(item.repetition_type))));
+                    if (item.number_of_sets != 1)
+                        tvSpecial.setText(item.number_of_sets + " " + resources.getString(R.string.exercise_sets_label) + ".");
                     break;
                 case Medicine:
                     Cursor c = (new MedicoDB(getApplicationContext())).getMedicineByID(item.id);
@@ -133,7 +136,6 @@ public class NotificationWindow extends AppCompatActivity {
                     else
                         alertRepeats.setText(""+amount +" "+ resources.getString (ValueConstants.DrugDosage.getStringCodeFromDBCode(type)));
 
-                    TextView tvSpecial = findViewById(R.id.tv_special);
                     if(special == ValueConstants.DrugDosageNotes.defaultValue)
                         tvSpecial.setVisibility(GONE);
                     else
@@ -252,7 +254,7 @@ public class NotificationWindow extends AppCompatActivity {
                     strHour = strHour.substring(strHour.length() - 2);
                     timeSTR = strHour + " : " + str_minute;
                     long alertId = db.addAlert("_TEMP__" + item.name, item.kind, timeSTR, item.repeats, item.repetition_type, (item.uriVideo != null) ? item.uriVideo.toString() : null,
-                            (item.uriImage != null) ? item.uriImage.toString() : null, new int[]{1, 1, 1, 1, 1, 1, 1}, item.alertSoundUriString);
+                            (item.uriImage != null) ? item.uriImage.toString() : null, new int[]{1, 1, 1, 1, 1, 1, 1}, item.alertSoundUriString, item.number_of_sets);
                     Bundle params = new Bundle();
                     params.putInt("minutes", snoozeMinutes);
                     mFirebaseAnalytics.logEvent("Notification_snooze", params);

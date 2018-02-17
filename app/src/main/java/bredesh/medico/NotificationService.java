@@ -52,7 +52,7 @@ public class NotificationService extends Service {
         return Service.START_STICKY;
     }
 
-    private void showNotification(String notificationName, int times, int notiID, String soundUri) {
+    private void showNotification(String notificationName, int times, int notiID, String soundUri, int numberOfSets) {
         int notification_id = (int) System.currentTimeMillis();
 
         if(notificationName.length() >=7 && notificationName.substring(0,7).equals("_TEMP__"))
@@ -74,6 +74,9 @@ public class NotificationService extends Service {
                 String repetitionType = getResources().getString(ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_REPETITION_TYPE))));
                 String timesStr = Integer.toString(times);
                 notiString = (getResources().getString(R.string.alert_text, notificationName ,timesStr, repetitionType));
+                if (numberOfSets != 1) {
+                    notiString += " " + Integer.toString(numberOfSets) + " " + getResources().getString(R.string.exercise_sets_label);
+                }
                 break;
             case Medicine:
                 Cursor cMedicine = local.getMedicineByID(notiID);
@@ -187,7 +190,8 @@ public class NotificationService extends Service {
                                         Bundle bundle=new Bundle();
                                         mFirebaseAnalytics.logEvent("Notification_show", bundle);
 
-                                        showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)), cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI)));
+                                        showNotification(notificationName, repeats, cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)), cursor.getString(cursor.getColumnIndex(MedicoDB.KEY_ALERT_SOUND_URI)),
+                                                cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_NUMBER_OF_SETS)));
                                         local.updateAlertToday(cursor.getInt(cursor.getColumnIndex(MedicoDB.KEY_ID)), time);
                                     }
                                 }

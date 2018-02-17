@@ -11,15 +11,21 @@ import bredesh.medico.DAL.MedicoDB;
 public class ExerciseIt extends ItemGeneral{
     private int noOfRepetitions;
     private int repetitionType;
+    private int numberOfSets;
 
-    public ExerciseIt(int id, String time, String name, String uriVideo, int[] days, int noOfRepetitions, int repetitionType, boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri){
+    public ExerciseIt(int id, String time, String name, String uriVideo, int[] days, int noOfRepetitions, int repetitionType, boolean detailedTimes, String allTimes, MedicoDB.KIND kind, String alertSoundUri, int numberOfSets){
         super(id,time,name,uriVideo, null, days,detailedTimes,allTimes,kind, alertSoundUri);
         this.noOfRepetitions = noOfRepetitions;
         this.repetitionType = repetitionType;
+        this.numberOfSets = numberOfSets;
     }
 
     //Getters
     public int getNoOfRepetitions() {return this.noOfRepetitions;}
+
+    public int getNumberOfSets() {
+        return this.numberOfSets;
+    }
 
     public int getRepetitionType() {return this.repetitionType;}
 }

@@ -41,6 +41,7 @@ public class ExerciseRA extends RecyclerAdapterGeneral<ExerciseIt> {
         intent.putExtra("dataAlertSoundUri", item.getAlertSoundUri());
 
         intent.putExtra("dataRepeats", ((ExerciseIt) item).getNoOfRepetitions());
+        intent.putExtra("dataNumberOfSets", ((ExerciseIt) item).getNumberOfSets());
         intent.putExtra("dataRepetitionType", ((ExerciseIt) item).getRepetitionType());
         return intent;
     }
@@ -50,14 +51,22 @@ public class ExerciseRA extends RecyclerAdapterGeneral<ExerciseIt> {
         customViewHolder.tvNumberOfRepeats.setText(String.valueOf(((ExerciseIt) item).getNoOfRepetitions()));
 
         int repetitionType = ((ExerciseIt) item).getRepetitionType();
+        String repetitionText = "";
+
         if (repetitionType == ValueConstants.ExerciseRepetitionType.defaultValue ) {
             customViewHolder.ivRepetition.setVisibility(View.VISIBLE);
         }
         else {
             customViewHolder.ivRepetition.setVisibility(View.GONE);
-            String repetitionTypeS = resources.getString(ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(repetitionType));
-            customViewHolder.tvDosageType.setText(repetitionTypeS);
+            repetitionText = resources.getString(ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(repetitionType));;
         }
+        int numberOfSets = ((ExerciseIt) item).getNumberOfSets();
+        if (numberOfSets != 1) {
+            repetitionText += " " + Integer.toString(numberOfSets) + " " + resources.getString(R.string.exercise_sets_label);
+        }
+
+        if (!repetitionText.equals(""))
+            customViewHolder.tvDosageType.setText(repetitionText);
     }
 
     @Override
