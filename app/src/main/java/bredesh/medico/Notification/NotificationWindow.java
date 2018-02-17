@@ -42,6 +42,38 @@ public class NotificationWindow extends AppCompatActivity {
     int amount;
     private FirebaseAnalytics mFirebaseAnalytics;
 
+    protected View.OnClickListener getPlayImageOrVideo(final boolean image) {
+        return new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v) {
+                if (item != null) {
+                    Uri uri = image? item.uriImage : item.uriVideo;
+                    Intent intent = null;
+                    String errMsg = "";
+                    try {
+                        if (!image) {
+                            intent = new Intent(Intent.ACTION_VIEW, uri);
+                            errMsg = getResources().getString(R.string.media_not_found);
+                        } else {
+                            intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setDataAndType(uri, "image/*");
+                            errMsg = getResources().getString(R.string.media_not_found_image);
+                        }
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        if (image) {
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        }
+                        getApplicationContext().startActivity(intent);
+                    } catch (RuntimeException e) {
+                        Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        };
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -242,39 +274,8 @@ public class NotificationWindow extends AppCompatActivity {
         if (item == null || item.uriVideo == null)
             frame_play_video.setVisibility(View.GONE);
 
-        ib_video.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if(item!=null)
-                {
-                    Uri videoUri = item.uriVideo;
-                    Intent intent = null;
-                    String errMsg = "";
-                    try {
-                        switch (item.kind)
-                        {
-                            case Exercise:
-                                intent = new Intent(Intent.ACTION_VIEW, videoUri);
-                                errMsg =  getResources().getString(R.string.media_not_found);
-                                break;
-                            case Medicine:
-                                intent = new Intent(Intent.ACTION_VIEW);
-                                intent.setDataAndType(videoUri,"image/*");
-                                errMsg =  getResources().getString(R.string.media_not_found_image);
-                                break;
-                            case Reminders:
-                                intent = new Intent(Intent.ACTION_VIEW, videoUri);
-                                errMsg =  getResources().getString(R.string.media_not_found);
-                                break;
-                        }
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        getApplicationContext().startActivity(intent);
-                    }
-                    catch (RuntimeException e){ Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT).show(); }
-                }
-            }
-        });
+        ib_video.setOnClickListener(getPlayImageOrVideo(false));
+        ib_image.setOnClickListener(getPlayImageOrVideo(true));
     }
 
 
