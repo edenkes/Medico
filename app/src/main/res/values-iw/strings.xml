@@ -155,4 +155,5 @@
     <string name="medicine">תרופות</string>
     <string name="medicine_deleted">התרופה נמחקה</string>
     <string name="reminders_deleted">התזכורת נמחקה</string>
+    <string name="exercise_sets_label">סטים</string>
 </resources>

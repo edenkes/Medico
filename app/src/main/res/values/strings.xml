@@ -201,4 +201,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="title_activity_reminders_data" translatable="false">RemindersData</string>
+    <string name="exercise_sets_label">Sets</string>
 </resources>

@@ -71,7 +71,7 @@ public abstract class DataGeneral extends AppCompatActivity {
     protected final Button[] alertPlanButtons = new Button[5];
     protected final int Max_Size = 16, NewData = -6;
 
-    protected EditText etDataName, etNotes, etAmount, etRepeats;
+    protected EditText etDataName, etNotes, etAmount, etRepeats, etNumberOfSets;
     protected TextView tvSelectedDays, tvAddMultiAlert;
     protected Button btDelete, btConfirm, btAddAlert;
     protected ImageButton btPlayImage, btPlayVideo, btChooseSound, btShootVideo, btShootImage;
@@ -88,7 +88,7 @@ public abstract class DataGeneral extends AppCompatActivity {
             oldAmount = "1", oldUriStringVideo = null, oldUriStringImage = null;
     protected int[] oldDays = new int[7];
     protected int oldRepetitionType = 0, oldSpecialNotes = 0, oldDosageType = 0;
-    protected int dataId, oldRepeats = 1;
+    protected int dataId, oldRepeats = 1, oldNumberOfSets = 1;
 
     private final String[][] AlertPlans = {
             {"07 : 00"},
@@ -132,6 +132,7 @@ public abstract class DataGeneral extends AppCompatActivity {
         btDelete            = findViewById(R.id.btDelete);
 
         etRepeats           = findViewById(R.id.etRepeats);
+        etNumberOfSets      = findViewById(R.id.etNumberOfSets);
         etAmount            = findViewById(R.id.amount_number);
         etNotes             = findViewById(R.id.et_notes);
         spSpecial           = findViewById(R.id.spinner_special);
@@ -273,6 +274,7 @@ public abstract class DataGeneral extends AppCompatActivity {
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             intent.setDataAndType(imageUri, "image/*");
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                             context.startActivity(intent);
                         } catch (RuntimeException e) {
                             Toast.makeText(context.getApplicationContext(),

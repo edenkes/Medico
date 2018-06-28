@@ -156,4 +156,5 @@
     <string name="medicine_deleted">Drug deleted</string>
     <string name="reminders_deleted">Reminder deleted</string>
     <string name="reminders_name_label">Reminder Name:</string>
+    <string name="exercise_sets_label">Sets</string>
 </resources>

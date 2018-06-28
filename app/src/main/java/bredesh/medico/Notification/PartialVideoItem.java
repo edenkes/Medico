@@ -14,8 +14,9 @@ public class PartialVideoItem {
     public MedicoDB.KIND kind;
     public int repetition_type;
     public boolean temp = false;
+    public int number_of_sets;
 
-    public PartialVideoItem(int id, String name, Uri uriVideo, Uri uriImage, int repeats, int repetition_type, MedicoDB.KIND kind, String alertSoundUriString)
+    public PartialVideoItem(int id, String name, Uri uriVideo, Uri uriImage, int repeats, int repetition_type, MedicoDB.KIND kind, String alertSoundUriString, int number_of_sets)
     {
         this.id = id;
         this.kind = kind;
@@ -29,5 +30,6 @@ public class PartialVideoItem {
         this.repeats = repeats;
         this.repetition_type = repetition_type;
         this.alertSoundUriString = alertSoundUriString;
+        this.number_of_sets = number_of_sets;
     }
 }

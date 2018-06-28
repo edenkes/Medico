@@ -42,6 +42,38 @@ public class NotificationWindow extends AppCompatActivity {
     int amount;
     private FirebaseAnalytics mFirebaseAnalytics;
 
+    protected View.OnClickListener getPlayImageOrVideo(final boolean image) {
+        return new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v) {
+                if (item != null) {
+                    Uri uri = image? item.uriImage : item.uriVideo;
+                    Intent intent = null;
+                    String errMsg = "";
+                    try {
+                        if (!image) {
+                            intent = new Intent(Intent.ACTION_VIEW, uri);
+                            errMsg = getResources().getString(R.string.media_not_found);
+                        } else {
+                            intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setDataAndType(uri, "image/*");
+                            errMsg = getResources().getString(R.string.media_not_found_image);
+                        }
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        if (image) {
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        }
+                        getApplicationContext().startActivity(intent);
+                    } catch (RuntimeException e) {
+                        Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        };
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +111,7 @@ public class NotificationWindow extends AppCompatActivity {
         item = db.getItemByID(id);
         final Resources resources = getResources();
         if(item != null) {
+        TextView tvSpecial = findViewById(R.id.tv_special);
 
             switch (item.kind)
             {
@@ -87,6 +120,8 @@ public class NotificationWindow extends AppCompatActivity {
                     alertName.setText(item.name);
                     alertRepeats.setText(resources.getString(R.string.notification_alert_repeats, item.repeats,
                             resources.getString (ValueConstants.ExerciseRepetitionType.getStringCodeFromDBCode(item.repetition_type))));
+                    if (item.number_of_sets != 1)
+                        tvSpecial.setText(item.number_of_sets + " " + resources.getString(R.string.exercise_sets_label) + ".");
                     break;
                 case Medicine:
                     Cursor c = (new MedicoDB(getApplicationContext())).getMedicineByID(item.id);
@@ -101,7 +136,6 @@ public class NotificationWindow extends AppCompatActivity {
                     else
                         alertRepeats.setText(""+amount +" "+ resources.getString (ValueConstants.DrugDosage.getStringCodeFromDBCode(type)));
 
-                    TextView tvSpecial = findViewById(R.id.tv_special);
                     if(special == ValueConstants.DrugDosageNotes.defaultValue)
                         tvSpecial.setVisibility(GONE);
                     else
@@ -220,7 +254,7 @@ public class NotificationWindow extends AppCompatActivity {
                     strHour = strHour.substring(strHour.length() - 2);
                     timeSTR = strHour + " : " + str_minute;
                     long alertId = db.addAlert("_TEMP__" + item.name, item.kind, timeSTR, item.repeats, item.repetition_type, (item.uriVideo != null) ? item.uriVideo.toString() : null,
-                            (item.uriImage != null) ? item.uriImage.toString() : null, new int[]{1, 1, 1, 1, 1, 1, 1}, item.alertSoundUriString);
+                            (item.uriImage != null) ? item.uriImage.toString() : null, new int[]{1, 1, 1, 1, 1, 1, 1}, item.alertSoundUriString, item.number_of_sets);
                     Bundle params = new Bundle();
                     params.putInt("minutes", snoozeMinutes);
                     mFirebaseAnalytics.logEvent("Notification_snooze", params);
@@ -242,39 +276,8 @@ public class NotificationWindow extends AppCompatActivity {
         if (item == null || item.uriVideo == null)
             frame_play_video.setVisibility(View.GONE);
 
-        ib_video.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if(item!=null)
-                {
-                    Uri videoUri = item.uriVideo;
-                    Intent intent = null;
-                    String errMsg = "";
-                    try {
-                        switch (item.kind)
-                        {
-                            case Exercise:
-                                intent = new Intent(Intent.ACTION_VIEW, videoUri);
-                                errMsg =  getResources().getString(R.string.media_not_found);
-                                break;
-                            case Medicine:
-                                intent = new Intent(Intent.ACTION_VIEW);
-                                intent.setDataAndType(videoUri,"image/*");
-                                errMsg =  getResources().getString(R.string.media_not_found_image);
-                                break;
-                            case Reminders:
-                                intent = new Intent(Intent.ACTION_VIEW, videoUri);
-                                errMsg =  getResources().getString(R.string.media_not_found);
-                                break;
-                        }
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        getApplicationContext().startActivity(intent);
-                    }
-                    catch (RuntimeException e){ Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT).show(); }
-                }
-            }
-        });
+        ib_video.setOnClickListener(getPlayImageOrVideo(false));
+        ib_image.setOnClickListener(getPlayImageOrVideo(true));
     }
 
 

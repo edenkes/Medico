@@ -113,6 +113,26 @@ public abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<Rec
             customViewHolder.btPlayImage.setBackground(null);
             Glide.with(activity).load(item.uriImage).into(customViewHolder.btPlayImage);
             customViewHolder.btPlayImage.invalidate();
+            customViewHolder.btPlayImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Uri imageUri = item.getUriImage();
+                    if(imageUri != null ) {
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setDataAndType(imageUri,"image/*");
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            context.startActivity(intent);
+                        }catch (RuntimeException e){
+                            Toast.makeText(context.getApplicationContext(),
+                                    resources.getString(R.string.media_not_found_image), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else Toast.makeText(context.getApplicationContext(),
+                            resources.getString(R.string.media_not_found_image), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         String times = item.getTime().replace(resources.getString(R.string.times_splitter), resources.getString(R.string.times_nice_separator));
@@ -144,6 +164,7 @@ public abstract class RecyclerAdapterGeneral<T> extends RecyclerView.Adapter<Rec
                         resources.getString(R.string.media_not_found), Toast.LENGTH_SHORT).show();
             }
         });
+
         changeViewHolder(customViewHolder, item, resources);
 
         activateAlerts(customViewHolder, item);
