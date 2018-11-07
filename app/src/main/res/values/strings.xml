@@ -79,6 +79,8 @@
 
 
     <string name="main_menu_title">תפריט ראשי</string>
+    <string name="privacy">
+        <a href="https://medigo44.wixsite.com/website/privacy">privacy</a>privacy</string>
     <string name="coming_soon">בבניה</string>
     <string name="menu_item_1">פיזיותרפיה</string>
     <string name="menu_item_2">תרופות</string>
