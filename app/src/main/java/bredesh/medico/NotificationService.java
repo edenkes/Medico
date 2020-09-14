@@ -9,6 +9,7 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.media.AudioAttributes;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,31 +35,45 @@ public class NotificationService extends Service {
     private int CURRENT_DAY;
     private boolean shouldStop = false;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private Object notificationChannel;
+    private int channelCounter = 0;
+    String CHANNEL_ID = "my_channel_05";
 
     @Override
     public IBinder onBind(Intent intent) { return null; }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        String CHANNEL_ID = "my_channel_01";
-
-        notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-
+    private NotificationChannel rebuild_channel(NotificationManager notificationManager) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            this.channelCounter += 1;
+            notificationManager.deleteNotificationChannel(CHANNEL_ID + String.valueOf(this.channelCounter - 1));
             CharSequence name = "Medigo Notifications";
             String Description = "Medigo Notifications";
             int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID + String.valueOf(channelCounter), name, importance);
             mChannel.setDescription(Description);
             mChannel.enableLights(true);
             mChannel.setLightColor(Color.RED);
             mChannel.enableVibration(true);
             mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
             mChannel.setShowBadge(false);
-            notificationManager.createNotificationChannel(mChannel);
+            this.notificationChannel = mChannel;
+            return mChannel;
+        }
+        return null;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            NotificationChannel channel = this.rebuild_channel(notificationManager);
+            if (channel != null)
+                notificationManager.createNotificationChannel(channel);
         }
 
-        builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
+
 
         Calendar calendar = Calendar.getInstance();
         local = new MedicoDB(getApplicationContext());
@@ -70,7 +85,7 @@ public class NotificationService extends Service {
         return Service.START_STICKY;
     }
 
-    private void showNotification(String notificationName, int times, int notiID, String soundUri, int numberOfSets) {
+    private void showNotification(String notificationName, int times, int notiID, String soundUri, int numberOfSets) throws InterruptedException {
         int notification_id = (int) System.currentTimeMillis();
 
         if(notificationName.length() >=7 && notificationName.substring(0,7).equals("_TEMP__"))
@@ -121,6 +136,29 @@ public class NotificationService extends Service {
                 break;
         }
 
+        Uri soundActualUri;
+        if (soundUri != null) {
+            soundActualUri = Uri.parse(soundUri);
+        }
+        else
+        {
+            soundActualUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+            NotificationChannel mChannel = this.rebuild_channel(notificationManager);
+            AudioAttributes.Builder builder = new AudioAttributes.Builder();
+            AudioAttributes attribs = builder.setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_ALARM).build();
+            if (mChannel != null) {
+                mChannel.setSound(soundActualUri, attribs);
+                notificationManager.createNotificationChannel(mChannel);
+            }
+        }
+
+        Thread.sleep(0);
+        builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID + String.valueOf(this.channelCounter ));
 
         builder.setSmallIcon(R.mipmap.ic_medigo_logo_clock)
                 .setSmallIcon(R.mipmap.ic_alarm_black_48dp)
@@ -131,16 +169,7 @@ public class NotificationService extends Service {
                 .setContentText(notiString)
                 .setPriority(Notification.PRIORITY_HIGH);
 
-        Uri soundActualUri;
-        if (soundUri != null) {
-            soundActualUri = Uri.parse(soundUri);
-        }
-        else
-        {
-            soundActualUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        }
         builder.setSound(soundActualUri);
-
         notificationManager.notify(notification_id,builder.build());
     }
 

@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 28
+    buildToolsVersion '26.0.3'
     defaultConfig {
         applicationId "bredesh.medico"
         minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 29
-        versionName "1.29"
+        targetSdkVersion 28
+        versionCode 30
+        versionName "1.30"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
